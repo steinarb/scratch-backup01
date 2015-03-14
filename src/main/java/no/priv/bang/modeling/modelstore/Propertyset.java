@@ -19,10 +19,13 @@ public interface Propertyset {
 	boolean isNil();
 
 	Integer getIntegerProperty(String propertyName);
+	void setIntegerProperty(String string, Integer intValue);
 
 	Double getDoubleProperty(String propertyName);
+	void setDoubleProperty(String string, Double doubleValue);
 
 	String getStringProperty(String propertyName);
+	void setStringProperty(String propertyName, String stringValue);
 
 	Propertyset getComplexProperty(String propertyName);
 

@@ -19,8 +19,8 @@ public final class PropertysetNil implements Propertyset {
 		return singleton;
 	}
 
-	private final Integer nullIntegerValue = new Integer(0);
-	private final Double nullDoubleValue = new Double(0);
+	private final Integer nullIntegerValue = Integer.valueOf(0);
+	private final Double nullDoubleValue = Double.valueOf(0);
 	private final String emptyStringValue = "";
 
 	private PropertysetNil() {}
@@ -32,13 +32,24 @@ public final class PropertysetNil implements Propertyset {
 	public Integer getIntegerProperty(String propertyName) {
 		return nullIntegerValue;
 	}
+	public void setIntegerProperty(String propertyName, Integer intValue) {
+		// No-op
+	}
 
 	public Double getDoubleProperty(String propertyName) {
 		return nullDoubleValue;
 	}
 
+	public void setDoubleProperty(String propertyName, Double doubleValue) {
+		// No-op
+	}
+
 	public String getStringProperty(String propertyName) {
 		return emptyStringValue;
+	}
+
+	public void setStringProperty(String propertyName, String stringValue) {
+		// No-op
 	}
 
 	public Propertyset getComplexProperty(String propertyName) {
