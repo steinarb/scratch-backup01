@@ -1,0 +1,9 @@
+* What is this?
+
+This is a small Java library intended to hold a model consisting of objects and relations in memory.
+
+The main use case for this library is to be used as a generic model container for an Eclipse GEF editor.  Because of this, and because it does no harm, and because I kind of like OSGi, this library is packaged as an OSGi bundle.
+
+The API is meant to be as clutter-free as possbile in use: it should throw no exceptions, and it should return no nulls (istead of null it will return the empty string, empty collections and zero values for the numeric types).
+
+The PropertySet interface defines the API of objects that forms both objects and relationships of the model.
