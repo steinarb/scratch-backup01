@@ -19,6 +19,7 @@ public final class PropertysetNil implements Propertyset {
         return singleton;
     }
 
+    private final Boolean nullBooleanValue = Boolean.valueOf(false);
     private final Long nullLongValue = Long.valueOf(0);
     private final Double nullDoubleValue = Double.valueOf(0);
     private final String emptyStringValue = "";
@@ -29,9 +30,18 @@ public final class PropertysetNil implements Propertyset {
         return true;
     }
 
+    public Boolean getBooleanProperty(String propertyName) {
+        return nullBooleanValue;
+    }
+
+    public void setBooleanProperty(String propertyName, Boolean boolValue) {
+        // No-op
+    }
+
     public Long getLongProperty(String propertyName) {
         return nullLongValue;
     }
+
     public void setLongProperty(String propertyName, Long intValue) {
         // No-op
     }

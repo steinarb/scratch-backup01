@@ -19,6 +19,46 @@ public class PropertysetImpl implements Propertyset {
         return false;
     }
 
+    public Boolean getBooleanProperty(String propertyName) {
+        Boolean propertyValue = PropertysetNil.getNil().getBooleanProperty(propertyName);
+        Object rawPropertyValue = properties.get(propertyName);
+        if (null != rawPropertyValue) {
+            if (rawPropertyValue.getClass() == Boolean.class) {
+                propertyValue = (Boolean) rawPropertyValue;
+            } else {
+                propertyValue = transformPropertyToBoolean(rawPropertyValue);
+            }
+        }
+
+        return propertyValue;
+    }
+
+    private Boolean transformPropertyToBoolean(Object rawPropertyValue) {
+        Class<? extends Object> propertyType = rawPropertyValue.getClass();
+        if (propertyType == Long.class) {
+            Long longPropertyValue = (Long) rawPropertyValue;
+            long longValue = longPropertyValue.longValue();
+            return longValue == 0 ? false : true;
+        }
+
+        if (propertyType == Double.class) {
+            Double doublePropertyValue = (Double) rawPropertyValue;
+            double doubleValue = doublePropertyValue.doubleValue();
+            return doubleValue == 0.0 ? false : true;
+        }
+
+        if (propertyType == String.class) {
+            String stringPropertyValue = (String) rawPropertyValue;
+            return Boolean.valueOf(stringPropertyValue);
+        }
+
+        return PropertysetNil.getNil().getBooleanProperty("dummy");
+    }
+
+    public void setBooleanProperty(String propertyName, Boolean boolValue) {
+        properties.put(propertyName, boolValue);
+    }
+
     public Long getLongProperty(String propertyName) {
         Long propertyValue = PropertysetNil.getNil().getLongProperty(propertyName);
         Object rawPropertyValue = properties.get(propertyName);
@@ -54,6 +94,11 @@ public class PropertysetImpl implements Propertyset {
             }
         }
 
+        if (rawPropertyValueClass == Boolean.class) {
+            Boolean propertyAsBoolean = (Boolean) rawPropertyValue;
+            return Long.valueOf(propertyAsBoolean.booleanValue()?1:0);
+        }
+
         return propertyValue;
     }
 
@@ -81,11 +126,17 @@ public class PropertysetImpl implements Propertyset {
             Long propertyAsInt = (Long) rawPropertyValue;
             return Double.valueOf(propertyAsInt.intValue());
         }
+
         if (propertyType == String.class) {
             String propertyAsString = (String) rawPropertyValue;
             try {
                 return Double.valueOf(propertyAsString);
             } catch (NumberFormatException e) {}
+        }
+
+        if (propertyType == Boolean.class) {
+            Boolean propertyAsBoolean = (Boolean) rawPropertyValue;
+            return propertyAsBoolean.booleanValue()?1.0:0.0;
         }
 
         return PropertysetNil.getNil().getDoubleProperty("dummy");
@@ -113,7 +164,8 @@ public class PropertysetImpl implements Propertyset {
         Class<? extends Object> propertyType = rawPropertyValue.getClass();
         if (
             propertyType == Long.class ||
-            propertyType == Double .class)
+            propertyType == Double .class ||
+            propertyType == Boolean.class)
         {
             stringValue = rawPropertyValue.toString();
         }

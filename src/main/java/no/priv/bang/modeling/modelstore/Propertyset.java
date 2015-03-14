@@ -18,6 +18,9 @@ public interface Propertyset {
 
     boolean isNil();
 
+    Boolean getBooleanProperty(String propertyName);
+    void setBooleanProperty(String propertyName, Boolean boolValue);
+
     Long getLongProperty(String propertyName);
     void setLongProperty(String string, Long intValue);
 

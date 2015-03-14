@@ -16,6 +16,8 @@ public class PropertysetImplTest {
         Propertyset propertyset = new PropertysetImpl();
         assertFalse(propertyset.isNil());
 
+        Boolean boolProperty = propertyset.getBooleanProperty("boolProperty");
+        assertEquals(Boolean.valueOf(false), boolProperty);
         Long intProperty = propertyset.getLongProperty("intPropName");
         assertEquals(Long.valueOf(0), intProperty);
         Double doubleProperty = propertyset.getDoubleProperty("doublePropName");
@@ -28,6 +30,64 @@ public class PropertysetImplTest {
         Propertyset reference = propertyset.getReferenceProperty("reference");
         assertNotNull(reference);
         assertTrue(reference.isNil());
+    }
+
+    /**
+     * Test getting a bool from various property types
+     */
+    @Test
+    public void testGetBooleanProperty() {
+        Propertyset propertyset = new PropertysetImpl();
+
+        Boolean trueValue = Boolean.valueOf(true);
+        propertyset.setBooleanProperty("trueValue", trueValue);
+        Boolean boolValue = propertyset.getBooleanProperty("trueValue");
+        assertEquals(trueValue, boolValue);
+
+        // Set int values and read them back as bool values
+        // 0 is false, everything else is true
+        Long negativeInt = Long.valueOf(-1);
+        propertyset.setLongProperty("negativeInt", negativeInt);
+        Boolean negativeIntAsBool = propertyset.getBooleanProperty("negativeInt");
+        assertEquals(Boolean.valueOf(true), negativeIntAsBool);
+        Long nullInt = Long.valueOf(0);
+        propertyset.setLongProperty("nullInt", nullInt);
+        Boolean nullIntAsBool = propertyset.getBooleanProperty("nullInt");
+        assertEquals(Boolean.valueOf(false), nullIntAsBool);
+        Long positiveInt = Long.valueOf(1);
+        propertyset.setLongProperty("positiveInt", positiveInt);
+        Boolean positiveIntAsBool = propertyset.getBooleanProperty("positiveInt");
+        assertEquals(Boolean.valueOf(true), positiveIntAsBool);
+
+        // Set float values and read them back as bool values
+        // 0.0 is false, everything else is true
+        Double negativeFloat = Double.valueOf(-1.0);
+        propertyset.setDoubleProperty("negativeFloat", negativeFloat);
+        Boolean negativeFloatAsBool = propertyset.getBooleanProperty("negativeFloat");
+        assertEquals(Boolean.valueOf(true), negativeFloatAsBool);
+        Double nullFloat = Double.valueOf(0.0);
+        propertyset.setDoubleProperty("nullFloat", nullFloat);
+        Boolean nullFloatAsBool = propertyset.getBooleanProperty("nullFloat");
+        assertEquals(Boolean.valueOf(false), nullFloatAsBool);
+        Double positiveFloat = Double.valueOf(1.0);
+        propertyset.setDoubleProperty("positiveFloat", positiveFloat);
+        Boolean positiveFloatAsBool = propertyset.getBooleanProperty("positiveFloat");
+        assertEquals(Boolean.valueOf(true), positiveFloatAsBool);
+
+        // Set string values and read them back as bool values
+        // "true" is true, everything else is false
+        String falseString = "false";
+        propertyset.setStringProperty("falseString", falseString);
+        Boolean falseStringAsBool = propertyset.getBooleanProperty("falseString");
+        assertEquals(Boolean.valueOf(false), falseStringAsBool);
+        String trueString = "true";
+        propertyset.setStringProperty("trueString", trueString);
+        Boolean trueStringAsBool = propertyset.getBooleanProperty("trueString");
+        assertEquals(Boolean.valueOf(true), trueStringAsBool);
+        String notABoolString = "hey there!";
+        propertyset.setStringProperty("notABoolString", notABoolString);
+        Boolean notABoolStringAsString = propertyset.getBooleanProperty("notABoolString");
+        assertEquals(Boolean.valueOf(false), notABoolStringAsString);
     }
 
     /**
@@ -67,6 +127,16 @@ public class PropertysetImplTest {
         propertyset.setStringProperty("stringValueNotParsableAsANumber", stringValueNotParsableAsANumber);
         Long stringValueReadBackAsInt3 = propertyset.getLongProperty("stringValueNotParsableAsANumber");
         assertEquals(Long.valueOf(0), stringValueReadBackAsInt3);
+
+        // set boolean values and read them back as integers.
+        Boolean falseValue = Boolean.valueOf(false);
+        propertyset.setBooleanProperty("falseValue", falseValue);
+        Long falseAsLong = propertyset.getLongProperty("falseValue");
+        assertEquals(Long.valueOf(0), falseAsLong);
+        Boolean trueValue = Boolean.valueOf(true);
+        propertyset.setBooleanProperty("trueValue", trueValue);
+        Long trueAsLong = propertyset.getLongProperty("trueValue");
+        assertEquals(Long.valueOf(1), trueAsLong);
     }
 
     /**
@@ -106,6 +176,16 @@ public class PropertysetImplTest {
         propertyset.setStringProperty("stringValueNotParsableAsANumber", stringValueNotParsableAsANumber);
         Double doubleValue6 = propertyset.getDoubleProperty("stringValueNotParsableAsANumber");
         assertEquals(Double.valueOf(0.0), doubleValue6);
+
+        // set boolean values and read them back as floating point numbers.
+        Boolean falseValue = Boolean.valueOf(false);
+        propertyset.setBooleanProperty("falseValue", falseValue);
+        Double falseAsDouble = propertyset.getDoubleProperty("falseValue");
+        assertEquals(Double.valueOf(0.0), falseAsDouble);
+        Boolean trueValue = Boolean.valueOf(true);
+        propertyset.setBooleanProperty("trueValue", trueValue);
+        Double trueAsDouble = propertyset.getDoubleProperty("trueValue");
+        assertEquals(Double.valueOf(1.0), trueAsDouble);
     }
 
     /**
@@ -132,6 +212,16 @@ public class PropertysetImplTest {
         propertyset.setDoubleProperty("doubleValue", doubleValue);
         String doubleValueAsString = propertyset.getStringProperty("doubleValue");
         assertEquals("37.5", doubleValueAsString);
+
+        // set boolean values and read them back as floating point numbers.
+        Boolean falseValue = Boolean.valueOf(false);
+        propertyset.setBooleanProperty("falseValue", falseValue);
+        String falseAsString = propertyset.getStringProperty("falseValue");
+        assertEquals("false", falseAsString);
+        Boolean trueValue = Boolean.valueOf(true);
+        propertyset.setBooleanProperty("trueValue", trueValue);
+        String trueAsString = propertyset.getStringProperty("trueValue");
+        assertEquals("true", trueAsString);
     }
 
 }
