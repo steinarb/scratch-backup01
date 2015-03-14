@@ -18,8 +18,8 @@ public interface Propertyset {
 
 	boolean isNil();
 
-	Integer getIntegerProperty(String propertyName);
-	void setIntegerProperty(String string, Integer intValue);
+	Long getLongProperty(String propertyName);
+	void setLongProperty(String string, Long intValue);
 
 	Double getDoubleProperty(String propertyName);
 	void setDoubleProperty(String string, Double doubleValue);

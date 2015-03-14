@@ -16,8 +16,8 @@ public class PropertysetImplTest {
 		Propertyset propertyset = new PropertysetImpl();
 		assertFalse(propertyset.isNil());
 
-		Integer intProperty = propertyset.getIntegerProperty("intPropName");
-		assertEquals(Integer.valueOf(0), intProperty);
+		Long intProperty = propertyset.getLongProperty("intPropName");
+		assertEquals(Long.valueOf(0), intProperty);
 		Double doubleProperty = propertyset.getDoubleProperty("doublePropName");
 		assertEquals(Double.valueOf(0), doubleProperty);
 		String stringProperty = propertyset.getStringProperty("stringProperty");
@@ -34,39 +34,39 @@ public class PropertysetImplTest {
 	 * Test getting an integer from various property types
 	 */
 	@Test
-	public void testGetIntegerProperty() {
+	public void testGetLongProperty() {
 		Propertyset propertyset = new PropertysetImpl();
 		assertFalse(propertyset.isNil());
 
-		// Verify that a value set as an integer is returned as the same Integer value
-		Integer intValue1 = Integer.valueOf(1234);
-		propertyset.setIntegerProperty("intValue", intValue1);
-		Integer intValue2 = propertyset.getIntegerProperty("intValue");
+		// Verify that a value set as an integer is returned as the same Long value
+		Long intValue1 = Long.valueOf(1234);
+		propertyset.setLongProperty("intValue", intValue1);
+		Long intValue2 = propertyset.getLongProperty("intValue");
 		assertEquals(intValue1, intValue2);
 
-		// Set some double values and read them back as Integer values
+		// Set some double values and read them back as Long values
 		Double doubleValueContainingInt = Double.valueOf(7);
 		propertyset.setDoubleProperty("doubleValueContainingInt", doubleValueContainingInt);
-		Integer doubleValueReadBackAsInt1 = propertyset.getIntegerProperty("doubleValueContainingInt");
-		assertEquals(Integer.valueOf(7), doubleValueReadBackAsInt1);
+		Long doubleValueReadBackAsInt1 = propertyset.getLongProperty("doubleValueContainingInt");
+		assertEquals(Long.valueOf(7), doubleValueReadBackAsInt1);
 		Double doubleValueContainingNonInt = Double.valueOf(2.78);
 		propertyset.setDoubleProperty("doubleValueReadBackAsInt", doubleValueContainingNonInt);
-		Integer doubleValueReadBackAsInt2 = propertyset.getIntegerProperty("doubleValueReadBackAsInt");
-		assertEquals(Integer.valueOf(3), doubleValueReadBackAsInt2);
+		Long doubleValueReadBackAsInt2 = propertyset.getLongProperty("doubleValueReadBackAsInt");
+		assertEquals(Long.valueOf(3), doubleValueReadBackAsInt2);
 
-		// Set some string values and read them back as Integer values
+		// Set some string values and read them back as Long values
 		String stringValueContainingInt = "11";
 		propertyset.setStringProperty("stringValueContainingInt", stringValueContainingInt);
-		Integer stringValueReadBackAsInt1 = propertyset.getIntegerProperty("stringValueContainingInt");
-		assertEquals(Integer.valueOf(11), stringValueReadBackAsInt1);
+		Long stringValueReadBackAsInt1 = propertyset.getLongProperty("stringValueContainingInt");
+		assertEquals(Long.valueOf(11), stringValueReadBackAsInt1);
 		String stringValueContainingFloat = "2.78";
 		propertyset.setStringProperty("stringValueContainingInt", stringValueContainingFloat);
-		Integer stringValueReadBackAsInt2 = propertyset.getIntegerProperty("stringValueContainingInt");
-		assertEquals(Integer.valueOf(3), stringValueReadBackAsInt2);
+		Long stringValueReadBackAsInt2 = propertyset.getLongProperty("stringValueContainingInt");
+		assertEquals(Long.valueOf(3), stringValueReadBackAsInt2);
 		String stringValueNotParsableAsANumber = "not a number";
 		propertyset.setStringProperty("stringValueNotParsableAsANumber", stringValueNotParsableAsANumber);
-		Integer stringValueReadBackAsInt3 = propertyset.getIntegerProperty("stringValueNotParsableAsANumber");
-		assertEquals(Integer.valueOf(0), stringValueReadBackAsInt3);
+		Long stringValueReadBackAsInt3 = propertyset.getLongProperty("stringValueNotParsableAsANumber");
+		assertEquals(Long.valueOf(0), stringValueReadBackAsInt3);
 	}
 
 	/**
@@ -84,8 +84,8 @@ public class PropertysetImplTest {
 		assertEquals(doubleValue1, doubleValue2);
 
 		// Verify that a value set as an int can be returned as a Double containing the same value
-		Integer intValue1 = Integer.valueOf(17);
-		propertyset.setIntegerProperty("intValue1", intValue1);
+		Long intValue1 = Long.valueOf(17);
+		propertyset.setLongProperty("intValue1", intValue1);
 		Double doubleValue3 = propertyset.getDoubleProperty("intValue1");
 		assertEquals(Double.valueOf(17), doubleValue3);
 
@@ -122,8 +122,8 @@ public class PropertysetImplTest {
 		assertEquals(stringValue, stringValueReadBackFromProperty);
 
 		// Set an int property and read it back as a string
-		Integer intValue = Integer.valueOf(42);
-		propertyset.setIntegerProperty("intValue", intValue);
+		Long intValue = Long.valueOf(42);
+		propertyset.setLongProperty("intValue", intValue);
 		String intValueAsString = propertyset.getStringProperty("intValue");
 		assertEquals("42", intValueAsString);
 

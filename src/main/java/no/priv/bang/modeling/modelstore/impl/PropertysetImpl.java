@@ -19,37 +19,37 @@ public class PropertysetImpl implements Propertyset {
 		return false;
 	}
 
-	public Integer getIntegerProperty(String propertyName) {
-		Integer propertyValue = PropertysetNil.getNil().getIntegerProperty(propertyName);
+	public Long getLongProperty(String propertyName) {
+		Long propertyValue = PropertysetNil.getNil().getLongProperty(propertyName);
 		Object rawPropertyValue = properties.get(propertyName);
 		if (null != rawPropertyValue) {
-			if (rawPropertyValue.getClass() == Integer.class) {
-				propertyValue = (Integer) rawPropertyValue;
+			if (rawPropertyValue.getClass() == Long.class) {
+				propertyValue = (Long) rawPropertyValue;
 			} else {
-				propertyValue = transformPropertyValueToInteger(rawPropertyValue);
+				propertyValue = transformPropertyValueToLong(rawPropertyValue);
 			}
 		}
 
 		return propertyValue;
 	}
 
-	private Integer transformPropertyValueToInteger(Object rawPropertyValue) {
-		Integer propertyValue = PropertysetNil.getNil().getIntegerProperty("dummy");
+	private Long transformPropertyValueToLong(Object rawPropertyValue) {
+		Long propertyValue = PropertysetNil.getNil().getLongProperty("dummy");
 		Class<? extends Object> rawPropertyValueClass = rawPropertyValue.getClass();
 
 		if (rawPropertyValueClass == Double.class) {
 			Double doublePropertyValue = (Double) rawPropertyValue;
-			propertyValue = Integer.valueOf((int) Math.round(doublePropertyValue.doubleValue()));
+			propertyValue = Long.valueOf(Math.round(doublePropertyValue.doubleValue()));
 		}
 
 		if (rawPropertyValueClass == String.class) {
 			String stringPropertyValue = (String) rawPropertyValue;
 			try {
-				propertyValue = Integer.valueOf(stringPropertyValue);
+				propertyValue = Long.valueOf(stringPropertyValue);
 			} catch (NumberFormatException e) {
 				try {
 					double doubleValue = Double.parseDouble(stringPropertyValue);
-					propertyValue = Integer.valueOf((int) Math.round(doubleValue));
+					propertyValue = Long.valueOf(Math.round(doubleValue));
 				} catch (NumberFormatException e1) { }
 			}
 		}
@@ -57,7 +57,7 @@ public class PropertysetImpl implements Propertyset {
 		return propertyValue;
 	}
 
-	public void setIntegerProperty(String propertyName, Integer intValue) {
+	public void setLongProperty(String propertyName, Long intValue) {
 		properties.put(propertyName, intValue);
 	}
 
@@ -77,8 +77,8 @@ public class PropertysetImpl implements Propertyset {
 
 	private Double transformPropertyValueToDouble(Object rawPropertyValue) {
 		Class<? extends Object> propertyType = rawPropertyValue.getClass();
-		if (propertyType == Integer.class) {
-			Integer propertyAsInt = (Integer) rawPropertyValue;
+		if (propertyType == Long.class) {
+			Long propertyAsInt = (Long) rawPropertyValue;
 			return Double.valueOf(propertyAsInt.intValue());
 		}
 		if (propertyType == String.class) {
@@ -112,7 +112,7 @@ public class PropertysetImpl implements Propertyset {
 		String stringValue = PropertysetNil.getNil().getStringProperty("dummy");
 		Class<? extends Object> propertyType = rawPropertyValue.getClass();
 		if (
-				propertyType == Integer.class ||
+				propertyType == Long.class ||
 				propertyType == Double .class)
 		{
 			stringValue = rawPropertyValue.toString();

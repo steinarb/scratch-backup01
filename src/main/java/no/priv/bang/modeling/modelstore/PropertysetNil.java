@@ -19,7 +19,7 @@ public final class PropertysetNil implements Propertyset {
 		return singleton;
 	}
 
-	private final Integer nullIntegerValue = Integer.valueOf(0);
+	private final Long nullLongValue = Long.valueOf(0);
 	private final Double nullDoubleValue = Double.valueOf(0);
 	private final String emptyStringValue = "";
 
@@ -29,10 +29,10 @@ public final class PropertysetNil implements Propertyset {
 		return true;
 	}
 
-	public Integer getIntegerProperty(String propertyName) {
-		return nullIntegerValue;
+	public Long getLongProperty(String propertyName) {
+		return nullLongValue;
 	}
-	public void setIntegerProperty(String propertyName, Integer intValue) {
+	public void setLongProperty(String propertyName, Long intValue) {
 		// No-op
 	}
 
