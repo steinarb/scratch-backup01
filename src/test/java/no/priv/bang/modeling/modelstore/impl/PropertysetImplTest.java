@@ -94,39 +94,39 @@ public class PropertysetImplTest {
 		propertyset.setStringProperty("stringValueWithFloat", stringValueWithFloat);
 		Double doubleValue4 = propertyset.getDoubleProperty("stringValueWithFloat");
 		assertEquals(Double.valueOf(3.14), doubleValue4);
-		
+
 		// Verify that an int value in a string can be returned as a Double containing the same value
 		String stringValueWithInt = "27";
 		propertyset.setStringProperty("stringValueWithFloat", stringValueWithInt);
 		Double doubleValue5 = propertyset.getDoubleProperty("stringValueWithFloat");
 		assertEquals(Double.valueOf(27), doubleValue5);
-		
+
 		// Verify that string not parseable as a numeric value can be returned as a Double with value 0.0
 		String stringValueNotParsableAsANumber = "This is not a number";
 		propertyset.setStringProperty("stringValueNotParsableAsANumber", stringValueNotParsableAsANumber);
 		Double doubleValue6 = propertyset.getDoubleProperty("stringValueNotParsableAsANumber");
 		assertEquals(Double.valueOf(0.0), doubleValue6);
 	}
-	
+
 	/**
 	 * Test getting a string back from various property types.
 	 */
 	@Test
 	public void testGetStringProperty() {
 		Propertyset propertyset = new PropertysetImpl();
-		
+
 		// Set a string property and get it back as a string
 		String stringValue = "Hello world!";
 		propertyset.setStringProperty("stringValue", stringValue);
 		String stringValueReadBackFromProperty = propertyset.getStringProperty("stringValue");
 		assertEquals(stringValue, stringValueReadBackFromProperty);
-		
+
 		// Set an int property and read it back as a string
 		Integer intValue = Integer.valueOf(42);
 		propertyset.setIntegerProperty("intValue", intValue);
 		String intValueAsString = propertyset.getStringProperty("intValue");
 		assertEquals("42", intValueAsString);
-		
+
 		// Set a double property and read it back as a string
 		Double doubleValue = Double.valueOf(37.5);
 		propertyset.setDoubleProperty("doubleValue", doubleValue);
