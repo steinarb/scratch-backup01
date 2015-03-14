@@ -7,3 +7,6 @@ The main use case for this library is to be used as a generic model container fo
 The API is meant to be as clutter-free as possbile in use: it should throw no exceptions, and it should return no nulls (istead of null it will return the empty string, empty collections and zero values for the numeric types).
 
 The PropertySet interface defines the API of objects that forms both objects and relationships of the model.
+
+This library is licensed under the Eclipse Public License.  See the
+file LICENSE for the terms and specifics of the license.
