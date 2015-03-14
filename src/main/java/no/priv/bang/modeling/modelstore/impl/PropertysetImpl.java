@@ -129,7 +129,7 @@ public class PropertysetImpl implements Propertyset {
         return PropertysetNil.getNil();
     }
 
-    public Propertyset getReference(String string) {
+    public Propertyset getReferenceProperty(String string) {
         return PropertysetNil.getNil();
     }
 

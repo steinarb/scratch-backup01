@@ -25,7 +25,7 @@ public class PropertysetImplTest {
         Propertyset complexProperty = propertyset.getComplexProperty("complexProperty");
         assertNotNull(complexProperty);
         assertTrue(complexProperty.isNil());
-        Propertyset reference = propertyset.getReference("reference");
+        Propertyset reference = propertyset.getReferenceProperty("reference");
         assertNotNull(reference);
         assertTrue(reference.isNil());
     }

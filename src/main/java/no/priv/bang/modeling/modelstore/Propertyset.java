@@ -29,6 +29,6 @@ public interface Propertyset {
 
     Propertyset getComplexProperty(String propertyName);
 
-    Propertyset getReference(String propertyName);
+    Propertyset getReferenceProperty(String propertyName);
 
 }

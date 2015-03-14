@@ -57,7 +57,7 @@ public final class PropertysetNil implements Propertyset {
         return null;
     }
 
-    public Propertyset getReference(String propertyName) {
+    public Propertyset getReferenceProperty(String propertyName) {
         // TODO Auto-generated method stub
         return null;
     }
