@@ -16,19 +16,19 @@ package no.priv.bang.modeling.modelstore;
  */
 public interface Propertyset {
 
-	boolean isNil();
+    boolean isNil();
 
-	Long getLongProperty(String propertyName);
-	void setLongProperty(String string, Long intValue);
+    Long getLongProperty(String propertyName);
+    void setLongProperty(String string, Long intValue);
 
-	Double getDoubleProperty(String propertyName);
-	void setDoubleProperty(String string, Double doubleValue);
+    Double getDoubleProperty(String propertyName);
+    void setDoubleProperty(String string, Double doubleValue);
 
-	String getStringProperty(String propertyName);
-	void setStringProperty(String propertyName, String stringValue);
+    String getStringProperty(String propertyName);
+    void setStringProperty(String propertyName, String stringValue);
 
-	Propertyset getComplexProperty(String propertyName);
+    Propertyset getComplexProperty(String propertyName);
 
-	Propertyset getReference(String propertyName);
+    Propertyset getReference(String propertyName);
 
 }
