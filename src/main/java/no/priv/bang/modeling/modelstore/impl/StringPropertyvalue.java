@@ -16,7 +16,11 @@ public class StringPropertyvalue extends PropertyvalueBase {
     private String value;
 
     public StringPropertyvalue(String value) {
-        this.value = value;
+    	if (null == value) {
+            this.value = PropertysetNil.getNil().getStringProperty("dummy");
+    	} else {
+            this.value = value;
+    	}
     }
 
     @Override

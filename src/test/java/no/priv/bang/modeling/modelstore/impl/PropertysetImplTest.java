@@ -59,6 +59,11 @@ public class PropertysetImplTest {
         Boolean positiveIntAsBool = propertyset.getBooleanProperty("positiveInt");
         assertEquals(Boolean.valueOf(true), positiveIntAsBool);
 
+        // Set a null value and get a false boolean value back
+        propertyset.setBooleanProperty("nullValue", null);
+        Boolean nullValue = propertyset.getBooleanProperty("nullValue");
+        assertEquals(Boolean.valueOf(false), nullValue);
+
         // Set float values and read them back as bool values
         // 0.0 is false, everything else is true
         Double negativeFloat = Double.valueOf(-1.0);
@@ -114,6 +119,11 @@ public class PropertysetImplTest {
         Long doubleValueReadBackAsInt2 = propertyset.getLongProperty("doubleValueReadBackAsInt");
         assertEquals(Long.valueOf(3), doubleValueReadBackAsInt2);
 
+        // Set a null value and verify that a zero int value is returned
+        propertyset.setLongProperty("nullValue", null);
+        Long nullValue = propertyset.getLongProperty("nullValue");
+        assertEquals(Long.valueOf(0), nullValue);
+
         // Set some string values and read them back as Long values
         String stringValueContainingInt = "11";
         propertyset.setStringProperty("stringValueContainingInt", stringValueContainingInt);
@@ -152,6 +162,11 @@ public class PropertysetImplTest {
         propertyset.setDoubleProperty("doubleValue", doubleValue1);
         Double doubleValue2 = propertyset.getDoubleProperty("doubleValue");
         assertEquals(doubleValue1, doubleValue2);
+
+        // Verify that setting a null value will return a zero double value.
+        propertyset.setDoubleProperty("nullDoubleValue", null);
+        Double nullDoubleValue = propertyset.getDoubleProperty("nullDoubleValue");
+        assertEquals(Double.valueOf(0.0), nullDoubleValue);
 
         // Verify that a value set as an int can be returned as a Double containing the same value
         Long intValue1 = Long.valueOf(17);
@@ -200,6 +215,11 @@ public class PropertysetImplTest {
         propertyset.setStringProperty("stringValue", stringValue);
         String stringValueReadBackFromProperty = propertyset.getStringProperty("stringValue");
         assertEquals(stringValue, stringValueReadBackFromProperty);
+
+        // Set a null string property and verify that it is returned as an empty string
+        propertyset.setStringProperty("nullValue", null);
+        String nullValue = propertyset.getStringProperty("nullValue");
+        assertEquals("", nullValue);
 
         // Set an int property and read it back as a string
         Long intValue = Long.valueOf(42);

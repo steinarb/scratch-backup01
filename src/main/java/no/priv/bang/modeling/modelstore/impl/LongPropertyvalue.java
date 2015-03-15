@@ -16,7 +16,11 @@ class LongPropertyvalue extends PropertyvalueBase {
     private Long value;
 
     public LongPropertyvalue(Long value) {
-        this.value = value;
+    	if (null == value) {
+            this.value = PropertysetNil.getNil().getLongProperty("dummy");
+    	} else {
+            this.value = value;
+    	}
     }
 
     public boolean isLong() {

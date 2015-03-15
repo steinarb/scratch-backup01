@@ -17,7 +17,11 @@ class BooleanPropertyvalue extends PropertyvalueBase {
     private Boolean value;
 
     BooleanPropertyvalue(Boolean value) {
-        this.value = value;
+    	if (null == value) {
+            this.value = PropertysetNil.getNil().getBooleanProperty("dummy");
+    	} else {
+            this.value = value;
+    	}
     }
 
     public boolean isBoolean() {

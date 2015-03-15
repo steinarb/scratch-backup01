@@ -16,7 +16,11 @@ class DoublePropertyvalue extends PropertyvalueBase {
     private Double value;
 
     public DoublePropertyvalue(Double value) {
-        this.value = value;
+    	if (null == value) {
+            this.value = PropertysetNil.getNil().getDoubleProperty("dummy");
+    	} else {
+            this.value = value;
+    	}
     }
 
     public boolean isDouble() {
