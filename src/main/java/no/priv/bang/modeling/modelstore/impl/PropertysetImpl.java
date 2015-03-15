@@ -5,6 +5,7 @@ import java.util.Map;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.Propertyvalue;
 
 /**
  * Implementation of {@link Propertyset} backed by a {@link Map}.
@@ -13,168 +14,62 @@ import no.priv.bang.modeling.modelstore.PropertysetNil;
  *
  */
 public class PropertysetImpl implements Propertyset {
-    Map<String, Object> properties = new HashMap<String, Object>();
+    Map<String, Propertyvalue> properties = new HashMap<String, Propertyvalue>();
 
     public boolean isNil() {
         return false;
     }
 
     public Boolean getBooleanProperty(String propertyName) {
-        Boolean propertyValue = PropertysetNil.getNil().getBooleanProperty(propertyName);
-        Object rawPropertyValue = properties.get(propertyName);
+        Propertyvalue rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
-            if (rawPropertyValue.getClass() == Boolean.class) {
-                propertyValue = (Boolean) rawPropertyValue;
-            } else {
-                propertyValue = transformPropertyToBoolean(rawPropertyValue);
-            }
+            return rawPropertyValue.asBoolean();
         }
 
-        return propertyValue;
-    }
-
-    private Boolean transformPropertyToBoolean(Object rawPropertyValue) {
-        Class<? extends Object> propertyType = rawPropertyValue.getClass();
-        if (propertyType == Long.class) {
-            Long longPropertyValue = (Long) rawPropertyValue;
-            long longValue = longPropertyValue.longValue();
-            return longValue == 0 ? false : true;
-        }
-
-        if (propertyType == Double.class) {
-            Double doublePropertyValue = (Double) rawPropertyValue;
-            double doubleValue = doublePropertyValue.doubleValue();
-            return doubleValue == 0.0 ? false : true;
-        }
-
-        if (propertyType == String.class) {
-            String stringPropertyValue = (String) rawPropertyValue;
-            return Boolean.valueOf(stringPropertyValue);
-        }
-
-        return PropertysetNil.getNil().getBooleanProperty("dummy");
+        return PropertysetNil.getNil().getBooleanProperty(propertyName);
     }
 
     public void setBooleanProperty(String propertyName, Boolean boolValue) {
-        properties.put(propertyName, boolValue);
+        properties.put(propertyName, new BooleanPropertyvalue(boolValue));
     }
 
     public Long getLongProperty(String propertyName) {
-        Long propertyValue = PropertysetNil.getNil().getLongProperty(propertyName);
-        Object rawPropertyValue = properties.get(propertyName);
+        Propertyvalue rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
-            if (rawPropertyValue.getClass() == Long.class) {
-                propertyValue = (Long) rawPropertyValue;
-            } else {
-                propertyValue = transformPropertyValueToLong(rawPropertyValue);
-            }
+            return rawPropertyValue.asLong();
         }
 
-        return propertyValue;
-    }
-
-    private Long transformPropertyValueToLong(Object rawPropertyValue) {
-        Long propertyValue = PropertysetNil.getNil().getLongProperty("dummy");
-        Class<? extends Object> rawPropertyValueClass = rawPropertyValue.getClass();
-
-        if (rawPropertyValueClass == Double.class) {
-            Double doublePropertyValue = (Double) rawPropertyValue;
-            propertyValue = Long.valueOf(Math.round(doublePropertyValue.doubleValue()));
-        }
-
-        if (rawPropertyValueClass == String.class) {
-            String stringPropertyValue = (String) rawPropertyValue;
-            try {
-                propertyValue = Long.valueOf(stringPropertyValue);
-            } catch (NumberFormatException e) {
-                try {
-                    double doubleValue = Double.parseDouble(stringPropertyValue);
-                    propertyValue = Long.valueOf(Math.round(doubleValue));
-                } catch (NumberFormatException e1) { }
-            }
-        }
-
-        if (rawPropertyValueClass == Boolean.class) {
-            Boolean propertyAsBoolean = (Boolean) rawPropertyValue;
-            return Long.valueOf(propertyAsBoolean.booleanValue()?1:0);
-        }
-
-        return propertyValue;
+        return PropertysetNil.getNil().getLongProperty(propertyName);
     }
 
     public void setLongProperty(String propertyName, Long intValue) {
-        properties.put(propertyName, intValue);
+        properties.put(propertyName, new LongPropertyvalue(intValue));
     }
 
     public Double getDoubleProperty(String propertyName) {
-        Double propertyValue = PropertysetNil.getNil().getDoubleProperty(propertyName);
-        Object rawPropertyValue = properties.get(propertyName);
+        Propertyvalue rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
-            if (rawPropertyValue.getClass() == Double.class) {
-                propertyValue = (Double) rawPropertyValue;
-            } else {
-                propertyValue = transformPropertyValueToDouble(rawPropertyValue);
-            }
+            return rawPropertyValue.asDouble();
         }
 
-        return propertyValue;
-    }
-
-    private Double transformPropertyValueToDouble(Object rawPropertyValue) {
-        Class<? extends Object> propertyType = rawPropertyValue.getClass();
-        if (propertyType == Long.class) {
-            Long propertyAsInt = (Long) rawPropertyValue;
-            return Double.valueOf(propertyAsInt.intValue());
-        }
-
-        if (propertyType == String.class) {
-            String propertyAsString = (String) rawPropertyValue;
-            try {
-                return Double.valueOf(propertyAsString);
-            } catch (NumberFormatException e) {}
-        }
-
-        if (propertyType == Boolean.class) {
-            Boolean propertyAsBoolean = (Boolean) rawPropertyValue;
-            return propertyAsBoolean.booleanValue()?1.0:0.0;
-        }
-
-        return PropertysetNil.getNil().getDoubleProperty("dummy");
+        return PropertysetNil.getNil().getDoubleProperty(propertyName);
     }
 
     public void setDoubleProperty(String propertyName, Double doubleValue) {
-        properties.put(propertyName, doubleValue);
+        properties.put(propertyName, new DoublePropertyvalue(doubleValue));
     }
 
     public String getStringProperty(String propertyName) {
-        String stringValue = PropertysetNil.getNil().getStringProperty(propertyName);
-        Object rawPropertyValue = properties.get(propertyName);
+        Propertyvalue rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
-            if (rawPropertyValue.getClass() == String.class) {
-                stringValue = (String) rawPropertyValue;
-            } else {
-                stringValue = transformPropertyToString(rawPropertyValue);
-            }
-        }
-        return stringValue;
-    }
-
-    private String transformPropertyToString(Object rawPropertyValue) {
-        String stringValue = PropertysetNil.getNil().getStringProperty("dummy");
-        Class<? extends Object> propertyType = rawPropertyValue.getClass();
-        if (
-            propertyType == Long.class ||
-            propertyType == Double .class ||
-            propertyType == Boolean.class)
-        {
-            stringValue = rawPropertyValue.toString();
+            return rawPropertyValue.asString();
         }
 
-        return stringValue;
+        return PropertysetNil.getNil().getStringProperty(propertyName);
     }
 
     public void setStringProperty(String propertyName, String stringValue) {
-        properties.put(propertyName, stringValue);
+        properties.put(propertyName, new StringPropertyvalue(stringValue));
     }
 
     public Propertyset getComplexProperty(String string) {
