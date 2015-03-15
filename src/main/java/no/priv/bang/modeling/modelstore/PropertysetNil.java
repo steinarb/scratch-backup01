@@ -67,9 +67,17 @@ public final class PropertysetNil implements Propertyset {
         return null;
     }
 
+    public void setComplexProperty(String propertyName, Propertyset complexProperty) {
+        // No-op
+    }
+
     public Propertyset getReferenceProperty(String propertyName) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public void setReferenceProperty(String string, Propertyset referencedObject) {
+        // TODO Auto-generated method stub
     }
 
 }

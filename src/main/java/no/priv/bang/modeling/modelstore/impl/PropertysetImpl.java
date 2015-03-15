@@ -72,12 +72,25 @@ public class PropertysetImpl implements Propertyset {
         properties.put(propertyName, new StringPropertyvalue(stringValue));
     }
 
-    public Propertyset getComplexProperty(String string) {
+    public Propertyset getComplexProperty(String propertyName) {
+    	Propertyvalue rawPropertyValue = properties.get(propertyName);
+    	if (null != rawPropertyValue) {
+            return rawPropertyValue.asComplexProperty();
+    	}
+
         return PropertysetNil.getNil();
     }
 
-    public Propertyset getReferenceProperty(String string) {
+    public void setComplexProperty(String propertyName, Propertyset complexProperty) {
+        properties.put(propertyName, new ComplexPropertyValue(complexProperty));
+    }
+
+    public Propertyset getReferenceProperty(String propertyName) {
         return PropertysetNil.getNil();
+    }
+
+    public void setReferenceProperty(String string, Propertyset referencedObject) {
+        // TODO Auto-generated method stub
     }
 
 }

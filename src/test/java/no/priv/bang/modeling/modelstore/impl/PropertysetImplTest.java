@@ -2,6 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetNil;
 
 import org.junit.Test;
 
@@ -242,6 +243,60 @@ public class PropertysetImplTest {
         propertyset.setBooleanProperty("trueValue", trueValue);
         String trueAsString = propertyset.getStringProperty("trueValue");
         assertEquals("true", trueAsString);
+    }
+
+
+    /**
+     * Test getting a complex property back from various property types.
+     *
+     * Only a property actually set as a complex property should return
+     * something other than {@link PropertysetNil#getNil()},
+     */
+    @Test
+    public void testGetComplexProperty() {
+        Propertyset propertyset = new PropertysetImpl();
+
+        // Set a complex property and retrieve it.
+        Propertyset point = new PropertysetImpl();
+        point.setDoubleProperty("x", 75.3);
+        point.setDoubleProperty("y", 145.3);
+        propertyset.setComplexProperty("upperLeftCorner", point);
+        Propertyset upperLeftCorner = propertyset.getComplexProperty("upperLeftCorner");
+        assertEquals(Double.valueOf(75.3), upperLeftCorner.getDoubleProperty("x"));
+        assertEquals(Double.valueOf(145.3), upperLeftCorner.getDoubleProperty("y"));
+
+        // Set a null complex property value and verify that it results in a nil Propertyset
+        propertyset.setComplexProperty("nullValue", null);
+        Propertyset nullValue = propertyset.getComplexProperty("nullValue");
+        assertEquals(PropertysetNil.getNil(), nullValue);
+
+        // Check that accessing a complex property as other property types
+        // gives null values (a complex property can't be autoconverted to
+        // a different type).
+        Boolean upperLeftCornerAsBoolean = propertyset.getBooleanProperty("upperLeftCorner");
+        assertEquals(Boolean.valueOf(false), upperLeftCornerAsBoolean);
+        Long upperLeftCornerAsLong = propertyset.getLongProperty("upperLeftCorner");
+        assertEquals(Long.valueOf(0), upperLeftCornerAsLong);
+        Double upperLeftCornerAsDouble = propertyset.getDoubleProperty("upperLeftCorner");
+        assertEquals(Double.valueOf(0.0), upperLeftCornerAsDouble);
+        String upperLeftCornerAsString = propertyset.getStringProperty("upperLeftCorner");
+        assertEquals("", upperLeftCornerAsString);
+        Propertyset upperLeftCornerAsReference = propertyset.getReferenceProperty("upperLeftCorner");
+        assertEquals(PropertysetNil.getNil(), upperLeftCornerAsReference);
+
+        // Set a some properties with different types and try reading them back as complex properties
+        // They all result in a nil complex property (ie. no value conversion).
+        propertyset.setBooleanProperty("boolValue", Boolean.valueOf(true));
+        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("boolValue"));
+        propertyset.setLongProperty("longValue", Long.valueOf(42));
+        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("longValue"));
+        propertyset.setDoubleProperty("doubleValue", Double.valueOf(2.78));
+        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("doubleValue"));
+        propertyset.setStringProperty("stringValue", "foo bar");
+        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("stringValue"));
+        Propertyset referencedObject = new PropertysetImpl();
+        propertyset.setReferenceProperty("referenceValue", referencedObject);
+        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("referenceValue"));
     }
 
 }
