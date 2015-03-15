@@ -120,8 +120,8 @@ public class PropertysetImplTest {
         Long stringValueReadBackAsInt1 = propertyset.getLongProperty("stringValueContainingInt");
         assertEquals(Long.valueOf(11), stringValueReadBackAsInt1);
         String stringValueContainingFloat = "2.78";
-        propertyset.setStringProperty("stringValueContainingInt", stringValueContainingFloat);
-        Long stringValueReadBackAsInt2 = propertyset.getLongProperty("stringValueContainingInt");
+        propertyset.setStringProperty("stringValueContainingFloat", stringValueContainingFloat);
+        Long stringValueReadBackAsInt2 = propertyset.getLongProperty("stringValueContainingFloat");
         assertEquals(Long.valueOf(3), stringValueReadBackAsInt2);
         String stringValueNotParsableAsANumber = "not a number";
         propertyset.setStringProperty("stringValueNotParsableAsANumber", stringValueNotParsableAsANumber);
