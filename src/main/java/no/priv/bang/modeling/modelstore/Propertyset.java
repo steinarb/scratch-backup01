@@ -34,6 +34,6 @@ public interface Propertyset {
     void setComplexProperty(String propertyName, Propertyset complexProperty);
 
     Propertyset getReferenceProperty(String propertyName);
-    void setReferenceProperty(String string, Propertyset referencedObject);
+    void setReferenceProperty(String propertyName, Propertyset referencedObject);
 
 }

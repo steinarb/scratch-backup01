@@ -86,11 +86,16 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public Propertyset getReferenceProperty(String propertyName) {
+    	Propertyvalue rawPropertyValue = properties.get(propertyName);
+    	if (null != rawPropertyValue) {
+            return rawPropertyValue.asReferenceProperty();
+    	}
+
         return PropertysetNil.getNil();
     }
 
-    public void setReferenceProperty(String string, Propertyset referencedObject) {
-        // TODO Auto-generated method stub
+    public void setReferenceProperty(String propertyName, Propertyset referencedObject) {
+    	properties.put(propertyName, new ReferencePropertyValue(referencedObject));
     }
 
 }

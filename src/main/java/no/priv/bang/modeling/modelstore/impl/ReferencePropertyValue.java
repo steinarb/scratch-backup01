@@ -3,23 +3,23 @@ package no.priv.bang.modeling.modelstore.impl;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 
-public class ComplexPropertyValue extends PropertysetPropertyValueBase {
+public class ReferencePropertyValue extends PropertysetPropertyValueBase {
 
-    public ComplexPropertyValue(Propertyset value) {
-    	super(value);
+    public ReferencePropertyValue(Propertyset value) {
+        super(value);
     }
 
     @Override
-    public boolean isComplexProperty() {
+    public boolean isReferenceProperty() {
         return true;
     }
 
     public Propertyset asComplexProperty() {
-        return value;
+        return PropertysetNil.getNil();
     }
 
     public Propertyset asReferenceProperty() {
-        return PropertysetNil.getNil();
+        return value;
     }
 
 }
