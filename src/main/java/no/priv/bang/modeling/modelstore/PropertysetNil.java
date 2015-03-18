@@ -16,13 +16,9 @@ public final class PropertysetNil implements Propertyset {
         if (null == singleton) {
             singleton = new PropertysetNil();
         }
+
         return singleton;
     }
-
-    private final Boolean nullBooleanValue = Boolean.valueOf(false);
-    private final Long nullLongValue = Long.valueOf(0);
-    private final Double nullDoubleValue = Double.valueOf(0);
-    private final String emptyStringValue = "";
 
     private PropertysetNil() {}
 
@@ -31,7 +27,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Boolean getBooleanProperty(String propertyName) {
-        return nullBooleanValue;
+        return PropertyvalueNil.getNil().asBoolean();
     }
 
     public void setBooleanProperty(String propertyName, Boolean boolValue) {
@@ -39,7 +35,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Long getLongProperty(String propertyName) {
-        return nullLongValue;
+        return PropertyvalueNil.getNil().asLong();
     }
 
     public void setLongProperty(String propertyName, Long intValue) {
@@ -47,7 +43,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Double getDoubleProperty(String propertyName) {
-        return nullDoubleValue;
+        return PropertyvalueNil.getNil().asDouble();
     }
 
     public void setDoubleProperty(String propertyName, Double doubleValue) {
@@ -55,7 +51,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public String getStringProperty(String propertyName) {
-        return emptyStringValue;
+        return PropertyvalueNil.getNil().asString();
     }
 
     public void setStringProperty(String propertyName, String stringValue) {
@@ -63,8 +59,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Propertyset getComplexProperty(String propertyName) {
-        // TODO Auto-generated method stub
-        return null;
+        return PropertyvalueNil.getNil().asComplexProperty();
     }
 
     public void setComplexProperty(String propertyName, Propertyset complexProperty) {
@@ -72,12 +67,19 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Propertyset getReferenceProperty(String propertyName) {
-        // TODO Auto-generated method stub
-        return null;
+        return PropertyvalueNil.getNil().asReference();
     }
 
     public void setReferenceProperty(String string, Propertyset referencedObject) {
-        // TODO Auto-generated method stub
+        // No-op
+    }
+
+    public PropertyvalueList getListProperty(String propertyName) {
+        return PropertyvalueNil.getNil().asList();
+    }
+
+    public void setListProperty(String propertyName, PropertyvalueList listValue) {
+        // No-op
     }
 
 }

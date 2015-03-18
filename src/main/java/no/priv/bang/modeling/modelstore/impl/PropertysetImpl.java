@@ -6,6 +6,7 @@ import java.util.Map;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
 
 /**
  * Implementation of {@link Propertyset} backed by a {@link Map}.
@@ -88,7 +89,7 @@ public class PropertysetImpl implements Propertyset {
     public Propertyset getReferenceProperty(String propertyName) {
     	Propertyvalue rawPropertyValue = properties.get(propertyName);
     	if (null != rawPropertyValue) {
-            return rawPropertyValue.asReferenceProperty();
+            return rawPropertyValue.asReference();
     	}
 
         return PropertysetNil.getNil();
@@ -96,6 +97,19 @@ public class PropertysetImpl implements Propertyset {
 
     public void setReferenceProperty(String propertyName, Propertyset referencedObject) {
     	properties.put(propertyName, new ReferencePropertyValue(referencedObject));
+    }
+
+    public PropertyvalueList getListProperty(String propertyName) {
+    	Propertyvalue rawPropertyValue = properties.get(propertyName);
+    	if (null != rawPropertyValue) {
+            return rawPropertyValue.asList();
+    	}
+
+        return PropertysetNil.getNil().getListProperty(propertyName);
+    }
+
+    public void setListProperty(String propertyName, PropertyvalueList listValue) {
+        properties.put(propertyName, new ListPropertyValue(listValue));
     }
 
 }

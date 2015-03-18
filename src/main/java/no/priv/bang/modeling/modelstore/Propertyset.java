@@ -36,4 +36,7 @@ public interface Propertyset {
     Propertyset getReferenceProperty(String propertyName);
     void setReferenceProperty(String propertyName, Propertyset referencedObject);
 
+    PropertyvalueList getListProperty(String propertyName);
+    void setListProperty(String propertyName, PropertyvalueList listValue);
+
 }

@@ -3,6 +3,8 @@ package no.priv.bang.modeling.modelstore.impl;
 import static org.junit.Assert.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 import org.junit.Test;
 
@@ -343,6 +345,48 @@ public class PropertysetImplTest {
         Propertyset complexdObject = new PropertysetImpl();
         propertyset.setComplexProperty("complexValue", complexdObject);
         assertEquals(PropertysetNil.getNil(), propertyset.getReferenceProperty("complexValue"));
+    }
+
+    /**
+     * Test getting a list property back from various types.
+     */
+    @Test
+    public void testGetListProperty() {
+        Propertyset propertyset = new PropertysetImpl();
+
+        // Set and get a list value, and verify that its members can be accessed.
+        PropertyvalueList listValue = new PropertyvalueArrayList();
+        listValue.add(new BooleanPropertyvalue(Boolean.valueOf(true)));
+        listValue.add(new LongPropertyvalue(Long.valueOf(42)));
+        propertyset.setListProperty("listValue", listValue);
+        PropertyvalueList retrievedListValue = propertyset.getListProperty("listValue");
+        assertEquals(2, retrievedListValue.size());
+        assertEquals(Long.valueOf(42), retrievedListValue.get(1).asLong());
+
+        // Expect and empty and unmodifiable list when accessing a property set with a null value
+        propertyset.setListProperty("nullValue", null);
+        PropertyvalueList nullValue = propertyset.getListProperty("nullValue");
+        assertEquals(0, nullValue.size());
+
+        // Expect an empty and unmodifiable list when accessing a non-existing property.
+        PropertyvalueList emptyList = propertyset.getListProperty("noSuchList");
+        assertEquals(0, emptyList.size());
+
+        // Expect all non-list properties to result in an empty list when accessing them
+        propertyset.setBooleanProperty("boolValue", Boolean.valueOf(true));
+        assertEquals(PropertyvalueNil.getNil().asList(), propertyset.getListProperty("boolValue"));
+        propertyset.setLongProperty("longValue", Long.valueOf(42));
+        assertEquals(PropertyvalueNil.getNil().asList(), propertyset.getListProperty("longValue"));
+        propertyset.setDoubleProperty("doubleValue", Double.valueOf(2.78));
+        assertEquals(PropertyvalueNil.getNil().asList(), propertyset.getListProperty("doubleValue"));
+        propertyset.setStringProperty("stringValue", "foo bar");
+        assertEquals(PropertyvalueNil.getNil().asList(), propertyset.getListProperty("stringValue"));
+        Propertyset complexdObject = new PropertysetImpl();
+        propertyset.setComplexProperty("complexValue", complexdObject);
+        assertEquals(PropertyvalueNil.getNil().asList(), propertyset.getListProperty("complexValue"));
+        Propertyset referencedObject = new PropertysetImpl();
+        propertyset.setReferenceProperty("referencedObject", referencedObject);
+        assertEquals(PropertyvalueNil.getNil().asList(), propertyset.getListProperty("referencedObject"));
     }
 
 }

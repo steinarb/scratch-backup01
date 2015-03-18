@@ -18,6 +18,8 @@ public interface Propertyvalue {
     String asString();
     boolean isComplexProperty();
     Propertyset asComplexProperty();
-    boolean isReferenceProperty();
-    Propertyset asReferenceProperty();
+    boolean isReference();
+    Propertyset asReference();
+    boolean isList();
+    PropertyvalueList asList();
 }

@@ -18,7 +18,7 @@ public class ComplexPropertyValue extends PropertysetPropertyValueBase {
         return value;
     }
 
-    public Propertyset asReferenceProperty() {
+    public Propertyset asReference() {
         return PropertysetNil.getNil();
     }
 

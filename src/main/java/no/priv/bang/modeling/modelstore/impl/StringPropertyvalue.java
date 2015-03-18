@@ -2,6 +2,8 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 /**
  * Wraps a {@link String} value in a {@link Propertyset}.
@@ -17,7 +19,7 @@ public class StringPropertyvalue extends PropertyvalueBase {
 
     public StringPropertyvalue(String value) {
     	if (null == value) {
-            this.value = PropertysetNil.getNil().getStringProperty("dummy");
+            this.value = PropertyvalueNil.getNil().asString();
     	} else {
             this.value = value;
     	}
@@ -61,8 +63,12 @@ public class StringPropertyvalue extends PropertyvalueBase {
         return PropertysetNil.getNil();
     }
 
-    public Propertyset asReferenceProperty() {
+    public Propertyset asReference() {
         return PropertysetNil.getNil();
+    }
+
+    public PropertyvalueList asList() {
+        return PropertyvalueNil.getNil().asList();
     }
 
 }

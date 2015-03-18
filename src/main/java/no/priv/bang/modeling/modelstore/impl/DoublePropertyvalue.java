@@ -2,6 +2,8 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 /**
  * Wraps a {@link Double} value in a {@link Propertyset}.
@@ -17,7 +19,7 @@ class DoublePropertyvalue extends PropertyvalueBase {
 
     public DoublePropertyvalue(Double value) {
     	if (null == value) {
-            this.value = PropertysetNil.getNil().getDoubleProperty("dummy");
+            this.value = PropertyvalueNil.getNil().asDouble();
     	} else {
             this.value = value;
     	}
@@ -49,8 +51,12 @@ class DoublePropertyvalue extends PropertyvalueBase {
         return PropertysetNil.getNil();
     }
 
-    public Propertyset asReferenceProperty() {
+    public Propertyset asReference() {
         return PropertysetNil.getNil();
+    }
+
+    public PropertyvalueList asList() {
+        return PropertyvalueNil.getNil().asList();
     }
 
 }

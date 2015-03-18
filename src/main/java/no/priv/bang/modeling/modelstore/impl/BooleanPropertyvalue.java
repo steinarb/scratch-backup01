@@ -2,6 +2,8 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 /**
  * Wraps a {@link Boolean} value in a {@link Propertyset}.
@@ -18,7 +20,7 @@ class BooleanPropertyvalue extends PropertyvalueBase {
 
     BooleanPropertyvalue(Boolean value) {
     	if (null == value) {
-            this.value = PropertysetNil.getNil().getBooleanProperty("dummy");
+            this.value = PropertyvalueNil.getNil().asBoolean();
     	} else {
             this.value = value;
     	}
@@ -50,8 +52,16 @@ class BooleanPropertyvalue extends PropertyvalueBase {
         return PropertysetNil.getNil();
     }
 
-    public Propertyset asReferenceProperty() {
+    public Propertyset asReference() {
         return PropertysetNil.getNil();
+    }
+
+    public boolean isList() {
+        return false;
+    }
+
+    public PropertyvalueList asList() {
+        return PropertyvalueNil.getNil().asList();
     }
 
 }

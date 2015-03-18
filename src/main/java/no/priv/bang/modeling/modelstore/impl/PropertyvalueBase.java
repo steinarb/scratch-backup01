@@ -35,7 +35,11 @@ public abstract class PropertyvalueBase implements Propertyvalue {
         return false;
     }
 
-    public boolean isReferenceProperty() {
+    public boolean isReference() {
+        return false;
+    }
+
+    public boolean isList() {
         return false;
     }
 

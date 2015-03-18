@@ -10,7 +10,7 @@ public class ReferencePropertyValue extends PropertysetPropertyValueBase {
     }
 
     @Override
-    public boolean isReferenceProperty() {
+    public boolean isReference() {
         return true;
     }
 
@@ -18,7 +18,7 @@ public class ReferencePropertyValue extends PropertysetPropertyValueBase {
         return PropertysetNil.getNil();
     }
 
-    public Propertyset asReferenceProperty() {
+    public Propertyset asReference() {
         return value;
     }
 

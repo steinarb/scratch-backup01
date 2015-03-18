@@ -1,20 +1,19 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
-public abstract class PropertysetPropertyValueBase extends PropertyvalueBase {
+public class ListPropertyValue extends PropertyvalueBase {
 
-    protected Propertyset value;
+    private PropertyvalueList value;
 
-    public PropertysetPropertyValueBase(Propertyset value) {
-        if (null == value) {
-            this.value = PropertysetNil.getNil();
-        } else {
+    public ListPropertyValue(PropertyvalueList value) {
+    	if (null == value) {
+            this.value = PropertyvalueNil.getNil().asList();
+    	} else {
             this.value = value;
-        }
+    	}
     }
 
     public Boolean asBoolean() {
@@ -33,8 +32,21 @@ public abstract class PropertysetPropertyValueBase extends PropertyvalueBase {
         return PropertyvalueNil.getNil().asString();
     }
 
+    public Propertyset asComplexProperty() {
+        return PropertyvalueNil.getNil().asComplexProperty();
+    }
+
+    public Propertyset asReference() {
+        return PropertyvalueNil.getNil().asReference();
+    }
+
+    @Override
+    public boolean isList() {
+        return true;
+    }
+
     public PropertyvalueList asList() {
-        return PropertyvalueNil.getNil().asList();
+        return value;
     }
 
 }
