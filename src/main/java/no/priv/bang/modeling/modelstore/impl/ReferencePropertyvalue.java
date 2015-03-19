@@ -3,9 +3,9 @@ package no.priv.bang.modeling.modelstore.impl;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 
-public class ReferencePropertyValue extends PropertysetPropertyValueBase {
+public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
 
-    public ReferencePropertyValue(Propertyset value) {
+    public ReferencePropertyvalue(Propertyset value) {
         super(value);
     }
 

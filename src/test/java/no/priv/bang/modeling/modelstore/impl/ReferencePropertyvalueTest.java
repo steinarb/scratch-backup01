@@ -23,7 +23,7 @@ public class ReferencePropertyvalueTest {
     @Before
     public void setUp() throws Exception {
         referencedObject = new PropertysetImpl();
-        value = new ReferencePropertyValue(referencedObject);
+        value = new ReferencePropertyvalue(referencedObject);
     }
 
     @Test

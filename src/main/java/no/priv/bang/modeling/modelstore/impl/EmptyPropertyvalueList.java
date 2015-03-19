@@ -17,7 +17,7 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
  * @author Steinar Bang
  *
  */
-public final class EmptyPropertyValueList implements PropertyvalueList {
+public final class EmptyPropertyvalueList implements PropertyvalueList {
 
     private final Propertyvalue[] emptyArray = new Propertyvalue[0];
 

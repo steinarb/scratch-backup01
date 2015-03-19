@@ -3,9 +3,9 @@ package no.priv.bang.modeling.modelstore.impl;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 
-public class ComplexPropertyValue extends PropertysetPropertyValueBase {
+public class ComplexPropertyvalue extends PropertysetPropertyvalueBase {
 
-    public ComplexPropertyValue(Propertyset value) {
+    public ComplexPropertyvalue(Propertyset value) {
     	super(value);
     }
 

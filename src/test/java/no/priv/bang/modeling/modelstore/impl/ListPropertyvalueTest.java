@@ -26,7 +26,7 @@ public class ListPropertyvalueTest {
         propertyvalueList.add(new LongPropertyvalue(Long.valueOf(42)));
         propertyvalueList.add(new DoublePropertyvalue(Double.valueOf(2.78)));
         propertyvalueList.add(new StringPropertyvalue("foo bar"));
-        value = new ListPropertyValue(propertyvalueList);
+        value = new ListPropertyvalue(propertyvalueList);
     }
 
     @Test

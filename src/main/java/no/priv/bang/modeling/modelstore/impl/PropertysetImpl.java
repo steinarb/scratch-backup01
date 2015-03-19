@@ -83,7 +83,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public void setComplexProperty(String propertyName, Propertyset complexProperty) {
-        properties.put(propertyName, new ComplexPropertyValue(complexProperty));
+        properties.put(propertyName, new ComplexPropertyvalue(complexProperty));
     }
 
     public Propertyset getReferenceProperty(String propertyName) {
@@ -96,7 +96,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public void setReferenceProperty(String propertyName, Propertyset referencedObject) {
-    	properties.put(propertyName, new ReferencePropertyValue(referencedObject));
+    	properties.put(propertyName, new ReferencePropertyvalue(referencedObject));
     }
 
     public PropertyvalueList getListProperty(String propertyName) {
@@ -109,7 +109,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public void setListProperty(String propertyName, PropertyvalueList listValue) {
-        properties.put(propertyName, new ListPropertyValue(listValue));
+        properties.put(propertyName, new ListPropertyvalue(listValue));
     }
 
 }

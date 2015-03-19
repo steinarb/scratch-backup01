@@ -4,11 +4,11 @@ import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
-public class ListPropertyValue extends PropertyvalueBase {
+public class ListPropertyvalue extends PropertyvalueBase {
 
     private PropertyvalueList value;
 
-    public ListPropertyValue(PropertyvalueList value) {
+    public ListPropertyvalue(PropertyvalueList value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asList();
     	} else {

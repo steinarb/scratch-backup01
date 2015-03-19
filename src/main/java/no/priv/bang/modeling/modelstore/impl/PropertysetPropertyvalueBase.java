@@ -5,11 +5,11 @@ import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
-public abstract class PropertysetPropertyValueBase extends PropertyvalueBase {
+public abstract class PropertysetPropertyvalueBase extends PropertyvalueBase {
 
     protected Propertyset value;
 
-    public PropertysetPropertyValueBase(Propertyset value) {
+    public PropertysetPropertyvalueBase(Propertyset value) {
         if (null == value) {
             this.value = PropertysetNil.getNil();
         } else {

@@ -23,7 +23,7 @@ public class ComplexPropertyvalueTest {
     @Before
     public void setUp() throws Exception {
         complexProperty = new PropertysetImpl();
-        value = new ComplexPropertyValue(complexProperty);
+        value = new ComplexPropertyvalue(complexProperty);
     }
 
     @Test

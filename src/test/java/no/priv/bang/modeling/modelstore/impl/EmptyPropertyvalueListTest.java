@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link EmptyPropertyValueList}.
+ * Unit tests for {@link EmptyPropertyvalueList}.
  *
  * @author Steinar Bang
  *
@@ -22,7 +22,7 @@ public class EmptyPropertyvalueListTest {
 
     @Before
     public void setUp() throws Exception {
-        value = new EmptyPropertyValueList();
+        value = new EmptyPropertyvalueList();
     }
 
     @Test

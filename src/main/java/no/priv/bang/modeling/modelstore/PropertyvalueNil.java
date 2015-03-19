@@ -1,6 +1,6 @@
 package no.priv.bang.modeling.modelstore;
 
-import no.priv.bang.modeling.modelstore.impl.EmptyPropertyValueList;
+import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
 
 /**
  * A nil property value object.  This is a singleton that can be
@@ -16,7 +16,7 @@ public class PropertyvalueNil implements Propertyvalue {
     private final Long nullLongValue = Long.valueOf(0);
     private final Double nullDoubleValue = Double.valueOf(0);
     private final String emptyStringValue = "";
-    private final PropertyvalueList emptyPropertyvalueList = new EmptyPropertyValueList();
+    private final PropertyvalueList emptyPropertyvalueList = new EmptyPropertyvalueList();
 
     public static Propertyvalue getNil() {
         return singleton;
