@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
 import static org.junit.Assert.*;
+import no.priv.bang.modeling.modelstore.impl.ImplementationFactory;
 
 import org.junit.Test;
 
@@ -85,7 +86,10 @@ public class PropertyvalueNilTest {
         assertEquals(0, emptyList.size());
 
         // Verify that the list can't be modified.
-        emptyList.add(PropertyvalueNil.getNil());
+        emptyList.add(ImplementationFactory.newBooleanPropertyvalue(true));
+        emptyList.add(ImplementationFactory.newLongPropertyvalue(13));
+        emptyList.add(ImplementationFactory.newDoublePropertyvalue(2.78));
+        emptyList.add(ImplementationFactory.newStringPropertyvalue("foo bar!"));
     	assertTrue(emptyList.isEmpty());
         assertEquals(0, emptyList.size());
     }
