@@ -9,7 +9,7 @@ import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
  * @author Steinar Bang
  *
  */
-public class PropertyvalueNil implements Propertyvalue {
+public final class PropertyvalueNil implements Propertyvalue {
 
     private static final Propertyvalue singleton = new PropertyvalueNil();
     private final Boolean nullBooleanValue = Boolean.valueOf(false);
