@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyvalue;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
 
 /**
  * Static class making the package private implementation classes
@@ -37,6 +38,10 @@ public class ImplementationFactory {
 
     static public Propertyvalue newStringPropertyvalue(String value) {
         return new StringPropertyvalue(value);
+    }
+
+    static public PropertyvalueList newList() {
+    	return new PropertyvalueArrayList();
     }
 
 }

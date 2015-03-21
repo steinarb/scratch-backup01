@@ -1,5 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
+import java.util.UUID;
+
 import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
 
 /**
@@ -12,6 +14,7 @@ import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
 public final class PropertyvalueNil implements Propertyvalue {
 
     private static final Propertyvalue singleton = new PropertyvalueNil();
+    private final UUID nilId = new UUID(0, 0);
     private final Boolean nullBooleanValue = Boolean.valueOf(false);
     private final Long nullLongValue = Long.valueOf(0);
     private final Double nullDoubleValue = Double.valueOf(0);
@@ -23,6 +26,14 @@ public final class PropertyvalueNil implements Propertyvalue {
     }
 
     private PropertyvalueNil() { }
+
+    public boolean isId() {
+        return false;
+    }
+
+    public UUID asId() {
+        return nilId;
+    }
 
     public boolean isBoolean() {
         return false;

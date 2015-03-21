@@ -1,5 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
+import java.util.UUID;
+
 /**
  * Interface defining a class that can function as both nodes
  * and edges in a model graph.
@@ -17,6 +19,10 @@ package no.priv.bang.modeling.modelstore;
 public interface Propertyset {
 
     boolean isNil();
+
+    boolean hasId();
+
+    UUID getId();
 
     Boolean getBooleanProperty(String propertyName);
     void setBooleanProperty(String propertyName, Boolean boolValue);

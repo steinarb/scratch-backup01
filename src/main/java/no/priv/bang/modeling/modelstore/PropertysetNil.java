@@ -1,5 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
+import java.util.UUID;
+
 /**
  * Singleton implementation of {@link Propertyset} intended to be used
  * instead of null, for undefined property values, or values that
@@ -24,6 +26,14 @@ public final class PropertysetNil implements Propertyset {
 
     public boolean isNil() {
         return true;
+    }
+
+    public boolean hasId() {
+        return false;
+    }
+
+    public UUID getId() {
+        return PropertyvalueNil.getNil().asId();
     }
 
     public Boolean getBooleanProperty(String propertyName) {

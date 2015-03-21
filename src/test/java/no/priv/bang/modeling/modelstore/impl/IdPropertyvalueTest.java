@@ -1,6 +1,9 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+
+import java.util.UUID;
+
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
@@ -10,28 +13,28 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link DoublePropertyvalue}.
+ * Unit tests for {@link IdPropertyvalue}.
  *
  * @author Steinar Bang
  *
  */
-public class DoublePropertyvalueTest {
+public class IdPropertyvalueTest {
 
     private Propertyvalue value;
 
     @Before
     public void setUp() throws Exception {
-        value = new DoublePropertyvalue(Double.valueOf(3.14));
+        value = new IdPropertyvalue(UUID.randomUUID());
     }
 
     @Test
     public void testIsId() {
-    	assertFalse(value.isId());
+    	assertTrue(value.isId());
     }
 
     @Test
     public void testAsId() {
-    	assertEquals(PropertyvalueNil.getNil().asId(), value.asId());
+    	assertNotEquals(PropertyvalueNil.getNil().asId(), value.asId());
     }
 
     @Test
@@ -41,7 +44,7 @@ public class DoublePropertyvalueTest {
 
     @Test
     public void testAsBoolean() {
-        assertTrue(value.asBoolean());
+        assertFalse(value.asBoolean());
     }
 
     @Test
@@ -51,17 +54,17 @@ public class DoublePropertyvalueTest {
 
     @Test
     public void testAsLong() {
-        assertEquals(Long.valueOf(3), value.asLong());
+        assertEquals(Long.valueOf(0), value.asLong());
     }
 
     @Test
     public void testIsDouble() {
-        assertTrue(value.isDouble());
+        assertFalse(value.isDouble());
     }
 
     @Test
     public void testAsDouble() {
-        assertEquals(Double.valueOf(3.14), value.asDouble());
+        assertEquals(Double.valueOf(0), value.asDouble());
     }
 
     @Test
@@ -71,7 +74,7 @@ public class DoublePropertyvalueTest {
 
     @Test
     public void testAsString() {
-        assertEquals("3.14", value.asString());
+        assertEquals(value.asId().toString(), value.asString());
     }
 
     @Test

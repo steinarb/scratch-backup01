@@ -1,6 +1,9 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import java.util.UUID;
+
 import no.priv.bang.modeling.modelstore.Propertyvalue;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 
 /**
@@ -14,6 +17,14 @@ import no.priv.bang.modeling.modelstore.Propertyvalue;
  *
  */
 public abstract class PropertyvalueBase implements Propertyvalue {
+
+    public boolean isId() {
+        return false;
+    }
+
+    public UUID asId() {
+        return PropertyvalueNil.getNil().asId();
+    }
 
     public boolean isBoolean() {
         return false;

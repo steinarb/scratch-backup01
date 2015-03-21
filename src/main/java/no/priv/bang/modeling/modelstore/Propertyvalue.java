@@ -1,5 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
+import java.util.UUID;
+
 
 /**
  * Defines a wrapper for a property in a {@link PropertySet}.
@@ -8,6 +10,8 @@ package no.priv.bang.modeling.modelstore;
  *
  */
 public interface Propertyvalue {
+    boolean isId();
+    UUID asId();
     boolean isBoolean();
     Boolean asBoolean();
     boolean isLong();

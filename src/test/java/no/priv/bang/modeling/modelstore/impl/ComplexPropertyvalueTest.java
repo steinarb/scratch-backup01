@@ -5,6 +5,7 @@ import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,16 @@ public class ComplexPropertyvalueTest {
     public void setUp() throws Exception {
         complexProperty = new PropertysetImpl();
         value = new ComplexPropertyvalue(complexProperty);
+    }
+
+    @Test
+    public void testIsId() {
+    	assertFalse(value.isId());
+    }
+
+    @Test
+    public void testAsId() {
+    	assertEquals(PropertyvalueNil.getNil().asId(), value.asId());
     }
 
     @Test

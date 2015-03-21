@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,18 @@ public class StringPropertyvalueTest {
     public void setUp() throws Exception {
         valueWithNumber = new StringPropertyvalue("13");
         valueNotANumber = new StringPropertyvalue("Not a number");
+    }
+
+    @Test
+    public void testIsId() {
+    	assertFalse(valueWithNumber.isId());
+    	assertFalse(valueNotANumber.isId());
+    }
+
+    @Test
+    public void testAsId() {
+    	assertEquals(PropertyvalueNil.getNil().asId(), valueWithNumber.asId());
+    	assertEquals(PropertyvalueNil.getNil().asId(), valueNotANumber.asId());
     }
 
     @Test

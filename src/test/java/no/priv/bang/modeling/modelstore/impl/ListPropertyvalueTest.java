@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,16 @@ public class ListPropertyvalueTest {
         propertyvalueList.add(new DoublePropertyvalue(Double.valueOf(2.78)));
         propertyvalueList.add(new StringPropertyvalue("foo bar"));
         value = new ListPropertyvalue(propertyvalueList);
+    }
+
+    @Test
+    public void testIsId() {
+    	assertFalse(value.isId());
+    }
+
+    @Test
+    public void testAsId() {
+    	assertEquals(PropertyvalueNil.getNil().asId(), value.asId());
     }
 
     @Test
