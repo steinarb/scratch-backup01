@@ -108,76 +108,76 @@ public class PropertysetManagerTest {
 
     private void buildModelWithAspects(PropertysetManager propertysetManager) {
         // Base aspect "vehicle"
-        UUID aspect1Id = UUID.randomUUID();
-        Propertyset aspect1 = propertysetManager.findPropertyset(aspect1Id);
-        aspect1.setStringProperty("title", "vehicle");
-        aspect1.setStringProperty("aspect", "object");
-        Propertyset aspect1Properties = propertysetManager.createPropertyset();
+        UUID vechicleAspectId = UUID.randomUUID();
+        Propertyset vehicleAspect = propertysetManager.findPropertyset(vechicleAspectId);
+        vehicleAspect.setStringProperty("title", "vehicle");
+        vehicleAspect.setStringProperty("aspect", "object");
+        Propertyset vehicleAspectProperties = propertysetManager.createPropertyset();
         Propertyset manufacturerDefinition = propertysetManager.createPropertyset();
         manufacturerDefinition.setStringProperty("aspect", "string");
         Propertyset modelnameDefinition = propertysetManager.createPropertyset();
         modelnameDefinition.setStringProperty("aspect", "string");
-        aspect1Properties.setComplexProperty("modelname", modelnameDefinition);
+        vehicleAspectProperties.setComplexProperty("modelname", modelnameDefinition);
         Propertyset wheelCountDefinition = propertysetManager.createPropertyset();
         wheelCountDefinition.setStringProperty("description", "Number of wheels on the vehicle");
         wheelCountDefinition.setStringProperty("aspect", "integer");
         wheelCountDefinition.setLongProperty("minimum", Long.valueOf(0));
-        aspect1Properties.setComplexProperty("definition", wheelCountDefinition);
-        aspect1.setComplexProperty("properties", aspect1Properties);
+        vehicleAspectProperties.setComplexProperty("definition", wheelCountDefinition);
+        vehicleAspect.setComplexProperty("properties", vehicleAspectProperties);
 
         // Subaspect "bicycle"
-        UUID aspect2Id = UUID.randomUUID();
-        Propertyset aspect2 = propertysetManager.findPropertyset(aspect2Id);
-        aspect2.setStringProperty("title", "bicycle");
-        aspect2.setStringProperty("aspect", "object");
-        aspect2.setReferenceProperty("inherits", aspect1);
-        Propertyset aspect2Properties = propertysetManager.createPropertyset();
+        UUID bicycleAspectId = UUID.randomUUID();
+        Propertyset bicycleAspect = propertysetManager.findPropertyset(bicycleAspectId);
+        bicycleAspect.setStringProperty("title", "bicycle");
+        bicycleAspect.setStringProperty("aspect", "object");
+        bicycleAspect.setReferenceProperty("inherits", vehicleAspect);
+        Propertyset bicycleAspectProperties = propertysetManager.createPropertyset();
         Propertyset frameNumber = propertysetManager.createPropertyset();
         frameNumber.setStringProperty("definition", "Unique identifier for the bicycle");
-        aspect2.setComplexProperty("properties", aspect2Properties);
+        bicycleAspect.setComplexProperty("properties", bicycleAspectProperties);
 
         // Subaspect "car"
-        UUID aspect3Id = UUID.randomUUID();
-        Propertyset aspect3 = propertysetManager.findPropertyset(aspect3Id);
-        aspect3.setStringProperty("title", "car");
-        aspect3.setStringProperty("aspect", "object");
-        aspect3.setReferenceProperty("inherits", aspect1);
-        Propertyset aspect3Properties = propertysetManager.createPropertyset();
+        UUID carAspectId = UUID.randomUUID();
+        Propertyset carAspect = propertysetManager.findPropertyset(carAspectId);
+        carAspect.setStringProperty("title", "car");
+        carAspect.setStringProperty("aspect", "object");
+        carAspect.setReferenceProperty("inherits", vehicleAspect);
+        Propertyset carAspectProperties = propertysetManager.createPropertyset();
         Propertyset engineSize = propertysetManager.createPropertyset();
         engineSize.setStringProperty("description", "Engine displacement in litres");
         engineSize.setStringProperty("aspect", "number");
-        aspect3Properties.setComplexProperty("engineSize", engineSize);
+        carAspectProperties.setComplexProperty("engineSize", engineSize);
         Propertyset enginePower = propertysetManager.createPropertyset();
         enginePower.setStringProperty("description", "Engine power in kW");
         enginePower.setStringProperty("aspect", "number");
-        aspect3Properties.setComplexProperty("enginePower", enginePower);
-        aspect3.setComplexProperty("properties", aspect3Properties);
+        carAspectProperties.setComplexProperty("enginePower", enginePower);
+        carAspect.setComplexProperty("properties", carAspectProperties);
 
-        // Make some instances with aspects
+        // Make some instances with aspsects
         Propertyset head = propertysetManager.findPropertyset(UUID.randomUUID());
-        head.addAspect(aspect2);
+        head.addAspect(bicycleAspect);
         head.setStringProperty("manufacturer", "HEAD");
         head.setStringProperty("model", "Tacoma I");
         head.setStringProperty("frameNumber", "001-234-509-374-331");
         Propertyset nakamura = propertysetManager.findPropertyset(UUID.randomUUID());
-        nakamura.addAspect(aspect2);
+        nakamura.addAspect(bicycleAspect);
         nakamura.setStringProperty("manufacturer", "Nakamura");
         nakamura.setStringProperty("model", "Fatbike 2015");
         nakamura.setStringProperty("frameNumber", "003-577-943-547-931");
         Propertyset ferrari = propertysetManager.findPropertyset(UUID.randomUUID());
-        ferrari.addAspect(aspect3);
+        ferrari.addAspect(carAspect);
         ferrari.setStringProperty("manufacturer", "Ferrari");
         ferrari.setStringProperty("model", "550 Barchetta");
         ferrari.setDoubleProperty("engineSize", 5.5);
         ferrari.setDoubleProperty("enginePower", 357.0);
         Propertyset subaru = propertysetManager.findPropertyset(UUID.randomUUID());
-        subaru.addAspect(aspect3);
+        subaru.addAspect(carAspect);
         subaru.setStringProperty("manufacturer", "Subaru");
         subaru.setStringProperty("model", "Outback");
         subaru.setDoubleProperty("engineSize", 2.5);
         subaru.setDoubleProperty("enginePower", 125.0);
         Propertyset volvo = propertysetManager.findPropertyset(UUID.randomUUID());
-        volvo.addAspect(aspect3);
+        volvo.addAspect(carAspect);
         volvo.setStringProperty("manufacturer", "Volvo");
         volvo.setStringProperty("model", "P1800");
         volvo.setDoubleProperty("engineSize", 1.8);
