@@ -1,8 +1,6 @@
 package no.priv.bang.modeling.modelstore.impl;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.AbstractList;
 import java.util.ListIterator;
 
 import no.priv.bang.modeling.modelstore.Propertyvalue;
@@ -17,97 +15,46 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
  * @author Steinar Bang
  *
  */
-public final class EmptyPropertyvalueList implements PropertyvalueList {
-
+public final class EmptyPropertyvalueList extends AbstractList<Propertyvalue> implements PropertyvalueList {
     private final Propertyvalue[] emptyArray = new Propertyvalue[0];
 
+    @Override
+    public void add(int index, Propertyvalue element) {
+        // Just drop the added elements on the floor.
+    }
+
+    @Override
     public boolean add(Propertyvalue e) {
+        // Just drop the added elements on the floor. Always return false
         return false;
     }
 
-    public void add(int index, Propertyvalue element) { }
-
-    public boolean addAll(Collection<? extends Propertyvalue> c) {
-        return false;
+    @Override
+    public Propertyvalue set(int index, Propertyvalue element) {
+        // Just drop the added elements on the floor. Always return PropertyvalueNil
+        return PropertyvalueNil.getNil();
     }
 
-    public boolean addAll(int index, Collection<? extends Propertyvalue> c) {
-        return false;
-    }
-
-    public void clear() { }
-
-    public boolean contains(Object o) {
-        return false;
-    }
-
-    public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
+    @Override
     public Propertyvalue get(int index) {
         return PropertyvalueNil.getNil();
     }
 
-    public int indexOf(Object o) {
-        return 0;
-    }
-
-    public boolean isEmpty() {
-        return true;
-    }
-
-    public Iterator<Propertyvalue> iterator() {
-        return null;
-    }
-
-    public int lastIndexOf(Object o) {
-        return 0;
-    }
-
-    public ListIterator<Propertyvalue> listIterator() {
-        return null;
-    }
-
-    public ListIterator<Propertyvalue> listIterator(int index) {
-        return null;
-    }
-
-    public boolean remove(Object o) {
-        return false;
-    }
-
+    @Override
     public Propertyvalue remove(int index) {
+        // Always return PropertyvalueNil
         return PropertyvalueNil.getNil();
     }
 
-    public boolean removeAll(Collection<?> c) {
-        return false;
-    }
-
-    public boolean retainAll(Collection<?> c) {
-        return false;
-    }
-
-    public Propertyvalue set(int index, Propertyvalue element) {
-        return PropertyvalueNil.getNil();
-    }
-
+    @Override
     public int size() {
         return 0;
     }
 
-    public List<Propertyvalue> subList(int fromIndex, int toIndex) {
-        return PropertyvalueNil.getNil().asList();
-    }
-
-    public Object[] toArray() {
-        return emptyArray ;
-    }
-
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T[] toArray(T[] a) {
-        return (T[]) new Propertyvalue[0];
+        return (T[]) emptyArray;
     }
 
 }

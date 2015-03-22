@@ -32,8 +32,8 @@ public class EmptyPropertyvalueListTest {
 
     @Test
     public void testAddAll() {
-        assertFalse(list.addAll(null));
-        assertFalse(list.addAll(1, null));
+        assertFalse(list.addAll(new EmptyPropertyvalueList()));
+        assertFalse(list.addAll(0, new EmptyPropertyvalueList()));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class EmptyPropertyvalueListTest {
 
     @Test
     public void testContainsAll() {
-        assertFalse(list.containsAll(null));
+        assertTrue(list.containsAll(new EmptyPropertyvalueList()));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class EmptyPropertyvalueListTest {
 
     @Test
     public void testIndexOf() {
-        assertEquals(0, list.indexOf(null));
+        assertEquals(-1, list.indexOf(null));
     }
 
     @Test
@@ -63,18 +63,22 @@ public class EmptyPropertyvalueListTest {
 
     @Test
     public void testIterator() {
-        assertNull(list.iterator());
+        assertNotNull(list.iterator());
     }
 
     @Test
     public void testLastIndexOf() {
-        assertEquals(0, list.lastIndexOf(null));
+        assertEquals(-1, list.lastIndexOf(null));
     }
 
     @Test
     public void testListIterator() {
-        assertNull(list.listIterator());
-        assertNull(list.listIterator(135));
+        assertNotNull(list.listIterator());
+    }
+
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testListIteratorWithArg() {
+        assertNotNull(list.listIterator(135));
     }
 
     @Test
@@ -103,7 +107,7 @@ public class EmptyPropertyvalueListTest {
         assertEquals(0, list.size());
     }
 
-    @Test
+    @Test(expected=IndexOutOfBoundsException.class)
     public void testSubList() {
         List<Propertyvalue> sublist = list.subList(1, 2);
         assertTrue(sublist.isEmpty());
