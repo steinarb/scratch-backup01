@@ -175,7 +175,7 @@ public class PropertysetManagerTest {
         subaru.setStringProperty("manufacturer", "Subaru");
         subaru.setStringProperty("model", "Outback");
         subaru.setDoubleProperty("engineSize", 2.5);
-        subaru.setDoubleProperty("enginePower", 170.0);
+        subaru.setDoubleProperty("enginePower", 125.0);
         Propertyset volvo = propertysetManager.findPropertyset(UUID.randomUUID());
         volvo.addAspect(aspect3);
         volvo.setStringProperty("manufacturer", "Volvo");
