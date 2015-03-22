@@ -18,103 +18,103 @@ import org.junit.Test;
  */
 public class EmptyPropertyvalueListTest {
 
-    private PropertyvalueList value;
+    private PropertyvalueList list;
 
     @Before
     public void setUp() throws Exception {
-        value = new EmptyPropertyvalueList();
+        list = new EmptyPropertyvalueList();
     }
 
     @Test
     public void testAdd() {
-        assertFalse(value.add(null));
+        assertFalse(list.add(null));
     }
 
     @Test
     public void testAddAll() {
-        assertFalse(value.addAll(null));
-        assertFalse(value.addAll(1, null));
+        assertFalse(list.addAll(null));
+        assertFalse(list.addAll(1, null));
     }
 
     @Test
     public void testContains() {
-        assertFalse(value.contains(null));
+        assertFalse(list.contains(null));
     }
 
     @Test
     public void testContainsAll() {
-        assertFalse(value.containsAll(null));
+        assertFalse(list.containsAll(null));
     }
 
     @Test
     public void testGet() {
-        assertEquals(PropertyvalueNil.getNil(), value.get(135));
+        assertEquals(PropertyvalueNil.getNil(), list.get(135));
     }
 
     @Test
     public void testIndexOf() {
-        assertEquals(0, value.indexOf(null));
+        assertEquals(0, list.indexOf(null));
     }
 
     @Test
     public void testIsEmpty() {
-        assertTrue(value.isEmpty());
-    }
-
-    @Test
-    public void testIterator() {
-        assertNull(value.iterator());
-    }
-
-    @Test
-    public void testLastIndexOf() {
-        assertEquals(0, value.lastIndexOf(null));
-    }
-
-    @Test
-    public void testListIterator() {
-        assertNull(value.listIterator());
-        assertNull(value.listIterator(135));
-    }
-
-    @Test
-    public void testRemove() {
-        assertFalse(value.remove(null));
-        assertEquals(PropertyvalueNil.getNil(), value.remove(135));
-    }
-
-    @Test
-    public void testRemoveAll() {
-        assertFalse(value.removeAll(null));
-    }
-
-    @Test
-    public void testRetainAll() {
-        assertFalse(value.retainAll(null));
-    }
-
-    @Test
-    public void testSet() {
-        assertEquals(PropertyvalueNil.getNil(), value.set(135, null));
-    }
-
-    @Test
-    public void testSize() {
-        assertEquals(0, value.size());
-    }
-
-    @Test
-    public void testSubList() {
-        List<Propertyvalue> list = value.subList(1, 2);
         assertTrue(list.isEmpty());
     }
 
     @Test
+    public void testIterator() {
+        assertNull(list.iterator());
+    }
+
+    @Test
+    public void testLastIndexOf() {
+        assertEquals(0, list.lastIndexOf(null));
+    }
+
+    @Test
+    public void testListIterator() {
+        assertNull(list.listIterator());
+        assertNull(list.listIterator(135));
+    }
+
+    @Test
+    public void testRemove() {
+        assertFalse(list.remove(null));
+        assertEquals(PropertyvalueNil.getNil(), list.remove(135));
+    }
+
+    @Test
+    public void testRemoveAll() {
+        assertFalse(list.removeAll(null));
+    }
+
+    @Test
+    public void testRetainAll() {
+        assertFalse(list.retainAll(null));
+    }
+
+    @Test
+    public void testSet() {
+        assertEquals(PropertyvalueNil.getNil(), list.set(135, null));
+    }
+
+    @Test
+    public void testSize() {
+        assertEquals(0, list.size());
+    }
+
+    @Test
+    public void testSubList() {
+        List<Propertyvalue> sublist = list.subList(1, 2);
+        assertTrue(sublist.isEmpty());
+    }
+
+    @Test
     public void testToArray() {
-        Object[] array1 = value.toArray();
+        Object[] array1 = list.toArray();
         assertEquals(0, array1.length);
         Propertyvalue[] valueArray = new Propertyvalue[10];
-        Propertyvalue[] array2 = value.toArray(valueArray);
+        Propertyvalue[] array2 = list.toArray(valueArray);
         assertEquals(0, array2.length);
     }
 
