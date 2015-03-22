@@ -18,6 +18,7 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
  */
 public class PropertysetImpl implements Propertyset {
     final private String idKey = "id";
+    final private String aspectsKey = "aspects";
     Map<String, Propertyvalue> properties = new HashMap<String, Propertyvalue>();
 
     public PropertysetImpl(UUID id) {
@@ -30,6 +31,48 @@ public class PropertysetImpl implements Propertyset {
         return false;
     }
 
+    public boolean hasAspect() {
+    	Propertyvalue rawPropertyValue = properties.get(aspectsKey);
+    	if (null != rawPropertyValue) {
+            return !rawPropertyValue.asList().isEmpty();
+    	}
+
+    	return false;
+    }
+
+    public PropertyvalueList getAspects() {
+    	Propertyvalue rawPropertyValue = properties.get(aspectsKey);
+    	if (null != rawPropertyValue) {
+            return rawPropertyValue.asList();
+    	}
+
+    	return PropertyvalueNil.getNil().asList();
+    }
+
+    public void addAspect(Propertyset aspect) {
+    	Propertyvalue rawPropertyValue = properties.get(aspectsKey);
+    	if (null != rawPropertyValue) {
+            PropertyvalueList aspectList = rawPropertyValue.asList();
+            if (!aspectContainedInList(aspectList, aspect)) {
+                aspectList.add(new ReferencePropertyvalue(aspect));
+            }
+    	} else {
+            PropertyvalueList aspectList = new PropertyvalueArrayList();
+            aspectList.add(new ReferencePropertyvalue(aspect));
+            properties.put(aspectsKey, new ListPropertyvalue(aspectList));
+    	}
+    }
+
+    private boolean aspectContainedInList(PropertyvalueList aspectList, Propertyset aspect) {
+        for (Propertyvalue propertyvalue : aspectList) {
+            if (propertyvalue.asReference().equals(aspect)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean hasId() {
         return properties.containsKey(idKey);
     }
@@ -38,7 +81,7 @@ public class PropertysetImpl implements Propertyset {
     	if (hasId()) {
             return properties.get(idKey).asId();
     	}
-		
+
     	return PropertyvalueNil.getNil().asId();
     }
 

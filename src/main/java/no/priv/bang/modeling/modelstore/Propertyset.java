@@ -20,6 +20,12 @@ public interface Propertyset {
 
     boolean isNil();
 
+    void addAspect(Propertyset aspect);
+
+    boolean hasAspect();
+
+    PropertyvalueList getAspects();
+
     boolean hasId();
 
     UUID getId();

@@ -28,6 +28,18 @@ public final class PropertysetNil implements Propertyset {
         return true;
     }
 
+    public boolean hasAspect() {
+        return false;
+    }
+
+    public PropertyvalueList getAspects() {
+        return PropertyvalueNil.getNil().asList();
+    }
+
+    public void addAspect(Propertyset aspect) {
+        // No-op
+    }
+
     public boolean hasId() {
         return false;
     }
