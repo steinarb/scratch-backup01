@@ -153,7 +153,7 @@ public class PropertysetManagerTest {
         carAspectProperties.setComplexProperty("enginePower", enginePower);
         carAspect.setComplexProperty("properties", carAspectProperties);
 
-        // Make some instances with aspsects
+        // Make some instances with aspects
         Propertyset head = propertysetManager.findPropertyset(UUID.randomUUID());
         head.addAspect(bicycleAspect);
         head.setStringProperty("manufacturer", "HEAD");
