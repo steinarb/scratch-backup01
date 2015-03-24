@@ -1,8 +1,6 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.AbstractList;
-import java.util.ListIterator;
-
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.PropertyvalueNil;
