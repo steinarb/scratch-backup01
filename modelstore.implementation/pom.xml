@@ -47,6 +47,7 @@
     <extensions>true</extensions>
     <configuration>
      <instructions>
+      <Bundle-SymbolicName>no.priv.bang.modeling.modelstore</Bundle-SymbolicName>
       <Bundle-Activator>no.priv.bang.modeling.modelstore.Activator</Bundle-Activator>
       <Export-Package/>
      </instructions>
