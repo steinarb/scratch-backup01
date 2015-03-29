@@ -1,4 +1,5 @@
 .classpath
 .project
 .settings/
+/modelstore.tests/test.log
 target/
