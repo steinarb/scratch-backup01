@@ -30,5 +30,6 @@
 
  <modules>
   <module>modelstore.implementation</module>
+  <module>modelstore.tests</module>
  </modules>
 </project>
