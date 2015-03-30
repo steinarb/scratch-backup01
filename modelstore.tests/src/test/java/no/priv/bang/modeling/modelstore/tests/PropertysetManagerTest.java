@@ -30,8 +30,7 @@ public class PropertysetManagerTest {
     @Configuration
     public Option[] config() {
         return options(
-                       systemProperty("logback.configurationFile").value(
-                                                                         "file:src/test/resources/logback.xml"),
+                       systemProperty("logback.configurationFile").value("file:src/test/resources/logback.xml"),
                        mavenBundle("org.slf4j", "slf4j-api", "1.7.2"),
                        mavenBundle("ch.qos.logback", "logback-core", "1.0.4"),
                        mavenBundle("ch.qos.logback", "logback-classic", "1.0.4"),
