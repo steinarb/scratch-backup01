@@ -2,13 +2,18 @@ package no.priv.bang.modeling.modelstore.tests;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.ops4j.pax.exam.CoreOptions.junitBundles;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 
+import java.util.UUID;
+
 import javax.inject.Inject;
+
+import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetManager;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +32,9 @@ public class PropertysetManagerTest {
     @Inject
     private BundleContext bc;
 
+    @Inject
+    private PropertysetManager propertysetManagerService;
+
     @Configuration
     public Option[] config() {
         return options(
@@ -34,12 +42,29 @@ public class PropertysetManagerTest {
                        mavenBundle("org.slf4j", "slf4j-api", "1.7.2"),
                        mavenBundle("ch.qos.logback", "logback-core", "1.0.4"),
                        mavenBundle("ch.qos.logback", "logback-classic", "1.0.4"),
+                       mavenBundle("no.priv.bang.modeling", "modelstore.implementation", "0.0.1-SNAPSHOT"),
                        junitBundles());
     }
 
     @Test
     public void shouldHaveBundleContext() {
         assertThat(bc, is(notNullValue()));
+    }
+    
+    @Test
+    public void propertysetManagerIntegrationTest() {
+    	// Verify that the service could be injected
+    	assertNotNull(propertysetManagerService);
+    	
+    	// Actually use the service to create some propertysets
+    	UUID propertysetId = UUID.randomUUID();
+    	// Create a new propertyset
+        Propertyset propertyset = propertysetManagerService.findPropertyset(propertysetId);
+        propertyset.setStringProperty("stringPropertyOfPi", "3.14");
+        assertEquals(Double.valueOf(3.14), propertyset.getDoubleProperty("stringPropertyOfPi"));
+        // Verify that using the same ID will result in the same propertyset
+        Propertyset newPropertyset = propertysetManagerService.findPropertyset(propertysetId);
+        assertEquals(propertyset, newPropertyset);
     }
 
 }

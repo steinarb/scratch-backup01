@@ -66,6 +66,12 @@
    <scope>provided</scope>
   </dependency>
 
+  <dependency>
+   <groupId>no.priv.bang.modeling</groupId>
+   <artifactId>modelstore.implementation</artifactId>
+   <version>0.0.1-SNAPSHOT</version>
+   <type>bundle</type>
+  </dependency>
  </dependencies>
 
  <profiles>
