@@ -11,6 +11,7 @@
 
  <properties>
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <maven.bundle.plugin.version>2.3.7</maven.bundle.plugin.version>
  </properties>
 
  <dependencies>
@@ -27,6 +28,24 @@
    <scope>test</scope>
   </dependency>
  </dependencies>
+
+ <build>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <dependencies>
+     <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <version>${maven.bundle.plugin.version}</version>
+      <type>maven-plugin</type>
+     </dependency>
+    </dependencies>
+    <extensions>true</extensions>
+   </plugin>
+  </plugins>
+ </build>
 
  <modules>
   <module>modelstore.implementation</module>
