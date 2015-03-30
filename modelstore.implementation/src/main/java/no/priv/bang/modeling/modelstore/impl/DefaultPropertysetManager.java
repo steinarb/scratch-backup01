@@ -1,4 +1,4 @@
-package no.priv.bang.modeling.modelstore;
+package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,6 +10,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetManager;
+import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.Propertyvalue;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
 
 /**
@@ -18,7 +23,7 @@ import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
  * @author Steinar Bang
  *
  */
-final class DefaultPropertysetManager implements PropertysetManager {
+public final class DefaultPropertysetManager implements PropertysetManager {
 
     private static DefaultPropertysetManager singleton;
     private Map<UUID, Propertyset> propertysets = new HashMap<UUID, Propertyset>();

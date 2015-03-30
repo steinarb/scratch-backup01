@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Collection;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.impl.DefaultPropertysetManager;
 import no.priv.bang.modeling.modelstore.impl.ImplementationFactory;
 
 import org.junit.Test;

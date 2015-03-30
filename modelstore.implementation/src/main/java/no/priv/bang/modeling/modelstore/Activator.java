@@ -1,5 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
+import no.priv.bang.modeling.modelstore.impl.DefaultPropertysetManager;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
