@@ -45,6 +45,14 @@
     <artifactId>maven-bundle-plugin</artifactId>
     <version>${maven.bundle.plugin.version}</version>
     <extensions>true</extensions>
+    <executions>
+     <!-- Make the manifest available to the Pax Exam tests in modelstore.tests -->
+     <execution>
+      <goals>
+       <goal>manifest</goal>
+      </goals>
+     </execution>
+    </executions>
     <configuration>
      <instructions>
       <Bundle-SymbolicName>no.priv.bang.modeling.modelstore</Bundle-SymbolicName>
