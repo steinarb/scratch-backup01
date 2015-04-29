@@ -1,7 +1,5 @@
 package no.priv.bang.modeling.modelstore.tests;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.*;
 import static org.ops4j.pax.exam.CoreOptions.junitBundles;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
@@ -22,15 +20,10 @@ import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
-import org.ops4j.pax.exam.util.PathUtils;
-import org.osgi.framework.BundleContext;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 public class PropertysetManagerTest {
-
-    @Inject
-    private BundleContext bc;
 
     @Inject
     private PropertysetManager propertysetManagerService;
@@ -47,15 +40,10 @@ public class PropertysetManagerTest {
     }
 
     @Test
-    public void shouldHaveBundleContext() {
-        assertThat(bc, is(notNullValue()));
-    }
-    
-    @Test
     public void propertysetManagerIntegrationTest() {
     	// Verify that the service could be injected
     	assertNotNull(propertysetManagerService);
-    	
+
     	// Actually use the service to create some propertysets
     	UUID propertysetId = UUID.randomUUID();
     	// Create a new propertyset
