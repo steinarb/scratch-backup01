@@ -24,6 +24,16 @@
    <scope>provided</scope>
   </dependency>
   <dependency>
+   <groupId>no.steria.osgi.jsr330activator</groupId>
+   <artifactId>jsr330activator.implementation</artifactId>
+   <version>1.0.0-SNAPSHOT</version>
+  </dependency>
+  <dependency>
+   <groupId>javax.inject</groupId>
+   <artifactId>javax.inject</artifactId>
+   <version>1</version>
+  </dependency>
+  <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
    <version>4.12</version>
@@ -48,8 +58,9 @@
     <configuration>
      <instructions>
       <Bundle-SymbolicName>no.priv.bang.modeling.modelstore</Bundle-SymbolicName>
-      <Bundle-Activator>no.priv.bang.modeling.modelstore.Activator</Bundle-Activator>
+      <Bundle-Activator>no.steria.osgi.jsr330activator.Jsr330Activator</Bundle-Activator>
       <Export-Package>no.priv.bang.modeling.modelstore</Export-Package>
+      <Embed-Dependency>jsr330activator.implementation;inline=true,javax.inject;inline=true</Embed-Dependency>
      </instructions>
     </configuration>
    </plugin>
