@@ -23,7 +23,7 @@ import org.ops4j.pax.exam.spi.reactors.PerClass;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
-public class PropertysetManagerTest {
+public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
 
     @Inject
     private PropertysetManager propertysetManagerService;
@@ -35,7 +35,7 @@ public class PropertysetManagerTest {
                        mavenBundle("org.slf4j", "slf4j-api", "1.7.2"),
                        mavenBundle("ch.qos.logback", "logback-core", "1.0.4"),
                        mavenBundle("ch.qos.logback", "logback-classic", "1.0.4"),
-                       mavenBundle("no.priv.bang.modeling", "modelstore.implementation", "0.0.1-SNAPSHOT"),
+                       mavenBundle("no.priv.bang.modeling", "modelstore.implementation", getMavenProjectVersion()),
                        junitBundles());
     }
 
