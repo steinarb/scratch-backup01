@@ -10,3 +10,12 @@ The PropertySet interface defines the API of objects that forms both objects and
 
 This library is licensed under the Eclipse Public License.  See the
 file LICENSE for the terms and specifics of the license.
+
+* Development stuff
+
+#+ATTR_HTML: title="Coverage status"
+[[https://coveralls.io/r/steinarb/modelstore?branch=master][file:https://coveralls.io/repos/steinarb/modelstore/badge.svg?branch=master]]
+
+ - [[https://github.com/steinarb/modelstore][Source code repository]]
+ - [[https://travis-ci.org/steinarb/modelstore][Continous integration build on Travis CI]]
+ - [[https://coveralls.io/r/steinarb/modelstore][Test coverage history on coveralls]]
