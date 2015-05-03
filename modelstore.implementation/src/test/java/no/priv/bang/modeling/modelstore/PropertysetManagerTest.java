@@ -97,6 +97,37 @@ public class PropertysetManagerTest {
         assertEquals(3, cars.size());
     }
 
+    /**
+     * Test setting multiple aspects on a Propertyset
+     */
+    @Test
+    public void testPropertysetWithMultipleAspects() {
+        PropertysetManager propertysetManager = DefaultPropertysetManager.getInstance();
+
+        // Create two aspects
+        Propertyset generalObjectAspect = buildGeneralObjectAspect(propertysetManager);
+        Propertyset positionAspect = buildPositionAspect(propertysetManager);
+
+        // Get a brand new aspectless Propertyset
+        Propertyset propertyset = propertysetManager.findPropertyset(UUID.randomUUID());
+
+        // Verify that the propertyset has no aspects
+        assertEquals(0, propertyset.getAspects().size());
+
+        // Add an aspect and verify that the propertyset now has an aspect
+        propertyset.addAspect(generalObjectAspect);
+        assertEquals(1, propertyset.getAspects().size());
+
+        // Add a new aspect and verify that the propertyset now has two aspects
+        propertyset.addAspect(positionAspect);
+        assertEquals(2, propertyset.getAspects().size());
+
+        // Add an already existing aspect again and observe that the propertyset
+        // still only has two aspects.
+        propertyset.addAspect(generalObjectAspect);
+        assertEquals(2, propertyset.getAspects().size());
+    }
+
     private Propertyset findAspectByTitle(Collection<Propertyset> aspects, String aspectTitle) {
     	for (Propertyset aspect : aspects) {
             if (aspectTitle.equals(aspect.getStringProperty("title"))) {
@@ -105,6 +136,38 @@ public class PropertysetManagerTest {
         }
 
     	return PropertysetNil.getNil();
+    }
+
+    private Propertyset buildGeneralObjectAspect(PropertysetManager propertysetManager) {
+        UUID generalObjectAspectId = UUID.randomUUID();
+        Propertyset generalObjectAspect = propertysetManager.findPropertyset(generalObjectAspectId);
+        generalObjectAspect.setStringProperty("title", "general object");
+        generalObjectAspect.setStringProperty("aspect", "object");
+        Propertyset generalObjectAspectProperties = propertysetManager.createPropertyset();
+        Propertyset nameProperty = propertysetManager.createPropertyset();
+        nameProperty.setStringProperty("aspect", "string");
+        generalObjectAspectProperties.setComplexProperty("name", nameProperty);
+        Propertyset descriptionProperty = propertysetManager.createPropertyset();
+        descriptionProperty.setStringProperty("aspect", "string");
+        generalObjectAspectProperties.setComplexProperty("description", descriptionProperty);
+        generalObjectAspect.setComplexProperty("properties", generalObjectAspectProperties);
+        return generalObjectAspect;
+    }
+
+    private Propertyset buildPositionAspect(PropertysetManager propertysetManager) {
+        UUID positionAspectId = UUID.randomUUID();
+        Propertyset positionAspect = propertysetManager.findPropertyset(positionAspectId);
+        positionAspect.setStringProperty("title", "position");
+        positionAspect.setStringProperty("aspect", "object");
+        Propertyset positionAspectProperties = propertysetManager.createPropertyset();
+        Propertyset xposProperty = propertysetManager.createPropertyset();
+        xposProperty.setStringProperty("aspect", "number");
+        positionAspectProperties.setComplexProperty("xpos", xposProperty);
+        Propertyset yposProperty = propertysetManager.createPropertyset();
+        yposProperty.setStringProperty("aspect", "number");
+        positionAspectProperties.setComplexProperty("ypos", yposProperty);
+        positionAspect.setComplexProperty("properties", positionAspectProperties);
+        return positionAspect;
     }
 
     private void buildModelWithAspects(PropertysetManager propertysetManager) {
