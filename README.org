@@ -13,6 +13,8 @@ file LICENSE for the terms and specifics of the license.
 
 * Development stuff
 
+#+ATTR_HTML: title="Build Status"
+[[https://travis-ci.org/steinarb/modelstore][file:https://travis-ci.org/steinarb/modelstore.png?branch=master]]
 #+ATTR_HTML: title="Coverage status"
 [[https://coveralls.io/r/steinarb/modelstore?branch=master][file:https://coveralls.io/repos/steinarb/modelstore/badge.svg?branch=master]]
 
