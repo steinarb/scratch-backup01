@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import java.util.Collection;
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.impl.DefaultPropertysetManager;
 import no.priv.bang.modeling.modelstore.impl.ImplementationFactory;
+import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ public class PropertysetManagerTest {
 
     @Test
     public void testCreatePropertySet() {
-        PropertysetManager propertysetManager = DefaultPropertysetManager.getInstance();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider();
 
         // Get a propertyset instance and verify that it is a non-nil instance
         // that can be modified.
@@ -39,7 +39,7 @@ public class PropertysetManagerTest {
 
     @Test
     public void testFindPropertysetById() {
-        PropertysetManager propertysetManager = DefaultPropertysetManager.getInstance();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider();
 
         // Get a propertyset by id and verify that it is empty initially
         UUID newPropertysetId = UUID.randomUUID();
@@ -80,7 +80,7 @@ public class PropertysetManagerTest {
 
     @Test
     public void testFindPropertysetOfAspect() {
-        PropertysetManager propertysetManager = DefaultPropertysetManager.getInstance();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider();
 
         buildModelWithAspects(propertysetManager);
 
@@ -102,7 +102,7 @@ public class PropertysetManagerTest {
      */
     @Test
     public void testPropertysetWithMultipleAspects() {
-        PropertysetManager propertysetManager = DefaultPropertysetManager.getInstance();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider();
 
         // Create two aspects
         Propertyset generalObjectAspect = buildGeneralObjectAspect(propertysetManager);

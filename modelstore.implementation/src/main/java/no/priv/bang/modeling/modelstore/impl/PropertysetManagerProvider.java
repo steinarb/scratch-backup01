@@ -13,10 +13,10 @@ import no.steria.osgi.jsr330activator.Jsr330Activator;
  * @author Steinar Bang
  *
  */
-public class PropertysetManagerProvider implements Provider<PropertysetManager> {
+public class PropertysetManagerProvider extends PropertysetManagerBase implements Provider<PropertysetManager> {
 
     public PropertysetManager get() {
-        return DefaultPropertysetManager.getInstance();
+        return this;
     }
 
 }

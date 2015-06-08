@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.inject.Provider;
+
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
@@ -18,25 +20,17 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
 
 /**
- * Singleton instance implementing {@link PropertysetManager}.
+ * Class implementing {@link PropertysetManager} for use as a base
+ * class for {@link Provider} classes for {@link PropertysetManager}
  *
  * @author Steinar Bang
  *
  */
-public final class DefaultPropertysetManager implements PropertysetManager {
+class PropertysetManagerBase implements PropertysetManager {
 
-    private static DefaultPropertysetManager singleton;
     private Map<UUID, Propertyset> propertysets = new HashMap<UUID, Propertyset>();
 
-    private DefaultPropertysetManager() { }
-
-    public static PropertysetManager getInstance() {
-        if (null == singleton) {
-            singleton = new DefaultPropertysetManager();
-        }
-
-        return singleton;
-    }
+    protected PropertysetManagerBase() { }
 
     public Propertyset createPropertyset() {
         return new PropertysetImpl();
