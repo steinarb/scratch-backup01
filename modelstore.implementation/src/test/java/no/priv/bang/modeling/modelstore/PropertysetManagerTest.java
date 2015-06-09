@@ -2,13 +2,23 @@ package no.priv.bang.modeling.modelstore;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.impl.ImplementationFactory;
 import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 /**
  * Unit test for the {@link PropertysetManager} interface and its
@@ -18,6 +28,8 @@ import org.junit.Test;
  *
  */
 public class PropertysetManagerTest {
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void testCreatePropertySet() {
@@ -126,6 +138,86 @@ public class PropertysetManagerTest {
         // still only has two aspects.
         propertyset.addAspect(generalObjectAspect);
         assertEquals(2, propertyset.getAspects().size());
+    }
+
+    @Test
+    public void experimentalJacksonPersist() throws IOException {
+        PropertysetManager propertysetManager = new PropertysetManagerProvider();
+        buildModelWithAspects(propertysetManager);
+
+        Collection<Propertyset> propertysets = propertysetManager.listAllPropertysets();
+
+        JsonFactory jsonFactory = new JsonFactory();
+        File propertysetsFile = folder.newFile("propertysets.json");
+        String propertysetsFileNameFullPath = propertysetsFile.getAbsolutePath();
+        JsonGenerator generator = jsonFactory.createGenerator(propertysetsFile, JsonEncoding.UTF8);
+        generator.writeStartArray();
+        for (Propertyset propertyset : propertysets) {
+            outputPropertyset(generator, propertyset);
+        }
+
+        generator.writeEndArray();
+        generator.close();
+
+        String contents = new String(Files.readAllBytes(Paths.get(propertysetsFileNameFullPath)));
+        System.out.println(contents);
+    }
+
+    private void outputPropertyset(JsonGenerator generator, Propertyset propertyset) throws IOException {
+        generator.writeStartObject();
+        propertyset.getPropertynames();
+        Collection<String> propertynames = propertyset.getPropertynames();
+        for (String propertyname : propertynames) {
+            Propertyvalue propertyvalue = propertyset.getProperty(propertyname);
+            outputPropertyvalue(generator, propertyname, propertyvalue);
+        }
+
+        generator.writeEndObject();
+    }
+
+    private void outputPropertyvalue(JsonGenerator generator, String propertyname, Propertyvalue propertyvalue) throws IOException {
+        if (propertyvalue.isId()) {
+            generator.writeStringField(propertyname, propertyvalue.asString());
+        } else if (propertyvalue.isReference()) {
+            generator.writeStringField(propertyname, propertyvalue.asString());
+        } else if (propertyvalue.isString()) {
+            generator.writeStringField(propertyname, propertyvalue.asString());
+        } else if (propertyvalue.isDouble()) {
+            generator.writeNumberField(propertyname, propertyvalue.asDouble());
+        } else if (propertyvalue.isLong()) {
+            generator.writeNumberField(propertyname, propertyvalue.asLong());
+        } else if (propertyvalue.isBoolean()) {
+            generator.writeBooleanField(propertyname, propertyvalue.asBoolean());
+        } else if (propertyvalue.isComplexProperty()) {
+            generator.writeFieldName(propertyname);
+            Propertyset complexPropertyvalue = propertyvalue.asComplexProperty();
+            outputPropertyset(generator, complexPropertyvalue);
+        } else if (propertyvalue.isList()) {
+            PropertyvalueList listvalue = propertyvalue.asList();
+            generator.writeFieldName(propertyname);
+            outputArray(generator, listvalue);
+        }
+    }
+
+    private void outputArray(JsonGenerator generator, PropertyvalueList listvalue) throws IOException {
+        generator.writeStartArray(listvalue.size());
+        for (Propertyvalue listElement : listvalue) {
+            if (listElement.isReference()) {
+                generator.writeString(listElement.asString());
+            } else if (listElement.isString()) {
+                generator.writeNumber(listElement.asDouble());
+            } else if (listElement.isString()) {
+                generator.writeNumber(listElement.asLong());
+            } else if (listElement.isBoolean()) {
+                generator.writeBoolean(listElement.asBoolean());
+            } else if (listElement.isString()) {
+                outputPropertyset(generator, listElement.asComplexProperty());
+            } else if (listElement.isList()) {
+                outputArray(generator, listElement.asList());
+            }
+        }
+
+        generator.writeEndArray();
     }
 
     private Propertyset findAspectByTitle(Collection<Propertyset> aspects, String aspectTitle) {
