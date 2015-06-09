@@ -1,5 +1,6 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +27,18 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public PropertysetImpl() { }
+
+    public Collection<String> getPropertynames() {
+        return properties.keySet();
+    }
+
+    public Propertyvalue getProperty(String propertyname) {
+        if (properties.containsKey(propertyname)) {
+            return properties.get(propertyname);
+        }
+
+        return PropertyvalueNil.getNil();
+    }
 
     public boolean isNil() {
         return false;

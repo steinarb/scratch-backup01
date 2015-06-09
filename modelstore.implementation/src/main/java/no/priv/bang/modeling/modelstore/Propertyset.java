@@ -1,5 +1,6 @@
 package no.priv.bang.modeling.modelstore;
 
+import java.util.Collection;
 import java.util.UUID;
 
 /**
@@ -19,6 +20,10 @@ import java.util.UUID;
 public interface Propertyset {
 
     boolean isNil();
+
+    Collection<String> getPropertynames();
+
+    Propertyvalue getProperty(String propertyname);
 
     void addAspect(Propertyset aspect);
 

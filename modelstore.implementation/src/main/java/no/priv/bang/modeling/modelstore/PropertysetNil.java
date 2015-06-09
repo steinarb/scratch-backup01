@@ -1,5 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -26,6 +28,14 @@ public final class PropertysetNil implements Propertyset {
 
     public boolean isNil() {
         return true;
+    }
+
+    public Collection<String> getPropertynames() {
+        return Collections.emptyList();
+    }
+
+    public Propertyvalue getProperty(String propertyname) {
+        return PropertyvalueNil.getNil();
     }
 
     public boolean hasAspect() {
