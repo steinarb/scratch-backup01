@@ -46,6 +46,10 @@ class PropertysetManagerBase implements PropertysetManager {
         return propertyset;
     }
 
+    public Collection<Propertyset> listAllPropertysets() {
+    	return propertysets.values();
+    }
+
     public Collection<Propertyset> listAllAspects() {
         Set<Propertyset> allAspects = new HashSet<Propertyset>();
         for (Entry<UUID, Propertyset> propertyset : propertysets.entrySet()) {

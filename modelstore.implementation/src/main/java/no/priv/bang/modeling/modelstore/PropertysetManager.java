@@ -63,4 +63,6 @@ public interface PropertysetManager {
      */
     Collection<Propertyset> findObjectsOfAspect(Propertyset aspect);
 
+    Collection<Propertyset> listAllPropertysets();
+
 }
