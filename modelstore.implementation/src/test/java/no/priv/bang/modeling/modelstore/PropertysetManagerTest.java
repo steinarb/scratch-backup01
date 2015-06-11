@@ -180,7 +180,7 @@ public class PropertysetManagerTest {
         if (propertyvalue.isId()) {
             generator.writeStringField(propertyname, propertyvalue.asString());
         } else if (propertyvalue.isReference()) {
-            generator.writeStringField(propertyname, propertyvalue.asString());
+            generator.writeStringField(propertyname, propertyvalue.asReference().getId().toString());
         } else if (propertyvalue.isString()) {
             generator.writeStringField(propertyname, propertyvalue.asString());
         } else if (propertyvalue.isDouble()) {
@@ -204,7 +204,7 @@ public class PropertysetManagerTest {
         generator.writeStartArray(listvalue.size());
         for (Propertyvalue listElement : listvalue) {
             if (listElement.isReference()) {
-                generator.writeString(listElement.asString());
+                generator.writeString(listElement.asReference().getId().toString());
             } else if (listElement.isString()) {
                 generator.writeNumber(listElement.asDouble());
             } else if (listElement.isString()) {
