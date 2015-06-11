@@ -151,6 +151,7 @@ public class PropertysetManagerTest {
         File propertysetsFile = folder.newFile("propertysets.json");
         String propertysetsFileNameFullPath = propertysetsFile.getAbsolutePath();
         JsonGenerator generator = jsonFactory.createGenerator(propertysetsFile, JsonEncoding.UTF8);
+        generator.useDefaultPrettyPrinter();
         generator.writeStartArray();
         for (Propertyset propertyset : propertysets) {
             outputPropertyset(generator, propertyset);
