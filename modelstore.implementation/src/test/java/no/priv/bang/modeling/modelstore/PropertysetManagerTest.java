@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -150,7 +149,6 @@ public class PropertysetManagerTest {
 
         JsonFactory jsonFactory = new JsonFactory();
         File propertysetsFile = folder.newFile("propertysets.json");
-        String propertysetsFileNameFullPath = propertysetsFile.getAbsolutePath();
         JsonGenerator generator = new JsonGeneratorWithReferences(jsonFactory.createGenerator(propertysetsFile, JsonEncoding.UTF8));
         assertTrue(generator.canWriteObjectId());
         generator.useDefaultPrettyPrinter();
@@ -162,7 +160,7 @@ public class PropertysetManagerTest {
         generator.writeEndArray();
         generator.close();
 
-        String contents = new String(Files.readAllBytes(Paths.get(propertysetsFileNameFullPath)));
+        String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
         System.out.println(contents);
     }
 
@@ -182,7 +180,6 @@ public class PropertysetManagerTest {
 
         // Write an objectId
         File objectIdFile = folder.newFile("objectid.json");
-        String ojectIdFileNameFullPath = objectIdFile.getAbsolutePath();
         JsonGenerator generator = new JsonGeneratorWithReferences(jsonFactory.createGenerator(objectIdFile, JsonEncoding.UTF8));
         assertTrue(generator.canWriteObjectId());
         generator.writeObjectId(a.getId());
@@ -190,12 +187,11 @@ public class PropertysetManagerTest {
 
         // Check that the written objectId looks like expected (a JSON quoted string)
         String expectedObjectIdAsJson = "\"" + idA.toString() + "\"";
-        String objectId = new String(Files.readAllBytes(Paths.get(ojectIdFileNameFullPath)));
+        String objectId = new String(Files.readAllBytes(objectIdFile.toPath()));
         assertEquals(expectedObjectIdAsJson, objectId);
 
         // Write an object reference
         File objectReferenceFile = folder.newFile("objectreference.json");
-        String objectReferenceFilenameFullPath = objectReferenceFile.getAbsolutePath();
         JsonGenerator generator2 = new JsonGeneratorWithReferences(jsonFactory.createGenerator(objectReferenceFile, JsonEncoding.UTF8));
         assertTrue(generator2.canWriteObjectId());
         generator2.writeObjectRef(a.getReferenceProperty("b").getId());
@@ -203,7 +199,7 @@ public class PropertysetManagerTest {
 
         // Check that the written objectReference looks like the expected JSON
         String expectedObjectReferenceAsJson = "{\"ref\":\"" + idB.toString() + "\"}";
-        String objectReference = new String(Files.readAllBytes(Paths.get(objectReferenceFilenameFullPath)));
+        String objectReference = new String(Files.readAllBytes(objectReferenceFile.toPath()));
         assertEquals(expectedObjectReferenceAsJson, objectReference);
     }
 
