@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.impl.ImplementationFactory;
+import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
 
 import org.junit.Rule;
@@ -150,7 +151,8 @@ public class PropertysetManagerTest {
         JsonFactory jsonFactory = new JsonFactory();
         File propertysetsFile = folder.newFile("propertysets.json");
         String propertysetsFileNameFullPath = propertysetsFile.getAbsolutePath();
-        JsonGenerator generator = jsonFactory.createGenerator(propertysetsFile, JsonEncoding.UTF8);
+        JsonGenerator generator = new JsonGeneratorWithReferences(jsonFactory.createGenerator(propertysetsFile, JsonEncoding.UTF8));
+        assertTrue(generator.canWriteObjectId());
         generator.useDefaultPrettyPrinter();
         generator.writeStartArray();
         for (Propertyset propertyset : propertysets) {
@@ -162,6 +164,47 @@ public class PropertysetManagerTest {
 
         String contents = new String(Files.readAllBytes(Paths.get(propertysetsFileNameFullPath)));
         System.out.println(contents);
+    }
+
+    @Test
+    public void testJsonGeneratorWithReference() throws IOException {
+        // Create two propertysets with ids, and make a reference to propertyset
+    	// "b" from propertyset "a".
+    	PropertysetManager propertysetManager = new PropertysetManagerProvider();
+        UUID idA = UUID.randomUUID();
+        Propertyset a = propertysetManager.findPropertyset(idA);
+        UUID idB = UUID.randomUUID();
+        Propertyset b = propertysetManager.findPropertyset(idB);
+        a.setReferenceProperty("b", b);
+
+        // Create a factory
+        JsonFactory jsonFactory = new JsonFactory();
+
+        // Write an objectId
+        File objectIdFile = folder.newFile("objectid.json");
+        String ojectIdFileNameFullPath = objectIdFile.getAbsolutePath();
+        JsonGenerator generator = new JsonGeneratorWithReferences(jsonFactory.createGenerator(objectIdFile, JsonEncoding.UTF8));
+        assertTrue(generator.canWriteObjectId());
+        generator.writeObjectId(a.getId());
+        generator.close();
+
+        // Check that the written objectId looks like expected (a JSON quoted string)
+        String expectedObjectIdAsJson = "\"" + idA.toString() + "\"";
+        String objectId = new String(Files.readAllBytes(Paths.get(ojectIdFileNameFullPath)));
+        assertEquals(expectedObjectIdAsJson, objectId);
+
+        // Write an object reference
+        File objectReferenceFile = folder.newFile("objectreference.json");
+        String objectReferenceFilenameFullPath = objectReferenceFile.getAbsolutePath();
+        JsonGenerator generator2 = new JsonGeneratorWithReferences(jsonFactory.createGenerator(objectReferenceFile, JsonEncoding.UTF8));
+        assertTrue(generator2.canWriteObjectId());
+        generator2.writeObjectRef(a.getReferenceProperty("b").getId());
+        generator2.close();
+
+        // Check that the written objectReference looks like the expected JSON
+        String expectedObjectReferenceAsJson = "{\"ref\":\"" + idB.toString() + "\"}";
+        String objectReference = new String(Files.readAllBytes(Paths.get(objectReferenceFilenameFullPath)));
+        assertEquals(expectedObjectReferenceAsJson, objectReference);
     }
 
     private void outputPropertyset(JsonGenerator generator, Propertyset propertyset) throws IOException {
@@ -178,9 +221,11 @@ public class PropertysetManagerTest {
 
     private void outputPropertyvalue(JsonGenerator generator, String propertyname, Propertyvalue propertyvalue) throws IOException {
         if (propertyvalue.isId()) {
-            generator.writeStringField(propertyname, propertyvalue.asString());
+            generator.writeFieldName(propertyname);
+            generator.writeObjectId(propertyvalue.asId());
         } else if (propertyvalue.isReference()) {
-            generator.writeStringField(propertyname, propertyvalue.asReference().getId().toString());
+            generator.writeFieldName(propertyname);
+            generator.writeObjectRef(propertyvalue.asReference().getId());
         } else if (propertyvalue.isString()) {
             generator.writeStringField(propertyname, propertyvalue.asString());
         } else if (propertyvalue.isDouble()) {
@@ -204,7 +249,7 @@ public class PropertysetManagerTest {
         generator.writeStartArray(listvalue.size());
         for (Propertyvalue listElement : listvalue) {
             if (listElement.isReference()) {
-                generator.writeString(listElement.asReference().getId().toString());
+                generator.writeObjectRef(listElement.asReference().getId());
             } else if (listElement.isString()) {
                 generator.writeNumber(listElement.asDouble());
             } else if (listElement.isString()) {
