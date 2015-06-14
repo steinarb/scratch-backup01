@@ -23,28 +23,49 @@ public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof PropertysetImpl)) {
-            return false;
-        }
-
-        try {
-            Object objValue = obj.getClass().getDeclaredField("value").get(obj);
-            Object objRefId = objValue.getClass().getMethod("getId", new Class<?>[0]).invoke(objValue, new Object[0]);
-            return value.getId().equals(objRefId);
-        } catch (Exception e) {
-            return false;
-        }
+    public String toString() {
+        return value != null && value.getId() != null ? value.getId().toString() : "null";
     }
 
     @Override
     public int hashCode() {
-        return value != null && value.getId() != null ? value.getId().hashCode() : 0;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
     }
 
     @Override
-    public String toString() {
-        return value != null && value.getId() != null ? value.getId().toString() : "null";
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        PropertysetPropertyvalueBase other = (PropertysetPropertyvalueBase) obj;
+        if (value == null) {
+            if (other.value != null) {
+                return false;
+            }
+        }
+
+        if (value.getId() != null) {
+            return value.getId().equals(other.value.getId());
+        }
+
+
+        if (other.value.getId() != null) {
+            return false;
+        }
+
+        return true;
     }
 
 }

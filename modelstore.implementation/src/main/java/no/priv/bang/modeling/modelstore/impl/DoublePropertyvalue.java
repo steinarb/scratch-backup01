@@ -60,23 +60,42 @@ public class DoublePropertyvalue extends PropertyvalueBase {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof DoublePropertyvalue)) {
-            return false;
-        }
-
-        DoublePropertyvalue objVal = (DoublePropertyvalue) obj;
-        return (asDouble().doubleValue() == objVal.asDouble().doubleValue());
+    public String toString() {
+        return (value != null) ? value.toString() : "null";
     }
 
     @Override
     public int hashCode() {
-        return (value != null) ? value.hashCode() : 0;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
     }
 
     @Override
-    public String toString() {
-        return (value != null) ? value.toString() : "null";
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        DoublePropertyvalue other = (DoublePropertyvalue) obj;
+        if (value == null) {
+            if (other.value != null) {
+                return false;
+            }
+        } else if (!value.equals(other.value)) {
+            return false;
+        }
+
+        return true;
     }
 
 }

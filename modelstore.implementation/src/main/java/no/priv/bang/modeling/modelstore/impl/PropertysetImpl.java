@@ -208,27 +208,43 @@ public class PropertysetImpl implements Propertyset {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof PropertysetImpl)) {
-            return false;
-        }
-
-        try {
-            Object objProperties = obj.getClass().getDeclaredField("properties").get(obj);
-            return properties.equals(objProperties);
-        } catch (Exception e) {
-            return false;
-        }
+    public String toString() {
+        return properties != null ? properties.toString() : "null";
     }
 
     @Override
     public int hashCode() {
-        return properties != null ? properties.hashCode() : 0;
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+            + ((properties == null) ? 0 : properties.hashCode());
+        return result;
     }
 
     @Override
-    public String toString() {
-        return properties != null ? properties.toString() : "null";
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        PropertysetImpl other = (PropertysetImpl) obj;
+        if (properties == null) {
+            if (other.properties != null) {
+                return false;
+            }
+        } else if (!properties.equals(other.properties)) {
+            return false;
+        }
+
+        return true;
     }
 
 }
