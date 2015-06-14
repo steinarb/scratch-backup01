@@ -72,11 +72,6 @@ public class StringPropertyvalue extends PropertyvalueBase {
     }
 
     @Override
-    public String toString() {
-        return (value != null) ? value.toString() : "null";
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -108,6 +103,11 @@ public class StringPropertyvalue extends PropertyvalueBase {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "StringPropertyvalue [value=" + value + "]";
     }
 
 }

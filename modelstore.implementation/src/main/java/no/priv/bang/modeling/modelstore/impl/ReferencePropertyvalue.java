@@ -23,11 +23,6 @@ public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
     }
 
     @Override
-    public String toString() {
-        return value != null && value.getId() != null ? value.getId().toString() : "null";
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -66,6 +61,11 @@ public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ReferencePropertyvalue [value=" + value + "]";
     }
 
 }

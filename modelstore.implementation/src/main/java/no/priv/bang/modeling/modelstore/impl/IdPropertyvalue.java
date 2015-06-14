@@ -80,11 +80,6 @@ class IdPropertyvalue implements Propertyvalue {
     }
 
     @Override
-    public String toString() {
-        return (value != null) ? value.toString() : "null";
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -116,6 +111,11 @@ class IdPropertyvalue implements Propertyvalue {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "IdPropertyvalue [value=" + value + "]";
     }
 
 }
