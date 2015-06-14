@@ -25,6 +25,8 @@ public interface Propertyset {
 
     Propertyvalue getProperty(String propertyname);
 
+    void setProperty(String propertyname, Propertyvalue property);
+
     void addAspect(Propertyset aspect);
 
     boolean hasAspect();

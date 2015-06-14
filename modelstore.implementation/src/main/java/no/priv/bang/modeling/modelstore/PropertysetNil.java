@@ -38,6 +38,10 @@ public final class PropertysetNil implements Propertyset {
         return PropertyvalueNil.getNil();
     }
 
+    public void setProperty(String propertyname, Propertyvalue property) {
+        // No-op
+    }
+
     public boolean hasAspect() {
         return false;
     }

@@ -40,6 +40,10 @@ public class PropertysetImpl implements Propertyset {
         return PropertyvalueNil.getNil();
     }
 
+    public void setProperty(String propertyname, Propertyvalue property) {
+        properties.put(propertyname, property);
+    }
+
     public boolean isNil() {
         return false;
     }
