@@ -14,11 +14,11 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
  * @author Steinar Bang
  *
  */
-class BooleanPropertyvalue extends PropertyvalueBase {
+public class BooleanPropertyvalue extends PropertyvalueBase {
 
     private Boolean value;
 
-    BooleanPropertyvalue(Boolean value) {
+    public BooleanPropertyvalue(Boolean value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asBoolean();
     	} else {
