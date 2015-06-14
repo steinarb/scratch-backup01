@@ -49,4 +49,24 @@ public class ListPropertyvalue extends PropertyvalueBase {
         return value;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ListPropertyvalue)) {
+            return false;
+        }
+
+        ListPropertyvalue objVal = (ListPropertyvalue) obj;
+        return (asList().equals(objVal.asList()));
+    }
+
+    @Override
+    public int hashCode() {
+        return (value != null) ? value.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return (value != null) ? value.toString() : "null";
+    }
+
 }

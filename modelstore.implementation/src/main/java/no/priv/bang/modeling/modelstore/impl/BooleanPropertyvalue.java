@@ -64,4 +64,24 @@ public class BooleanPropertyvalue extends PropertyvalueBase {
         return PropertyvalueNil.getNil().asList();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BooleanPropertyvalue)) {
+            return false;
+        }
+
+        BooleanPropertyvalue objVal = (BooleanPropertyvalue) obj;
+        return (asBoolean().booleanValue() == objVal.asBoolean().booleanValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return (value != null) ? value.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return (value != null) ? value.toString() : "null";
+    }
+
 }

@@ -59,4 +59,24 @@ public class DoublePropertyvalue extends PropertyvalueBase {
         return PropertyvalueNil.getNil().asList();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DoublePropertyvalue)) {
+            return false;
+        }
+
+        DoublePropertyvalue objVal = (DoublePropertyvalue) obj;
+        return (asDouble().doubleValue() == objVal.asDouble().doubleValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return (value != null) ? value.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return (value != null) ? value.toString() : "null";
+    }
+
 }

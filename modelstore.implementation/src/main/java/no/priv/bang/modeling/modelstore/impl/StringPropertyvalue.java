@@ -71,4 +71,24 @@ public class StringPropertyvalue extends PropertyvalueBase {
         return PropertyvalueNil.getNil().asList();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof StringPropertyvalue)) {
+            return false;
+        }
+
+        StringPropertyvalue objVal = (StringPropertyvalue) obj;
+        return (asString().equals(objVal.asString()));
+    }
+
+    @Override
+    public String toString() {
+        return (value != null) ? value.toString() : "null";
+    }
+
+    @Override
+    public int hashCode() {
+        return (value != null) ? value.hashCode() : 0;
+    }
+
 }

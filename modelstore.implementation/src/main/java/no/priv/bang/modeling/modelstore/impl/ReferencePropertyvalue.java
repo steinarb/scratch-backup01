@@ -22,4 +22,29 @@ public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
         return value;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PropertysetImpl)) {
+            return false;
+        }
+
+        try {
+            Object objValue = obj.getClass().getDeclaredField("value").get(obj);
+            Object objRefId = objValue.getClass().getMethod("getId", new Class<?>[0]).invoke(objValue, new Object[0]);
+            return value.getId().equals(objRefId);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return value != null && value.getId() != null ? value.getId().hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return value != null && value.getId() != null ? value.getId().toString() : "null";
+    }
+
 }

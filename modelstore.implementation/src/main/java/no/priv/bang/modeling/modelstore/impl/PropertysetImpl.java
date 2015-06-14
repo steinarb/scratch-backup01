@@ -207,4 +207,28 @@ public class PropertysetImpl implements Propertyset {
     	}
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PropertysetImpl)) {
+            return false;
+        }
+
+        try {
+            Object objProperties = obj.getClass().getDeclaredField("properties").get(obj);
+            return properties.equals(objProperties);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return properties != null ? properties.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return properties != null ? properties.toString() : "null";
+    }
+
 }
