@@ -118,4 +118,9 @@ public final class PropertysetNil implements Propertyset {
         // No-op
     }
 
+    @Override
+    public String toString() {
+        return "PropertysetNil []";
+    }
+
 }
