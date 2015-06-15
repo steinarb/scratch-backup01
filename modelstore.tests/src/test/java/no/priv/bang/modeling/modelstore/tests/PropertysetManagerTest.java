@@ -35,6 +35,7 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
                        mavenBundle("org.slf4j", "slf4j-api", "1.7.2"),
                        mavenBundle("ch.qos.logback", "logback-core", "1.0.4"),
                        mavenBundle("ch.qos.logback", "logback-classic", "1.0.4"),
+                       mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.5.3"),
                        mavenBundle("no.priv.bang.modeling", "modelstore.implementation", getMavenProjectVersion()),
                        junitBundles());
     }
