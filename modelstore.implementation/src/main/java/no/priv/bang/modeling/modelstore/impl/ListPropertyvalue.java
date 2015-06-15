@@ -63,6 +63,14 @@ public class ListPropertyvalue extends PropertyvalueBase {
             return true;
         }
 
+        if (obj instanceof PropertyvalueNil) {
+            // If this list is unset or empty
+            // test equal to a nil property value.
+            if (value == null || value.isEmpty()) {
+                return true;
+            }
+        }
+
         if (obj == null) {
             return false;
         }

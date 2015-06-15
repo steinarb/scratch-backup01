@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
@@ -110,6 +111,20 @@ public class ListPropertyvalueTest {
     	PropertyvalueList list = value.asList();
     	assertFalse(list.isEmpty());
     	assertEquals(propertyvalueList.size(), list.size());
+    }
+
+    /**
+     * Verify that a property value containing an empty list is
+     * equal to the list extracted from a {@link PropertyvalueNil}.
+     */
+    @Test
+    public void testEmptyListEqualsNilList() {
+    	ListPropertyvalue emptylist = new ListPropertyvalue(new PropertyvalueArrayList());
+    	Propertyvalue nil = PropertyvalueNil.getNil();
+    	assertTrue(emptylist.equals(nil));
+
+    	// TODO: should the equals be implemented in the nil object as well?
+    	assertFalse(nil.equals(emptylist));
     }
 
 }
