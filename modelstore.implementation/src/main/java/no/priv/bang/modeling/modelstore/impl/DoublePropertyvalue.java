@@ -14,7 +14,7 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
  * @author Steinar Bang
  *
  */
-public class DoublePropertyvalue extends PropertyvalueBase {
+class DoublePropertyvalue extends PropertyvalueBase {
     private Double value;
 
     public DoublePropertyvalue(Double value) {

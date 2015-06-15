@@ -14,7 +14,7 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
  * @author Steinar Bang
  *
  */
-public class LongPropertyvalue extends PropertyvalueBase {
+class LongPropertyvalue extends PropertyvalueBase {
     private Long value;
 
     public LongPropertyvalue(Long value) {
