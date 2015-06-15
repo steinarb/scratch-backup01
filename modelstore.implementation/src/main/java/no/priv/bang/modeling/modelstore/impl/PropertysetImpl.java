@@ -226,6 +226,13 @@ public class PropertysetImpl implements Propertyset {
             return false;
         }
 
+        if (obj instanceof PropertysetNil) {
+            // A nil propertyset is equal to an empty propertyset
+            if (properties == null || properties.isEmpty()) {
+                return true;
+            }
+        }
+
         if (getClass() != obj.getClass()) {
             return false;
         }

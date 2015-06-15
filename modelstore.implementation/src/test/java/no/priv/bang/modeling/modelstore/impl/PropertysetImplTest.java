@@ -389,4 +389,12 @@ public class PropertysetImplTest {
         assertEquals(PropertyvalueNil.getNil().asList(), propertyset.getListProperty("referencedObject"));
     }
 
+    @Test
+    public void testEmptyPropertysetEqualsPropertysetNil() {
+    	Propertyset emptypropertyset = new PropertysetImpl();
+    	Propertyset nil = PropertysetNil.getNil();
+    	assertTrue(emptypropertyset.equals(nil));
+    	assertTrue(nil.equals(emptypropertyset));
+    }
+
 }
