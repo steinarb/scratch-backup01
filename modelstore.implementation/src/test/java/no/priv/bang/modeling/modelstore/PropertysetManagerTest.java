@@ -8,9 +8,18 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.impl.BooleanPropertyvalue;
+import no.priv.bang.modeling.modelstore.impl.ComplexPropertyvalue;
+import no.priv.bang.modeling.modelstore.impl.DoublePropertyvalue;
 import no.priv.bang.modeling.modelstore.impl.ImplementationFactory;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
+import no.priv.bang.modeling.modelstore.impl.ListPropertyvalue;
+import no.priv.bang.modeling.modelstore.impl.LongPropertyvalue;
+import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
 import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
+import no.priv.bang.modeling.modelstore.impl.PropertyvalueArrayList;
+import no.priv.bang.modeling.modelstore.impl.ReferencePropertyvalue;
+import no.priv.bang.modeling.modelstore.impl.StringPropertyvalue;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,6 +28,9 @@ import org.junit.rules.TemporaryFolder;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 
 /**
  * Unit test for the {@link PropertysetManager} interface and its
@@ -149,6 +161,51 @@ public class PropertysetManagerTest {
 
         JsonFactory jsonFactory = new JsonFactory();
         File propertysetsFile = folder.newFile("propertysets.json");
+        outputPropertySets(jsonFactory, propertysetsFile, propertysets);
+
+        String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
+        System.out.println(contents);
+
+        // Parse the written data
+        PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
+        JsonParser parser = jsonFactory.createParser(propertysetsFile);
+        while (parser.nextToken() != null) {
+            JsonToken currentToken = parser.getCurrentToken();
+            if (currentToken == JsonToken.START_ARRAY) {
+                parseArray(parser, propertysetManager2);
+            } else if (currentToken == JsonToken.START_OBJECT) {
+                parseObject(parser, propertysetManager2);
+            }
+        }
+
+        // Output the parsed content for debug
+        File parsedContentFile = folder.newFile("parsedcontent.json");
+        outputPropertySets(jsonFactory, parsedContentFile, propertysetManager2.listAllPropertysets());
+        String parsedContent = new String(Files.readAllBytes(parsedContentFile.toPath()));
+        System.out.println();
+        System.out.println();
+        System.out.println("Parsed content:");
+        System.out.print(parsedContent);
+
+        // verify that what's parsed is what went in.
+        assertEquals(propertysetManager.listAllPropertysets().size(), propertysetManager2.listAllPropertysets().size());
+        compareAllPropertysets(propertysetManager, propertysetManager2);
+    }
+
+    private void compareAllPropertysets(PropertysetManager propertysetManager, PropertysetManager propertysetManager2) {
+    	for (Propertyset propertyset : propertysetManager.listAllPropertysets()) {
+            Propertyset parsedPropertyset = propertysetManager2.findPropertyset(propertyset.getId());
+            for (String propertyname : propertyset.getPropertynames()) {
+                Propertyvalue originalValue = propertyset.getProperty(propertyname);
+                Propertyvalue parsedValue = parsedPropertyset.getProperty(propertyname);
+                assertEquals(originalValue, parsedValue);
+            }
+        }
+    }
+
+    private void outputPropertySets(JsonFactory jsonFactory,
+                                    File propertysetsFile, Collection<Propertyset> propertysets)
+        throws IOException {
         JsonGenerator generator = new JsonGeneratorWithReferences(jsonFactory.createGenerator(propertysetsFile, JsonEncoding.UTF8));
         assertTrue(generator.canWriteObjectId());
         generator.useDefaultPrettyPrinter();
@@ -159,9 +216,106 @@ public class PropertysetManagerTest {
 
         generator.writeEndArray();
         generator.close();
+    }
 
-        String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
-        System.out.println(contents);
+    private Propertyvalue parseArray(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
+    	PropertyvalueList propertyList = new PropertyvalueArrayList();
+        while (parser.nextToken() != JsonToken.END_ARRAY) {
+            JsonToken currentToken = parser.getCurrentToken();
+            if (currentToken == JsonToken.VALUE_STRING) {
+                propertyList.add(new StringPropertyvalue(parser.getText()));
+            } else if (currentToken == JsonToken.VALUE_NUMBER_FLOAT) {
+                propertyList.add(new DoublePropertyvalue(parser.getDoubleValue()));
+            } else if (currentToken == JsonToken.VALUE_NUMBER_INT) {
+                propertyList.add(new LongPropertyvalue(parser.getLongValue()));
+            } else if (currentToken == JsonToken.VALUE_TRUE) {
+                propertyList.add(new BooleanPropertyvalue(true));
+            } else if (currentToken == JsonToken.VALUE_FALSE) {
+                propertyList.add(new BooleanPropertyvalue(false));
+            } else if (currentToken == JsonToken.START_OBJECT) {
+                propertyList.add(parseObject(parser, propertysetManager));
+            } else if (currentToken == JsonToken.START_ARRAY) {
+                propertyList.add(parseArray(parser, propertysetManager));
+            }
+        }
+
+        return new ListPropertyvalue(propertyList);
+    }
+
+    private Propertyvalue parseObject(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
+        Propertyset propertyset = null;
+        while (parser.nextToken() != JsonToken.END_OBJECT) {
+            String currentFieldName = parser.getCurrentName();
+            if ("ref".equals(currentFieldName)) {
+                // This is an object reference, rather than an object
+                parser.nextToken();
+                String refValue = parser.getText();
+                UUID refId = UUID.fromString(refValue);
+
+                // Note: This will create an empty placeholder if the referenced object
+                // hasn't been parsed yet.
+                // When the referenced object is parsed it will retrieve the same
+                // placeholder and start filling in its properties.
+                Propertyset referencedPropertyset = propertysetManager.findPropertyset(refId);
+
+                // Complete the object, by consuming the END_OBJECT before returning
+                parser.nextToken();
+
+                // Return with the reference.
+                // If this should happen to be a regular object with a field named "ref",
+                // then parsing will fail because next token isn't the expected values
+                return new ReferencePropertyvalue(referencedPropertyset);
+            }
+
+            if ("id".equals(currentFieldName)) {
+                parser.nextToken();
+                String idValue = parser.getText();
+                UUID id = UUID.fromString(idValue);
+                if (propertyset == null) {
+                    propertyset = propertysetManager.findPropertyset(id);
+                } else {
+                    // Need to copy existing properties parsed earlier
+                    Propertyset complexvalue = propertyset;
+                    propertyset = propertysetManager.findPropertyset(id);
+                    for (String propertyname : complexvalue.getPropertynames()) {
+                        propertyset.setProperty(propertyname, complexvalue.getProperty(propertyname));
+                    }
+                }
+            } else {
+                // Parsing all ordinary properties of a propertyset
+                parser.nextToken();
+                JsonToken currentToken = parser.getCurrentToken();
+                if (currentToken == JsonToken.VALUE_STRING) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    propertyset.setStringProperty(currentFieldName, parser.getText());
+                } else if (currentToken == JsonToken.VALUE_NUMBER_FLOAT) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    propertyset.setDoubleProperty(currentFieldName, parser.getDoubleValue());
+                } else if (currentToken == JsonToken.VALUE_NUMBER_INT) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    propertyset.setLongProperty(currentFieldName, parser.getLongValue());
+                } else if (currentToken == JsonToken.VALUE_TRUE) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    propertyset.setBooleanProperty(currentFieldName, true);
+                } else if (currentToken == JsonToken.VALUE_FALSE) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    propertyset.setBooleanProperty(currentFieldName, false);
+                } else if (currentToken == JsonToken.START_OBJECT) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    propertyset.setProperty(currentFieldName, parseObject(parser, propertysetManager));
+                } else if (currentToken == JsonToken.START_ARRAY) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    propertyset.setProperty(currentFieldName, parseArray(parser, propertysetManager));
+                }
+            }
+        }
+
+        return new ComplexPropertyvalue(createPropertysetIfNull(propertyset));
+    }
+
+    private Propertyset createPropertysetIfNull(Propertyset propertyset) {
+        propertyset = (propertyset != null) ? propertyset : new PropertysetImpl();
+        return propertyset;
     }
 
     @Test
@@ -332,6 +486,7 @@ public class PropertysetManagerTest {
         Propertyset bicycleAspectProperties = propertysetManager.createPropertyset();
         Propertyset frameNumber = propertysetManager.createPropertyset();
         frameNumber.setStringProperty("definition", "Unique identifier for the bicycle");
+        bicycleAspectProperties.setComplexProperty("framenumber", frameNumber);
         bicycleAspect.setComplexProperty("properties", bicycleAspectProperties);
 
         // Subaspect "car"
