@@ -40,7 +40,7 @@ public class PropertyvalueArrayList extends AbstractList<Propertyvalue> implemen
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((arrayList == null) ? 0 : arrayList.hashCode());
+        result = prime * result + arrayList.hashCode();
         return result;
     }
 
@@ -50,20 +50,16 @@ public class PropertyvalueArrayList extends AbstractList<Propertyvalue> implemen
             return true;
         }
 
+        if (obj == null) {
+            return false;
+        }
+
         if (getClass() != obj.getClass()) {
             return false;
         }
 
         PropertyvalueArrayList other = (PropertyvalueArrayList) obj;
-        if (arrayList == null) {
-            if (other.arrayList != null) {
-                return false;
-            }
-        } else if (!arrayList.equals(other.arrayList)) {
-            return false;
-        }
-
-        return true;
+        return arrayList.equals(other.arrayList);
     }
 
 }
