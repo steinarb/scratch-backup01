@@ -12,6 +12,7 @@ import no.priv.bang.modeling.modelstore.impl.ImplementationFactory;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
 import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
+import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -160,17 +161,6 @@ public class PropertysetManagerTest {
         // verify that what's parsed is what went in.
         assertEquals(propertysetManager.listAllPropertysets().size(), propertysetManager2.listAllPropertysets().size());
         compareAllPropertysets(propertysetManager, propertysetManager2);
-    }
-
-    private void compareAllPropertysets(PropertysetManager propertysetManager, PropertysetManager propertysetManager2) {
-    	for (Propertyset propertyset : propertysetManager.listAllPropertysets()) {
-            Propertyset parsedPropertyset = propertysetManager2.findPropertyset(propertyset.getId());
-            for (String propertyname : propertyset.getPropertynames()) {
-                Propertyvalue originalValue = propertyset.getProperty(propertyname);
-                Propertyvalue parsedValue = parsedPropertyset.getProperty(propertyname);
-                assertEquals(originalValue, parsedValue);
-            }
-        }
     }
 
     @Test
