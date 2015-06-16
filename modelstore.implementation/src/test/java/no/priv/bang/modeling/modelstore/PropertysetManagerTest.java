@@ -153,21 +153,9 @@ public class PropertysetManagerTest {
         File propertysetsFile = folder.newFile("propertysets.json");
         persister.persist(propertysetsFile, propertysets);
 
-        String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
-        System.out.println(contents);
-
         // Parse the written data
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
         persister.restore(propertysetsFile, propertysetManager2);
-
-        // Output the parsed content for debug
-        File parsedContentFile = folder.newFile("parsedcontent.json");
-        persister.persist(parsedContentFile, propertysetManager2.listAllPropertysets());
-        String parsedContent = new String(Files.readAllBytes(parsedContentFile.toPath()));
-        System.out.println();
-        System.out.println();
-        System.out.println("Parsed content:");
-        System.out.print(parsedContent);
 
         // verify that what's parsed is what went in.
         assertEquals(propertysetManager.listAllPropertysets().size(), propertysetManager2.listAllPropertysets().size());
