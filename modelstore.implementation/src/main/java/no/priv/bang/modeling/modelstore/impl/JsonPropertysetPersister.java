@@ -42,8 +42,8 @@ public class JsonPropertysetPersister {
         this.factory = factory;
     }
 
-    public void persist(File propertysetsFile, Collection<Propertyset> propertysets) throws IOException {
-        outputPropertySets(factory, propertysetsFile, propertysets);
+    public void persist(File propertysetsFile, PropertysetManager propertysetManager) throws IOException {
+        outputPropertySets(factory, propertysetsFile, propertysetManager.listAllPropertysets());
     }
 
     public void restore(File propertysetsFile, PropertysetManager propertysetManager) throws JsonParseException, IOException {
@@ -110,12 +110,14 @@ public class JsonPropertysetPersister {
             if (listElement.isReference()) {
                 generator.writeObjectRef(listElement.asReference().getId());
             } else if (listElement.isString()) {
+                generator.writeString(listElement.asString());
+            } else if (listElement.isDouble()) {
                 generator.writeNumber(listElement.asDouble());
-            } else if (listElement.isString()) {
+            } else if (listElement.isLong()) {
                 generator.writeNumber(listElement.asLong());
             } else if (listElement.isBoolean()) {
                 generator.writeBoolean(listElement.asBoolean());
-            } else if (listElement.isString()) {
+            } else if (listElement.isComplexProperty()) {
                 outputPropertyset(generator, listElement.asComplexProperty());
             } else if (listElement.isList()) {
                 outputArray(generator, listElement.asList());

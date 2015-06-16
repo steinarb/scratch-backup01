@@ -1,6 +1,10 @@
 package no.priv.bang.modeling.modelstore.testutils;
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
@@ -12,6 +16,17 @@ import no.priv.bang.modeling.modelstore.Propertyvalue;
  *
  */
 public class TestUtils {
+
+    /**
+     * Get a {@link File} referencing a resource.
+     *
+     * @param resource the name of the resource to get a File for
+     * @return a {@link File} object referencing the resource
+     * @throws URISyntaxException
+     */
+    public static File getResourceAsFile(String resource) throws URISyntaxException {
+        return Paths.get(TestUtils.class.getResource(resource).toURI()).toFile();
+    }
 
     /**
      * Iterate over all of the {@link Propertyset} instances of a

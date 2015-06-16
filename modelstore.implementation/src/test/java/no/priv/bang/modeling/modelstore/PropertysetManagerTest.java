@@ -147,12 +147,10 @@ public class PropertysetManagerTest {
         PropertysetManager propertysetManager = new PropertysetManagerProvider();
         buildModelWithAspects(propertysetManager);
 
-        Collection<Propertyset> propertysets = propertysetManager.listAllPropertysets();
-
         JsonFactory jsonFactory = new JsonFactory();;
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         File propertysetsFile = folder.newFile("propertysets.json");
-        persister.persist(propertysetsFile, propertysets);
+        persister.persist(propertysetsFile, propertysetManager);
 
         // Parse the written data
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
