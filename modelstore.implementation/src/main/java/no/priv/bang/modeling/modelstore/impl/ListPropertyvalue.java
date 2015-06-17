@@ -53,7 +53,7 @@ public class ListPropertyvalue extends PropertyvalueBase {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + value.hashCode();
         return result;
     }
 
@@ -64,31 +64,22 @@ public class ListPropertyvalue extends PropertyvalueBase {
         }
 
         if (obj instanceof PropertyvalueNil) {
-            // If this list is unset or empty
-            // test equal to a nil property value.
-            if (value == null || value.isEmpty()) {
-                return true;
-            }
+            // If this list is empty test equal to a nil property value.
+            // If not empty, they are not equal
+            return value.isEmpty();
         }
 
         if (obj == null) {
             return false;
         }
 
+
         if (getClass() != obj.getClass()) {
             return false;
         }
 
         ListPropertyvalue other = (ListPropertyvalue) obj;
-        if (value == null) {
-            if (other.value != null) {
-                return false;
-            }
-        } else if (!value.equals(other.value)) {
-            return false;
-        }
-
-        return true;
+        return value.equals(other.value);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
-
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
@@ -125,6 +124,58 @@ public class ListPropertyvalueTest {
 
     	// TODO: should the equals be implemented in the nil object as well?
     	assertFalse(nil.equals(emptylist));
+    }
+
+    /**
+     * Test av {@link ListPropertyvalue#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        ListPropertyvalue nullStringValue = new ListPropertyvalue(null);
+        assertEquals(32, nullStringValue.hashCode());
+        ListPropertyvalue foo = new ListPropertyvalue(new PropertyvalueArrayList());
+        assertEquals(63, foo.hashCode());
+        assertEquals(-24528609, value.hashCode());
+    }
+
+    /**
+     * Test av {@link ListPropertyvalue#equals(Object)}.
+     */
+    @Test
+    public void testEquals() {
+        ListPropertyvalue nullListValue = new ListPropertyvalue(null);
+        ListPropertyvalue emptyvalue = new ListPropertyvalue(new PropertyvalueArrayList());
+        PropertyvalueList list = new PropertyvalueArrayList();
+        list.add(new DoublePropertyvalue(3.14));
+        ListPropertyvalue otherValue = new ListPropertyvalue(list);
+        assertFalse(nullListValue.equals(null));
+        assertTrue(nullListValue.equals(PropertyvalueNil.getNil()));
+        assertTrue(nullListValue.equals(nullListValue));
+        assertTrue(nullListValue.equals(emptyvalue));
+        assertFalse(emptyvalue.equals(nullListValue));
+        assertTrue(value.equals(value));
+        assertFalse(value.equals(emptyvalue));
+        assertFalse(value.equals(nullListValue));
+        assertFalse(emptyvalue.equals(value));
+        StringPropertyvalue stringvalue = new StringPropertyvalue("foobar");
+        assertFalse(value.equals(stringvalue));
+        assertFalse(value.equals(otherValue));
+    }
+
+    /**
+     * Test av {@link ListPropertyvalue#toString()}.
+     */
+    @Test
+    public void testToString() {
+        ListPropertyvalue nullListValue = new ListPropertyvalue(null);
+        assertEquals("ListPropertyvalue [value=[]]", nullListValue.toString());
+        PropertyvalueArrayList list = new PropertyvalueArrayList();
+        list.add(new StringPropertyvalue("foo"));
+        list.add(new StringPropertyvalue("bar"));
+        list.add(new DoublePropertyvalue(2.78));
+        ListPropertyvalue otherValue = new ListPropertyvalue(list);
+        assertEquals("ListPropertyvalue [value=[StringPropertyvalue [value=foo], StringPropertyvalue [value=bar], DoublePropertyvalue [value=2.78]]]", otherValue.toString());
+        assertEquals("ListPropertyvalue [value=[BooleanPropertyvalue [value=true], LongPropertyvalue [value=42], DoublePropertyvalue [value=2.78], StringPropertyvalue [value=foo bar]]]", value.toString());
     }
 
 }
