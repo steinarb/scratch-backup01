@@ -105,4 +105,40 @@ public class DoublePropertyvalueTest {
     	assertTrue(emptyList.isEmpty());
     }
 
+    /**
+     * Test av {@link DoublePropertyvalue#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        DoublePropertyvalue nullDoubleValue = new DoublePropertyvalue(null);
+        assertEquals(31, nullDoubleValue.hashCode());
+        DoublePropertyvalue pi = new DoublePropertyvalue(3.14);
+        assertEquals(300063686, pi.hashCode());
+    }
+
+    /**
+     * Test av {@link DoublePropertyvalue#equals(Object)}.
+     */
+    @Test
+    public void testEquals() {
+        DoublePropertyvalue nullDoubleValue = new DoublePropertyvalue(null);
+        DoublePropertyvalue value = new DoublePropertyvalue(37.5);
+        assertFalse(nullDoubleValue.equals(null));
+        assertFalse(nullDoubleValue.equals(PropertyvalueNil.getNil()));
+        assertTrue(nullDoubleValue.equals(nullDoubleValue));
+        assertFalse(nullDoubleValue.equals(value));
+        assertFalse(value.equals(nullDoubleValue));
+    }
+
+    /**
+     * Test av {@link DoublePropertyvalue#toString()}.
+     */
+    @Test
+    public void testToString() {
+        DoublePropertyvalue nullDoubleValue = new DoublePropertyvalue(null);
+        assertEquals("DoublePropertyvalue [value=0.0]", nullDoubleValue.toString());
+        DoublePropertyvalue e = new DoublePropertyvalue(2.78);
+        assertEquals("DoublePropertyvalue [value=2.78]", e.toString());
+    }
+
 }
