@@ -124,4 +124,40 @@ public class StringPropertyvalueTest {
     	assertTrue(emptyList2.isEmpty());
     }
 
+    /**
+     * Test av {@link StringPropertyvalue#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        StringPropertyvalue nullStringValue = new StringPropertyvalue(null);
+        assertEquals(31, nullStringValue.hashCode());
+        StringPropertyvalue foo = new StringPropertyvalue("foo");
+        assertEquals(101605, foo.hashCode());
+    }
+
+    /**
+     * Test av {@link StringPropertyvalue#equals(Object)}.
+     */
+    @Test
+    public void testEquals() {
+        StringPropertyvalue nullStringValue = new StringPropertyvalue(null);
+        StringPropertyvalue value = new StringPropertyvalue("foobar");
+        assertFalse(nullStringValue.equals(null));
+        assertFalse(nullStringValue.equals(PropertyvalueNil.getNil()));
+        assertTrue(nullStringValue.equals(nullStringValue));
+        assertFalse(nullStringValue.equals(value));
+        assertFalse(value.equals(nullStringValue));
+    }
+
+    /**
+     * Test av {@link StringPropertyvalue#toString()}.
+     */
+    @Test
+    public void testToString() {
+        StringPropertyvalue nullLongValue = new StringPropertyvalue(null);
+        assertEquals("StringPropertyvalue [value=]", nullLongValue.toString());
+        StringPropertyvalue value = new StringPropertyvalue("bar");
+        assertEquals("StringPropertyvalue [value=bar]", value.toString());
+    }
+
 }
