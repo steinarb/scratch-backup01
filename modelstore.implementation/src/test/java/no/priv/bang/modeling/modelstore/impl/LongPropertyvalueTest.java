@@ -105,4 +105,40 @@ public class LongPropertyvalueTest {
     	assertTrue(emptyList.isEmpty());
     }
 
+    /**
+     * Test av {@link LongPropertyvalue#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        LongPropertyvalue nullLongValue = new LongPropertyvalue(null);
+        assertEquals(31, nullLongValue.hashCode());
+        LongPropertyvalue value = new LongPropertyvalue(42L);
+        assertEquals(73, value.hashCode());
+    }
+
+    /**
+     * Test av {@link LongPropertyvalue#equals(Object)}.
+     */
+    @Test
+    public void testEquals() {
+        LongPropertyvalue nullLongValue = new LongPropertyvalue(null);
+        LongPropertyvalue value = new LongPropertyvalue(21L);
+        assertFalse(nullLongValue.equals(null));
+        assertFalse(nullLongValue.equals(PropertyvalueNil.getNil()));
+        assertTrue(nullLongValue.equals(nullLongValue));
+        assertFalse(nullLongValue.equals(value));
+        assertFalse(value.equals(nullLongValue));
+    }
+
+    /**
+     * Test av {@link LongPropertyvalue#toString()}.
+     */
+    @Test
+    public void testToString() {
+        LongPropertyvalue nullLongValue = new LongPropertyvalue(null);
+        assertEquals("LongPropertyvalue [value=0]", nullLongValue.toString());
+        LongPropertyvalue value = new LongPropertyvalue(1024L);
+        assertEquals("LongPropertyvalue [value=1024]", value.toString());
+    }
+
 }
