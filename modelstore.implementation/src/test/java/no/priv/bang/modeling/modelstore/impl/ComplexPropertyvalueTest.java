@@ -112,4 +112,38 @@ public class ComplexPropertyvalueTest {
     	assertTrue(emptyList.isEmpty());
     }
 
+    /**
+     * Test av {@link ComplexPropertyvalue#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        ComplexPropertyvalue nullComplexValue = new ComplexPropertyvalue(null);
+        assertEquals(31, nullComplexValue.hashCode());
+        assertEquals(1958288831, value.hashCode());
+    }
+
+    /**
+     * Test av {@link ComplexPropertyvalue#equals(Object)}.
+     */
+    @Test
+    public void testEquals() {
+        ComplexPropertyvalue nullComplexValue = new ComplexPropertyvalue(null);
+        assertFalse(nullComplexValue.equals(null));
+        assertFalse(nullComplexValue.equals(PropertyvalueNil.getNil().asComplexProperty()));
+        assertTrue(nullComplexValue.equals(nullComplexValue));
+        assertFalse(nullComplexValue.equals(value));
+        assertFalse(value.equals(nullComplexValue));
+        assertTrue(value.equals(value));
+    }
+
+    /**
+     * Test av {@link ComplexPropertyvalue#toString()}.
+     */
+    @Test
+    public void testToString() {
+        ComplexPropertyvalue nullComplexValue = new ComplexPropertyvalue(null);
+        assertEquals("ComplexPropertyvalue [value=PropertysetNil []]", nullComplexValue.toString());
+        assertEquals("ComplexPropertyvalue [value=PropertysetImpl [properties={string=StringPropertyvalue [value=foo bar], boolean=BooleanPropertyvalue [value=true], double=DoublePropertyvalue [value=2.78], long=LongPropertyvalue [value=42]}]]", value.toString());
+    }
+
 }

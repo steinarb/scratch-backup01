@@ -26,7 +26,7 @@ public class ComplexPropertyvalue extends PropertysetPropertyvalueBase {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + value.hashCode();
         return result;
     }
 
@@ -45,15 +45,7 @@ public class ComplexPropertyvalue extends PropertysetPropertyvalueBase {
         }
 
         PropertysetPropertyvalueBase other = (PropertysetPropertyvalueBase) obj;
-        if (value == null) {
-            if (other.value != null) {
-                return false;
-            }
-        } else if (!value.equals(other.value)) {
-            return false;
-        }
-
-        return true;
+        return value.equals(other.value);
     }
 
     @Override
