@@ -24,6 +24,10 @@ public class ComplexPropertyvalueTest {
     @Before
     public void setUp() throws Exception {
         complexProperty = new PropertysetImpl();
+        complexProperty.setBooleanProperty("boolean", Boolean.TRUE);
+        complexProperty.setLongProperty("long", Long.valueOf(42));
+        complexProperty.setDoubleProperty("double", Double.valueOf(2.78));
+        complexProperty.setStringProperty("string", "foo bar");
         value = new ComplexPropertyvalue(complexProperty);
     }
 

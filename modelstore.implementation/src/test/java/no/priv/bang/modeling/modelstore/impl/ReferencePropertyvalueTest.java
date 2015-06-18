@@ -1,6 +1,9 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+
+import java.util.UUID;
+
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
@@ -23,7 +26,11 @@ public class ReferencePropertyvalueTest {
 
     @Before
     public void setUp() throws Exception {
-        referencedObject = new PropertysetImpl();
+        referencedObject = new PropertysetImpl(UUID.randomUUID());
+        referencedObject.setBooleanProperty("boolean", Boolean.TRUE);
+        referencedObject.setLongProperty("long", Long.valueOf(42));
+        referencedObject.setDoubleProperty("double", Double.valueOf(2.78));
+        referencedObject.setStringProperty("string", "foo bar");
         value = new ReferencePropertyvalue(referencedObject);
     }
 
