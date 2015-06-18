@@ -24,7 +24,7 @@ public class IdPropertyvalueTest {
 
     @Before
     public void setUp() throws Exception {
-        value = new IdPropertyvalue(UUID.randomUUID());
+        value = new IdPropertyvalue(UUID.fromString("e40fb164-3dd3-43b8-839f-8781bbcb2a15"));
     }
 
     @Test
@@ -106,6 +106,42 @@ public class IdPropertyvalueTest {
     public void testAsList() {
     	PropertyvalueList emptyList = value.asList();
     	assertTrue(emptyList.isEmpty());
+    }
+
+    /**
+     * Test av {@link IdPropertyvalue#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        IdPropertyvalue nullIdPropertyValue = new IdPropertyvalue(null);
+        assertEquals(31, nullIdPropertyValue.hashCode());
+        assertEquals(-511156377, value.hashCode());
+    }
+
+    /**
+     * Test av {@link IdPropertyvalue#equals(Object)}.
+     */
+    @Test
+    public void testEquals() {
+        IdPropertyvalue nullIdPropertyValue = new IdPropertyvalue(null);
+        assertFalse(nullIdPropertyValue.equals(null));
+        assertFalse(nullIdPropertyValue.equals(PropertyvalueNil.getNil().asId()));
+        assertTrue(nullIdPropertyValue.equals(nullIdPropertyValue));
+        assertFalse(nullIdPropertyValue.equals(value));
+        assertFalse(value.equals(nullIdPropertyValue));
+        assertTrue(value.equals(value));
+
+        // Different object with the same UUID compares as equal
+        IdPropertyvalue value2 = new IdPropertyvalue(UUID.fromString(value.asString()));
+        assertTrue(value.equals(value2));
+    }
+
+    /**
+     * Test av {@link IdPropertyvalue#toString()}.
+     */
+    @Test
+    public void testToString() {
+        assertEquals("IdPropertyvalue [value=e40fb164-3dd3-43b8-839f-8781bbcb2a15]", value.toString());
     }
 
 }

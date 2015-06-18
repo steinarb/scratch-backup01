@@ -12,7 +12,11 @@ class IdPropertyvalue implements Propertyvalue {
     private UUID value;
 
     public IdPropertyvalue(UUID value) {
-        this.value = value;
+    	if (value != null) {
+            this.value = value;
+    	} else {
+            this.value = PropertyvalueNil.getNil().asId();
+    	}
     }
 
     public boolean isId() {
@@ -83,7 +87,7 @@ class IdPropertyvalue implements Propertyvalue {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + value.hashCode();
         return result;
     }
 
@@ -102,15 +106,7 @@ class IdPropertyvalue implements Propertyvalue {
         }
 
         IdPropertyvalue other = (IdPropertyvalue) obj;
-        if (value == null) {
-            if (other.value != null) {
-                return false;
-            }
-        } else if (!value.equals(other.value)) {
-            return false;
-        }
-
-        return true;
+        return value.equals(other.value);
     }
 
     @Override
