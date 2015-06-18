@@ -18,9 +18,21 @@ file LICENSE for the terms and specifics of the license.
  - [[https://travis-ci.org/steinarb/modelstore][Continous integration build on Travis CI]]
  - [[https://coveralls.io/r/steinarb/modelstore][Test coverage history on coveralls]]
 
-* Roadmap [0/7]
+* Roadmap [0/19]
 ** TODO Fix the test coverage of all property values (hashCode, equals and toString ruined coverage)
-** TODO Put some basic aspects in place (object, relationship, model)
+** TODO Put javadoc from travis builds on the web
+ - Could be my own server
+ - Could be a github web site
+** TODO Add javadocs to everything
+** TODO Refactor the propertyvalue creation into something that makes sense for a library bundle
+ - Maybe a static method on the PropertyValue interface, if that's possible?
+** TODO Add clone operation to Propertyset
+** TODO Add lazy copy-on-read for complex properties (possibly just do shallow copy-on-read?)
+ - Can it be possible to skip this for serialization?
+   - Or is the cost of shallow copies so low compared to the serialization that it doesn't really matter?
+** TODO Add shallow copy-on-read for list properties
+** TODO Put some basic aspects in place (object, relationship, model, aspectcontainer)
+** TODO Add AspectViwer (connected to aspect container and used as a filter)
 ** TODO Test serialization/deserialization using YAML (YAML has object id and object reference)
 ** TODO Split off ModelContext/PropertyContext
  - PropertysetManager will be the access point for creating and saving ModelContext instances
@@ -32,7 +44,25 @@ file LICENSE for the terms and specifics of the license.
 *** TODO Store metadata (last modification time, at first)
 *** TODO Create a clone operation (shallow collection copy, propertyvalues are immutable)
 *** TODO Create a merge operation that will merge all aspects and propertysets
+*** TODO Move ModelContext/PropertyContext to a library bundle (or possibly one with a factory service for modelcontexts?)
+ - Alternatively:
+   - Just move the interface definitions to a separate bundle
+     - Does this have any benefits
+*** TODO Move Jackson serialization to a separate bundle (maybe a library bundle?)
 ** TODO Storage based on SQL for relationships and references and individual JSON files
-*** TODO Individual files git versioned
+*** TODO Individual Propertyset files git versioned
+*** TODO Metatada into the RDMNS
+ - Per propertyset load time
+ - Per propertyset last modified time
+ - Propertyset delete time
+** TODO Storage based on PostgreSQL with native JSON support
 ** TODO Connect a minimal hardcoded model to eclipse GEF
 ** TODO Implement JSON storage for eclipse GEF models
+** TODO Get PropertysetManager with storage running in Karaf
+** TODO Create a RESTful API and a storage/persist mechanism on top of it
+** TODO Create a query language (or find something usable and implement/use)
+ - Possibilities
+   - I like s-expressions
+   - Is there something in JSON that could be used
+   - Just implement something as nested complex objects and let its JSON representation be the wire format
+** TODO Lag en s-expression-factory for jackson
