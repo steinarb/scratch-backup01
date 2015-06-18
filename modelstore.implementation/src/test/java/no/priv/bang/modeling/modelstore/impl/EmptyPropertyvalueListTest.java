@@ -28,6 +28,9 @@ public class EmptyPropertyvalueListTest {
     @Test
     public void testAdd() {
         assertFalse(list.add(null));
+        assertEquals(0, list.size());
+        list.add(1024, null);
+        assertEquals(0, list.size());
     }
 
     @Test
