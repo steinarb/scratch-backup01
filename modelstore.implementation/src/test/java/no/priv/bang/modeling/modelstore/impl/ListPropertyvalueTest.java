@@ -131,8 +131,8 @@ public class ListPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        ListPropertyvalue nullStringValue = new ListPropertyvalue(null);
-        assertEquals(32, nullStringValue.hashCode());
+        ListPropertyvalue nullListValue = new ListPropertyvalue(null);
+        assertEquals(32, nullListValue.hashCode());
         ListPropertyvalue foo = new ListPropertyvalue(new PropertyvalueArrayList());
         assertEquals(63, foo.hashCode());
         assertEquals(-24528609, value.hashCode());
