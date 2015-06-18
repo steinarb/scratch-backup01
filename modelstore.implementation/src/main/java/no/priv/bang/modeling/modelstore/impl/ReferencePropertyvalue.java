@@ -26,7 +26,7 @@ public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + value.getId().hashCode();
         return result;
     }
 
@@ -45,22 +45,8 @@ public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
         }
 
         PropertysetPropertyvalueBase other = (PropertysetPropertyvalueBase) obj;
-        if (value == null) {
-            if (other.value != null) {
-                return false;
-            }
-        }
 
-        if (value.getId() != null) {
-            return value.getId().equals(other.value.getId());
-        }
-
-
-        if (other.value.getId() != null) {
-            return false;
-        }
-
-        return true;
+        return value.getId().equals(other.value.getId());
     }
 
     @Override
