@@ -3,6 +3,7 @@ package no.priv.bang.modeling.modelstore.impl;
 import static org.junit.Assert.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
@@ -395,6 +396,13 @@ public class PropertysetImplTest {
     	Propertyset nil = PropertysetNil.getNil();
     	assertTrue(emptypropertyset.equals(nil));
     	assertTrue(nil.equals(emptypropertyset));
+    }
+
+    @Test
+    public void testGetProperty() {
+        Propertyset emptypropertyset = new PropertysetImpl();
+        Propertyvalue nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
+        assertEquals(PropertyvalueNil.getNil(), nosuchproperty);
     }
 
 }
