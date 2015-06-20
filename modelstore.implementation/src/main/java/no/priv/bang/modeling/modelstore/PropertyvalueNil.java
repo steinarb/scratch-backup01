@@ -103,7 +103,7 @@ public final class PropertyvalueNil implements Propertyvalue {
 
     @Override
     public String toString() {
-        return "nil";
+        return "PropertyvalueNil []";
     }
 
 }
