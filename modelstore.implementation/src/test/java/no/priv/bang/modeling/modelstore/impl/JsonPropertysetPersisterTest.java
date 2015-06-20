@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
@@ -175,8 +174,6 @@ public class JsonPropertysetPersisterTest {
         // Read the file back in and compare it with the original
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
         persister.restore(saveRestoreFile, propertysetManager2);
-        String contents = new String(Files.readAllBytes(saveRestoreFile.toPath()));
-        System.out.println(contents);
 
         // Verify that the results of the second parse are identical to the first
         assertEquals(1, propertysetManager2.listAllPropertysets().size());
@@ -201,7 +198,5 @@ public class JsonPropertysetPersisterTest {
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         File propertysetsFile = folder.newFile("propertyset.json");
         persister.persist(propertysetsFile, propertysetManager);
-        String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
-        System.out.println(contents);
     }
 }
