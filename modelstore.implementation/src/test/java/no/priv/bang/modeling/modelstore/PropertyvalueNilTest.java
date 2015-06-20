@@ -14,6 +14,11 @@ import org.junit.Test;
 public class PropertyvalueNilTest {
 
     @Test
+    public void testIsId() {
+        assertFalse(PropertyvalueNil.getNil().isId());
+    }
+
+    @Test
     public void testIsBoolean() {
         assertFalse(PropertyvalueNil.getNil().isBoolean());
     }
@@ -92,6 +97,16 @@ public class PropertyvalueNilTest {
         emptyList.add(ImplementationFactory.newStringPropertyvalue("foo bar!"));
     	assertTrue(emptyList.isEmpty());
         assertEquals(0, emptyList.size());
+    }
+
+    @Test
+    public void testHashCode() {
+        assertEquals(0, PropertyvalueNil.getNil().hashCode());
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals("PropertyvalueNil []", PropertyvalueNil.getNil().toString());
     }
 
 }
