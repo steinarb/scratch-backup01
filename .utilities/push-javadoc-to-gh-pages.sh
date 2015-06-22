@@ -9,7 +9,7 @@ if [ "$TRAVIS_REPO_SLUG" == "sbang/jsr330activator" ] && [ "$TRAVIS_PULL_REQUEST
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
-  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/sbang/jsr330activator gh-pages > /dev/null
+  git clone --quiet --branch=gh-pages https://${GH_TOKEN}@github.com/steinarb/modelstore gh-pages > /dev/null
 
   cd gh-pages
   git rm -rf ./javadoc
