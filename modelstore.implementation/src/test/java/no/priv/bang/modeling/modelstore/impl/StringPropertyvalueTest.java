@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
@@ -22,8 +23,8 @@ public class StringPropertyvalueTest {
 
     @Before
     public void setUp() throws Exception {
-        valueWithNumber = new StringPropertyvalue("13");
-        valueNotANumber = new StringPropertyvalue("Not a number");
+        valueWithNumber = toStringValue("13");
+        valueNotANumber = toStringValue("Not a number");
     }
 
     @Test
@@ -129,9 +130,9 @@ public class StringPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        StringPropertyvalue nullStringValue = new StringPropertyvalue(null);
+        Propertyvalue nullStringValue = toStringValue(null);
         assertEquals(31, nullStringValue.hashCode());
-        StringPropertyvalue foo = new StringPropertyvalue("foo");
+        Propertyvalue foo = toStringValue("foo");
         assertEquals(101605, foo.hashCode());
     }
 
@@ -140,8 +141,8 @@ public class StringPropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        StringPropertyvalue nullStringValue = new StringPropertyvalue(null);
-        StringPropertyvalue value = new StringPropertyvalue("foobar");
+        Propertyvalue nullStringValue = toStringValue(null);
+        Propertyvalue value = toStringValue("foobar");
         assertFalse(nullStringValue.equals(null));
         assertFalse(nullStringValue.equals(PropertyvalueNil.getNil()));
         assertTrue(nullStringValue.equals(nullStringValue));
@@ -154,9 +155,9 @@ public class StringPropertyvalueTest {
      */
     @Test
     public void testToString() {
-        StringPropertyvalue nullLongValue = new StringPropertyvalue(null);
+        Propertyvalue nullLongValue = toStringValue(null);
         assertEquals("StringPropertyvalue [value=]", nullLongValue.toString());
-        StringPropertyvalue value = new StringPropertyvalue("bar");
+        Propertyvalue value = toStringValue("bar");
         assertEquals("StringPropertyvalue [value=bar]", value.toString());
     }
 

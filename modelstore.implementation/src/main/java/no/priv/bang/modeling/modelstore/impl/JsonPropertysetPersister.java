@@ -5,21 +5,14 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.UUID;
 
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
-import no.priv.bang.modeling.modelstore.impl.BooleanPropertyvalue;
-import no.priv.bang.modeling.modelstore.impl.ComplexPropertyvalue;
-import no.priv.bang.modeling.modelstore.impl.DoublePropertyvalue;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
-import no.priv.bang.modeling.modelstore.impl.ListPropertyvalue;
-import no.priv.bang.modeling.modelstore.impl.LongPropertyvalue;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
 import no.priv.bang.modeling.modelstore.impl.PropertyvalueArrayList;
-import no.priv.bang.modeling.modelstore.impl.ReferencePropertyvalue;
-import no.priv.bang.modeling.modelstore.impl.StringPropertyvalue;
-
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -140,19 +133,19 @@ public class JsonPropertysetPersister {
     }
 
     private Propertyvalue parseArray(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
-        PropertyvalueList propertyList = new PropertyvalueArrayList();
+        PropertyvalueList propertyList = newList();
         while (parser.nextToken() != JsonToken.END_ARRAY) {
             JsonToken currentToken = parser.getCurrentToken();
             if (currentToken == JsonToken.VALUE_STRING) {
-                propertyList.add(new StringPropertyvalue(parser.getText()));
+                propertyList.add(toStringValue(parser.getText()));
             } else if (currentToken == JsonToken.VALUE_NUMBER_FLOAT) {
-                propertyList.add(new DoublePropertyvalue(parser.getDoubleValue()));
+                propertyList.add(toDoubleValue(parser.getDoubleValue()));
             } else if (currentToken == JsonToken.VALUE_NUMBER_INT) {
-                propertyList.add(new LongPropertyvalue(parser.getLongValue()));
+                propertyList.add(toLongValue(parser.getLongValue()));
             } else if (currentToken == JsonToken.VALUE_TRUE) {
-                propertyList.add(new BooleanPropertyvalue(true));
+                propertyList.add(toBooleanValue(true));
             } else if (currentToken == JsonToken.VALUE_FALSE) {
-                propertyList.add(new BooleanPropertyvalue(false));
+                propertyList.add(toBooleanValue(false));
             } else if (currentToken == JsonToken.START_OBJECT) {
                 propertyList.add(parseObject(parser, propertysetManager));
             } else if (currentToken == JsonToken.START_ARRAY) {
@@ -160,7 +153,7 @@ public class JsonPropertysetPersister {
             }
         }
 
-        return new ListPropertyvalue(propertyList);
+        return toListValue(propertyList);
     }
 
     private Propertyvalue parseObject(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
@@ -185,7 +178,7 @@ public class JsonPropertysetPersister {
                 // Return with the reference.
                 // If this should happen to be a regular object with a field named "ref",
                 // then parsing will fail because next token isn't the expected values
-                return new ReferencePropertyvalue(referencedPropertyset);
+                return toReferenceValue(referencedPropertyset);
             }
 
             if ("id".equals(currentFieldName)) {
@@ -231,7 +224,7 @@ public class JsonPropertysetPersister {
             }
         }
 
-        return new ComplexPropertyvalue(createPropertysetIfNull(propertyset));
+        return toComplexValue(createPropertysetIfNull(propertyset));
     }
 
     private Propertyset createPropertysetIfNull(Propertyset propertyset) {

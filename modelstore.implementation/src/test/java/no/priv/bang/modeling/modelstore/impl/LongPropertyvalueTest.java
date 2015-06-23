@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
@@ -21,7 +22,7 @@ public class LongPropertyvalueTest {
 
     @Before
     public void setUp() throws Exception {
-        value = new LongPropertyvalue(Long.valueOf(42));
+        value = toLongValue(42);
     }
 
     @Test
@@ -110,9 +111,8 @@ public class LongPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        LongPropertyvalue nullLongValue = new LongPropertyvalue(null);
+        Propertyvalue nullLongValue = toLongValue(null);
         assertEquals(31, nullLongValue.hashCode());
-        LongPropertyvalue value = new LongPropertyvalue(42L);
         assertEquals(73, value.hashCode());
     }
 
@@ -121,8 +121,7 @@ public class LongPropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        LongPropertyvalue nullLongValue = new LongPropertyvalue(null);
-        LongPropertyvalue value = new LongPropertyvalue(21L);
+        Propertyvalue nullLongValue = toLongValue(null);
         assertFalse(nullLongValue.equals(null));
         assertFalse(nullLongValue.equals(PropertyvalueNil.getNil()));
         assertTrue(nullLongValue.equals(nullLongValue));
@@ -135,10 +134,9 @@ public class LongPropertyvalueTest {
      */
     @Test
     public void testToString() {
-        LongPropertyvalue nullLongValue = new LongPropertyvalue(null);
+        Propertyvalue nullLongValue = toLongValue(null);
         assertEquals("LongPropertyvalue [value=0]", nullLongValue.toString());
-        LongPropertyvalue value = new LongPropertyvalue(1024L);
-        assertEquals("LongPropertyvalue [value=1024]", value.toString());
+        assertEquals("LongPropertyvalue [value=42]", value.toString());
     }
 
 }

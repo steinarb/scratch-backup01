@@ -4,10 +4,16 @@ import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
-public class ListPropertyvalue extends PropertyvalueBase {
+class ListPropertyvalue extends PropertyvalueBase {
 
     private PropertyvalueList value;
 
+    /**
+     * Create a new instance of {@link ListPropertyvalue}.
+     *
+     * @param value the value to wrap
+     * @deprecated use {@link Propertyvalues#toListValue(PropertyvalueList)} instead
+     */
     public ListPropertyvalue(PropertyvalueList value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asList();

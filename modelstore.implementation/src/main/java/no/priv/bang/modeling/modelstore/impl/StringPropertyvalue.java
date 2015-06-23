@@ -14,9 +14,15 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
  * @author Steinar Bang
  *
  */
-public class StringPropertyvalue extends PropertyvalueBase {
+class StringPropertyvalue extends PropertyvalueBase {
     private String value;
 
+    /**
+     * Create a new instance of {@link StringPropertyvalue}.
+     *
+     * @param value the value to wrap
+     * @deprecated use {@link Propertyvalues#toStringValue(String)} instead
+     */
     public StringPropertyvalue(String value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asString();

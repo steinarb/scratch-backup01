@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
@@ -71,12 +72,12 @@ public class PropertysetImpl implements Propertyset {
     	if (null != rawPropertyValue) {
             PropertyvalueList aspectList = rawPropertyValue.asList();
             if (!aspectContainedInList(aspectList, aspect)) {
-                aspectList.add(new ReferencePropertyvalue(aspect));
+                aspectList.add(Propertyvalues.toReferenceValue(aspect));
             }
     	} else {
-            PropertyvalueList aspectList = new PropertyvalueArrayList();
-            aspectList.add(new ReferencePropertyvalue(aspect));
-            properties.put(aspectsKey, new ListPropertyvalue(aspectList));
+            PropertyvalueList aspectList = newList();
+            aspectList.add(Propertyvalues.toReferenceValue(aspect));
+            properties.put(aspectsKey, Propertyvalues.toListValue(aspectList));
     	}
     }
 
@@ -113,7 +114,7 @@ public class PropertysetImpl implements Propertyset {
 
     public void setBooleanProperty(String propertyName, Boolean boolValue) {
     	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, new BooleanPropertyvalue(boolValue));
+            properties.put(propertyName, toBooleanValue(boolValue));
     	}
     }
 
@@ -128,7 +129,7 @@ public class PropertysetImpl implements Propertyset {
 
     public void setLongProperty(String propertyName, Long intValue) {
     	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, new LongPropertyvalue(intValue));
+            properties.put(propertyName, toLongValue(intValue));
     	}
     }
 
@@ -143,7 +144,7 @@ public class PropertysetImpl implements Propertyset {
 
     public void setDoubleProperty(String propertyName, Double doubleValue) {
     	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, new DoublePropertyvalue(doubleValue));
+            properties.put(propertyName, toDoubleValue(doubleValue));
     	}
     }
 
@@ -158,7 +159,7 @@ public class PropertysetImpl implements Propertyset {
 
     public void setStringProperty(String propertyName, String stringValue) {
     	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, new StringPropertyvalue(stringValue));
+            properties.put(propertyName, toStringValue(stringValue));
     	}
     }
 
@@ -173,7 +174,7 @@ public class PropertysetImpl implements Propertyset {
 
     public void setComplexProperty(String propertyName, Propertyset complexProperty) {
     	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, new ComplexPropertyvalue(complexProperty));
+            properties.put(propertyName, toComplexValue(complexProperty));
     	}
     }
 
@@ -188,7 +189,7 @@ public class PropertysetImpl implements Propertyset {
 
     public void setReferenceProperty(String propertyName, Propertyset referencedObject) {
     	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, new ReferencePropertyvalue(referencedObject));
+            properties.put(propertyName, toReferenceValue(referencedObject));
     	}
     }
 
@@ -203,7 +204,7 @@ public class PropertysetImpl implements Propertyset {
 
     public void setListProperty(String propertyName, PropertyvalueList listValue) {
     	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, new ListPropertyvalue(listValue));
+            properties.put(propertyName, toListValue(listValue));
     	}
     }
 

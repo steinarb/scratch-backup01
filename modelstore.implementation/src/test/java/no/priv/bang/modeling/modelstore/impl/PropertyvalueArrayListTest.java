@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
@@ -18,13 +19,13 @@ public class PropertyvalueArrayListTest {
      */
     @Test
     public void testAddGetPutRemove() {
-        PropertyvalueList list = new PropertyvalueArrayList();
+        PropertyvalueList list = newList();
         assertEquals(0, list.size());
-        list.add(new StringPropertyvalue("a"));
-        list.add(new LongPropertyvalue(4L));
+        list.add(toStringValue("a"));
+        list.add(toLongValue(4L));
         assertEquals(2, list.size());
         assertEquals(4L, list.get(1).asLong().longValue());
-        list.set(1, new LongPropertyvalue(3L));
+        list.set(1, toLongValue(3L));
         list.remove(0);
         assertEquals(1, list.size());
         assertEquals(3L, list.get(0).asLong().longValue());
@@ -35,9 +36,9 @@ public class PropertyvalueArrayListTest {
      */
     @Test
     public void testHashCode() {
-        PropertyvalueList list = new PropertyvalueArrayList();
+        PropertyvalueList list = newList();
         assertEquals(32, list.hashCode());
-        list.add(new LongPropertyvalue(1L));
+        list.add(toLongValue(1L));
         assertEquals(2016, list.hashCode());
     }
 
@@ -46,17 +47,17 @@ public class PropertyvalueArrayListTest {
      */
     @Test
     public void testEquals() {
-        PropertyvalueList list = new PropertyvalueArrayList();
+        PropertyvalueList list = newList();
         assertTrue(list.equals(list));
         assertFalse(list.equals(null));
-        PropertyvalueList emptylist = new PropertyvalueArrayList();
+        PropertyvalueList emptylist = newList();
         assertTrue(list.equals(emptylist));
         assertFalse(list.equals(PropertyvalueNil.getNil().asList()));
         assertFalse(list.equals(new EmptyPropertyvalueList()));
-        list.add(new LongPropertyvalue(1L));
+        list.add(toLongValue(1L));
         assertFalse(list.equals(emptylist));
-        PropertyvalueList otherlistWithSameItem = new PropertyvalueArrayList();
-        otherlistWithSameItem.add(new LongPropertyvalue(1L));
+        PropertyvalueList otherlistWithSameItem = newList();
+        otherlistWithSameItem.add(toLongValue(1L));
         assertTrue(list.equals(otherlistWithSameItem));
     }
 }

@@ -3,8 +3,21 @@ package no.priv.bang.modeling.modelstore.impl;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 
-public class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
+/**
+ * A property value that references a {@link Propertyset} (a "pointer"
+ * value).  This type is essential for building graphs.
+ *
+ * @author Steinar Bang
+ *
+ */
+class ReferencePropertyvalue extends PropertysetPropertyvalueBase {
 
+    /**
+     * Create a new instance of {@link ReferencePropertyvalue}.
+     *
+     * @param value the value to wrap
+     * @deprecated use {@link Propertyvalues#toReferenceValue(Propertyset)} instead
+     */
     public ReferencePropertyvalue(Propertyset value) {
         super(value);
     }

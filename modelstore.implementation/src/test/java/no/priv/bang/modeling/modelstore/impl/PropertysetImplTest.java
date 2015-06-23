@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
@@ -356,9 +357,9 @@ public class PropertysetImplTest {
         Propertyset propertyset = new PropertysetImpl();
 
         // Set and get a list value, and verify that its members can be accessed.
-        PropertyvalueList listValue = new PropertyvalueArrayList();
-        listValue.add(new BooleanPropertyvalue(Boolean.valueOf(true)));
-        listValue.add(new LongPropertyvalue(Long.valueOf(42)));
+        PropertyvalueList listValue = newList();
+        listValue.add(toBooleanValue(Boolean.valueOf(true)));
+        listValue.add(toLongValue(Long.valueOf(42)));
         propertyset.setListProperty("listValue", listValue);
         PropertyvalueList retrievedListValue = propertyset.getListProperty("listValue");
         assertEquals(2, retrievedListValue.size());

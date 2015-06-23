@@ -17,6 +17,12 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 class DoublePropertyvalue extends PropertyvalueBase {
     private Double value;
 
+    /**
+     * Create new instances of {@link DoublePropertyvalue}.
+     *
+     * @param value the value to wrap
+     * @deprecated use {@link Propertyvalues#toDoubleValue(Double)} instead
+     */
     public DoublePropertyvalue(Double value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asDouble();

@@ -18,6 +18,12 @@ class BooleanPropertyvalue extends PropertyvalueBase {
 
     private Boolean value;
 
+    /**
+     * Create new instance of {@link BooleanPropertyvalue}
+     *
+     * @param value the value to wrap.
+     * @deprecated Use {@link Propertyvalues#toBooleanValue(Boolean)} instead
+     */
     BooleanPropertyvalue(Boolean value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asBoolean();

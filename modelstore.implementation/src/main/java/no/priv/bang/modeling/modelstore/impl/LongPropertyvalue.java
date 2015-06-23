@@ -17,6 +17,12 @@ import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 class LongPropertyvalue extends PropertyvalueBase {
     private Long value;
 
+    /**
+     * Create new instances of {@link LongPropertyvalue}.
+     *
+     * @param value the value to wrap
+     * @deprecated use {@link Propertyvalues#toLongValue(Long)} instead
+     */
     public LongPropertyvalue(Long value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asLong();

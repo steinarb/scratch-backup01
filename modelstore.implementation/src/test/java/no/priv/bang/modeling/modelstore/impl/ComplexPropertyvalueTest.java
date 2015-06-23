@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
@@ -28,7 +29,7 @@ public class ComplexPropertyvalueTest {
         complexProperty.setLongProperty("long", Long.valueOf(42));
         complexProperty.setDoubleProperty("double", Double.valueOf(2.78));
         complexProperty.setStringProperty("string", "foo bar");
-        value = new ComplexPropertyvalue(complexProperty);
+        value = toComplexValue(complexProperty);
     }
 
     @Test
@@ -117,7 +118,7 @@ public class ComplexPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        ComplexPropertyvalue nullComplexValue = new ComplexPropertyvalue(null);
+        Propertyvalue nullComplexValue = toComplexValue(null);
         assertEquals(31, nullComplexValue.hashCode());
         assertEquals(1958288831, value.hashCode());
     }
@@ -127,7 +128,7 @@ public class ComplexPropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        ComplexPropertyvalue nullComplexValue = new ComplexPropertyvalue(null);
+        Propertyvalue nullComplexValue = toComplexValue(null);
         assertFalse(nullComplexValue.equals(null));
         assertFalse(nullComplexValue.equals(PropertyvalueNil.getNil().asComplexProperty()));
         assertTrue(nullComplexValue.equals(nullComplexValue));
@@ -141,7 +142,7 @@ public class ComplexPropertyvalueTest {
      */
     @Test
     public void testToString() {
-        ComplexPropertyvalue nullComplexValue = new ComplexPropertyvalue(null);
+        Propertyvalue nullComplexValue = toComplexValue(null);
         assertEquals("ComplexPropertyvalue [value=PropertysetNil []]", nullComplexValue.toString());
         assertEquals("ComplexPropertyvalue [value=PropertysetImpl [properties={string=StringPropertyvalue [value=foo bar], boolean=BooleanPropertyvalue [value=true], double=DoublePropertyvalue [value=2.78], long=LongPropertyvalue [value=42]}]]", value.toString());
     }

@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
@@ -21,7 +22,7 @@ public class BooleanPropertyvalueTest {
 
     @Before
     public void setUp() throws Exception {
-        value = new BooleanPropertyvalue(Boolean.TRUE);
+        value = toBooleanValue(Boolean.TRUE);
     }
 
     @Test
@@ -110,9 +111,9 @@ public class BooleanPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        BooleanPropertyvalue nullBooleanValue = new BooleanPropertyvalue(null);
+        Propertyvalue nullBooleanValue = toBooleanValue(null);
         assertEquals(1268, nullBooleanValue.hashCode());
-        BooleanPropertyvalue trueBooleanValue = new BooleanPropertyvalue(Boolean.TRUE);
+        Propertyvalue trueBooleanValue = toBooleanValue(Boolean.TRUE);
         assertEquals(1262, trueBooleanValue.hashCode());
     }
 
@@ -121,9 +122,9 @@ public class BooleanPropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        BooleanPropertyvalue nullBooleanValue = new BooleanPropertyvalue(null);
-        BooleanPropertyvalue falseBooleanValue = new BooleanPropertyvalue(Boolean.FALSE);
-        BooleanPropertyvalue trueBooleanValue = new BooleanPropertyvalue(Boolean.TRUE);
+        Propertyvalue nullBooleanValue = toBooleanValue(null);
+        Propertyvalue falseBooleanValue = toBooleanValue(Boolean.FALSE);
+        Propertyvalue trueBooleanValue = toBooleanValue(Boolean.TRUE);
         assertFalse(nullBooleanValue.equals(null));
         assertFalse(nullBooleanValue.equals(PropertyvalueNil.getNil()));
         assertTrue(nullBooleanValue.equals(nullBooleanValue));
@@ -136,11 +137,11 @@ public class BooleanPropertyvalueTest {
      */
     @Test
     public void testToString() {
-        BooleanPropertyvalue nullBooleanValue = new BooleanPropertyvalue(null);
+        Propertyvalue nullBooleanValue = toBooleanValue(null);
         assertEquals("BooleanPropertyvalue [value=false]", nullBooleanValue.toString());
-        BooleanPropertyvalue falseBooleanValue = new BooleanPropertyvalue(Boolean.FALSE);
+        Propertyvalue falseBooleanValue = toBooleanValue(Boolean.FALSE);
         assertEquals("BooleanPropertyvalue [value=false]", falseBooleanValue.toString());
-        BooleanPropertyvalue trueBooleanValue = new BooleanPropertyvalue(Boolean.TRUE);
+        Propertyvalue trueBooleanValue = toBooleanValue(Boolean.TRUE);
         assertEquals("BooleanPropertyvalue [value=true]", trueBooleanValue.toString());
     }
 }

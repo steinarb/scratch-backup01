@@ -7,7 +7,7 @@ import java.util.List;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 
-public class PropertyvalueArrayList extends AbstractList<Propertyvalue> implements PropertyvalueList {
+class PropertyvalueArrayList extends AbstractList<Propertyvalue> implements PropertyvalueList {
 
     List<Propertyvalue> arrayList = new ArrayList<Propertyvalue>();
 

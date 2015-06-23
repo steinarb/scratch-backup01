@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.UUID;
 
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
@@ -31,7 +32,7 @@ public class ReferencePropertyvalueTest {
         referencedObject.setLongProperty("long", Long.valueOf(42));
         referencedObject.setDoubleProperty("double", Double.valueOf(2.78));
         referencedObject.setStringProperty("string", "foo bar");
-        value = new ReferencePropertyvalue(referencedObject);
+        value = toReferenceValue(referencedObject);
     }
 
     @Test
@@ -120,7 +121,7 @@ public class ReferencePropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        ReferencePropertyvalue nullReferenceValue = new ReferencePropertyvalue(null);
+        Propertyvalue nullReferenceValue = toReferenceValue(null);
         assertEquals(31, nullReferenceValue.hashCode());
         assertEquals(1755681326, value.hashCode());
     }
@@ -130,7 +131,7 @@ public class ReferencePropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        ReferencePropertyvalue nullReferenceValue = new ReferencePropertyvalue(null);
+        Propertyvalue nullReferenceValue = toReferenceValue(null);
         assertFalse(nullReferenceValue.equals(null));
         assertFalse(nullReferenceValue.equals(PropertyvalueNil.getNil().asComplexProperty()));
         assertTrue(nullReferenceValue.equals(nullReferenceValue));
@@ -139,8 +140,8 @@ public class ReferencePropertyvalueTest {
         assertTrue(value.equals(value));
 
         // Compare two different object with no id property
-        ReferencePropertyvalue refToNoId = new ReferencePropertyvalue(new PropertysetImpl());
-        ReferencePropertyvalue refToNoId2 = new ReferencePropertyvalue(new PropertysetImpl());
+        Propertyvalue refToNoId = toReferenceValue(new PropertysetImpl());
+        Propertyvalue refToNoId2 = toReferenceValue(new PropertysetImpl());
         assertTrue(refToNoId.equals(refToNoId2));
 
     }
@@ -150,7 +151,7 @@ public class ReferencePropertyvalueTest {
      */
     @Test
     public void testToString() {
-        ReferencePropertyvalue nullReferenceValue = new ReferencePropertyvalue(null);
+        Propertyvalue nullReferenceValue = toReferenceValue(null);
         assertEquals("ReferencePropertyvalue [value=PropertysetNil []]", nullReferenceValue.toString());
         assertEquals("ReferencePropertyvalue [value=PropertysetImpl [properties={id=IdPropertyvalue [value=276dbd6e-dc46-4c14-af9e-83c63c10e0b3], string=StringPropertyvalue [value=foo bar], boolean=BooleanPropertyvalue [value=true], double=DoublePropertyvalue [value=2.78], long=LongPropertyvalue [value=42]}]]", value.toString());
     }

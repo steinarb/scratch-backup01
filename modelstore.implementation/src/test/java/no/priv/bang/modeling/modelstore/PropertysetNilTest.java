@@ -1,9 +1,8 @@
 package no.priv.bang.modeling.modelstore;
 
 import static org.junit.Assert.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
-import no.priv.bang.modeling.modelstore.impl.PropertyvalueArrayList;
-import no.priv.bang.modeling.modelstore.impl.StringPropertyvalue;
 
 import org.junit.Test;
 
@@ -36,7 +35,7 @@ public class PropertysetNilTest {
         assertEquals(PropertyvalueNil.getNil(), nilPropertyset.getProperty("nomatter"));
 
         // Verify that properties can't be set.
-        nilPropertyset.setProperty("nomatter", new StringPropertyvalue("foo bar"));
+        nilPropertyset.setProperty("nomatter", toStringValue("foo bar"));
         // Reading back, the value is still nil
         assertEquals(PropertyvalueNil.getNil(), nilPropertyset.getProperty("nomatter"));
 
@@ -72,8 +71,8 @@ public class PropertysetNilTest {
 
         // List properties can't be set
         assertEquals(0, nilPropertyset.getListProperty("list").size());
-        PropertyvalueList list = new PropertyvalueArrayList();
-        list.add(new StringPropertyvalue("bar"));
+        PropertyvalueList list = newList();
+        list.add(toStringValue("bar"));
         nilPropertyset.setListProperty("list", list);
         assertEquals(0, nilPropertyset.getListProperty("list").size());
     }
