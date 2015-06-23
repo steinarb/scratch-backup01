@@ -32,12 +32,12 @@ public class PropertysetNilTest {
         Propertyset nilPropertyset = PropertysetNil.getNil();
         Propertyset propertyset = new PropertysetImpl();
         propertyset.setStringProperty("string", "this is stringvalue");
-        assertEquals(PropertyvalueNil.getNil(), nilPropertyset.getProperty("nomatter"));
+        assertEquals(getNil(), nilPropertyset.getProperty("nomatter"));
 
         // Verify that properties can't be set.
         nilPropertyset.setProperty("nomatter", toStringValue("foo bar"));
         // Reading back, the value is still nil
-        assertEquals(PropertyvalueNil.getNil(), nilPropertyset.getProperty("nomatter"));
+        assertEquals(getNil(), nilPropertyset.getProperty("nomatter"));
 
         // Boolean properties can't be set
         assertFalse(nilPropertyset.getBooleanProperty("boolean"));

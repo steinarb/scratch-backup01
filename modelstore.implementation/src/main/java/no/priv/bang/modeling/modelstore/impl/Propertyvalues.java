@@ -15,6 +15,15 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
 public class Propertyvalues {
 
     /**
+     * Get the singleton {@link PropertyvalueNil} object.
+     *
+     * @return a reference to {@link PropertyvalueNil}.
+     */
+    static public Propertyvalue getNil() {
+        return PropertyvalueNil.getNil();
+    }
+
+    /**
      * Create new instances of {@link BooleanPropertyvalue}
      *
      * @param boolValue the value to wrap

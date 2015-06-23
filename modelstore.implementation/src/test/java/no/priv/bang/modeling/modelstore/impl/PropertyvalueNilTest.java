@@ -1,7 +1,11 @@
-package no.priv.bang.modeling.modelstore;
+package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
+import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
+
 import org.junit.Test;
+
 import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
 
 /**

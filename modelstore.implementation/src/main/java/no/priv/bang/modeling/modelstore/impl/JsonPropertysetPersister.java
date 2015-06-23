@@ -12,7 +12,6 @@ import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
-import no.priv.bang.modeling.modelstore.impl.PropertyvalueArrayList;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;

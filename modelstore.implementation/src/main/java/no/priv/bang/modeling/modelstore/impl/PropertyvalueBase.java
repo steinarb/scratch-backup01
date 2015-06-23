@@ -3,7 +3,6 @@ package no.priv.bang.modeling.modelstore.impl;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 
 /**

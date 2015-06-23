@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.util.List;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
-import no.priv.bang.modeling.modelstore.PropertyvalueNil;
-
 import org.junit.Before;
 import org.junit.Test;
 

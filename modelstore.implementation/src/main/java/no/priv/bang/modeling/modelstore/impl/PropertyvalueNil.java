@@ -1,7 +1,11 @@
-package no.priv.bang.modeling.modelstore;
+package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetNil;
+import no.priv.bang.modeling.modelstore.Propertyvalue;
+import no.priv.bang.modeling.modelstore.PropertyvalueList;
 import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
 
 /**
@@ -11,7 +15,7 @@ import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
  * @author Steinar Bang
  *
  */
-public final class PropertyvalueNil implements Propertyvalue {
+final class PropertyvalueNil implements Propertyvalue {
 
     private static final Propertyvalue singleton = new PropertyvalueNil();
     private final UUID nilId = new UUID(0, 0);

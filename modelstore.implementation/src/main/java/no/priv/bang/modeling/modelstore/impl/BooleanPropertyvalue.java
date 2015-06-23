@@ -3,7 +3,6 @@ package no.priv.bang.modeling.modelstore.impl;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
-import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 /**
  * Wraps a {@link Boolean} value in a {@link Propertyset}.

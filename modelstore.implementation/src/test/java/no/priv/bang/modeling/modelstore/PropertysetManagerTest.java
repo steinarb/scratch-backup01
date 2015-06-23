@@ -42,7 +42,7 @@ public class PropertysetManagerTest {
         Propertyset propertyset = propertysetManager.createPropertyset();
         assertFalse(propertyset.isNil());
         assertFalse(propertyset.hasId());
-        assertEquals(PropertyvalueNil.getNil().asId(), propertyset.getId());
+        assertEquals(getNil().asId(), propertyset.getId());
         // First get the default value for a non-existing property
         assertEquals("", propertyset.getStringProperty("stringProperty"));
         // Set the value as a different type
@@ -80,13 +80,13 @@ public class PropertysetManagerTest {
         Propertyset returnedComplexProperty = propertyset.getComplexProperty("id");
         assertEquals("Expected the \"id\" property not to be affected by setting a complex value", PropertysetNil.getNil(), returnedComplexProperty);
         assertFalse(returnedComplexProperty.hasId());
-        assertEquals(PropertyvalueNil.getNil().asId(), returnedComplexProperty.getId());
+        assertEquals(getNil().asId(), returnedComplexProperty.getId());
         Propertyset referencedPropertyset = propertysetManager.findPropertyset(UUID.randomUUID());
         referencedPropertyset.setReferenceProperty("id", referencedPropertyset);
         assertEquals("Expected the \"id\" property not to be affected by setting an object reference", PropertysetNil.getNil(), propertyset.getReferenceProperty("id"));
         PropertyvalueList listValue = newList();
         propertyset.setListProperty("id", listValue);
-        assertEquals("Expected the \"id\" property not to be affected by setting an object reference", PropertyvalueNil.getNil().asList(), propertyset.getListProperty("id"));
+        assertEquals("Expected the \"id\" property not to be affected by setting an object reference", getNil().asList(), propertyset.getListProperty("id"));
 
         // Verify that asking for the same id again will return the same object
         assertEquals(propertyset, propertysetManager.findPropertyset(newPropertysetId));

@@ -6,8 +6,6 @@ import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
-import no.priv.bang.modeling.modelstore.PropertyvalueNil;
-
 import org.junit.Test;
 
 public class PropertysetImplTest {

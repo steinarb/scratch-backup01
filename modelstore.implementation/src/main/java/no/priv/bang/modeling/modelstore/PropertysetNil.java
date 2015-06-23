@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.impl.Propertyvalues;
+
 /**
  * Singleton implementation of {@link Propertyset} intended to be used
  * instead of null, for undefined property values, or values that
@@ -35,7 +37,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Propertyvalue getProperty(String propertyname) {
-        return PropertyvalueNil.getNil();
+        return Propertyvalues.getNil();
     }
 
     public void setProperty(String propertyname, Propertyvalue property) {
@@ -47,7 +49,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public PropertyvalueList getAspects() {
-        return PropertyvalueNil.getNil().asList();
+        return Propertyvalues.getNil().asList();
     }
 
     public void addAspect(Propertyset aspect) {
@@ -59,11 +61,11 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public UUID getId() {
-        return PropertyvalueNil.getNil().asId();
+        return Propertyvalues.getNil().asId();
     }
 
     public Boolean getBooleanProperty(String propertyName) {
-        return PropertyvalueNil.getNil().asBoolean();
+        return Propertyvalues.getNil().asBoolean();
     }
 
     public void setBooleanProperty(String propertyName, Boolean boolValue) {
@@ -71,7 +73,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Long getLongProperty(String propertyName) {
-        return PropertyvalueNil.getNil().asLong();
+        return Propertyvalues.getNil().asLong();
     }
 
     public void setLongProperty(String propertyName, Long intValue) {
@@ -79,7 +81,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Double getDoubleProperty(String propertyName) {
-        return PropertyvalueNil.getNil().asDouble();
+        return Propertyvalues.getNil().asDouble();
     }
 
     public void setDoubleProperty(String propertyName, Double doubleValue) {
@@ -87,7 +89,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public String getStringProperty(String propertyName) {
-        return PropertyvalueNil.getNil().asString();
+        return Propertyvalues.getNil().asString();
     }
 
     public void setStringProperty(String propertyName, String stringValue) {
@@ -95,7 +97,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Propertyset getComplexProperty(String propertyName) {
-        return PropertyvalueNil.getNil().asComplexProperty();
+        return Propertyvalues.getNil().asComplexProperty();
     }
 
     public void setComplexProperty(String propertyName, Propertyset complexProperty) {
@@ -103,7 +105,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public Propertyset getReferenceProperty(String propertyName) {
-        return PropertyvalueNil.getNil().asReference();
+        return Propertyvalues.getNil().asReference();
     }
 
     public void setReferenceProperty(String string, Propertyset referencedObject) {
@@ -111,7 +113,7 @@ public final class PropertysetNil implements Propertyset {
     }
 
     public PropertyvalueList getListProperty(String propertyName) {
-        return PropertyvalueNil.getNil().asList();
+        return Propertyvalues.getNil().asList();
     }
 
     public void setListProperty(String propertyName, PropertyvalueList listValue) {

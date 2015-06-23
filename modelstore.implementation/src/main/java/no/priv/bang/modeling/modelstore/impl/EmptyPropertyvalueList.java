@@ -3,7 +3,6 @@ package no.priv.bang.modeling.modelstore.impl;
 import java.util.AbstractList;
 import no.priv.bang.modeling.modelstore.Propertyvalue;
 import no.priv.bang.modeling.modelstore.PropertyvalueList;
-import no.priv.bang.modeling.modelstore.PropertyvalueNil;
 
 /**
  * A list implementation that signifies the nil list value.
