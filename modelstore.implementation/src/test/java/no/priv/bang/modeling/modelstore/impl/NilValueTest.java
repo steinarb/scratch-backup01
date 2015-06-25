@@ -17,78 +17,78 @@ public class NilValueTest {
 
     @Test
     public void testIsId() {
-        assertFalse(NilValue.getNil().isId());
+        assertFalse(getNil().isId());
     }
 
     @Test
     public void testIsBoolean() {
-        assertFalse(NilValue.getNil().isBoolean());
+        assertFalse(getNil().isBoolean());
     }
 
     @Test
     public void testAsBoolean() {
-        assertFalse(NilValue.getNil().asBoolean());
-        assertEquals(Boolean.valueOf(false), NilValue.getNil().asBoolean());
+        assertFalse(getNil().asBoolean());
+        assertEquals(Boolean.valueOf(false), getNil().asBoolean());
     }
 
     @Test
     public void testIsLong() {
-        assertFalse(NilValue.getNil().isLong());
+        assertFalse(getNil().isLong());
     }
 
     @Test
     public void testAsLong() {
-        assertEquals(Long.valueOf(0), NilValue.getNil().asLong());
+        assertEquals(Long.valueOf(0), getNil().asLong());
     }
 
     @Test
     public void testIsDouble() {
-        assertFalse(NilValue.getNil().isDouble());
+        assertFalse(getNil().isDouble());
     }
 
     @Test
     public void testAsDouble() {
-        assertEquals(Double.valueOf(0.0), NilValue.getNil().asDouble());
+        assertEquals(Double.valueOf(0.0), getNil().asDouble());
     }
 
     @Test
     public void testIsString() {
-        assertFalse(NilValue.getNil().isString());
+        assertFalse(getNil().isString());
     }
 
     @Test
     public void testAsString() {
-        assertEquals("", NilValue.getNil().asString());
+        assertEquals("", getNil().asString());
     }
 
     @Test
     public void testIsComplexProperty() {
-        assertFalse(NilValue.getNil().isComplexProperty());
+        assertFalse(getNil().isComplexProperty());
     }
 
     @Test
     public void testAsComplexProperty() {
-        assertEquals(getNilPropertyset(), NilValue.getNil().asComplexProperty());
+        assertEquals(getNilPropertyset(), getNil().asComplexProperty());
     }
 
     @Test
     public void testIsReference() {
-        assertFalse(NilValue.getNil().isReference());
+        assertFalse(getNil().isReference());
     }
 
     @Test
     public void testAsReference() {
-        assertEquals(getNilPropertyset(), NilValue.getNil().asReference());
+        assertEquals(getNilPropertyset(), getNil().asReference());
     }
 
     @Test
     public void testIsList() {
-        assertFalse(NilValue.getNil().isList());
+        assertFalse(getNil().isList());
     }
 
     @Test
     public void testAsList() {
-    	ValueList emptyList = NilValue.getNil().asList();
+    	ValueList emptyList = getNil().asList();
     	assertTrue(emptyList.isEmpty());
         assertEquals(0, emptyList.size());
 
@@ -103,12 +103,12 @@ public class NilValueTest {
 
     @Test
     public void testHashCode() {
-        assertEquals(0, NilValue.getNil().hashCode());
+        assertEquals(0, getNil().hashCode());
     }
 
     @Test
     public void testToString() {
-        assertEquals("PropertyvalueNil []", NilValue.getNil().toString());
+        assertEquals("PropertyvalueNil []", getNil().toString());
     }
 
 }

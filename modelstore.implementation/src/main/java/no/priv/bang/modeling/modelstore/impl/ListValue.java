@@ -1,5 +1,6 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -15,34 +16,34 @@ class ListPropertyvalue extends ValueBase {
      */
     public ListPropertyvalue(ValueList value) {
     	if (null == value) {
-            this.value = NilValue.getNil().asList();
+            this.value = getNil().asList();
     	} else {
             this.value = value;
     	}
     }
 
     public Boolean asBoolean() {
-        return NilValue.getNil().asBoolean();
+        return getNil().asBoolean();
     }
 
     public Long asLong() {
-        return NilValue.getNil().asLong();
+        return getNil().asLong();
     }
 
     public Double asDouble() {
-        return NilValue.getNil().asDouble();
+        return getNil().asDouble();
     }
 
     public String asString() {
-        return NilValue.getNil().asString();
+        return getNil().asString();
     }
 
     public Propertyset asComplexProperty() {
-        return NilValue.getNil().asComplexProperty();
+        return getNil().asComplexProperty();
     }
 
     public Propertyset asReference() {
-        return NilValue.getNil().asReference();
+        return getNil().asReference();
     }
 
     @Override

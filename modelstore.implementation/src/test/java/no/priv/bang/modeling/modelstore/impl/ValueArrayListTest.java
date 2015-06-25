@@ -50,7 +50,7 @@ public class ValueArrayListTest {
         assertFalse(list.equals(null));
         ValueList emptylist = newList();
         assertTrue(list.equals(emptylist));
-        assertFalse(list.equals(NilValue.getNil().asList()));
+        assertFalse(list.equals(getNil().asList()));
         assertFalse(list.equals(new EmptyValueList()));
         list.add(toLongValue(1L));
         assertFalse(list.equals(emptylist));

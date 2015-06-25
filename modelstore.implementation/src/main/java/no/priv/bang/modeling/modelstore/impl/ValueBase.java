@@ -2,6 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.UUID;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Value;
 
 
@@ -22,7 +23,7 @@ public abstract class ValueBase implements Value {
     }
 
     public UUID asId() {
-        return NilValue.getNil().asId();
+        return getNil().asId();
     }
 
     public boolean isBoolean() {

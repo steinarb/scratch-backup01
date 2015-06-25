@@ -29,7 +29,7 @@ public class BooleanValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(NilValue.getNil().asId(), value.asId());
+    	assertEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class BooleanValueTest {
         Value falseBooleanValue = toBooleanValue(Boolean.FALSE);
         Value trueBooleanValue = toBooleanValue(Boolean.TRUE);
         assertFalse(nullBooleanValue.equals(null));
-        assertFalse(nullBooleanValue.equals(NilValue.getNil()));
+        assertFalse(nullBooleanValue.equals(getNil()));
         assertTrue(nullBooleanValue.equals(nullBooleanValue));
         assertTrue(nullBooleanValue.equals(falseBooleanValue));
         assertFalse(nullBooleanValue.equals(trueBooleanValue));

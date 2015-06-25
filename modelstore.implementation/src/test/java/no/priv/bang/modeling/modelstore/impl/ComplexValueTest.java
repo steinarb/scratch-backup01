@@ -36,7 +36,7 @@ public class ComplexValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(NilValue.getNil().asId(), value.asId());
+    	assertEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ComplexValueTest {
     public void testEquals() {
         Value nullComplexValue = toComplexValue(null);
         assertFalse(nullComplexValue.equals(null));
-        assertFalse(nullComplexValue.equals(NilValue.getNil().asComplexProperty()));
+        assertFalse(nullComplexValue.equals(getNil().asComplexProperty()));
         assertTrue(nullComplexValue.equals(nullComplexValue));
         assertFalse(nullComplexValue.equals(value));
         assertFalse(value.equals(nullComplexValue));

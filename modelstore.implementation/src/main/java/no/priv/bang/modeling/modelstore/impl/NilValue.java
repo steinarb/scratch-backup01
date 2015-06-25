@@ -25,7 +25,7 @@ final class NilValue implements Value {
     private final String emptyStringValue = "";
     private final ValueList emptyPropertyvalueList = new EmptyValueList();
 
-    public static Value getNil() {
+    static Value getNil() {
         return singleton;
     }
 

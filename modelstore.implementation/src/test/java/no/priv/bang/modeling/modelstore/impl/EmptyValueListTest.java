@@ -3,6 +3,7 @@ package no.priv.bang.modeling.modelstore.impl;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
@@ -49,7 +50,7 @@ public class EmptyValueListTest {
 
     @Test
     public void testGet() {
-        assertEquals(NilValue.getNil(), list.get(135));
+        assertEquals(getNil(), list.get(135));
     }
 
     @Test
@@ -85,7 +86,7 @@ public class EmptyValueListTest {
     @Test
     public void testRemove() {
         assertFalse(list.remove(null));
-        assertEquals(NilValue.getNil(), list.remove(135));
+        assertEquals(getNil(), list.remove(135));
     }
 
     @Test
@@ -100,7 +101,7 @@ public class EmptyValueListTest {
 
     @Test
     public void testSet() {
-        assertEquals(NilValue.getNil(), list.set(135, null));
+        assertEquals(getNil(), list.set(135, null));
     }
 
     @Test

@@ -373,19 +373,19 @@ public class PropertysetImplTest {
 
         // Expect all non-list properties to result in an empty list when accessing them
         propertyset.setBooleanProperty("boolValue", Boolean.valueOf(true));
-        assertEquals(NilValue.getNil().asList(), propertyset.getListProperty("boolValue"));
+        assertEquals(getNil().asList(), propertyset.getListProperty("boolValue"));
         propertyset.setLongProperty("longValue", Long.valueOf(42));
-        assertEquals(NilValue.getNil().asList(), propertyset.getListProperty("longValue"));
+        assertEquals(getNil().asList(), propertyset.getListProperty("longValue"));
         propertyset.setDoubleProperty("doubleValue", Double.valueOf(2.78));
-        assertEquals(NilValue.getNil().asList(), propertyset.getListProperty("doubleValue"));
+        assertEquals(getNil().asList(), propertyset.getListProperty("doubleValue"));
         propertyset.setStringProperty("stringValue", "foo bar");
-        assertEquals(NilValue.getNil().asList(), propertyset.getListProperty("stringValue"));
+        assertEquals(getNil().asList(), propertyset.getListProperty("stringValue"));
         Propertyset complexdObject = new PropertysetImpl();
         propertyset.setComplexProperty("complexValue", complexdObject);
-        assertEquals(NilValue.getNil().asList(), propertyset.getListProperty("complexValue"));
+        assertEquals(getNil().asList(), propertyset.getListProperty("complexValue"));
         Propertyset referencedObject = new PropertysetImpl();
         propertyset.setReferenceProperty("referencedObject", referencedObject);
-        assertEquals(NilValue.getNil().asList(), propertyset.getListProperty("referencedObject"));
+        assertEquals(getNil().asList(), propertyset.getListProperty("referencedObject"));
     }
 
     @Test
@@ -400,7 +400,7 @@ public class PropertysetImplTest {
     public void testGetProperty() {
         Propertyset emptypropertyset = new PropertysetImpl();
         Value nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
-        assertEquals(NilValue.getNil(), nosuchproperty);
+        assertEquals(getNil(), nosuchproperty);
     }
 
 }

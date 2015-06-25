@@ -35,7 +35,7 @@ public class ListValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(NilValue.getNil().asId(), value.asId());
+    	assertEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class ListValueTest {
     @Test
     public void testEmptyListEqualsNilList() {
     	Value emptylist = toListValue(newList());
-    	Value nil = NilValue.getNil();
+    	Value nil = getNil();
     	assertTrue(emptylist.equals(nil));
 
     	// TODO: should the equals be implemented in the nil object as well?
@@ -147,7 +147,7 @@ public class ListValueTest {
         list.add(toDoubleValue(3.14));
         Value otherValue = toListValue(list);
         assertFalse(nullListValue.equals(null));
-        assertTrue(nullListValue.equals(NilValue.getNil()));
+        assertTrue(nullListValue.equals(getNil()));
         assertTrue(nullListValue.equals(nullListValue));
         assertTrue(nullListValue.equals(emptyvalue));
         assertFalse(emptyvalue.equals(nullListValue));

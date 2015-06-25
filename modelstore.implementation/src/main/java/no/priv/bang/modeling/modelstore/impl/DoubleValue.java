@@ -24,7 +24,7 @@ class DoublePropertyvalue extends ValueBase {
      */
     public DoublePropertyvalue(Double value) {
     	if (null == value) {
-            this.value = NilValue.getNil().asDouble();
+            this.value = getNil().asDouble();
     	} else {
             this.value = value;
     	}
@@ -61,7 +61,7 @@ class DoublePropertyvalue extends ValueBase {
     }
 
     public ValueList asList() {
-        return NilValue.getNil().asList();
+        return getNil().asList();
     }
 
     @Override

@@ -39,7 +39,7 @@ public class ReferenceValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(NilValue.getNil().asId(), value.asId());
+    	assertEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -130,7 +130,7 @@ public class ReferenceValueTest {
     public void testEquals() {
         Value nullReferenceValue = toReferenceValue(null);
         assertFalse(nullReferenceValue.equals(null));
-        assertFalse(nullReferenceValue.equals(NilValue.getNil().asComplexProperty()));
+        assertFalse(nullReferenceValue.equals(getNil().asComplexProperty()));
         assertTrue(nullReferenceValue.equals(nullReferenceValue));
         assertFalse(nullReferenceValue.equals(value));
         assertFalse(value.equals(nullReferenceValue));

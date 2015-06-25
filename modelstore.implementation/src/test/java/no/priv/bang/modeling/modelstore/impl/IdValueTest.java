@@ -32,7 +32,7 @@ public class IdValueTest {
 
     @Test
     public void testAsId() {
-    	assertNotEquals(NilValue.getNil().asId(), value.asId());
+    	assertNotEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class IdValueTest {
     public void testEquals() {
         IdPropertyvalue nullIdPropertyValue = new IdPropertyvalue(null);
         assertFalse(nullIdPropertyValue.equals(null));
-        assertFalse(nullIdPropertyValue.equals(NilValue.getNil().asId()));
+        assertFalse(nullIdPropertyValue.equals(getNil().asId()));
         assertTrue(nullIdPropertyValue.equals(nullIdPropertyValue));
         assertFalse(nullIdPropertyValue.equals(value));
         assertFalse(value.equals(nullIdPropertyValue));

@@ -2,6 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.UUID;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
@@ -14,7 +15,7 @@ class IdPropertyvalue implements Value {
     	if (value != null) {
             this.value = value;
     	} else {
-            this.value = NilValue.getNil().asId();
+            this.value = getNil().asId();
     	}
     }
 
@@ -31,7 +32,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Boolean asBoolean() {
-        return NilValue.getNil().asBoolean();
+        return getNil().asBoolean();
     }
 
     public boolean isLong() {
@@ -39,7 +40,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Long asLong() {
-        return NilValue.getNil().asLong();
+        return getNil().asLong();
     }
 
     public boolean isDouble() {
@@ -47,7 +48,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Double asDouble() {
-        return NilValue.getNil().asDouble();
+        return getNil().asDouble();
     }
 
     public boolean isString() {
@@ -63,7 +64,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Propertyset asComplexProperty() {
-        return NilValue.getNil().asComplexProperty();
+        return getNil().asComplexProperty();
     }
 
     public boolean isReference() {
@@ -71,7 +72,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Propertyset asReference() {
-        return NilValue.getNil().asReference();
+        return getNil().asReference();
     }
 
     public boolean isList() {
@@ -79,7 +80,7 @@ class IdPropertyvalue implements Value {
     }
 
     public ValueList asList() {
-        return NilValue.getNil().asList();
+        return getNil().asList();
     }
 
     @Override

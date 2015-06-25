@@ -24,7 +24,7 @@ class StringPropertyvalue extends ValueBase {
      */
     public StringPropertyvalue(String value) {
     	if (null == value) {
-            this.value = NilValue.getNil().asString();
+            this.value = getNil().asString();
     	} else {
             this.value = value;
     	}
@@ -73,7 +73,7 @@ class StringPropertyvalue extends ValueBase {
     }
 
     public ValueList asList() {
-        return NilValue.getNil().asList();
+        return getNil().asList();
     }
 
     @Override

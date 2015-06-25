@@ -29,7 +29,7 @@ public class DoubleValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(NilValue.getNil().asId(), value.asId());
+    	assertEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -121,7 +121,7 @@ public class DoubleValueTest {
     public void testEquals() {
         Value nullDoubleValue = toDoubleValue(null);
         assertFalse(nullDoubleValue.equals(null));
-        assertFalse(nullDoubleValue.equals(NilValue.getNil()));
+        assertFalse(nullDoubleValue.equals(getNil()));
         assertTrue(nullDoubleValue.equals(nullDoubleValue));
         assertFalse(nullDoubleValue.equals(value));
         assertFalse(value.equals(nullDoubleValue));
