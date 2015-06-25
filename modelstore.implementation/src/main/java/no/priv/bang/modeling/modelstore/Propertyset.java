@@ -12,7 +12,7 @@ import java.util.UUID;
  * will never return null.
  *
  * The raw property accessors will return null values for unset
- * properties, but the raw accessors are mainly intended for reflection.s
+ * properties, but the raw accessors are mainly intended for reflection.
  *
  * @author Steinar Bang
  *
