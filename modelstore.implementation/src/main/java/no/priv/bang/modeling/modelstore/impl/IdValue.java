@@ -14,7 +14,7 @@ class IdPropertyvalue implements Value {
     	if (value != null) {
             this.value = value;
     	} else {
-            this.value = PropertyvalueNil.getNil().asId();
+            this.value = NilValue.getNil().asId();
     	}
     }
 
@@ -31,7 +31,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Boolean asBoolean() {
-        return PropertyvalueNil.getNil().asBoolean();
+        return NilValue.getNil().asBoolean();
     }
 
     public boolean isLong() {
@@ -39,7 +39,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Long asLong() {
-        return PropertyvalueNil.getNil().asLong();
+        return NilValue.getNil().asLong();
     }
 
     public boolean isDouble() {
@@ -47,7 +47,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Double asDouble() {
-        return PropertyvalueNil.getNil().asDouble();
+        return NilValue.getNil().asDouble();
     }
 
     public boolean isString() {
@@ -63,7 +63,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Propertyset asComplexProperty() {
-        return PropertyvalueNil.getNil().asComplexProperty();
+        return NilValue.getNil().asComplexProperty();
     }
 
     public boolean isReference() {
@@ -71,7 +71,7 @@ class IdPropertyvalue implements Value {
     }
 
     public Propertyset asReference() {
-        return PropertyvalueNil.getNil().asReference();
+        return NilValue.getNil().asReference();
     }
 
     public boolean isList() {
@@ -79,7 +79,7 @@ class IdPropertyvalue implements Value {
     }
 
     public ValueList asList() {
-        return PropertyvalueNil.getNil().asList();
+        return NilValue.getNil().asList();
     }
 
     @Override

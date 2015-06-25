@@ -49,7 +49,7 @@ public class EmptyValueListTest {
 
     @Test
     public void testGet() {
-        assertEquals(PropertyvalueNil.getNil(), list.get(135));
+        assertEquals(NilValue.getNil(), list.get(135));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class EmptyValueListTest {
     @Test
     public void testRemove() {
         assertFalse(list.remove(null));
-        assertEquals(PropertyvalueNil.getNil(), list.remove(135));
+        assertEquals(NilValue.getNil(), list.remove(135));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class EmptyValueListTest {
 
     @Test
     public void testSet() {
-        assertEquals(PropertyvalueNil.getNil(), list.set(135, null));
+        assertEquals(NilValue.getNil(), list.set(135, null));
     }
 
     @Test

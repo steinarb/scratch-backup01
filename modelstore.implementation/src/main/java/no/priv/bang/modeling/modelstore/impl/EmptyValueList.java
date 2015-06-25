@@ -29,18 +29,18 @@ public final class EmptyValueList extends AbstractList<Value> implements ValueLi
     @Override
     public Value set(int index, Value element) {
         // Just drop the added elements on the floor. Always return PropertyvalueNil
-        return PropertyvalueNil.getNil();
+        return NilValue.getNil();
     }
 
     @Override
     public Value get(int index) {
-        return PropertyvalueNil.getNil();
+        return NilValue.getNil();
     }
 
     @Override
     public Value remove(int index) {
         // Always return PropertyvalueNil
-        return PropertyvalueNil.getNil();
+        return NilValue.getNil();
     }
 
     @Override

@@ -22,7 +22,7 @@ public abstract class ValueBase implements Value {
     }
 
     public UUID asId() {
-        return PropertyvalueNil.getNil().asId();
+        return NilValue.getNil().asId();
     }
 
     public boolean isBoolean() {

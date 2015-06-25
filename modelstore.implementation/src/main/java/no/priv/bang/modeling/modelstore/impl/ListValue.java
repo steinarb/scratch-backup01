@@ -15,34 +15,34 @@ class ListPropertyvalue extends ValueBase {
      */
     public ListPropertyvalue(ValueList value) {
     	if (null == value) {
-            this.value = PropertyvalueNil.getNil().asList();
+            this.value = NilValue.getNil().asList();
     	} else {
             this.value = value;
     	}
     }
 
     public Boolean asBoolean() {
-        return PropertyvalueNil.getNil().asBoolean();
+        return NilValue.getNil().asBoolean();
     }
 
     public Long asLong() {
-        return PropertyvalueNil.getNil().asLong();
+        return NilValue.getNil().asLong();
     }
 
     public Double asDouble() {
-        return PropertyvalueNil.getNil().asDouble();
+        return NilValue.getNil().asDouble();
     }
 
     public String asString() {
-        return PropertyvalueNil.getNil().asString();
+        return NilValue.getNil().asString();
     }
 
     public Propertyset asComplexProperty() {
-        return PropertyvalueNil.getNil().asComplexProperty();
+        return NilValue.getNil().asComplexProperty();
     }
 
     public Propertyset asReference() {
-        return PropertyvalueNil.getNil().asReference();
+        return NilValue.getNil().asReference();
     }
 
     @Override
@@ -68,7 +68,7 @@ class ListPropertyvalue extends ValueBase {
             return true;
         }
 
-        if (obj instanceof PropertyvalueNil) {
+        if (obj instanceof NilValue) {
             // If this list is empty test equal to a nil property value.
             // If not empty, they are not equal
             return value.isEmpty();

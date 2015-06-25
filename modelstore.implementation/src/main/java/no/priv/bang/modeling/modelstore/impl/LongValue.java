@@ -24,7 +24,7 @@ class LongPropertyvalue extends ValueBase {
      */
     public LongPropertyvalue(Long value) {
     	if (null == value) {
-            this.value = PropertyvalueNil.getNil().asLong();
+            this.value = NilValue.getNil().asLong();
     	} else {
             this.value = value;
     	}
@@ -61,7 +61,7 @@ class LongPropertyvalue extends ValueBase {
     }
 
     public ValueList asList() {
-        return PropertyvalueNil.getNil().asList();
+        return NilValue.getNil().asList();
     }
 
     @Override

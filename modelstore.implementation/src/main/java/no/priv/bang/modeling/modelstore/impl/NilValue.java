@@ -15,9 +15,9 @@ import no.priv.bang.modeling.modelstore.impl.EmptyValueList;
  * @author Steinar Bang
  *
  */
-final class PropertyvalueNil implements Value {
+final class NilValue implements Value {
 
-    private static final Value singleton = new PropertyvalueNil();
+    private static final Value singleton = new NilValue();
     private final UUID nilId = new UUID(0, 0);
     private final Boolean nullBooleanValue = Boolean.valueOf(false);
     private final Long nullLongValue = Long.valueOf(0);
@@ -29,7 +29,7 @@ final class PropertyvalueNil implements Value {
         return singleton;
     }
 
-    private PropertyvalueNil() { }
+    private NilValue() { }
 
     public boolean isId() {
         return false;
@@ -97,7 +97,7 @@ final class PropertyvalueNil implements Value {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof PropertyvalueNil;
+        return obj instanceof NilValue;
     }
 
     @Override

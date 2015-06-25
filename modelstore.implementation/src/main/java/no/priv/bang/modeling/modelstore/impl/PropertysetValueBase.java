@@ -17,23 +17,23 @@ public abstract class PropertysetValueBase extends ValueBase {
     }
 
     public Boolean asBoolean() {
-        return PropertyvalueNil.getNil().asBoolean();
+        return NilValue.getNil().asBoolean();
     }
 
     public Long asLong() {
-        return PropertyvalueNil.getNil().asLong();
+        return NilValue.getNil().asLong();
     }
 
     public Double asDouble() {
-        return PropertyvalueNil.getNil().asDouble();
+        return NilValue.getNil().asDouble();
     }
 
     public String asString() {
-        return PropertyvalueNil.getNil().asString();
+        return NilValue.getNil().asString();
     }
 
     public ValueList asList() {
-        return PropertyvalueNil.getNil().asList();
+        return NilValue.getNil().asList();
     }
 
 }

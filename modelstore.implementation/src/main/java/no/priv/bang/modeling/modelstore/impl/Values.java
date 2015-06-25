@@ -24,12 +24,12 @@ public class Values {
     }
 
     /**
-     * Get the singleton {@link PropertyvalueNil} object.
+     * Get the singleton {@link NilValue} object.
      *
-     * @return a reference to {@link PropertyvalueNil}.
+     * @return a reference to {@link NilValue}.
      */
     static public Value getNil() {
-        return PropertyvalueNil.getNil();
+        return NilValue.getNil();
     }
 
     /**

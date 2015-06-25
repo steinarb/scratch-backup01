@@ -29,7 +29,7 @@ public class LongValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(PropertyvalueNil.getNil().asId(), value.asId());
+    	assertEquals(NilValue.getNil().asId(), value.asId());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class LongValueTest {
     public void testEquals() {
         Value nullLongValue = toLongValue(null);
         assertFalse(nullLongValue.equals(null));
-        assertFalse(nullLongValue.equals(PropertyvalueNil.getNil()));
+        assertFalse(nullLongValue.equals(NilValue.getNil()));
         assertTrue(nullLongValue.equals(nullLongValue));
         assertFalse(nullLongValue.equals(value));
         assertFalse(value.equals(nullLongValue));

@@ -35,7 +35,7 @@ public class ListValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(PropertyvalueNil.getNil().asId(), value.asId());
+    	assertEquals(NilValue.getNil().asId(), value.asId());
     }
 
     @Test
@@ -112,12 +112,12 @@ public class ListValueTest {
 
     /**
      * Verify that a property value containing an empty list is
-     * equal to the list extracted from a {@link PropertyvalueNil}.
+     * equal to the list extracted from a {@link NilValue}.
      */
     @Test
     public void testEmptyListEqualsNilList() {
     	Value emptylist = toListValue(newList());
-    	Value nil = PropertyvalueNil.getNil();
+    	Value nil = NilValue.getNil();
     	assertTrue(emptylist.equals(nil));
 
     	// TODO: should the equals be implemented in the nil object as well?
@@ -147,7 +147,7 @@ public class ListValueTest {
         list.add(toDoubleValue(3.14));
         Value otherValue = toListValue(list);
         assertFalse(nullListValue.equals(null));
-        assertTrue(nullListValue.equals(PropertyvalueNil.getNil()));
+        assertTrue(nullListValue.equals(NilValue.getNil()));
         assertTrue(nullListValue.equals(nullListValue));
         assertTrue(nullListValue.equals(emptyvalue));
         assertFalse(emptyvalue.equals(nullListValue));

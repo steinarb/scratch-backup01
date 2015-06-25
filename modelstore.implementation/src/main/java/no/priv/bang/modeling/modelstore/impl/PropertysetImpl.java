@@ -36,7 +36,7 @@ public class PropertysetImpl implements Propertyset {
             return properties.get(propertyname);
         }
 
-        return PropertyvalueNil.getNil();
+        return NilValue.getNil();
     }
 
     public void setProperty(String propertyname, Value property) {
@@ -62,7 +62,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asList();
     	}
 
-    	return PropertyvalueNil.getNil().asList();
+    	return NilValue.getNil().asList();
     }
 
     public void addAspect(Propertyset aspect) {
@@ -98,7 +98,7 @@ public class PropertysetImpl implements Propertyset {
             return properties.get(idKey).asId();
     	}
 
-    	return PropertyvalueNil.getNil().asId();
+    	return NilValue.getNil().asId();
     }
 
     public Boolean getBooleanProperty(String propertyName) {

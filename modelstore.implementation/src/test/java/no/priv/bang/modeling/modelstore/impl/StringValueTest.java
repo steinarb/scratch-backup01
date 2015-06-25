@@ -32,8 +32,8 @@ public class StringValueTest {
 
     @Test
     public void testAsId() {
-    	assertEquals(PropertyvalueNil.getNil().asId(), valueWithNumber.asId());
-    	assertEquals(PropertyvalueNil.getNil().asId(), valueNotANumber.asId());
+    	assertEquals(NilValue.getNil().asId(), valueWithNumber.asId());
+    	assertEquals(NilValue.getNil().asId(), valueNotANumber.asId());
     }
 
     @Test
@@ -141,7 +141,7 @@ public class StringValueTest {
         Value nullStringValue = toStringValue(null);
         Value value = toStringValue("foobar");
         assertFalse(nullStringValue.equals(null));
-        assertFalse(nullStringValue.equals(PropertyvalueNil.getNil()));
+        assertFalse(nullStringValue.equals(NilValue.getNil()));
         assertTrue(nullStringValue.equals(nullStringValue));
         assertFalse(nullStringValue.equals(value));
         assertFalse(value.equals(nullStringValue));

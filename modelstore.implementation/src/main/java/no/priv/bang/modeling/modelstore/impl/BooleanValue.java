@@ -25,7 +25,7 @@ class BooleanPropertyvalue extends ValueBase {
      */
     BooleanPropertyvalue(Boolean value) {
     	if (null == value) {
-            this.value = PropertyvalueNil.getNil().asBoolean();
+            this.value = NilValue.getNil().asBoolean();
     	} else {
             this.value = value;
     	}
@@ -66,7 +66,7 @@ class BooleanPropertyvalue extends ValueBase {
     }
 
     public ValueList asList() {
-        return PropertyvalueNil.getNil().asList();
+        return NilValue.getNil().asList();
     }
 
     @Override
