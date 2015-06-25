@@ -1,11 +1,11 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Test;
 
 public class PropertysetImplTest {
@@ -355,21 +355,21 @@ public class PropertysetImplTest {
         Propertyset propertyset = new PropertysetImpl();
 
         // Set and get a list value, and verify that its members can be accessed.
-        PropertyvalueList listValue = newList();
+        ValueList listValue = newList();
         listValue.add(toBooleanValue(Boolean.valueOf(true)));
         listValue.add(toLongValue(Long.valueOf(42)));
         propertyset.setListProperty("listValue", listValue);
-        PropertyvalueList retrievedListValue = propertyset.getListProperty("listValue");
+        ValueList retrievedListValue = propertyset.getListProperty("listValue");
         assertEquals(2, retrievedListValue.size());
         assertEquals(Long.valueOf(42), retrievedListValue.get(1).asLong());
 
         // Expect and empty and unmodifiable list when accessing a property set with a null value
         propertyset.setListProperty("nullValue", null);
-        PropertyvalueList nullValue = propertyset.getListProperty("nullValue");
+        ValueList nullValue = propertyset.getListProperty("nullValue");
         assertEquals(0, nullValue.size());
 
         // Expect an empty and unmodifiable list when accessing a non-existing property.
-        PropertyvalueList emptyList = propertyset.getListProperty("noSuchList");
+        ValueList emptyList = propertyset.getListProperty("noSuchList");
         assertEquals(0, emptyList.size());
 
         // Expect all non-list properties to result in an empty list when accessing them
@@ -400,7 +400,7 @@ public class PropertysetImplTest {
     @Test
     public void testGetProperty() {
         Propertyset emptypropertyset = new PropertysetImpl();
-        Propertyvalue nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
+        Value nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
         assertEquals(PropertyvalueNil.getNil(), nosuchproperty);
     }
 

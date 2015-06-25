@@ -2,7 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.Propertyvalue;
+import no.priv.bang.modeling.modelstore.Value;
 
 
 /**
@@ -15,7 +15,7 @@ import no.priv.bang.modeling.modelstore.Propertyvalue;
  * @author Steinar Bang
  *
  */
-public abstract class PropertyvalueBase implements Propertyvalue {
+public abstract class ValueBase implements Value {
 
     public boolean isId() {
         return false;

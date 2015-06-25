@@ -2,7 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
  * Wraps a {@link String} value in a {@link Propertyset}.
@@ -13,14 +13,14 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
  * @author Steinar Bang
  *
  */
-class StringPropertyvalue extends PropertyvalueBase {
+class StringPropertyvalue extends ValueBase {
     private String value;
 
     /**
      * Create a new instance of {@link StringPropertyvalue}.
      *
      * @param value the value to wrap
-     * @deprecated use {@link Propertyvalues#toStringValue(String)} instead
+     * @deprecated use {@link Values#toStringValue(String)} instead
      */
     public StringPropertyvalue(String value) {
     	if (null == value) {
@@ -72,7 +72,7 @@ class StringPropertyvalue extends PropertyvalueBase {
         return PropertysetNil.getNil();
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return PropertyvalueNil.getNil().asList();
     }
 

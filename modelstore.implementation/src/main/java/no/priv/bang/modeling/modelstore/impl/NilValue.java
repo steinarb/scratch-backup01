@@ -4,9 +4,9 @@ import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
-import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
+import no.priv.bang.modeling.modelstore.impl.EmptyValueList;
 
 /**
  * A nil property value object.  This is a singleton that can be
@@ -15,17 +15,17 @@ import no.priv.bang.modeling.modelstore.impl.EmptyPropertyvalueList;
  * @author Steinar Bang
  *
  */
-final class PropertyvalueNil implements Propertyvalue {
+final class PropertyvalueNil implements Value {
 
-    private static final Propertyvalue singleton = new PropertyvalueNil();
+    private static final Value singleton = new PropertyvalueNil();
     private final UUID nilId = new UUID(0, 0);
     private final Boolean nullBooleanValue = Boolean.valueOf(false);
     private final Long nullLongValue = Long.valueOf(0);
     private final Double nullDoubleValue = Double.valueOf(0);
     private final String emptyStringValue = "";
-    private final PropertyvalueList emptyPropertyvalueList = new EmptyPropertyvalueList();
+    private final ValueList emptyPropertyvalueList = new EmptyValueList();
 
-    public static Propertyvalue getNil() {
+    public static Value getNil() {
         return singleton;
     }
 
@@ -91,7 +91,7 @@ final class PropertyvalueNil implements Propertyvalue {
         return false;
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return emptyPropertyvalueList;
     }
 

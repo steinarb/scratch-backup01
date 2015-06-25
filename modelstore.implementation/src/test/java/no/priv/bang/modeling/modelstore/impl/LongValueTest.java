@@ -1,10 +1,10 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,9 +14,9 @@ import org.junit.Test;
  * @author Steinar Bang
  *
  */
-public class LongPropertyvalueTest {
+public class LongValueTest {
 
-    private Propertyvalue value;
+    private Value value;
 
     @Before
     public void setUp() throws Exception {
@@ -100,7 +100,7 @@ public class LongPropertyvalueTest {
 
     @Test
     public void testAsList() {
-    	PropertyvalueList emptyList = value.asList();
+    	ValueList emptyList = value.asList();
     	assertTrue(emptyList.isEmpty());
     }
 
@@ -109,7 +109,7 @@ public class LongPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        Propertyvalue nullLongValue = toLongValue(null);
+        Value nullLongValue = toLongValue(null);
         assertEquals(31, nullLongValue.hashCode());
         assertEquals(73, value.hashCode());
     }
@@ -119,7 +119,7 @@ public class LongPropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        Propertyvalue nullLongValue = toLongValue(null);
+        Value nullLongValue = toLongValue(null);
         assertFalse(nullLongValue.equals(null));
         assertFalse(nullLongValue.equals(PropertyvalueNil.getNil()));
         assertTrue(nullLongValue.equals(nullLongValue));
@@ -132,7 +132,7 @@ public class LongPropertyvalueTest {
      */
     @Test
     public void testToString() {
-        Propertyvalue nullLongValue = toLongValue(null);
+        Value nullLongValue = toLongValue(null);
         assertEquals("LongPropertyvalue [value=0]", nullLongValue.toString());
         assertEquals("LongPropertyvalue [value=42]", value.toString());
     }

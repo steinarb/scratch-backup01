@@ -4,30 +4,30 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 
-class PropertyvalueArrayList extends AbstractList<Propertyvalue> implements PropertyvalueList {
+class PropertyvalueArrayList extends AbstractList<Value> implements ValueList {
 
-    List<Propertyvalue> arrayList = new ArrayList<Propertyvalue>();
+    List<Value> arrayList = new ArrayList<Value>();
 
     @Override
-    public Propertyvalue set(int paramInt, Propertyvalue paramE) {
+    public Value set(int paramInt, Value paramE) {
         return arrayList.set(paramInt, paramE);
     }
 
     @Override
-    public void add(int paramInt, Propertyvalue paramE) {
+    public void add(int paramInt, Value paramE) {
         arrayList.add(paramInt, paramE);
     }
 
     @Override
-    public Propertyvalue remove(int paramInt) {
+    public Value remove(int paramInt) {
         return arrayList.remove(paramInt);
     }
 
     @Override
-    public Propertyvalue get(int index) {
+    public Value get(int index) {
         return arrayList.get(index);
     }
 

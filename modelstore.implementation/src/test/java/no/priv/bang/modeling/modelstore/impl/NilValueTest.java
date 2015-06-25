@@ -2,11 +2,11 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 import org.junit.Test;
 
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 
 /**
  * Unit tests for {@link PropertyvalueNil}.
@@ -14,7 +14,7 @@ import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
  * @author Steinar Bang
  *
  */
-public class PropertyvalueNilTest {
+public class NilValueTest {
 
     @Test
     public void testIsId() {
@@ -89,7 +89,7 @@ public class PropertyvalueNilTest {
 
     @Test
     public void testAsList() {
-    	PropertyvalueList emptyList = PropertyvalueNil.getNil().asList();
+    	ValueList emptyList = PropertyvalueNil.getNil().asList();
     	assertTrue(emptyList.isEmpty());
         assertEquals(0, emptyList.size());
 

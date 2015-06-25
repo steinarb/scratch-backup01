@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
+import no.priv.bang.modeling.modelstore.Value;
 
 /**
  * Contains static methods used in more than one unit test.
@@ -40,8 +40,8 @@ public class TestUtils {
         for (Propertyset propertyset : propertysetManager.listAllPropertysets()) {
             Propertyset parsedPropertyset = propertysetManager2.findPropertyset(propertyset.getId());
             for (String propertyname : propertyset.getPropertynames()) {
-                Propertyvalue originalValue = propertyset.getProperty(propertyname);
-                Propertyvalue parsedValue = parsedPropertyset.getProperty(propertyname);
+                Value originalValue = propertyset.getProperty(propertyname);
+                Value parsedValue = parsedPropertyset.getProperty(propertyname);
                 assertEquals(originalValue, parsedValue);
             }
         }

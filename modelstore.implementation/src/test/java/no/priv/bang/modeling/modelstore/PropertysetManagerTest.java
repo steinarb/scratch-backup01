@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
 import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
@@ -84,7 +84,7 @@ public class PropertysetManagerTest {
         Propertyset referencedPropertyset = propertysetManager.findPropertyset(UUID.randomUUID());
         referencedPropertyset.setReferenceProperty("id", referencedPropertyset);
         assertEquals("Expected the \"id\" property not to be affected by setting an object reference", PropertysetNil.getNil(), propertyset.getReferenceProperty("id"));
-        PropertyvalueList listValue = newList();
+        ValueList listValue = newList();
         propertyset.setListProperty("id", listValue);
         assertEquals("Expected the \"id\" property not to be affected by setting an object reference", getNil().asList(), propertyset.getListProperty("id"));
 

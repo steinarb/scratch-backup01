@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
  * Implementation of {@link Propertyset} backed by a {@link Map}.
@@ -20,7 +20,7 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
 public class PropertysetImpl implements Propertyset {
     final private String idKey = "id";
     final private String aspectsKey = "aspects";
-    Map<String, Propertyvalue> properties = new HashMap<String, Propertyvalue>();
+    Map<String, Value> properties = new HashMap<String, Value>();
 
     public PropertysetImpl(UUID id) {
     	properties.put(idKey, new IdPropertyvalue(id));
@@ -32,7 +32,7 @@ public class PropertysetImpl implements Propertyset {
         return properties.keySet();
     }
 
-    public Propertyvalue getProperty(String propertyname) {
+    public Value getProperty(String propertyname) {
         if (properties.containsKey(propertyname)) {
             return properties.get(propertyname);
         }
@@ -40,7 +40,7 @@ public class PropertysetImpl implements Propertyset {
         return PropertyvalueNil.getNil();
     }
 
-    public void setProperty(String propertyname, Propertyvalue property) {
+    public void setProperty(String propertyname, Value property) {
         properties.put(propertyname, property);
     }
 
@@ -49,7 +49,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public boolean hasAspect() {
-    	Propertyvalue rawPropertyValue = properties.get(aspectsKey);
+    	Value rawPropertyValue = properties.get(aspectsKey);
     	if (null != rawPropertyValue) {
             return !rawPropertyValue.asList().isEmpty();
     	}
@@ -57,8 +57,8 @@ public class PropertysetImpl implements Propertyset {
     	return false;
     }
 
-    public PropertyvalueList getAspects() {
-    	Propertyvalue rawPropertyValue = properties.get(aspectsKey);
+    public ValueList getAspects() {
+    	Value rawPropertyValue = properties.get(aspectsKey);
     	if (null != rawPropertyValue) {
             return rawPropertyValue.asList();
     	}
@@ -67,21 +67,21 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public void addAspect(Propertyset aspect) {
-    	Propertyvalue rawPropertyValue = properties.get(aspectsKey);
+    	Value rawPropertyValue = properties.get(aspectsKey);
     	if (null != rawPropertyValue) {
-            PropertyvalueList aspectList = rawPropertyValue.asList();
+            ValueList aspectList = rawPropertyValue.asList();
             if (!aspectContainedInList(aspectList, aspect)) {
-                aspectList.add(Propertyvalues.toReferenceValue(aspect));
+                aspectList.add(Values.toReferenceValue(aspect));
             }
     	} else {
-            PropertyvalueList aspectList = newList();
-            aspectList.add(Propertyvalues.toReferenceValue(aspect));
-            properties.put(aspectsKey, Propertyvalues.toListValue(aspectList));
+            ValueList aspectList = newList();
+            aspectList.add(Values.toReferenceValue(aspect));
+            properties.put(aspectsKey, Values.toListValue(aspectList));
     	}
     }
 
-    private boolean aspectContainedInList(PropertyvalueList aspectList, Propertyset aspect) {
-        for (Propertyvalue propertyvalue : aspectList) {
+    private boolean aspectContainedInList(ValueList aspectList, Propertyset aspect) {
+        for (Value propertyvalue : aspectList) {
             if (propertyvalue.asReference().equals(aspect)) {
                 return true;
             }
@@ -103,7 +103,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public Boolean getBooleanProperty(String propertyName) {
-        Propertyvalue rawPropertyValue = properties.get(propertyName);
+        Value rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
             return rawPropertyValue.asBoolean();
         }
@@ -118,7 +118,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public Long getLongProperty(String propertyName) {
-        Propertyvalue rawPropertyValue = properties.get(propertyName);
+        Value rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
             return rawPropertyValue.asLong();
         }
@@ -133,7 +133,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public Double getDoubleProperty(String propertyName) {
-        Propertyvalue rawPropertyValue = properties.get(propertyName);
+        Value rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
             return rawPropertyValue.asDouble();
         }
@@ -148,7 +148,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public String getStringProperty(String propertyName) {
-        Propertyvalue rawPropertyValue = properties.get(propertyName);
+        Value rawPropertyValue = properties.get(propertyName);
         if (null != rawPropertyValue) {
             return rawPropertyValue.asString();
         }
@@ -163,7 +163,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public Propertyset getComplexProperty(String propertyName) {
-    	Propertyvalue rawPropertyValue = properties.get(propertyName);
+    	Value rawPropertyValue = properties.get(propertyName);
     	if (null != rawPropertyValue) {
             return rawPropertyValue.asComplexProperty();
     	}
@@ -178,7 +178,7 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public Propertyset getReferenceProperty(String propertyName) {
-    	Propertyvalue rawPropertyValue = properties.get(propertyName);
+    	Value rawPropertyValue = properties.get(propertyName);
     	if (null != rawPropertyValue) {
             return rawPropertyValue.asReference();
     	}
@@ -192,8 +192,8 @@ public class PropertysetImpl implements Propertyset {
     	}
     }
 
-    public PropertyvalueList getListProperty(String propertyName) {
-    	Propertyvalue rawPropertyValue = properties.get(propertyName);
+    public ValueList getListProperty(String propertyName) {
+    	Value rawPropertyValue = properties.get(propertyName);
     	if (null != rawPropertyValue) {
             return rawPropertyValue.asList();
     	}
@@ -201,7 +201,7 @@ public class PropertysetImpl implements Propertyset {
         return PropertysetNil.getNil().getListProperty(propertyName);
     }
 
-    public void setListProperty(String propertyName, PropertyvalueList listValue) {
+    public void setListProperty(String propertyName, ValueList listValue) {
     	if (!idKey.equals(propertyName)) {
             properties.put(propertyName, toListValue(listValue));
     	}

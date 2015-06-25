@@ -2,7 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
  * Wraps a {@link Long} value in a {@link Propertyset}.
@@ -13,14 +13,14 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
  * @author Steinar Bang
  *
  */
-class LongPropertyvalue extends PropertyvalueBase {
+class LongPropertyvalue extends ValueBase {
     private Long value;
 
     /**
      * Create new instances of {@link LongPropertyvalue}.
      *
      * @param value the value to wrap
-     * @deprecated use {@link Propertyvalues#toLongValue(Long)} instead
+     * @deprecated use {@link Values#toLongValue(Long)} instead
      */
     public LongPropertyvalue(Long value) {
     	if (null == value) {
@@ -60,7 +60,7 @@ class LongPropertyvalue extends PropertyvalueBase {
         return PropertysetNil.getNil();
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return PropertyvalueNil.getNil().asList();
     }
 

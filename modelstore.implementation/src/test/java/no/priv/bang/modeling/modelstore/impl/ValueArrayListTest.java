@@ -1,8 +1,8 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
+import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Test;
 
 /**
@@ -11,13 +11,13 @@ import org.junit.Test;
  * @author Steinar Bang
  *
  */
-public class PropertyvalueArrayListTest {
+public class ValueArrayListTest {
     /**
      * Test of basic list operations.
      */
     @Test
     public void testAddGetPutRemove() {
-        PropertyvalueList list = newList();
+        ValueList list = newList();
         assertEquals(0, list.size());
         list.add(toStringValue("a"));
         list.add(toLongValue(4L));
@@ -34,7 +34,7 @@ public class PropertyvalueArrayListTest {
      */
     @Test
     public void testHashCode() {
-        PropertyvalueList list = newList();
+        ValueList list = newList();
         assertEquals(32, list.hashCode());
         list.add(toLongValue(1L));
         assertEquals(2016, list.hashCode());
@@ -45,16 +45,16 @@ public class PropertyvalueArrayListTest {
      */
     @Test
     public void testEquals() {
-        PropertyvalueList list = newList();
+        ValueList list = newList();
         assertTrue(list.equals(list));
         assertFalse(list.equals(null));
-        PropertyvalueList emptylist = newList();
+        ValueList emptylist = newList();
         assertTrue(list.equals(emptylist));
         assertFalse(list.equals(PropertyvalueNil.getNil().asList()));
-        assertFalse(list.equals(new EmptyPropertyvalueList()));
+        assertFalse(list.equals(new EmptyValueList()));
         list.add(toLongValue(1L));
         assertFalse(list.equals(emptylist));
-        PropertyvalueList otherlistWithSameItem = newList();
+        ValueList otherlistWithSameItem = newList();
         otherlistWithSameItem.add(toLongValue(1L));
         assertTrue(list.equals(otherlistWithSameItem));
     }

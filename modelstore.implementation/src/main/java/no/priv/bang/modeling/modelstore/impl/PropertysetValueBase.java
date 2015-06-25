@@ -2,13 +2,13 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.ValueList;
 
-public abstract class PropertysetPropertyvalueBase extends PropertyvalueBase {
+public abstract class PropertysetValueBase extends ValueBase {
 
     protected Propertyset value;
 
-    public PropertysetPropertyvalueBase(Propertyset value) {
+    public PropertysetValueBase(Propertyset value) {
         if (null == value) {
             this.value = PropertysetNil.getNil();
         } else {
@@ -32,7 +32,7 @@ public abstract class PropertysetPropertyvalueBase extends PropertyvalueBase {
         return PropertyvalueNil.getNil().asString();
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return PropertyvalueNil.getNil().asList();
     }
 

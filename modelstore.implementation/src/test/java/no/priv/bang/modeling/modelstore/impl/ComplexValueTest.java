@@ -1,11 +1,11 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,10 +15,10 @@ import org.junit.Test;
  * @author Steinar Bang
  *
  */
-public class ComplexPropertyvalueTest {
+public class ComplexValueTest {
 
     private Propertyset complexProperty;
-    private Propertyvalue value;
+    private Value value;
 
     @Before
     public void setUp() throws Exception {
@@ -107,7 +107,7 @@ public class ComplexPropertyvalueTest {
 
     @Test
     public void testAsList() {
-    	PropertyvalueList emptyList = value.asList();
+    	ValueList emptyList = value.asList();
     	assertTrue(emptyList.isEmpty());
     }
 
@@ -116,7 +116,7 @@ public class ComplexPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        Propertyvalue nullComplexValue = toComplexValue(null);
+        Value nullComplexValue = toComplexValue(null);
         assertEquals(31, nullComplexValue.hashCode());
         assertEquals(1958288831, value.hashCode());
     }
@@ -126,7 +126,7 @@ public class ComplexPropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        Propertyvalue nullComplexValue = toComplexValue(null);
+        Value nullComplexValue = toComplexValue(null);
         assertFalse(nullComplexValue.equals(null));
         assertFalse(nullComplexValue.equals(PropertyvalueNil.getNil().asComplexProperty()));
         assertTrue(nullComplexValue.equals(nullComplexValue));
@@ -140,7 +140,7 @@ public class ComplexPropertyvalueTest {
      */
     @Test
     public void testToString() {
-        Propertyvalue nullComplexValue = toComplexValue(null);
+        Value nullComplexValue = toComplexValue(null);
         assertEquals("ComplexPropertyvalue [value=PropertysetNil []]", nullComplexValue.toString());
         assertEquals("ComplexPropertyvalue [value=PropertysetImpl [properties={string=StringPropertyvalue [value=foo bar], boolean=BooleanPropertyvalue [value=true], double=DoublePropertyvalue [value=2.78], long=LongPropertyvalue [value=42]}]]", value.toString());
     }

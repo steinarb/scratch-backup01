@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
 import com.fasterxml.jackson.core.JsonEncoding;
@@ -63,14 +63,14 @@ public class JsonPropertysetPersister {
         propertyset.getPropertynames();
         Collection<String> propertynames = propertyset.getPropertynames();
         for (String propertyname : propertynames) {
-            Propertyvalue propertyvalue = propertyset.getProperty(propertyname);
+            Value propertyvalue = propertyset.getProperty(propertyname);
             outputPropertyvalue(generator, propertyname, propertyvalue);
         }
 
         generator.writeEndObject();
     }
 
-    private void outputPropertyvalue(JsonGenerator generator, String propertyname, Propertyvalue propertyvalue) throws IOException {
+    private void outputPropertyvalue(JsonGenerator generator, String propertyname, Value propertyvalue) throws IOException {
         if (propertyvalue.isId()) {
             generator.writeFieldName(propertyname);
             generator.writeObjectId(propertyvalue.asId());
@@ -90,15 +90,15 @@ public class JsonPropertysetPersister {
             Propertyset complexPropertyvalue = propertyvalue.asComplexProperty();
             outputPropertyset(generator, complexPropertyvalue);
         } else if (propertyvalue.isList()) {
-            PropertyvalueList listvalue = propertyvalue.asList();
+            ValueList listvalue = propertyvalue.asList();
             generator.writeFieldName(propertyname);
             outputArray(generator, listvalue);
         }
     }
 
-    private void outputArray(JsonGenerator generator, PropertyvalueList listvalue) throws IOException {
+    private void outputArray(JsonGenerator generator, ValueList listvalue) throws IOException {
         generator.writeStartArray(listvalue.size());
-        for (Propertyvalue listElement : listvalue) {
+        for (Value listElement : listvalue) {
             if (listElement.isReference()) {
                 generator.writeObjectRef(listElement.asReference().getId());
             } else if (listElement.isString()) {
@@ -131,8 +131,8 @@ public class JsonPropertysetPersister {
         }
     }
 
-    private Propertyvalue parseArray(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
-        PropertyvalueList propertyList = newList();
+    private Value parseArray(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
+        ValueList propertyList = newList();
         while (parser.nextToken() != JsonToken.END_ARRAY) {
             JsonToken currentToken = parser.getCurrentToken();
             if (currentToken == JsonToken.VALUE_STRING) {
@@ -155,7 +155,7 @@ public class JsonPropertysetPersister {
         return toListValue(propertyList);
     }
 
-    private Propertyvalue parseObject(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
+    private Value parseObject(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
         Propertyset propertyset = null;
         while (parser.nextToken() != JsonToken.END_OBJECT) {
             String currentFieldName = parser.getCurrentName();

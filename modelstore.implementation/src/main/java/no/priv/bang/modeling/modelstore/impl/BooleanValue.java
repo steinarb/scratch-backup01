@@ -2,7 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
  * Wraps a {@link Boolean} value in a {@link Propertyset}.
@@ -13,7 +13,7 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
  * @author Steinar Bang
  *
  */
-class BooleanPropertyvalue extends PropertyvalueBase {
+class BooleanPropertyvalue extends ValueBase {
 
     private Boolean value;
 
@@ -21,7 +21,7 @@ class BooleanPropertyvalue extends PropertyvalueBase {
      * Create new instance of {@link BooleanPropertyvalue}
      *
      * @param value the value to wrap.
-     * @deprecated Use {@link Propertyvalues#toBooleanValue(Boolean)} instead
+     * @deprecated Use {@link Values#toBooleanValue(Boolean)} instead
      */
     BooleanPropertyvalue(Boolean value) {
     	if (null == value) {
@@ -65,7 +65,7 @@ class BooleanPropertyvalue extends PropertyvalueBase {
         return false;
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return PropertyvalueNil.getNil().asList();
     }
 

@@ -9,7 +9,7 @@ import java.util.UUID;
  * @author Steinar Bang
  *
  */
-public interface Propertyvalue {
+public interface Value {
     boolean isId();
     UUID asId();
     boolean isBoolean();
@@ -25,5 +25,5 @@ public interface Propertyvalue {
     boolean isReference();
     Propertyset asReference();
     boolean isList();
-    PropertyvalueList asList();
+    ValueList asList();
 }

@@ -1,10 +1,10 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertyvalues.*;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,10 +14,10 @@ import org.junit.Test;
  * @author Steinar Bang
  *
  */
-public class ListPropertyvalueTest {
+public class ListValueTest {
 
-    private PropertyvalueList propertyvalueList;
-    private Propertyvalue value;
+    private ValueList propertyvalueList;
+    private Value value;
 
     @Before
     public void setUp() throws Exception {
@@ -106,7 +106,7 @@ public class ListPropertyvalueTest {
 
     @Test
     public void testAsList() {
-    	PropertyvalueList list = value.asList();
+    	ValueList list = value.asList();
     	assertFalse(list.isEmpty());
     	assertEquals(propertyvalueList.size(), list.size());
     }
@@ -117,8 +117,8 @@ public class ListPropertyvalueTest {
      */
     @Test
     public void testEmptyListEqualsNilList() {
-    	Propertyvalue emptylist = toListValue(newList());
-    	Propertyvalue nil = PropertyvalueNil.getNil();
+    	Value emptylist = toListValue(newList());
+    	Value nil = PropertyvalueNil.getNil();
     	assertTrue(emptylist.equals(nil));
 
     	// TODO: should the equals be implemented in the nil object as well?
@@ -130,9 +130,9 @@ public class ListPropertyvalueTest {
      */
     @Test
     public void testHashCode() {
-        Propertyvalue nullListValue = toListValue(null);
+        Value nullListValue = toListValue(null);
         assertEquals(32, nullListValue.hashCode());
-        Propertyvalue foo = toListValue(newList());
+        Value foo = toListValue(newList());
         assertEquals(63, foo.hashCode());
         assertEquals(-24528609, value.hashCode());
     }
@@ -142,11 +142,11 @@ public class ListPropertyvalueTest {
      */
     @Test
     public void testEquals() {
-        Propertyvalue nullListValue = toListValue(null);
-        Propertyvalue emptyvalue = toListValue(newList());
-        PropertyvalueList list = newList();
+        Value nullListValue = toListValue(null);
+        Value emptyvalue = toListValue(newList());
+        ValueList list = newList();
         list.add(toDoubleValue(3.14));
-        Propertyvalue otherValue = toListValue(list);
+        Value otherValue = toListValue(list);
         assertFalse(nullListValue.equals(null));
         assertTrue(nullListValue.equals(PropertyvalueNil.getNil()));
         assertTrue(nullListValue.equals(nullListValue));
@@ -156,7 +156,7 @@ public class ListPropertyvalueTest {
         assertFalse(value.equals(emptyvalue));
         assertFalse(value.equals(nullListValue));
         assertFalse(emptyvalue.equals(value));
-        Propertyvalue stringvalue = toStringValue("foobar");
+        Value stringvalue = toStringValue("foobar");
         assertFalse(value.equals(stringvalue));
         assertFalse(value.equals(otherValue));
     }
@@ -166,13 +166,13 @@ public class ListPropertyvalueTest {
      */
     @Test
     public void testToString() {
-        Propertyvalue nullListValue = toListValue(null);
+        Value nullListValue = toListValue(null);
         assertEquals("ListPropertyvalue [value=[]]", nullListValue.toString());
-        PropertyvalueList list = newList();
+        ValueList list = newList();
         list.add(toStringValue("foo"));
         list.add(toStringValue("bar"));
         list.add(toDoubleValue(2.78));
-        Propertyvalue otherValue = toListValue(list);
+        Value otherValue = toListValue(list);
         assertEquals("ListPropertyvalue [value=[StringPropertyvalue [value=foo], StringPropertyvalue [value=bar], DoublePropertyvalue [value=2.78]]]", otherValue.toString());
         assertEquals("ListPropertyvalue [value=[BooleanPropertyvalue [value=true], LongPropertyvalue [value=42], DoublePropertyvalue [value=2.78], StringPropertyvalue [value=foo bar]]]", value.toString());
     }

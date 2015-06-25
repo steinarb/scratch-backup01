@@ -1,19 +1,19 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.ValueList;
 
-class ListPropertyvalue extends PropertyvalueBase {
+class ListPropertyvalue extends ValueBase {
 
-    private PropertyvalueList value;
+    private ValueList value;
 
     /**
      * Create a new instance of {@link ListPropertyvalue}.
      *
      * @param value the value to wrap
-     * @deprecated use {@link Propertyvalues#toListValue(PropertyvalueList)} instead
+     * @deprecated use {@link Values#toListValue(ValueList)} instead
      */
-    public ListPropertyvalue(PropertyvalueList value) {
+    public ListPropertyvalue(ValueList value) {
     	if (null == value) {
             this.value = PropertyvalueNil.getNil().asList();
     	} else {
@@ -50,7 +50,7 @@ class ListPropertyvalue extends PropertyvalueBase {
         return true;
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return value;
     }
 

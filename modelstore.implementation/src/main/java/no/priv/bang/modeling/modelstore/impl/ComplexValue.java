@@ -3,13 +3,13 @@ package no.priv.bang.modeling.modelstore.impl;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
 
-class ComplexPropertyvalue extends PropertysetPropertyvalueBase {
+class ComplexPropertyvalue extends PropertysetValueBase {
 
     /**
      * Create a new instance of {@link ComplexPropertyvalue}.
      *
      * @param value the value to wrap
-     * @deprecated use {@link Propertyvalues#toComplexValue(Propertyset)} instead
+     * @deprecated use {@link Values#toComplexValue(Propertyset)} instead
      */
     public ComplexPropertyvalue(Propertyset value) {
     	super(value);
@@ -50,7 +50,7 @@ class ComplexPropertyvalue extends PropertysetPropertyvalueBase {
             return false;
         }
 
-        PropertysetPropertyvalueBase other = (PropertysetPropertyvalueBase) obj;
+        PropertysetValueBase other = (PropertysetValueBase) obj;
         return value.equals(other.value);
     }
 

@@ -3,10 +3,10 @@ package no.priv.bang.modeling.modelstore.impl;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 
-class IdPropertyvalue implements Propertyvalue {
+class IdPropertyvalue implements Value {
 
     private UUID value;
 
@@ -78,7 +78,7 @@ class IdPropertyvalue implements Propertyvalue {
         return false;
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return PropertyvalueNil.getNil().asList();
     }
 

@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,9 +16,9 @@ import org.junit.Test;
  * @author Steinar Bang
  *
  */
-public class IdPropertyvalueTest {
+public class IdValueTest {
 
-    private Propertyvalue value;
+    private Value value;
 
     @Before
     public void setUp() throws Exception {
@@ -102,7 +102,7 @@ public class IdPropertyvalueTest {
 
     @Test
     public void testAsList() {
-    	PropertyvalueList emptyList = value.asList();
+    	ValueList emptyList = value.asList();
     	assertTrue(emptyList.isEmpty());
     }
 

@@ -2,7 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
  * Wraps a {@link Double} value in a {@link Propertyset}.
@@ -13,14 +13,14 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
  * @author Steinar Bang
  *
  */
-class DoublePropertyvalue extends PropertyvalueBase {
+class DoublePropertyvalue extends ValueBase {
     private Double value;
 
     /**
      * Create new instances of {@link DoublePropertyvalue}.
      *
      * @param value the value to wrap
-     * @deprecated use {@link Propertyvalues#toDoubleValue(Double)} instead
+     * @deprecated use {@link Values#toDoubleValue(Double)} instead
      */
     public DoublePropertyvalue(Double value) {
     	if (null == value) {
@@ -60,7 +60,7 @@ class DoublePropertyvalue extends PropertyvalueBase {
         return PropertysetNil.getNil();
     }
 
-    public PropertyvalueList asList() {
+    public ValueList asList() {
         return PropertyvalueNil.getNil().asList();
     }
 

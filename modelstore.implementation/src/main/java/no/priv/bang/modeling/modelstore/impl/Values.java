@@ -1,25 +1,25 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
  * A class with static methods for wrapping Java property values
- * in {@link Propertyvalue} objects.
+ * in {@link Value} objects.
  *
  * @author Steinar Bang
  *
  */
 @SuppressWarnings("deprecation")
-public class Propertyvalues {
+public class Values {
 
     /**
      * Get the singleton {@link PropertyvalueNil} object.
      *
      * @return a reference to {@link PropertyvalueNil}.
      */
-    static public Propertyvalue getNil() {
+    static public Value getNil() {
         return PropertyvalueNil.getNil();
     }
 
@@ -29,7 +29,7 @@ public class Propertyvalues {
      * @param boolValue the value to wrap
      * @return a {@link BooleanPropertyvalue} instance
      */
-    static public Propertyvalue toBooleanValue(Boolean boolValue) {
+    static public Value toBooleanValue(Boolean boolValue) {
         return new BooleanPropertyvalue(boolValue);
     }
 
@@ -39,7 +39,7 @@ public class Propertyvalues {
      * @param boolValue the value to wrap
      * @return a {@link BooleanPropertyvalue} instance
      */
-    static public Propertyvalue toBooleanValue(boolean boolValue) {
+    static public Value toBooleanValue(boolean boolValue) {
         return toBooleanValue(Boolean.valueOf(boolValue));
     }
 
@@ -49,7 +49,7 @@ public class Propertyvalues {
      * @param intValue the value to wrap
      * @return a {@link LongPropertyvalue} instance
      */
-    static public Propertyvalue toLongValue(Long intValue) {
+    static public Value toLongValue(Long intValue) {
         return new LongPropertyvalue(intValue);
     }
 
@@ -59,7 +59,7 @@ public class Propertyvalues {
      * @param intValue the value to wrap
      * @return a {@link LongPropertyvalue} instance
      */
-    static public Propertyvalue toLongValue(long intValue) {
+    static public Value toLongValue(long intValue) {
         return toLongValue(Long.valueOf(intValue));
     }
 
@@ -69,7 +69,7 @@ public class Propertyvalues {
      * @param doubleValue the value to wrap
      * @return a {@link DoublePropertyvalue} instance
      */
-    static public Propertyvalue toDoubleValue(Double doubleValue) {
+    static public Value toDoubleValue(Double doubleValue) {
         return new DoublePropertyvalue(doubleValue);
     }
 
@@ -79,7 +79,7 @@ public class Propertyvalues {
      * @param doubleValue the value to wrap
      * @return a {@link DoublePropertyvalue} instance
      */
-    static public Propertyvalue toDoubleValue(double doubleValue) {
+    static public Value toDoubleValue(double doubleValue) {
         return toDoubleValue(Double.valueOf(doubleValue));
     }
 
@@ -89,7 +89,7 @@ public class Propertyvalues {
      * @param stringValue the value to wrap
      * @return a {@link StringPropertyvalue} instance
      */
-    static public Propertyvalue toStringValue(String stringValue) {
+    static public Value toStringValue(String stringValue) {
         return new StringPropertyvalue(stringValue);
     }
 
@@ -99,7 +99,7 @@ public class Propertyvalues {
      * @param complexValue the value to wrap
      * @return a {@link ComplexPropertyvalue} instance
      */
-    static public Propertyvalue toComplexValue(Propertyset complexValue) {
+    static public Value toComplexValue(Propertyset complexValue) {
         return new ComplexPropertyvalue(complexValue);
     }
 
@@ -109,7 +109,7 @@ public class Propertyvalues {
      * @param referencedValue the value to wrap
      * @return a {@link ReferencePropertyvalue} instance
      */
-    static public Propertyvalue toReferenceValue(Propertyset referencedValue) {
+    static public Value toReferenceValue(Propertyset referencedValue) {
         return new ReferencePropertyvalue(referencedValue);
     }
 
@@ -119,7 +119,7 @@ public class Propertyvalues {
      * @param listValue the value to wrap
      * @return a {@link ListPropertyvalue} instance
      */
-    static Propertyvalue toListValue(PropertyvalueList listValue) {
+    static Value toListValue(ValueList listValue) {
         return new ListPropertyvalue(listValue);
     }
 
@@ -128,7 +128,7 @@ public class Propertyvalues {
      *
      * @return a new empty instance of {@link PropertyvalueArrayList}.
      */
-    static public PropertyvalueList newList() {
+    static public ValueList newList() {
         return new PropertyvalueArrayList();
     }
 

@@ -15,8 +15,8 @@ import javax.inject.Provider;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.PropertysetNil;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
 
 /**
@@ -54,8 +54,8 @@ class PropertysetManagerBase implements PropertysetManager {
         Set<Propertyset> allAspects = new HashSet<Propertyset>();
         for (Entry<UUID, Propertyset> propertyset : propertysets.entrySet()) {
             if (propertyset.getValue().hasAspect()) {
-                PropertyvalueList aspects = propertyset.getValue().getAspects();
-                for (Propertyvalue propertyvalue : aspects) {
+                ValueList aspects = propertyset.getValue().getAspects();
+                for (Value propertyvalue : aspects) {
                     Propertyset aspect = propertyvalue.asReference();
                     if (!PropertysetNil.getNil().equals(aspect)) {
                         allAspects.add(aspect);
@@ -74,8 +74,8 @@ class PropertysetManagerBase implements PropertysetManager {
     public Collection<Propertyset> findObjectsOfAspect(Propertyset aspect) {
         List<Propertyset> objectsOfAspect = new ArrayList<Propertyset>();
         for (Entry<UUID, Propertyset> propertysetEntry : propertysets.entrySet()) {
-            PropertyvalueList aspectList = propertysetEntry.getValue().getListProperty("aspects");
-            for (Propertyvalue aspectValue : aspectList) {
+            ValueList aspectList = propertysetEntry.getValue().getListProperty("aspects");
+            for (Value aspectValue : aspectList) {
             	Set<Propertyset> aspectInheritanceChain = followInheritanceChain(aspectValue.asReference());
                 if (aspectInheritanceChain.contains(aspect)) {
                     objectsOfAspect.add(propertysetEntry.getValue());

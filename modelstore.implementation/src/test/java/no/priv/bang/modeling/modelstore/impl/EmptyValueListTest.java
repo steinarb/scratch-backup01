@@ -3,24 +3,24 @@ package no.priv.bang.modeling.modelstore.impl;
 import static org.junit.Assert.*;
 
 import java.util.List;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link EmptyPropertyvalueList}.
+ * Unit tests for {@link EmptyValueList}.
  *
  * @author Steinar Bang
  *
  */
-public class EmptyPropertyvalueListTest {
+public class EmptyValueListTest {
 
-    private PropertyvalueList list;
+    private ValueList list;
 
     @Before
     public void setUp() throws Exception {
-        list = new EmptyPropertyvalueList();
+        list = new EmptyValueList();
     }
 
     @Test
@@ -33,8 +33,8 @@ public class EmptyPropertyvalueListTest {
 
     @Test
     public void testAddAll() {
-        assertFalse(list.addAll(new EmptyPropertyvalueList()));
-        assertFalse(list.addAll(0, new EmptyPropertyvalueList()));
+        assertFalse(list.addAll(new EmptyValueList()));
+        assertFalse(list.addAll(0, new EmptyValueList()));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class EmptyPropertyvalueListTest {
 
     @Test
     public void testContainsAll() {
-        assertTrue(list.containsAll(new EmptyPropertyvalueList()));
+        assertTrue(list.containsAll(new EmptyValueList()));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class EmptyPropertyvalueListTest {
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void testSubList() {
-        List<Propertyvalue> sublist = list.subList(1, 2);
+        List<Value> sublist = list.subList(1, 2);
         assertTrue(sublist.isEmpty());
     }
 
@@ -118,8 +118,8 @@ public class EmptyPropertyvalueListTest {
     public void testToArray() {
         Object[] array1 = list.toArray();
         assertEquals(0, array1.length);
-        Propertyvalue[] valueArray = new Propertyvalue[10];
-        Propertyvalue[] array2 = list.toArray(valueArray);
+        Value[] valueArray = new Value[10];
+        Value[] array2 = list.toArray(valueArray);
         assertEquals(0, array2.length);
     }
 

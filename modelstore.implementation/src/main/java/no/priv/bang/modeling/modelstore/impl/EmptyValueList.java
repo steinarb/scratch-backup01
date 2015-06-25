@@ -1,8 +1,8 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.AbstractList;
-import no.priv.bang.modeling.modelstore.Propertyvalue;
-import no.priv.bang.modeling.modelstore.PropertyvalueList;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
  * A list implementation that signifies the nil list value.
@@ -12,33 +12,33 @@ import no.priv.bang.modeling.modelstore.PropertyvalueList;
  * @author Steinar Bang
  *
  */
-public final class EmptyPropertyvalueList extends AbstractList<Propertyvalue> implements PropertyvalueList {
-    private final Propertyvalue[] emptyArray = new Propertyvalue[0];
+public final class EmptyValueList extends AbstractList<Value> implements ValueList {
+    private final Value[] emptyArray = new Value[0];
 
     @Override
-    public void add(int index, Propertyvalue element) {
+    public void add(int index, Value element) {
         // Just drop the added elements on the floor.
     }
 
     @Override
-    public boolean add(Propertyvalue e) {
+    public boolean add(Value e) {
         // Just drop the added elements on the floor. Always return false
         return false;
     }
 
     @Override
-    public Propertyvalue set(int index, Propertyvalue element) {
+    public Value set(int index, Value element) {
         // Just drop the added elements on the floor. Always return PropertyvalueNil
         return PropertyvalueNil.getNil();
     }
 
     @Override
-    public Propertyvalue get(int index) {
+    public Value get(int index) {
         return PropertyvalueNil.getNil();
     }
 
     @Override
-    public Propertyvalue remove(int index) {
+    public Value remove(int index) {
         // Always return PropertyvalueNil
         return PropertyvalueNil.getNil();
     }

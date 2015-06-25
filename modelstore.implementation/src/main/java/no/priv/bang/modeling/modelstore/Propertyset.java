@@ -23,15 +23,15 @@ public interface Propertyset {
 
     Collection<String> getPropertynames();
 
-    Propertyvalue getProperty(String propertyname);
+    Value getProperty(String propertyname);
 
-    void setProperty(String propertyname, Propertyvalue property);
+    void setProperty(String propertyname, Value property);
 
     void addAspect(Propertyset aspect);
 
     boolean hasAspect();
 
-    PropertyvalueList getAspects();
+    ValueList getAspects();
 
     boolean hasId();
 
@@ -55,7 +55,7 @@ public interface Propertyset {
     Propertyset getReferenceProperty(String propertyName);
     void setReferenceProperty(String propertyName, Propertyset referencedObject);
 
-    PropertyvalueList getListProperty(String propertyName);
-    void setListProperty(String propertyName, PropertyvalueList listValue);
+    ValueList getListProperty(String propertyName);
+    void setListProperty(String propertyName, ValueList listValue);
 
 }
