@@ -2,8 +2,8 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.UUID;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.EmptyValueList;
@@ -76,7 +76,7 @@ final class PropertyvalueNil implements Value {
     }
 
     public Propertyset asComplexProperty() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public boolean isReference() {
@@ -84,7 +84,7 @@ final class PropertyvalueNil implements Value {
     }
 
     public Propertyset asReference() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public boolean isList() {

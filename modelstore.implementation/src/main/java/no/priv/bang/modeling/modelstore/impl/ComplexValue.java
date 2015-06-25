@@ -1,7 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 
 class ComplexPropertyvalue extends PropertysetValueBase {
 
@@ -25,7 +25,7 @@ class ComplexPropertyvalue extends PropertysetValueBase {
     }
 
     public Propertyset asReference() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     @Override

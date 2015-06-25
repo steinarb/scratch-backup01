@@ -3,7 +3,6 @@ package no.priv.bang.modeling.modelstore.impl;
 import static org.junit.Assert.*;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Test;
@@ -270,7 +269,7 @@ public class PropertysetImplTest {
         // Set a null complex property value and verify that it results in a nil Propertyset
         propertyset.setComplexProperty("nullValue", null);
         Propertyset nullValue = propertyset.getComplexProperty("nullValue");
-        assertEquals(PropertysetNil.getNil(), nullValue);
+        assertEquals(getNilPropertyset(), nullValue);
 
         // Check that accessing a complex property as other property types
         // gives null values (a complex property can't be autoconverted to
@@ -284,21 +283,21 @@ public class PropertysetImplTest {
         String upperLeftCornerAsString = propertyset.getStringProperty("upperLeftCorner");
         assertEquals("", upperLeftCornerAsString);
         Propertyset upperLeftCornerAsReference = propertyset.getReferenceProperty("upperLeftCorner");
-        assertEquals(PropertysetNil.getNil(), upperLeftCornerAsReference);
+        assertEquals(getNilPropertyset(), upperLeftCornerAsReference);
 
         // Set a some properties with different types and try reading them back as complex properties
         // They all result in a nil complex property (ie. no value conversion).
         propertyset.setBooleanProperty("boolValue", Boolean.valueOf(true));
-        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("boolValue"));
+        assertEquals(getNilPropertyset(), propertyset.getComplexProperty("boolValue"));
         propertyset.setLongProperty("longValue", Long.valueOf(42));
-        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("longValue"));
+        assertEquals(getNilPropertyset(), propertyset.getComplexProperty("longValue"));
         propertyset.setDoubleProperty("doubleValue", Double.valueOf(2.78));
-        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("doubleValue"));
+        assertEquals(getNilPropertyset(), propertyset.getComplexProperty("doubleValue"));
         propertyset.setStringProperty("stringValue", "foo bar");
-        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("stringValue"));
+        assertEquals(getNilPropertyset(), propertyset.getComplexProperty("stringValue"));
         Propertyset referencedObject = new PropertysetImpl();
         propertyset.setReferenceProperty("referenceValue", referencedObject);
-        assertEquals(PropertysetNil.getNil(), propertyset.getComplexProperty("referenceValue"));
+        assertEquals(getNilPropertyset(), propertyset.getComplexProperty("referenceValue"));
     }
 
     /**
@@ -330,21 +329,21 @@ public class PropertysetImplTest {
         String aLinkedObjectAsString = propertyset.getStringProperty("aLinkedObject");
         assertEquals("", aLinkedObjectAsString);
         Propertyset aLinkedObjectAsComplexProperty = propertyset.getComplexProperty("aLinkedObject");
-        assertEquals(PropertysetNil.getNil(), aLinkedObjectAsComplexProperty);
+        assertEquals(getNilPropertyset(), aLinkedObjectAsComplexProperty);
 
         // Set a some properties with different types and try reading them back as reference properties
         // They all result in a nil reference property (ie. no value conversion).
         propertyset.setBooleanProperty("boolValue", Boolean.valueOf(true));
-        assertEquals(PropertysetNil.getNil(), propertyset.getReferenceProperty("boolValue"));
+        assertEquals(getNilPropertyset(), propertyset.getReferenceProperty("boolValue"));
         propertyset.setLongProperty("longValue", Long.valueOf(42));
-        assertEquals(PropertysetNil.getNil(), propertyset.getReferenceProperty("longValue"));
+        assertEquals(getNilPropertyset(), propertyset.getReferenceProperty("longValue"));
         propertyset.setDoubleProperty("doubleValue", Double.valueOf(2.78));
-        assertEquals(PropertysetNil.getNil(), propertyset.getReferenceProperty("doubleValue"));
+        assertEquals(getNilPropertyset(), propertyset.getReferenceProperty("doubleValue"));
         propertyset.setStringProperty("stringValue", "foo bar");
-        assertEquals(PropertysetNil.getNil(), propertyset.getReferenceProperty("stringValue"));
+        assertEquals(getNilPropertyset(), propertyset.getReferenceProperty("stringValue"));
         Propertyset complexdObject = new PropertysetImpl();
         propertyset.setComplexProperty("complexValue", complexdObject);
-        assertEquals(PropertysetNil.getNil(), propertyset.getReferenceProperty("complexValue"));
+        assertEquals(getNilPropertyset(), propertyset.getReferenceProperty("complexValue"));
     }
 
     /**
@@ -392,7 +391,7 @@ public class PropertysetImplTest {
     @Test
     public void testEmptyPropertysetEqualsPropertysetNil() {
     	Propertyset emptypropertyset = new PropertysetImpl();
-    	Propertyset nil = PropertysetNil.getNil();
+    	Propertyset nil = getNilPropertyset();
     	assertTrue(emptypropertyset.equals(nil));
     	assertTrue(nil.equals(emptypropertyset));
     }

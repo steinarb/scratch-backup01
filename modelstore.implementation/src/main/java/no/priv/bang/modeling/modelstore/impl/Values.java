@@ -15,6 +15,15 @@ import no.priv.bang.modeling.modelstore.ValueList;
 public class Values {
 
     /**
+     * Get the singleton {@link PropertysetNil} object.
+     *
+     * @return a reference to {@link PropertysetNil}.
+     */
+    static public Propertyset getNilPropertyset() {
+        return PropertysetNil.getNil();
+    }
+
+    /**
      * Get the singleton {@link PropertyvalueNil} object.
      *
      * @return a reference to {@link PropertyvalueNil}.

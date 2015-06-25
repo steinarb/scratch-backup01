@@ -2,7 +2,6 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
@@ -93,8 +92,8 @@ public class StringValueTest {
 
     @Test
     public void testAsComplexProperty() {
-        assertEquals(PropertysetNil.getNil(), valueWithNumber.asComplexProperty());
-        assertEquals(PropertysetNil.getNil(), valueNotANumber.asComplexProperty());
+        assertEquals(getNilPropertyset(), valueWithNumber.asComplexProperty());
+        assertEquals(getNilPropertyset(), valueNotANumber.asComplexProperty());
     }
 
     @Test
@@ -105,8 +104,8 @@ public class StringValueTest {
 
     @Test
     public void testAsReference() {
-        assertEquals(PropertysetNil.getNil(), valueWithNumber.asReference());
-        assertEquals(PropertysetNil.getNil(), valueNotANumber.asReference());
+        assertEquals(getNilPropertyset(), valueWithNumber.asReference());
+        assertEquals(getNilPropertyset(), valueNotANumber.asReference());
     }
 
     @Test

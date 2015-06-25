@@ -1,7 +1,9 @@
-package no.priv.bang.modeling.modelstore;
+package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
+import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
 
 import org.junit.Test;
@@ -19,7 +21,7 @@ public class PropertysetNilTest {
      */
     @Test
     public void testGetPropertyNames() {
-        Propertyset nilPropertyset = PropertysetNil.getNil();
+        Propertyset nilPropertyset = getNilPropertyset();
         assertEquals(0, nilPropertyset.getPropertynames().size());
     }
 
@@ -29,7 +31,7 @@ public class PropertysetNilTest {
      */
     @Test
     public void testGetSetGetProperty() {
-        Propertyset nilPropertyset = PropertysetNil.getNil();
+        Propertyset nilPropertyset = getNilPropertyset();
         Propertyset propertyset = new PropertysetImpl();
         propertyset.setStringProperty("string", "this is stringvalue");
         assertEquals(getNil(), nilPropertyset.getProperty("nomatter"));
@@ -84,7 +86,7 @@ public class PropertysetNilTest {
      */
     @Test
     public void testAspects() {
-        Propertyset nilPropertyset = PropertysetNil.getNil();
+        Propertyset nilPropertyset = getNilPropertyset();
         Propertyset propertyset = new PropertysetImpl();
         propertyset.setStringProperty("string", "this is stringvalue");
 
@@ -104,7 +106,7 @@ public class PropertysetNilTest {
      */
     @Test
     public void testEquals() {
-        Propertyset nilPropertyset = PropertysetNil.getNil();
+        Propertyset nilPropertyset = getNilPropertyset();
         Propertyset propertyset = new PropertysetImpl();
 
         assertTrue(nilPropertyset.equals(nilPropertyset));

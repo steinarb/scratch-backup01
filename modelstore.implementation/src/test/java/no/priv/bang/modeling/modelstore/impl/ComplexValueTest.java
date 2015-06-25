@@ -3,7 +3,6 @@ package no.priv.bang.modeling.modelstore.impl;
 import static org.junit.Assert.*;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
@@ -97,7 +96,7 @@ public class ComplexValueTest {
 
     @Test
     public void testAsReference() {
-        assertEquals(PropertysetNil.getNil(), value.asReference());
+        assertEquals(getNilPropertyset(), value.asReference());
     }
 
     @Test

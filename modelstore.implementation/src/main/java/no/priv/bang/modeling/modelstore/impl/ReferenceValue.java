@@ -1,7 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 
 /**
  * A property value that references a {@link Propertyset} (a "pointer"
@@ -28,7 +28,7 @@ class ReferencePropertyvalue extends PropertysetValueBase {
     }
 
     public Propertyset asComplexProperty() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public Propertyset asReference() {

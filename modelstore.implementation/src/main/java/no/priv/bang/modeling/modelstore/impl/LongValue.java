@@ -1,7 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
@@ -53,11 +53,11 @@ class LongPropertyvalue extends ValueBase {
     }
 
     public Propertyset asComplexProperty() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public Propertyset asReference() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public ValueList asList() {

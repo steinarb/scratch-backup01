@@ -1,9 +1,12 @@
-package no.priv.bang.modeling.modelstore;
+package no.priv.bang.modeling.modelstore.impl;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.Values;
 
 /**
@@ -18,7 +21,7 @@ public final class PropertysetNil implements Propertyset {
 
     private static Propertyset singleton;
 
-    public static Propertyset getNil() {
+    static Propertyset getNil() {
         if (null == singleton) {
             singleton = new PropertysetNil();
         }

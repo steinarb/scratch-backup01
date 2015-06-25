@@ -1,7 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.ValueList;
 
 public abstract class PropertysetValueBase extends ValueBase {
@@ -10,7 +10,7 @@ public abstract class PropertysetValueBase extends ValueBase {
 
     public PropertysetValueBase(Propertyset value) {
         if (null == value) {
-            this.value = PropertysetNil.getNil();
+            this.value = getNilPropertyset();
         } else {
             this.value = value;
         }

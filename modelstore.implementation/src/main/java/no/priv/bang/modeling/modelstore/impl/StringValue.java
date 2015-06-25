@@ -1,7 +1,7 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.ValueList;
 
 /**
@@ -47,7 +47,7 @@ class StringPropertyvalue extends ValueBase {
                 double doubleValue = Double.parseDouble(value);
                 return Math.round(doubleValue);
             } catch (NumberFormatException e2) {
-                return PropertysetNil.getNil().getLongProperty("dummy");
+                return getNilPropertyset().getLongProperty("dummy");
             }
         }
     }
@@ -56,7 +56,7 @@ class StringPropertyvalue extends ValueBase {
         try {
             return Double.valueOf(value);
         } catch (NumberFormatException e) {
-            return PropertysetNil.getNil().getDoubleProperty("dummy");
+            return getNilPropertyset().getDoubleProperty("dummy");
         }
     }
 
@@ -65,11 +65,11 @@ class StringPropertyvalue extends ValueBase {
     }
 
     public Propertyset asComplexProperty() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public Propertyset asReference() {
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public ValueList asList() {

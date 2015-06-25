@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
@@ -90,7 +89,7 @@ public class ReferenceValueTest {
 
     @Test
     public void testAsComplexProperty() {
-        assertEquals(PropertysetNil.getNil(), value.asComplexProperty());
+        assertEquals(getNilPropertyset(), value.asComplexProperty());
     }
 
     @Test

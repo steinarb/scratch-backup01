@@ -78,12 +78,12 @@ public class PropertysetManagerTest {
         Propertyset complexValue = propertysetManager.createPropertyset();
         propertyset.setComplexProperty("id", complexValue);
         Propertyset returnedComplexProperty = propertyset.getComplexProperty("id");
-        assertEquals("Expected the \"id\" property not to be affected by setting a complex value", PropertysetNil.getNil(), returnedComplexProperty);
+        assertEquals("Expected the \"id\" property not to be affected by setting a complex value", getNilPropertyset(), returnedComplexProperty);
         assertFalse(returnedComplexProperty.hasId());
         assertEquals(getNil().asId(), returnedComplexProperty.getId());
         Propertyset referencedPropertyset = propertysetManager.findPropertyset(UUID.randomUUID());
         referencedPropertyset.setReferenceProperty("id", referencedPropertyset);
-        assertEquals("Expected the \"id\" property not to be affected by setting an object reference", PropertysetNil.getNil(), propertyset.getReferenceProperty("id"));
+        assertEquals("Expected the \"id\" property not to be affected by setting an object reference", getNilPropertyset(), propertyset.getReferenceProperty("id"));
         ValueList listValue = newList();
         propertyset.setListProperty("id", listValue);
         assertEquals("Expected the \"id\" property not to be affected by setting an object reference", getNil().asList(), propertyset.getListProperty("id"));
@@ -207,7 +207,7 @@ public class PropertysetManagerTest {
             }
         }
 
-    	return PropertysetNil.getNil();
+    	return getNilPropertyset();
     }
 
     private Propertyset buildGeneralObjectAspect(PropertysetManager propertysetManager) {

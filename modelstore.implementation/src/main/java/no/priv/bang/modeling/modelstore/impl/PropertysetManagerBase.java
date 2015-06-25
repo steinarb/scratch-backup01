@@ -12,9 +12,9 @@ import java.util.UUID;
 
 import javax.inject.Provider;
 
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
@@ -57,10 +57,10 @@ class PropertysetManagerBase implements PropertysetManager {
                 ValueList aspects = propertyset.getValue().getAspects();
                 for (Value propertyvalue : aspects) {
                     Propertyset aspect = propertyvalue.asReference();
-                    if (!PropertysetNil.getNil().equals(aspect)) {
+                    if (!getNilPropertyset().equals(aspect)) {
                         allAspects.add(aspect);
                         Propertyset baseAspect = aspect.getReferenceProperty("inherits");
-                        if (!PropertysetNil.getNil().equals(baseAspect)) {
+                        if (!getNilPropertyset().equals(baseAspect)) {
                             allAspects.add(baseAspect);
                         }
                     }
@@ -88,7 +88,7 @@ class PropertysetManagerBase implements PropertysetManager {
 
     private Set<Propertyset> followInheritanceChain(Propertyset aspect) {
         Propertyset baseAspect = aspect.getReferenceProperty("inherits");
-        if (!PropertysetNil.getNil().equals(baseAspect)) {
+        if (!getNilPropertyset().equals(baseAspect)) {
             Set<Propertyset> aspects = followInheritanceChain(baseAspect);
             aspects.add(aspect);
             return aspects;

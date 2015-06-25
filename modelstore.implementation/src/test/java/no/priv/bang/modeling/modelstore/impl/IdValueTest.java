@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.PropertysetNil;
+import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Before;
@@ -82,7 +82,7 @@ public class IdValueTest {
 
     @Test
     public void testAsComplexProperty() {
-        assertEquals(PropertysetNil.getNil(), value.asComplexProperty());
+        assertEquals(getNilPropertyset(), value.asComplexProperty());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class IdValueTest {
 
     @Test
     public void testAsReference() {
-        assertEquals(PropertysetNil.getNil(), value.asReference());
+        assertEquals(getNilPropertyset(), value.asReference());
     }
 
     @Test

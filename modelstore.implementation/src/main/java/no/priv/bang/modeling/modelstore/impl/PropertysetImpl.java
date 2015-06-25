@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetNil;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -108,7 +107,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asBoolean();
         }
 
-        return PropertysetNil.getNil().getBooleanProperty(propertyName);
+        return getNilPropertyset().getBooleanProperty(propertyName);
     }
 
     public void setBooleanProperty(String propertyName, Boolean boolValue) {
@@ -123,7 +122,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asLong();
         }
 
-        return PropertysetNil.getNil().getLongProperty(propertyName);
+        return getNilPropertyset().getLongProperty(propertyName);
     }
 
     public void setLongProperty(String propertyName, Long intValue) {
@@ -138,7 +137,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asDouble();
         }
 
-        return PropertysetNil.getNil().getDoubleProperty(propertyName);
+        return getNilPropertyset().getDoubleProperty(propertyName);
     }
 
     public void setDoubleProperty(String propertyName, Double doubleValue) {
@@ -153,7 +152,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asString();
         }
 
-        return PropertysetNil.getNil().getStringProperty(propertyName);
+        return getNilPropertyset().getStringProperty(propertyName);
     }
 
     public void setStringProperty(String propertyName, String stringValue) {
@@ -168,7 +167,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asComplexProperty();
     	}
 
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public void setComplexProperty(String propertyName, Propertyset complexProperty) {
@@ -183,7 +182,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asReference();
     	}
 
-        return PropertysetNil.getNil();
+        return getNilPropertyset();
     }
 
     public void setReferenceProperty(String propertyName, Propertyset referencedObject) {
@@ -198,7 +197,7 @@ public class PropertysetImpl implements Propertyset {
             return rawPropertyValue.asList();
     	}
 
-        return PropertysetNil.getNil().getListProperty(propertyName);
+        return getNilPropertyset().getListProperty(propertyName);
     }
 
     public void setListProperty(String propertyName, ValueList listValue) {
