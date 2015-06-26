@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link StringPropertyvalue}.
+ * Unit tests for {@link StringValue}.
  *
  * @author Steinar Bang
  *
@@ -123,7 +123,7 @@ public class StringValueTest {
     }
 
     /**
-     * Test av {@link StringPropertyvalue#hashCode()}.
+     * Test av {@link StringValue#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -134,7 +134,7 @@ public class StringValueTest {
     }
 
     /**
-     * Test av {@link StringPropertyvalue#equals(Object)}.
+     * Test av {@link StringValue#equals(Object)}.
      */
     @Test
     public void testEquals() {
@@ -148,14 +148,14 @@ public class StringValueTest {
     }
 
     /**
-     * Test av {@link StringPropertyvalue#toString()}.
+     * Test av {@link StringValue#toString()}.
      */
     @Test
     public void testToString() {
         Value nullLongValue = toStringValue(null);
-        assertEquals("StringPropertyvalue [value=]", nullLongValue.toString());
+        assertEquals("StringValue [value=]", nullLongValue.toString());
         Value value = toStringValue("bar");
-        assertEquals("StringPropertyvalue [value=bar]", value.toString());
+        assertEquals("StringValue [value=bar]", value.toString());
     }
 
 }

@@ -23,7 +23,7 @@ final class NilValue implements Value {
     private final Long nullLongValue = Long.valueOf(0);
     private final Double nullDoubleValue = Double.valueOf(0);
     private final String emptyStringValue = "";
-    private final ValueList emptyPropertyvalueList = new EmptyValueList();
+    private final ValueList emptyValueList = new EmptyValueList();
 
     static Value getNil() {
         return singleton;
@@ -92,7 +92,7 @@ final class NilValue implements Value {
     }
 
     public ValueList asList() {
-        return emptyPropertyvalueList;
+        return emptyValueList;
     }
 
     @Override
@@ -107,7 +107,7 @@ final class NilValue implements Value {
 
     @Override
     public String toString() {
-        return "PropertyvalueNil []";
+        return "NilValue []";
     }
 
 }

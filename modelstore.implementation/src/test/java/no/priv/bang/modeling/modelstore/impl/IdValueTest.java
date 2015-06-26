@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link IdPropertyvalue}.
+ * Unit tests for {@link IdValue}.
  *
  * @author Steinar Bang
  *
@@ -22,7 +22,7 @@ public class IdValueTest {
 
     @Before
     public void setUp() throws Exception {
-        value = new IdPropertyvalue(UUID.fromString("e40fb164-3dd3-43b8-839f-8781bbcb2a15"));
+        value = new IdValue(UUID.fromString("e40fb164-3dd3-43b8-839f-8781bbcb2a15"));
     }
 
     @Test
@@ -107,39 +107,39 @@ public class IdValueTest {
     }
 
     /**
-     * Test av {@link IdPropertyvalue#hashCode()}.
+     * Test av {@link IdValue#hashCode()}.
      */
     @Test
     public void testHashCode() {
-        IdPropertyvalue nullIdPropertyValue = new IdPropertyvalue(null);
-        assertEquals(31, nullIdPropertyValue.hashCode());
+        IdValue nullIdValue = new IdValue(null);
+        assertEquals(31, nullIdValue.hashCode());
         assertEquals(-511156377, value.hashCode());
     }
 
     /**
-     * Test av {@link IdPropertyvalue#equals(Object)}.
+     * Test av {@link IdValue#equals(Object)}.
      */
     @Test
     public void testEquals() {
-        IdPropertyvalue nullIdPropertyValue = new IdPropertyvalue(null);
-        assertFalse(nullIdPropertyValue.equals(null));
-        assertFalse(nullIdPropertyValue.equals(getNil().asId()));
-        assertTrue(nullIdPropertyValue.equals(nullIdPropertyValue));
-        assertFalse(nullIdPropertyValue.equals(value));
-        assertFalse(value.equals(nullIdPropertyValue));
+        IdValue nullIdValue = new IdValue(null);
+        assertFalse(nullIdValue.equals(null));
+        assertFalse(nullIdValue.equals(getNil().asId()));
+        assertTrue(nullIdValue.equals(nullIdValue));
+        assertFalse(nullIdValue.equals(value));
+        assertFalse(value.equals(nullIdValue));
         assertTrue(value.equals(value));
 
         // Different object with the same UUID compares as equal
-        IdPropertyvalue value2 = new IdPropertyvalue(UUID.fromString(value.asString()));
+        IdValue value2 = new IdValue(UUID.fromString(value.asString()));
         assertTrue(value.equals(value2));
     }
 
     /**
-     * Test av {@link IdPropertyvalue#toString()}.
+     * Test av {@link IdValue#toString()}.
      */
     @Test
     public void testToString() {
-        assertEquals("IdPropertyvalue [value=e40fb164-3dd3-43b8-839f-8781bbcb2a15]", value.toString());
+        assertEquals("IdValue [value=e40fb164-3dd3-43b8-839f-8781bbcb2a15]", value.toString());
     }
 
 }

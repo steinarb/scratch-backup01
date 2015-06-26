@@ -20,7 +20,7 @@ public final class EmptyValueList extends AbstractList<Value> implements ValueLi
 
     @Override
     public Value set(int index, Value element) {
-        // Just drop the added elements on the floor. Always return PropertyvalueNil
+        // Just drop the added elements on the floor. Always return NilValue
         return getNil();
     }
 
@@ -114,7 +114,7 @@ public final class EmptyValueList extends AbstractList<Value> implements ValueLi
 
     @Override
     public Value remove(int index) {
-        // Always return PropertyvalueNil
+        // Always return NilValue
         return getNil();
     }
 

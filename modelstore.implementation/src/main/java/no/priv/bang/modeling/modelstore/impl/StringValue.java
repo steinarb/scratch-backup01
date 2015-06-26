@@ -13,16 +13,16 @@ import no.priv.bang.modeling.modelstore.ValueList;
  * @author Steinar Bang
  *
  */
-class StringPropertyvalue extends ValueBase {
+class StringValue extends ValueBase {
     private String value;
 
     /**
-     * Create a new instance of {@link StringPropertyvalue}.
+     * Create a new instance of {@link StringValue}.
      *
      * @param value the value to wrap
      * @deprecated use {@link Values#toStringValue(String)} instead
      */
-    public StringPropertyvalue(String value) {
+    public StringValue(String value) {
     	if (null == value) {
             this.value = getNil().asString();
     	} else {
@@ -98,13 +98,13 @@ class StringPropertyvalue extends ValueBase {
             return false;
         }
 
-        StringPropertyvalue other = (StringPropertyvalue) obj;
+        StringValue other = (StringValue) obj;
         return value.equals(other.value);
     }
 
     @Override
     public String toString() {
-        return "StringPropertyvalue [value=" + value + "]";
+        return "StringValue [value=" + value + "]";
     }
 
 }

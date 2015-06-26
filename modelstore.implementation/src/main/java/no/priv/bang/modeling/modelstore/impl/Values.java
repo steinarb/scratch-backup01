@@ -33,112 +33,112 @@ public class Values {
     }
 
     /**
-     * Create new instances of {@link BooleanPropertyvalue}
+     * Create new instances of {@link BooleanValue}
      *
      * @param boolValue the value to wrap
-     * @return a {@link BooleanPropertyvalue} instance
+     * @return a {@link BooleanValue} instance
      */
     static public Value toBooleanValue(Boolean boolValue) {
-        return new BooleanPropertyvalue(boolValue);
+        return new BooleanValue(boolValue);
     }
 
     /**
-     * Create new instances of {@link BooleanPropertyvalue}
+     * Create new instances of {@link BooleanValue}
      *
      * @param boolValue the value to wrap
-     * @return a {@link BooleanPropertyvalue} instance
+     * @return a {@link BooleanValue} instance
      */
     static public Value toBooleanValue(boolean boolValue) {
         return toBooleanValue(Boolean.valueOf(boolValue));
     }
 
     /**
-     * Create new instances of {@link LongPropertyvalue}
+     * Create new instances of {@link LongValue}
      *
      * @param intValue the value to wrap
-     * @return a {@link LongPropertyvalue} instance
+     * @return a {@link LongValue} instance
      */
     static public Value toLongValue(Long intValue) {
-        return new LongPropertyvalue(intValue);
+        return new LongValue(intValue);
     }
 
     /**
-     * Create new instances of {@link LongPropertyvalue}
+     * Create new instances of {@link LongValue}
      *
      * @param intValue the value to wrap
-     * @return a {@link LongPropertyvalue} instance
+     * @return a {@link LongValue} instance
      */
     static public Value toLongValue(long intValue) {
         return toLongValue(Long.valueOf(intValue));
     }
 
     /**
-     * Create new instances of {@link DoublePropertyvalue}
+     * Create new instances of {@link DoubleValue}
      *
      * @param doubleValue the value to wrap
-     * @return a {@link DoublePropertyvalue} instance
+     * @return a {@link DoubleValue} instance
      */
     static public Value toDoubleValue(Double doubleValue) {
-        return new DoublePropertyvalue(doubleValue);
+        return new DoubleValue(doubleValue);
     }
 
     /**
-     * Create new instances of {@link DoublePropertyvalue}
+     * Create new instances of {@link DoubleValue}
      *
      * @param doubleValue the value to wrap
-     * @return a {@link DoublePropertyvalue} instance
+     * @return a {@link DoubleValue} instance
      */
     static public Value toDoubleValue(double doubleValue) {
         return toDoubleValue(Double.valueOf(doubleValue));
     }
 
     /**
-     * Create new instances of {@link StringPropertyvalue}
+     * Create new instances of {@link StringValue}
      *
      * @param stringValue the value to wrap
-     * @return a {@link StringPropertyvalue} instance
+     * @return a {@link StringValue} instance
      */
     static public Value toStringValue(String stringValue) {
-        return new StringPropertyvalue(stringValue);
+        return new StringValue(stringValue);
     }
 
     /**
-     * Create new instances of {@link ComplexPropertyvalue}
+     * Create new instances of {@link ComplexValue}
      *
      * @param complexValue the value to wrap
-     * @return a {@link ComplexPropertyvalue} instance
+     * @return a {@link ComplexValue} instance
      */
     static public Value toComplexValue(Propertyset complexValue) {
-        return new ComplexPropertyvalue(complexValue);
+        return new ComplexValue(complexValue);
     }
 
     /**
-     * Create new instances of {@link ReferencePropertyvalue}
+     * Create new instances of {@link ReferenceValue}
      *
      * @param referencedValue the value to wrap
-     * @return a {@link ReferencePropertyvalue} instance
+     * @return a {@link ReferenceValue} instance
      */
     static public Value toReferenceValue(Propertyset referencedValue) {
-        return new ReferencePropertyvalue(referencedValue);
+        return new ReferenceValue(referencedValue);
     }
 
     /**
-     * Create new instances of {@link ListPropertyvalue}
+     * Create new instances of {@link ListValue}
      *
      * @param listValue the value to wrap
-     * @return a {@link ListPropertyvalue} instance
+     * @return a {@link ListValue} instance
      */
     static Value toListValue(ValueList listValue) {
-        return new ListPropertyvalue(listValue);
+        return new ListValue(listValue);
     }
 
     /**
-     * Create new instances of {@link PropertyvalueArrayList}.
+     * Create new instances of {@link ValueArrayList}.
      *
-     * @return a new empty instance of {@link PropertyvalueArrayList}.
+     * @return a new empty instance of {@link ValueArrayList}.
      */
     static public ValueList newList() {
-        return new PropertyvalueArrayList();
+        return new ValueArrayList();
     }
 
 }

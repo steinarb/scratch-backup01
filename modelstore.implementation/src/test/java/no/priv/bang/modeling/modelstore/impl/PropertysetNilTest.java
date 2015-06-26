@@ -27,7 +27,7 @@ public class PropertysetNilTest {
 
     /**
      * Unit test for {@link PropertysetNil#getProperty()} and
-     * {@link PropertysetNil#setProperty(String, Propertyvalue)}
+     * {@link PropertysetNil#setProperty(String, Value)}
      */
     @Test
     public void testGetSetGetProperty() {

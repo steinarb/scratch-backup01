@@ -108,7 +108,7 @@ public class NilValueTest {
 
     @Test
     public void testToString() {
-        assertEquals("PropertyvalueNil []", getNil().toString());
+        assertEquals("NilValue []", getNil().toString());
     }
 
 }

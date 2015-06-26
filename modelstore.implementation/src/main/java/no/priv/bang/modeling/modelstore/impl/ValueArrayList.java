@@ -9,7 +9,7 @@ import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
-class PropertyvalueArrayList extends AbstractList<Value> implements ValueList {
+class ValueArrayList extends AbstractList<Value> implements ValueList {
 
     List<Value> arrayList = new ArrayList<Value>();
 
@@ -140,7 +140,7 @@ class PropertyvalueArrayList extends AbstractList<Value> implements ValueList {
             return false;
         }
 
-        PropertyvalueArrayList other = (PropertyvalueArrayList) obj;
+        ValueArrayList other = (ValueArrayList) obj;
         return arrayList.equals(other.arrayList);
     }
 

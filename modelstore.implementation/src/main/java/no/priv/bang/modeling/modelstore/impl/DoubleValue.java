@@ -13,16 +13,16 @@ import no.priv.bang.modeling.modelstore.ValueList;
  * @author Steinar Bang
  *
  */
-class DoublePropertyvalue extends ValueBase {
+class DoubleValue extends ValueBase {
     private Double value;
 
     /**
-     * Create new instances of {@link DoublePropertyvalue}.
+     * Create new instances of {@link DoubleValue}.
      *
      * @param value the value to wrap
      * @deprecated use {@link Values#toDoubleValue(Double)} instead
      */
-    public DoublePropertyvalue(Double value) {
+    public DoubleValue(Double value) {
     	if (null == value) {
             this.value = getNil().asDouble();
     	} else {
@@ -86,13 +86,13 @@ class DoublePropertyvalue extends ValueBase {
             return false;
         }
 
-        DoublePropertyvalue other = (DoublePropertyvalue) obj;
+        DoubleValue other = (DoubleValue) obj;
         return value.equals(other.value);
     }
 
     @Override
     public String toString() {
-        return "DoublePropertyvalue [value=" + value + "]";
+        return "DoubleValue [value=" + value + "]";
     }
 
 }

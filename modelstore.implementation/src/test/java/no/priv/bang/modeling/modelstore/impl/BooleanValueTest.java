@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link BooleanPropertyvalue}.
+ * Unit tests for {@link BooleanValue}.
  *
  * @author Steinar Bang
  *
@@ -104,7 +104,7 @@ public class BooleanValueTest {
     }
 
     /**
-     * Test av {@link BooleanPropertyvalue#hashCode()}.
+     * Test av {@link BooleanValue#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -115,7 +115,7 @@ public class BooleanValueTest {
     }
 
     /**
-     * Test av {@link BooleanPropertyvalue#equals(Object)}.
+     * Test av {@link BooleanValue#equals(Object)}.
      */
     @Test
     public void testEquals() {
@@ -130,15 +130,15 @@ public class BooleanValueTest {
     }
 
     /**
-     * Test av {@link BooleanPropertyvalue#toString()}.
+     * Test av {@link BooleanValue#toString()}.
      */
     @Test
     public void testToString() {
         Value nullBooleanValue = toBooleanValue(null);
-        assertEquals("BooleanPropertyvalue [value=false]", nullBooleanValue.toString());
+        assertEquals("BooleanValue [value=false]", nullBooleanValue.toString());
         Value falseBooleanValue = toBooleanValue(Boolean.FALSE);
-        assertEquals("BooleanPropertyvalue [value=false]", falseBooleanValue.toString());
+        assertEquals("BooleanValue [value=false]", falseBooleanValue.toString());
         Value trueBooleanValue = toBooleanValue(Boolean.TRUE);
-        assertEquals("BooleanPropertyvalue [value=true]", trueBooleanValue.toString());
+        assertEquals("BooleanValue [value=true]", trueBooleanValue.toString());
     }
 }

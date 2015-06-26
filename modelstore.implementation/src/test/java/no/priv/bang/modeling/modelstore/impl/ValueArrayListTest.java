@@ -12,7 +12,7 @@ import no.priv.bang.modeling.modelstore.ValueList;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link PropertyvalueArrayList}.
+ * Unit tests for {@link ValueArrayList}.
  *
  * @author Steinar Bang
  *
@@ -105,8 +105,8 @@ public class ValueArrayListTest {
      * Test of basic list operations for {@link Propertyset} values.
      *
      * A {@link Propertyset} value where {@link Propertyset#hasId()} is
-     * true, will become a {@link ReferencePropertyvalue}, if hasId is
-     * false, it will become a {@link ComplexPropertyvalue}.
+     * true, will become a {@link ReferenceValue}, if hasId is
+     * false, it will become a {@link ComplexValue}.
      *
      * A null argument will become whatever {@link Values#toComplexValue(Propertyset)}
      * does with a null.
@@ -173,7 +173,7 @@ public class ValueArrayListTest {
     }
 
     /**
-     * Test av {@link PropertyvalueArrayList#hashCode()}.
+     * Test av {@link ValueArrayList#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -184,7 +184,7 @@ public class ValueArrayListTest {
     }
 
     /**
-     * Test av {@link PropertyvalueArrayList#equals(Object)}.
+     * Test av {@link ValueArrayList#equals(Object)}.
      */
     @Test
     public void testEquals() {

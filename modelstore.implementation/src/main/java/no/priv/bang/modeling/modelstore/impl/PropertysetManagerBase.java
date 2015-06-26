@@ -55,8 +55,8 @@ class PropertysetManagerBase implements PropertysetManager {
         for (Entry<UUID, Propertyset> propertyset : propertysets.entrySet()) {
             if (propertyset.getValue().hasAspect()) {
                 ValueList aspects = propertyset.getValue().getAspects();
-                for (Value propertyvalue : aspects) {
-                    Propertyset aspect = propertyvalue.asReference();
+                for (Value value : aspects) {
+                    Propertyset aspect = value.asReference();
                     if (!getNilPropertyset().equals(aspect)) {
                         allAspects.add(aspect);
                         Propertyset baseAspect = aspect.getReferenceProperty("inherits");

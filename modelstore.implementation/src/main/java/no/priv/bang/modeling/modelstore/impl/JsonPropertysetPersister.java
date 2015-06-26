@@ -63,34 +63,34 @@ public class JsonPropertysetPersister {
         propertyset.getPropertynames();
         Collection<String> propertynames = propertyset.getPropertynames();
         for (String propertyname : propertynames) {
-            Value propertyvalue = propertyset.getProperty(propertyname);
-            outputPropertyvalue(generator, propertyname, propertyvalue);
+            Value value = propertyset.getProperty(propertyname);
+            outputValue(generator, propertyname, value);
         }
 
         generator.writeEndObject();
     }
 
-    private void outputPropertyvalue(JsonGenerator generator, String propertyname, Value propertyvalue) throws IOException {
-        if (propertyvalue.isId()) {
+    private void outputValue(JsonGenerator generator, String propertyname, Value value) throws IOException {
+        if (value.isId()) {
             generator.writeFieldName(propertyname);
-            generator.writeObjectId(propertyvalue.asId());
-        } else if (propertyvalue.isReference()) {
+            generator.writeObjectId(value.asId());
+        } else if (value.isReference()) {
             generator.writeFieldName(propertyname);
-            generator.writeObjectRef(propertyvalue.asReference().getId());
-        } else if (propertyvalue.isString()) {
-            generator.writeStringField(propertyname, propertyvalue.asString());
-        } else if (propertyvalue.isDouble()) {
-            generator.writeNumberField(propertyname, propertyvalue.asDouble());
-        } else if (propertyvalue.isLong()) {
-            generator.writeNumberField(propertyname, propertyvalue.asLong());
-        } else if (propertyvalue.isBoolean()) {
-            generator.writeBooleanField(propertyname, propertyvalue.asBoolean());
-        } else if (propertyvalue.isComplexProperty()) {
+            generator.writeObjectRef(value.asReference().getId());
+        } else if (value.isString()) {
+            generator.writeStringField(propertyname, value.asString());
+        } else if (value.isDouble()) {
+            generator.writeNumberField(propertyname, value.asDouble());
+        } else if (value.isLong()) {
+            generator.writeNumberField(propertyname, value.asLong());
+        } else if (value.isBoolean()) {
+            generator.writeBooleanField(propertyname, value.asBoolean());
+        } else if (value.isComplexProperty()) {
             generator.writeFieldName(propertyname);
-            Propertyset complexPropertyvalue = propertyvalue.asComplexProperty();
-            outputPropertyset(generator, complexPropertyvalue);
-        } else if (propertyvalue.isList()) {
-            ValueList listvalue = propertyvalue.asList();
+            Propertyset complexValue = value.asComplexProperty();
+            outputPropertyset(generator, complexValue);
+        } else if (value.isList()) {
+            ValueList listvalue = value.asList();
             generator.writeFieldName(propertyname);
             outputArray(generator, listvalue);
         }

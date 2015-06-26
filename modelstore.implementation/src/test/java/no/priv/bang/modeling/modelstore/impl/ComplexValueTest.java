@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link ComplexPropertyvalue}.
+ * Unit tests for {@link ComplexValue}.
  *
  * @author Steinar Bang
  *
@@ -111,7 +111,7 @@ public class ComplexValueTest {
     }
 
     /**
-     * Test av {@link ComplexPropertyvalue#hashCode()}.
+     * Test av {@link ComplexValue#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -121,7 +121,7 @@ public class ComplexValueTest {
     }
 
     /**
-     * Test av {@link ComplexPropertyvalue#equals(Object)}.
+     * Test av {@link ComplexValue#equals(Object)}.
      */
     @Test
     public void testEquals() {
@@ -135,13 +135,13 @@ public class ComplexValueTest {
     }
 
     /**
-     * Test av {@link ComplexPropertyvalue#toString()}.
+     * Test av {@link ComplexValue#toString()}.
      */
     @Test
     public void testToString() {
         Value nullComplexValue = toComplexValue(null);
-        assertEquals("ComplexPropertyvalue [value=PropertysetNil []]", nullComplexValue.toString());
-        assertEquals("ComplexPropertyvalue [value=PropertysetImpl [properties={string=StringPropertyvalue [value=foo bar], boolean=BooleanPropertyvalue [value=true], double=DoublePropertyvalue [value=2.78], long=LongPropertyvalue [value=42]}]]", value.toString());
+        assertEquals("ComplexValue [value=PropertysetNil []]", nullComplexValue.toString());
+        assertEquals("ComplexValue [value=PropertysetImpl [properties={string=StringValue [value=foo bar], boolean=BooleanValue [value=true], double=DoubleValue [value=2.78], long=LongValue [value=42]}]]", value.toString());
     }
 
 }

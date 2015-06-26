@@ -13,17 +13,17 @@ import no.priv.bang.modeling.modelstore.ValueList;
  * @author Steinar Bang
  *
  */
-class BooleanPropertyvalue extends ValueBase {
+class BooleanValue extends ValueBase {
 
     private Boolean value;
 
     /**
-     * Create new instance of {@link BooleanPropertyvalue}
+     * Create new instance of {@link BooleanValue}
      *
      * @param value the value to wrap.
      * @deprecated Use {@link Values#toBooleanValue(Boolean)} instead
      */
-    BooleanPropertyvalue(Boolean value) {
+    BooleanValue(Boolean value) {
     	if (null == value) {
             this.value = getNil().asBoolean();
     	} else {
@@ -91,13 +91,13 @@ class BooleanPropertyvalue extends ValueBase {
             return false;
         }
 
-        BooleanPropertyvalue other = (BooleanPropertyvalue) obj;
+        BooleanValue other = (BooleanValue) obj;
         return value.equals(other.value);
     }
 
     @Override
     public String toString() {
-        return "BooleanPropertyvalue [value=" + value + "]";
+        return "BooleanValue [value=" + value + "]";
     }
 
 }

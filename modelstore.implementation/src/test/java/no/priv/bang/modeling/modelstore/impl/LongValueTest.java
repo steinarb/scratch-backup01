@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link LongPropertyvalue}.
+ * Unit tests for {@link LongValue}.
  *
  * @author Steinar Bang
  *
@@ -104,7 +104,7 @@ public class LongValueTest {
     }
 
     /**
-     * Test av {@link LongPropertyvalue#hashCode()}.
+     * Test av {@link LongValue#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -114,7 +114,7 @@ public class LongValueTest {
     }
 
     /**
-     * Test av {@link LongPropertyvalue#equals(Object)}.
+     * Test av {@link LongValue#equals(Object)}.
      */
     @Test
     public void testEquals() {
@@ -127,13 +127,13 @@ public class LongValueTest {
     }
 
     /**
-     * Test av {@link LongPropertyvalue#toString()}.
+     * Test av {@link LongValue#toString()}.
      */
     @Test
     public void testToString() {
         Value nullLongValue = toLongValue(null);
-        assertEquals("LongPropertyvalue [value=0]", nullLongValue.toString());
-        assertEquals("LongPropertyvalue [value=42]", value.toString());
+        assertEquals("LongValue [value=0]", nullLongValue.toString());
+        assertEquals("LongValue [value=42]", value.toString());
     }
 
 }

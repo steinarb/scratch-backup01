@@ -7,11 +7,11 @@ import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
-class IdPropertyvalue implements Value {
+class IdValue implements Value {
 
     private UUID value;
 
-    public IdPropertyvalue(UUID value) {
+    public IdValue(UUID value) {
     	if (value != null) {
             this.value = value;
     	} else {
@@ -105,13 +105,13 @@ class IdPropertyvalue implements Value {
             return false;
         }
 
-        IdPropertyvalue other = (IdPropertyvalue) obj;
+        IdValue other = (IdValue) obj;
         return value.equals(other.value);
     }
 
     @Override
     public String toString() {
-        return "IdPropertyvalue [value=" + value + "]";
+        return "IdValue [value=" + value + "]";
     }
 
 }

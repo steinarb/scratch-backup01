@@ -13,16 +13,16 @@ import no.priv.bang.modeling.modelstore.ValueList;
  * @author Steinar Bang
  *
  */
-class LongPropertyvalue extends ValueBase {
+class LongValue extends ValueBase {
     private Long value;
 
     /**
-     * Create new instances of {@link LongPropertyvalue}.
+     * Create new instances of {@link LongValue}.
      *
      * @param value the value to wrap
      * @deprecated use {@link Values#toLongValue(Long)} instead
      */
-    public LongPropertyvalue(Long value) {
+    public LongValue(Long value) {
     	if (null == value) {
             this.value = getNil().asLong();
     	} else {
@@ -86,13 +86,13 @@ class LongPropertyvalue extends ValueBase {
             return false;
         }
 
-        LongPropertyvalue other = (LongPropertyvalue) obj;
+        LongValue other = (LongValue) obj;
         return value.equals(other.value);
     }
 
     @Override
     public String toString() {
-        return "LongPropertyvalue [value=" + value + "]";
+        return "LongValue [value=" + value + "]";
     }
 
 }

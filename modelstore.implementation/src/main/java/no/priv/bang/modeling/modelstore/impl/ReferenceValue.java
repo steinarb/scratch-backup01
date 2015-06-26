@@ -10,15 +10,15 @@ import no.priv.bang.modeling.modelstore.Propertyset;
  * @author Steinar Bang
  *
  */
-class ReferencePropertyvalue extends PropertysetValueBase {
+class ReferenceValue extends PropertysetValueBase {
 
     /**
-     * Create a new instance of {@link ReferencePropertyvalue}.
+     * Create a new instance of {@link ReferenceValue}.
      *
      * @param value the value to wrap
      * @deprecated use {@link Values#toReferenceValue(Propertyset)} instead
      */
-    public ReferencePropertyvalue(Propertyset value) {
+    public ReferenceValue(Propertyset value) {
         super(value);
     }
 
@@ -64,7 +64,7 @@ class ReferencePropertyvalue extends PropertysetValueBase {
 
     @Override
     public String toString() {
-        return "ReferencePropertyvalue [value=" + value + "]";
+        return "ReferenceValue [value=" + value + "]";
     }
 
 }

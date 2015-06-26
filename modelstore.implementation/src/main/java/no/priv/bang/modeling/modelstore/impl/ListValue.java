@@ -4,17 +4,17 @@ import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.ValueList;
 
-class ListPropertyvalue extends ValueBase {
+class ListValue extends ValueBase {
 
     private ValueList value;
 
     /**
-     * Create a new instance of {@link ListPropertyvalue}.
+     * Create a new instance of {@link ListValue}.
      *
      * @param value the value to wrap
      * @deprecated use {@link Values#toListValue(ValueList)} instead
      */
-    public ListPropertyvalue(ValueList value) {
+    public ListValue(ValueList value) {
     	if (null == value) {
             this.value = getNil().asList();
     	} else {
@@ -84,13 +84,13 @@ class ListPropertyvalue extends ValueBase {
             return false;
         }
 
-        ListPropertyvalue other = (ListPropertyvalue) obj;
+        ListValue other = (ListValue) obj;
         return value.equals(other.value);
     }
 
     @Override
     public String toString() {
-        return "ListPropertyvalue [value=" + value + "]";
+        return "ListValue [value=" + value + "]";
     }
 
 }

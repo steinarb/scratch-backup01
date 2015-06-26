@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link ReferencePropertyvalue}.
+ * Unit tests for {@link ReferenceValue}.
  *
  * @author Steinar Bang
  *
@@ -114,7 +114,7 @@ public class ReferenceValueTest {
     }
 
     /**
-     * Test av {@link ReferencePropertyvalue#hashCode()}.
+     * Test av {@link ReferenceValue#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -124,7 +124,7 @@ public class ReferenceValueTest {
     }
 
     /**
-     * Test av {@link ReferencePropertyvalue#equals(Object)}.
+     * Test av {@link ReferenceValue#equals(Object)}.
      */
     @Test
     public void testEquals() {
@@ -144,13 +144,13 @@ public class ReferenceValueTest {
     }
 
     /**
-     * Test av {@link ReferencePropertyvalue#toString()}.
+     * Test av {@link ReferenceValue#toString()}.
      */
     @Test
     public void testToString() {
         Value nullReferenceValue = toReferenceValue(null);
-        assertEquals("ReferencePropertyvalue [value=PropertysetNil []]", nullReferenceValue.toString());
-        assertEquals("ReferencePropertyvalue [value=PropertysetImpl [properties={id=IdPropertyvalue [value=276dbd6e-dc46-4c14-af9e-83c63c10e0b3], string=StringPropertyvalue [value=foo bar], boolean=BooleanPropertyvalue [value=true], double=DoublePropertyvalue [value=2.78], long=LongPropertyvalue [value=42]}]]", value.toString());
+        assertEquals("ReferenceValue [value=PropertysetNil []]", nullReferenceValue.toString());
+        assertEquals("ReferenceValue [value=PropertysetImpl [properties={id=IdValue [value=276dbd6e-dc46-4c14-af9e-83c63c10e0b3], string=StringValue [value=foo bar], boolean=BooleanValue [value=true], double=DoubleValue [value=2.78], long=LongValue [value=42]}]]", value.toString());
     }
 
 }

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link DoublePropertyvalue}.
+ * Unit tests for {@link DoubleValue}.
  *
  * @author Steinar Bang
  *
@@ -104,7 +104,7 @@ public class DoubleValueTest {
     }
 
     /**
-     * Test av {@link DoublePropertyvalue#hashCode()}.
+     * Test av {@link DoubleValue#hashCode()}.
      */
     @Test
     public void testHashCode() {
@@ -115,7 +115,7 @@ public class DoubleValueTest {
     }
 
     /**
-     * Test av {@link DoublePropertyvalue#equals(Object)}.
+     * Test av {@link DoubleValue#equals(Object)}.
      */
     @Test
     public void testEquals() {
@@ -128,14 +128,14 @@ public class DoubleValueTest {
     }
 
     /**
-     * Test av {@link DoublePropertyvalue#toString()}.
+     * Test av {@link DoubleValue#toString()}.
      */
     @Test
     public void testToString() {
         Value nullDoubleValue = toDoubleValue(null);
-        assertEquals("DoublePropertyvalue [value=0.0]", nullDoubleValue.toString());
+        assertEquals("DoubleValue [value=0.0]", nullDoubleValue.toString());
         Value e = toDoubleValue(2.78);
-        assertEquals("DoublePropertyvalue [value=2.78]", e.toString());
+        assertEquals("DoubleValue [value=2.78]", e.toString());
     }
 
 }
