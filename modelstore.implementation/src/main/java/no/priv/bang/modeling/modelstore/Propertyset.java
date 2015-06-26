@@ -39,12 +39,15 @@ public interface Propertyset {
 
     Boolean getBooleanProperty(String propertyName);
     void setBooleanProperty(String propertyName, Boolean boolValue);
+    void setBooleanProperty(String propertyName, boolean boolValue);
 
     Long getLongProperty(String propertyName);
-    void setLongProperty(String string, Long intValue);
+    void setLongProperty(String propertyname, Long intValue);
+    void setLongProperty(String propertyname, long intvalue);
 
     Double getDoubleProperty(String propertyName);
-    void setDoubleProperty(String string, Double doubleValue);
+    void setDoubleProperty(String propertyname, Double doubleValue);
+    void setDoubleProperty(String propertyname, double doubleValue);
 
     String getStringProperty(String propertyName);
     void setStringProperty(String propertyName, String stringValue);

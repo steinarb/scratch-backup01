@@ -5,6 +5,7 @@ import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
+
 import org.junit.Test;
 
 public class PropertysetImplTest {
@@ -45,6 +46,14 @@ public class PropertysetImplTest {
         propertyset.setBooleanProperty("trueValue", trueValue);
         Boolean boolValue = propertyset.getBooleanProperty("trueValue");
         assertEquals(trueValue, boolValue);
+        propertyset.setBooleanProperty("alsoTrue", true);
+        Boolean alsoTrue = propertyset.getBooleanProperty("alsoTrue");
+        assertTrue(alsoTrue);
+
+        // Make sure "id" can't be assigned a boolean.
+        assertFalse(propertyset.getBooleanProperty("id"));
+        propertyset.setBooleanProperty("id", true);
+        assertFalse(propertyset.getBooleanProperty("id"));
 
         // Set int values and read them back as bool values
         // 0 is false, everything else is true
@@ -110,6 +119,14 @@ public class PropertysetImplTest {
         propertyset.setLongProperty("intValue", intValue1);
         Long intValue2 = propertyset.getLongProperty("intValue");
         assertEquals(intValue1, intValue2);
+        propertyset.setLongProperty("anotherInt", 42);
+        Long anotherInt = propertyset.getLongProperty("anotherInt");
+        assertEquals(42, anotherInt.longValue());
+
+        // Make sure "id" can't be assigned a long.
+        assertEquals(0, propertyset.getLongProperty("id").longValue());
+        propertyset.setLongProperty("id", 43);
+        assertEquals(0, propertyset.getLongProperty("id").longValue());
 
         // Set some double values and read them back as Long values
         Double doubleValueContainingInt = Double.valueOf(7);
@@ -164,6 +181,14 @@ public class PropertysetImplTest {
         propertyset.setDoubleProperty("doubleValue", doubleValue1);
         Double doubleValue2 = propertyset.getDoubleProperty("doubleValue");
         assertEquals(doubleValue1, doubleValue2);
+        propertyset.setDoubleProperty("anotherDouble", 2.78);
+        Double anotherDouble = propertyset.getDoubleProperty("anotherDouble");
+        assertEquals(2.78, anotherDouble, 0.0);
+
+        // Make sure "id" can't be assigned a double.
+        assertEquals(0.0, propertyset.getDoubleProperty("id").doubleValue(), 0.0);
+        propertyset.setDoubleProperty("id", 43.0);
+        assertEquals(0.0, propertyset.getDoubleProperty("id").doubleValue(), 0.0);
 
         // Verify that setting a null value will return a zero double value.
         propertyset.setDoubleProperty("nullDoubleValue", null);

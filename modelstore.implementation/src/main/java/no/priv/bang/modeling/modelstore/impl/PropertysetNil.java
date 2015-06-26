@@ -75,6 +75,10 @@ public final class PropertysetNil implements Propertyset {
         // No-op
     }
 
+    public void setBooleanProperty(String propertyName, boolean boolValue) {
+        // No-op
+    }
+
     public Long getLongProperty(String propertyName) {
         return Values.getNil().asLong();
     }
@@ -83,11 +87,19 @@ public final class PropertysetNil implements Propertyset {
         // No-op
     }
 
+    public void setLongProperty(String propertyname, long intvalue) {
+        // No-op
+    }
+
     public Double getDoubleProperty(String propertyName) {
         return Values.getNil().asDouble();
     }
 
     public void setDoubleProperty(String propertyName, Double doubleValue) {
+        // No-op
+    }
+
+    public void setDoubleProperty(String propertyname, double doubleValue) {
         // No-op
     }
 

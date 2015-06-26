@@ -116,6 +116,12 @@ public class PropertysetImpl implements Propertyset {
     	}
     }
 
+    public void setBooleanProperty(String propertyName, boolean boolValue) {
+    	if (!idKey.equals(propertyName)) {
+            properties.put(propertyName, toBooleanValue(boolValue));
+    	}
+    }
+
     public Long getLongProperty(String propertyName) {
         Value rawValue = properties.get(propertyName);
         if (null != rawValue) {
@@ -131,6 +137,12 @@ public class PropertysetImpl implements Propertyset {
     	}
     }
 
+    public void setLongProperty(String propertyname, long intvalue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toLongValue(intvalue));
+    	}
+    }
+
     public Double getDoubleProperty(String propertyName) {
         Value rawValue = properties.get(propertyName);
         if (null != rawValue) {
@@ -143,6 +155,12 @@ public class PropertysetImpl implements Propertyset {
     public void setDoubleProperty(String propertyName, Double doubleValue) {
     	if (!idKey.equals(propertyName)) {
             properties.put(propertyName, toDoubleValue(doubleValue));
+    	}
+    }
+
+    public void setDoubleProperty(String propertyname, double doubleValue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toDoubleValue(doubleValue));
     	}
     }
 
