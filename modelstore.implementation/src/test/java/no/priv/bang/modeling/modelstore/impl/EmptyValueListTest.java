@@ -26,7 +26,7 @@ public class EmptyValueListTest {
 
     @Test
     public void testAdd() {
-        assertFalse(list.add(null));
+        assertFalse(list.add((Value)null));
         assertEquals(0, list.size());
         list.add(1024, null);
         assertEquals(0, list.size());
@@ -101,7 +101,7 @@ public class EmptyValueListTest {
 
     @Test
     public void testSet() {
-        assertEquals(getNil(), list.set(135, null));
+        assertEquals(getNil(), list.set(135, (Value)null));
     }
 
     @Test
