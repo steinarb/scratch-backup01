@@ -30,6 +30,24 @@ public class EmptyValueListTest {
         assertEquals(0, list.size());
         list.add(1024, null);
         assertEquals(0, list.size());
+        list.add(Boolean.TRUE);
+        assertEquals(0, list.size());
+        list.add(true);
+        assertEquals(0, list.size());
+        list.add(Long.valueOf(3));
+        assertEquals(0, list.size());
+        list.add(37);
+        assertEquals(0, list.size());
+        list.add(Double.valueOf(3.14));
+        assertEquals(0, list.size());
+        list.add(2.78);
+        assertEquals(0, list.size());
+        list.add("foo");
+        assertEquals(0, list.size());
+        list.add(new PropertysetImpl());
+        assertEquals(0, list.size());
+        list.add(newList());
+        assertEquals(0, list.size());
     }
 
     @Test
@@ -102,6 +120,15 @@ public class EmptyValueListTest {
     @Test
     public void testSet() {
         assertEquals(getNil(), list.set(135, (Value)null));
+        assertEquals(getNil(), list.set(135, Boolean.TRUE));
+        assertEquals(getNil(), list.set(135, true));
+        assertEquals(getNil(), list.set(135, Long.valueOf(1)));
+        assertEquals(getNil(), list.set(135, 2));
+        assertEquals(getNil(), list.set(135, Double.valueOf(1.1)));
+        assertEquals(getNil(), list.set(135, 2.4));
+        assertEquals(getNil(), list.set(135, "foobar"));
+        assertEquals(getNil(), list.set(135, new PropertysetImpl()));
+        assertEquals(getNil(), list.set(135, newList()));
     }
 
     @Test

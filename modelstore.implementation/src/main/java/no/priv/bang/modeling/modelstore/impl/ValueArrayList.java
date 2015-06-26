@@ -18,44 +18,44 @@ class ValueArrayList extends AbstractList<Value> implements ValueList {
         return arrayList.set(paramInt, paramE);
     }
 
-    public void set(int i, Boolean value) {
-        arrayList.set(i, toBooleanValue(value));
+    public Value set(int i, Boolean value) {
+        return arrayList.set(i, toBooleanValue(value));
     }
 
-    public void set(int i, boolean value) {
-        arrayList.set(i, toBooleanValue(value));
+    public Value set(int i, boolean value) {
+        return arrayList.set(i, toBooleanValue(value));
     }
 
-    public void set(int i, Long value) {
-        arrayList.set(i, toLongValue(value));
+    public Value set(int i, Long value) {
+        return arrayList.set(i, toLongValue(value));
     }
 
-    public void set(int i, long value) {
-        arrayList.set(i, toLongValue(value));
+    public Value set(int i, long value) {
+        return arrayList.set(i, toLongValue(value));
     }
 
-    public void set(int i, Double value) {
-        arrayList.set(i, toDoubleValue(value));
+    public Value set(int i, Double value) {
+        return arrayList.set(i, toDoubleValue(value));
     }
 
-    public void set(int i, double value) {
-        arrayList.set(i, toDoubleValue(value));
+    public Value set(int i, double value) {
+        return arrayList.set(i, toDoubleValue(value));
     }
 
-    public void set(int i, String value) {
-        arrayList.set(i, toStringValue(value));
+    public Value set(int i, String value) {
+        return arrayList.set(i, toStringValue(value));
     }
 
-    public void set(int i, Propertyset value) {
+    public Value set(int i, Propertyset value) {
         if (value == null || !value.hasId()) {
-            arrayList.set(i, toComplexValue(value));
+            return arrayList.set(i, toComplexValue(value));
         } else {
-            arrayList.set(i, toReferenceValue(value));
+            return arrayList.set(i, toReferenceValue(value));
         }
     }
 
-    public void set(int i, ValueList value) {
-        arrayList.set(i, toListValue(value));
+    public Value set(int i, ValueList value) {
+        return arrayList.set(i, toListValue(value));
     }
 
     @Override

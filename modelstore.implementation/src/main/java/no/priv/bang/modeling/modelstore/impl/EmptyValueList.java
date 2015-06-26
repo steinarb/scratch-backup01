@@ -24,40 +24,49 @@ public final class EmptyValueList extends AbstractList<Value> implements ValueLi
         return getNil();
     }
 
-    public void set(int i, Boolean value) {
+    public Value set(int i, Boolean value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, boolean value) {
+    public Value set(int i, boolean value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, Long value) {
+    public Value set(int i, Long value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, long value) {
+    public Value set(int i, long value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, Double value) {
+    public Value set(int i, Double value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, double value) {
+    public Value set(int i, double value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, String value) {
+    public Value set(int i, String value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, Propertyset value) {
+    public Value set(int i, Propertyset value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
-    public void set(int i, ValueList value) {
+    public Value set(int i, ValueList value) {
         // Just drop the added elements on the floor.
+        return getNil();
     }
 
     @Override
