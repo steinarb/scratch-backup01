@@ -101,39 +101,39 @@ public class PropertysetImpl implements Propertyset {
     	return getNil().asId();
     }
 
-    public Boolean getBooleanProperty(String propertyName) {
-        Value rawValue = properties.get(propertyName);
+    public Boolean getBooleanProperty(String propertyname) {
+        Value rawValue = properties.get(propertyname);
         if (null != rawValue) {
             return rawValue.asBoolean();
         }
 
-        return getNilPropertyset().getBooleanProperty(propertyName);
+        return getNilPropertyset().getBooleanProperty(propertyname);
     }
 
-    public void setBooleanProperty(String propertyName, Boolean boolValue) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toBooleanValue(boolValue));
+    public void setBooleanProperty(String propertyname, Boolean boolValue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toBooleanValue(boolValue));
     	}
     }
 
-    public void setBooleanProperty(String propertyName, boolean boolValue) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toBooleanValue(boolValue));
+    public void setBooleanProperty(String propertyname, boolean boolValue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toBooleanValue(boolValue));
     	}
     }
 
-    public Long getLongProperty(String propertyName) {
-        Value rawValue = properties.get(propertyName);
+    public Long getLongProperty(String propertyname) {
+        Value rawValue = properties.get(propertyname);
         if (null != rawValue) {
             return rawValue.asLong();
         }
 
-        return getNilPropertyset().getLongProperty(propertyName);
+        return getNilPropertyset().getLongProperty(propertyname);
     }
 
-    public void setLongProperty(String propertyName, Long intValue) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toLongValue(intValue));
+    public void setLongProperty(String propertyname, Long intValue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toLongValue(intValue));
     	}
     }
 
@@ -143,18 +143,18 @@ public class PropertysetImpl implements Propertyset {
     	}
     }
 
-    public Double getDoubleProperty(String propertyName) {
-        Value rawValue = properties.get(propertyName);
+    public Double getDoubleProperty(String propertyname) {
+        Value rawValue = properties.get(propertyname);
         if (null != rawValue) {
             return rawValue.asDouble();
         }
 
-        return getNilPropertyset().getDoubleProperty(propertyName);
+        return getNilPropertyset().getDoubleProperty(propertyname);
     }
 
-    public void setDoubleProperty(String propertyName, Double doubleValue) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toDoubleValue(doubleValue));
+    public void setDoubleProperty(String propertyname, Double doubleValue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toDoubleValue(doubleValue));
     	}
     }
 
@@ -164,23 +164,23 @@ public class PropertysetImpl implements Propertyset {
     	}
     }
 
-    public String getStringProperty(String propertyName) {
-        Value rawValue = properties.get(propertyName);
+    public String getStringProperty(String propertyname) {
+        Value rawValue = properties.get(propertyname);
         if (null != rawValue) {
             return rawValue.asString();
         }
 
-        return getNilPropertyset().getStringProperty(propertyName);
+        return getNilPropertyset().getStringProperty(propertyname);
     }
 
-    public void setStringProperty(String propertyName, String stringValue) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toStringValue(stringValue));
+    public void setStringProperty(String propertyname, String stringValue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toStringValue(stringValue));
     	}
     }
 
-    public Propertyset getComplexProperty(String propertyName) {
-    	Value rawValue = properties.get(propertyName);
+    public Propertyset getComplexProperty(String propertyname) {
+    	Value rawValue = properties.get(propertyname);
     	if (null != rawValue) {
             return rawValue.asComplexProperty();
     	}
@@ -188,14 +188,14 @@ public class PropertysetImpl implements Propertyset {
         return getNilPropertyset();
     }
 
-    public void setComplexProperty(String propertyName, Propertyset complexProperty) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toComplexValue(complexProperty));
+    public void setComplexProperty(String propertyname, Propertyset complexProperty) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toComplexValue(complexProperty));
     	}
     }
 
-    public Propertyset getReferenceProperty(String propertyName) {
-    	Value rawValue = properties.get(propertyName);
+    public Propertyset getReferenceProperty(String propertyname) {
+    	Value rawValue = properties.get(propertyname);
     	if (null != rawValue) {
             return rawValue.asReference();
     	}
@@ -203,24 +203,24 @@ public class PropertysetImpl implements Propertyset {
         return getNilPropertyset();
     }
 
-    public void setReferenceProperty(String propertyName, Propertyset referencedObject) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toReferenceValue(referencedObject));
+    public void setReferenceProperty(String propertyname, Propertyset referencedObject) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toReferenceValue(referencedObject));
     	}
     }
 
-    public ValueList getListProperty(String propertyName) {
-    	Value rawValue = properties.get(propertyName);
+    public ValueList getListProperty(String propertyname) {
+    	Value rawValue = properties.get(propertyname);
     	if (null != rawValue) {
             return rawValue.asList();
     	}
 
-        return getNilPropertyset().getListProperty(propertyName);
+        return getNilPropertyset().getListProperty(propertyname);
     }
 
-    public void setListProperty(String propertyName, ValueList listValue) {
-    	if (!idKey.equals(propertyName)) {
-            properties.put(propertyName, toListValue(listValue));
+    public void setListProperty(String propertyname, ValueList listValue) {
+    	if (!idKey.equals(propertyname)) {
+            properties.put(propertyname, toListValue(listValue));
     	}
     }
 

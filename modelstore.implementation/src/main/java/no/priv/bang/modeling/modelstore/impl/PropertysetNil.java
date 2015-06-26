@@ -67,23 +67,23 @@ public final class PropertysetNil implements Propertyset {
         return Values.getNil().asId();
     }
 
-    public Boolean getBooleanProperty(String propertyName) {
+    public Boolean getBooleanProperty(String propertyname) {
         return Values.getNil().asBoolean();
     }
 
-    public void setBooleanProperty(String propertyName, Boolean boolValue) {
+    public void setBooleanProperty(String propertyname, Boolean boolValue) {
         // No-op
     }
 
-    public void setBooleanProperty(String propertyName, boolean boolValue) {
+    public void setBooleanProperty(String propertyname, boolean boolValue) {
         // No-op
     }
 
-    public Long getLongProperty(String propertyName) {
+    public Long getLongProperty(String propertyname) {
         return Values.getNil().asLong();
     }
 
-    public void setLongProperty(String propertyName, Long intValue) {
+    public void setLongProperty(String propertyname, Long intValue) {
         // No-op
     }
 
@@ -91,11 +91,11 @@ public final class PropertysetNil implements Propertyset {
         // No-op
     }
 
-    public Double getDoubleProperty(String propertyName) {
+    public Double getDoubleProperty(String propertyname) {
         return Values.getNil().asDouble();
     }
 
-    public void setDoubleProperty(String propertyName, Double doubleValue) {
+    public void setDoubleProperty(String propertyname, Double doubleValue) {
         // No-op
     }
 
@@ -103,23 +103,23 @@ public final class PropertysetNil implements Propertyset {
         // No-op
     }
 
-    public String getStringProperty(String propertyName) {
+    public String getStringProperty(String propertyname) {
         return Values.getNil().asString();
     }
 
-    public void setStringProperty(String propertyName, String stringValue) {
+    public void setStringProperty(String propertyname, String stringValue) {
         // No-op
     }
 
-    public Propertyset getComplexProperty(String propertyName) {
+    public Propertyset getComplexProperty(String propertyname) {
         return Values.getNil().asComplexProperty();
     }
 
-    public void setComplexProperty(String propertyName, Propertyset complexProperty) {
+    public void setComplexProperty(String propertyname, Propertyset complexProperty) {
         // No-op
     }
 
-    public Propertyset getReferenceProperty(String propertyName) {
+    public Propertyset getReferenceProperty(String propertyname) {
         return Values.getNil().asReference();
     }
 
@@ -127,11 +127,11 @@ public final class PropertysetNil implements Propertyset {
         // No-op
     }
 
-    public ValueList getListProperty(String propertyName) {
+    public ValueList getListProperty(String propertyname) {
         return Values.getNil().asList();
     }
 
-    public void setListProperty(String propertyName, ValueList listValue) {
+    public void setListProperty(String propertyname, ValueList listValue) {
         // No-op
     }
 

@@ -37,28 +37,28 @@ public interface Propertyset {
 
     UUID getId();
 
-    Boolean getBooleanProperty(String propertyName);
-    void setBooleanProperty(String propertyName, Boolean boolValue);
-    void setBooleanProperty(String propertyName, boolean boolValue);
+    Boolean getBooleanProperty(String propertyname);
+    void setBooleanProperty(String propertyname, Boolean boolValue);
+    void setBooleanProperty(String propertyname, boolean boolValue);
 
-    Long getLongProperty(String propertyName);
+    Long getLongProperty(String propertyname);
     void setLongProperty(String propertyname, Long intValue);
     void setLongProperty(String propertyname, long intvalue);
 
-    Double getDoubleProperty(String propertyName);
+    Double getDoubleProperty(String propertyname);
     void setDoubleProperty(String propertyname, Double doubleValue);
     void setDoubleProperty(String propertyname, double doubleValue);
 
-    String getStringProperty(String propertyName);
-    void setStringProperty(String propertyName, String stringValue);
+    String getStringProperty(String propertyname);
+    void setStringProperty(String propertyname, String stringValue);
 
-    Propertyset getComplexProperty(String propertyName);
-    void setComplexProperty(String propertyName, Propertyset complexProperty);
+    Propertyset getComplexProperty(String propertyname);
+    void setComplexProperty(String propertyname, Propertyset complexProperty);
 
-    Propertyset getReferenceProperty(String propertyName);
-    void setReferenceProperty(String propertyName, Propertyset referencedObject);
+    Propertyset getReferenceProperty(String propertyname);
+    void setReferenceProperty(String propertyname, Propertyset referencedObject);
 
-    ValueList getListProperty(String propertyName);
-    void setListProperty(String propertyName, ValueList listValue);
+    ValueList getListProperty(String propertyname);
+    void setListProperty(String propertyname, ValueList listValue);
 
 }
