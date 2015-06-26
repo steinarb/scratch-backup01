@@ -228,8 +228,7 @@ public class PropertysetImpl implements Propertyset {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result
-            + ((properties == null) ? 0 : properties.hashCode());
+        result = prime * result + properties.hashCode();
         return result;
     }
 
@@ -245,7 +244,7 @@ public class PropertysetImpl implements Propertyset {
 
         if (obj instanceof PropertysetNil) {
             // A nil propertyset is equal to an empty propertyset
-            if (properties == null || properties.isEmpty()) {
+            if (properties.isEmpty()) {
                 return true;
             }
         }
@@ -255,15 +254,7 @@ public class PropertysetImpl implements Propertyset {
         }
 
         PropertysetImpl other = (PropertysetImpl) obj;
-        if (properties == null) {
-            if (other.properties != null) {
-                return false;
-            }
-        } else if (!properties.equals(other.properties)) {
-            return false;
-        }
-
-        return true;
+        return properties.equals(other.properties);
     }
 
     @Override

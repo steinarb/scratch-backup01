@@ -2,7 +2,11 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
+
+import java.util.UUID;
+
 import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -426,6 +430,50 @@ public class PropertysetImplTest {
         Propertyset emptypropertyset = new PropertysetImpl();
         Value nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
         assertEquals(getNil(), nosuchproperty);
+    }
+
+    @Test
+    public void testHashCode() {
+        Propertyset emptypropertyset = new PropertysetImpl();
+        assertEquals(31, emptypropertyset.hashCode());
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        UUID id = UUID.fromString("8ce20479-8876-4d84-98a3-c14b53715c5d");
+        Propertyset propertyset = new PropertysetImpl();
+        populatePropertyset(propertyset, manager, id);
+        assertEquals(-1461527047, propertyset.hashCode());
+    }
+
+    @Test
+    public void testEquals() {
+        Propertyset emptypropertyset = new PropertysetImpl();
+        assertTrue(emptypropertyset.equals(emptypropertyset));
+        assertFalse(emptypropertyset.equals(null));
+        assertTrue(emptypropertyset.equals(getNilPropertyset()));
+
+        // Compare two identical but propertysets that aren't the same object
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        UUID id = UUID.randomUUID();
+        Propertyset propertyset1 = new PropertysetImpl();
+        populatePropertyset(propertyset1, manager, id);
+        Propertyset propertyset2 = new PropertysetImpl();
+        populatePropertyset(propertyset2, manager, id);
+        assertTrue(propertyset1.equals(propertyset2));
+        assertTrue(propertyset2.equals(propertyset1));
+    }
+
+    private void populatePropertyset(Propertyset propertyset, PropertysetManager manager, UUID id) {
+        propertyset.setBooleanProperty("a", true);
+        propertyset.setLongProperty("b", 42);
+        propertyset.setDoubleProperty("c", 2.7);
+        propertyset.setComplexProperty("d", manager.findPropertyset(id));
+        propertyset.setComplexProperty("e", manager.createPropertyset());
+        propertyset.setListProperty("f", newList());
+    }
+
+    @Test
+    public void testToString() {
+        Propertyset emptypropertyset = new PropertysetImpl();
+        assertEquals("PropertysetImpl [properties={}]", emptypropertyset.toString());
     }
 
 }
