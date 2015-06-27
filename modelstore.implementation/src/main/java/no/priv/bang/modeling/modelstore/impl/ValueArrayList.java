@@ -15,6 +15,7 @@ class ValueArrayList extends AbstractList<Value> implements ValueList {
 
     public ValueArrayList(ValueList original) {
         arrayList = new ArrayList<Value>(original);
+        deepDefensiveCopyWhenNeeded();
     }
 
     public ValueArrayList() {
@@ -23,6 +24,17 @@ class ValueArrayList extends AbstractList<Value> implements ValueList {
 
     public ValueArrayList(int initialCapacity) {
         arrayList = new ArrayList<Value>(initialCapacity);
+    }
+
+    private void deepDefensiveCopyWhenNeeded() {
+        for (int i = 0; i < arrayList.size(); i++) {
+            Value v = arrayList.get(i);
+            if (v.isComplexProperty()) {
+                arrayList.set(i, toComplexValue(new PropertysetImpl(v.asComplexProperty())));
+            } else if (v.isList()) {
+                arrayList.set(i, toListValue(new ValueArrayList(v.asList())));
+            }
+        }
     }
 
     @Override

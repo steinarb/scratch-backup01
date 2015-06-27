@@ -33,6 +33,8 @@ public class ValueArrayListTest {
         list.remove(0);
         assertEquals(1, list.size());
         assertEquals(3L, list.get(0).asLong().longValue());
+
+        // TODO verify deep copy for Propertysets and lists
     }
 
     /**
@@ -135,6 +137,8 @@ public class ValueArrayListTest {
         assertTrue(list.get(0).isComplexProperty());
         assertTrue(list.get(1).isComplexProperty());
         assertTrue(list.get(2).isReference());
+
+        //TODO Verify deep copy of propertysets
     }
 
     /**
@@ -170,6 +174,64 @@ public class ValueArrayListTest {
         assertEquals(0, list.get(0).asList().size());
         assertEquals(3, list.get(1).asList().size());
         assertEquals(2, list.get(2).asList().size());
+
+        //TODO Verify deep copy of lists
+    }
+
+    /**
+     * Test av {@link ValueArrayList#equals(Object)}.
+     */
+    @Test
+    public void testCopyConstructor() {
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        UUID id = UUID.randomUUID();
+        ValueList original = newList();
+        populateList(original, manager, id);
+
+        ValueList copy = new ValueArrayList(original);
+        assertNotSame(original, copy); // Obviously...
+        assertEquals(original, copy);
+
+        // Modify elements in the copy and verify that there is no effect on the original
+        copy.set(0, false);
+        assertFalse(copy.get(0).asBoolean());
+        assertTrue("Expected original to be unchanged", original.get(0).asBoolean());
+        copy.set(1, 43);
+        assertEquals(43, copy.get(1).asLong().longValue());
+        assertEquals("Expected original to be unchanged", 42, original.get(1).asLong().longValue());
+        copy.set(2, 2.78);
+        assertEquals(2.78, copy.get(2).asDouble(), 0.0);
+        assertEquals("Expected original to be unchanged", 2.7, original.get(2).asDouble(), 0.0);
+        copy.set(3, "bar foo");
+        assertEquals("bar foo", copy.get(3).asString());
+        Propertyset originalReference = copy.get(4).asReference();
+        Propertyset newReference = manager.findPropertyset(UUID.randomUUID());
+        copy.set(4, newReference);
+        assertEquals(newReference, copy.get(4).asReference());
+        assertEquals("Expected original to be unchanged", originalReference, original.get(4).asReference());
+        copy.get(5).asComplexProperty().setStringProperty("d", "foobar");
+        assertEquals("foobar", copy.get(5).asComplexProperty().getStringProperty("d"));
+        assertEquals("Expected original to be unchanged", "bar foo", original.get(5).asComplexProperty().getStringProperty("d"));
+        copy.get(6).asList().add(3);
+        assertEquals(2, copy.get(6).asList().size());
+        assertEquals("Expected original to be unchanged", 1, original.get(6).asList().size());
+    }
+
+    private void populateList(ValueList list, PropertysetManager manager, UUID id) {
+        list.add(true);
+        list.add(42);
+        list.add(2.7);
+        list.add("foo bar");
+        list.add(manager.findPropertyset(id));
+        Propertyset propertyset = manager.createPropertyset();
+        propertyset.setBooleanProperty("a", true);
+        propertyset.setLongProperty("b", 47);
+        propertyset.setDoubleProperty("c", 3.14);
+        propertyset.setStringProperty("d", "bar foo");
+        list.add(propertyset);
+        ValueList listAsElement = newList();
+        listAsElement.add("foo");
+        list.add(listAsElement);
     }
 
     /**
