@@ -11,7 +11,19 @@ import no.priv.bang.modeling.modelstore.ValueList;
 
 class ValueArrayList extends AbstractList<Value> implements ValueList {
 
-    List<Value> arrayList = new ArrayList<Value>();
+    List<Value> arrayList;
+
+    public ValueArrayList(ValueList original) {
+        arrayList = new ArrayList<Value>(original);
+    }
+
+    public ValueArrayList() {
+        this(0);
+    }
+
+    public ValueArrayList(int initialCapacity) {
+        arrayList = new ArrayList<Value>(initialCapacity);
+    }
 
     @Override
     public Value set(int paramInt, Value paramE) {

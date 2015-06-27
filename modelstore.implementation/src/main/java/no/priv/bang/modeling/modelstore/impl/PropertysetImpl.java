@@ -19,13 +19,36 @@ import no.priv.bang.modeling.modelstore.ValueList;
 public class PropertysetImpl implements Propertyset {
     final private String idKey = "id";
     final private String aspectsKey = "aspects";
-    Map<String, Value> properties = new HashMap<String, Value>();
+    final private Map<String, Value> properties = new HashMap<String, Value>();
 
     public PropertysetImpl(UUID id) {
     	properties.put(idKey, new IdValue(id));
     }
 
     public PropertysetImpl() { }
+
+    public PropertysetImpl(Propertyset propertyset) {
+    	if (propertyset.hasId()) {
+            properties.put(idKey, new IdValue(propertyset.getId()));
+    	}
+
+    	if (propertyset.hasAspect()) {
+            for (Value aspect : propertyset.getAspects()) {
+                addAspect(aspect.asReference());
+            }
+    	}
+
+    	for (String propertyname : propertyset.getPropertynames()) {
+            Value value = propertyset.getProperty(propertyname);
+            if (value.isComplexProperty()) {
+                properties.put(propertyname, toComplexValue(new PropertysetImpl(value.asComplexProperty())));
+            } else if (value.isList()) {
+                properties.put(propertyname, toListValue(new ValueArrayList(value.asList())));
+            } else {
+                properties.put(propertyname, value);
+            }
+        }
+    }
 
     public Collection<String> getPropertynames() {
         return properties.keySet();

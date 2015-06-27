@@ -440,7 +440,7 @@ public class PropertysetImplTest {
         UUID id = UUID.fromString("8ce20479-8876-4d84-98a3-c14b53715c5d");
         Propertyset propertyset = new PropertysetImpl();
         populatePropertyset(propertyset, manager, id);
-        assertEquals(-1461527047, propertyset.hashCode());
+        assertEquals(201512373, propertyset.hashCode());
     }
 
     @Test
@@ -461,19 +461,81 @@ public class PropertysetImplTest {
         assertTrue(propertyset2.equals(propertyset1));
     }
 
-    private void populatePropertyset(Propertyset propertyset, PropertysetManager manager, UUID id) {
-        propertyset.setBooleanProperty("a", true);
-        propertyset.setLongProperty("b", 42);
-        propertyset.setDoubleProperty("c", 2.7);
-        propertyset.setComplexProperty("d", manager.findPropertyset(id));
-        propertyset.setComplexProperty("e", manager.createPropertyset());
-        propertyset.setListProperty("f", newList());
-    }
-
     @Test
     public void testToString() {
         Propertyset emptypropertyset = new PropertysetImpl();
         assertEquals("PropertysetImpl [properties={}]", emptypropertyset.toString());
+        // No test for a propertyset with properties, because they are written in a non-predictable order
+    }
+
+    @Test
+    public void testCopyConstructor() {
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        UUID id = UUID.randomUUID();
+        Propertyset propertyset = new PropertysetImpl();
+        populatePropertyset(propertyset, manager, id);
+
+        Propertyset copy = new PropertysetImpl(propertyset);
+        compareOriginalUnchangedByCopyChange(manager, propertyset, copy);
+    }
+
+    @Test
+    public void testCopyConstructorOnPropertysetWithIdAndAspect() {
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        UUID id = UUID.randomUUID();
+        UUID propsetId = UUID.randomUUID();
+        Propertyset propertyset = manager.findPropertyset(propsetId);
+        UUID aspectId = UUID.randomUUID();
+        Propertyset aspect = manager.findPropertyset(aspectId);
+        propertyset.addAspect(aspect);
+        populatePropertyset(propertyset, manager, id);
+
+        Propertyset copy = new PropertysetImpl(propertyset);
+        compareOriginalUnchangedByCopyChange(manager, propertyset, copy);
+    }
+
+    private void compareOriginalUnchangedByCopyChange(
+                                                      PropertysetManager manager, Propertyset propertyset,
+                                                      Propertyset copy) {
+        assertNotSame(propertyset, copy); // Obviously...
+        assertEquals(propertyset, copy);
+
+        // Check that modifying values in the copy doesn't affect the original
+        copy.setBooleanProperty("a", false);
+        assertFalse(copy.getBooleanProperty("a").booleanValue());
+        assertTrue("Expected unchanged value", propertyset.getBooleanProperty("a").booleanValue());
+        copy.setLongProperty("b", 43);
+        assertEquals(43, copy.getLongProperty("b").longValue());
+        assertEquals("Expected unchanged value", 42, propertyset.getLongProperty("b").longValue());
+        copy.setDoubleProperty("c", 1.1);
+        assertEquals(1.1, copy.getDoubleProperty("c"), 0.0);
+        assertEquals("Expected unchanged value", 2.7, propertyset.getDoubleProperty("c"), 0.0);
+        copy.setStringProperty("d", "bar foo");
+        assertEquals("bar foo", copy.getStringProperty("d"));
+        assertEquals("Expected unchanged value", "foo bar", propertyset.getStringProperty("d"));
+        Propertyset originalReferencedPropertyset = copy.getReferenceProperty("e");
+        Propertyset newReferencedPropertyset = manager.findPropertyset(UUID.randomUUID());
+        copy.setReferenceProperty("e", newReferencedPropertyset);
+        assertEquals(newReferencedPropertyset, copy.getReferenceProperty("e"));
+        assertEquals("Expected unchanged value", originalReferencedPropertyset, propertyset.getReferenceProperty("e"));
+        copy.getComplexProperty("f").setLongProperty("z", 35);
+        assertEquals(1, copy.getComplexProperty("f").getPropertynames().size());
+        assertEquals("Expected unchanged value", 0, propertyset.getComplexProperty("f").getPropertynames().size());
+        copy.getListProperty("g").add(3.7);
+        assertEquals(2, copy.getListProperty("g").size());
+        assertEquals("Expected unchanged value", 1, propertyset.getListProperty("g").size());
+    }
+
+    private void populatePropertyset(Propertyset propertyset, PropertysetManager manager, UUID id) {
+        propertyset.setBooleanProperty("a", true);
+        propertyset.setLongProperty("b", 42);
+        propertyset.setDoubleProperty("c", 2.7);
+        propertyset.setStringProperty("d", "foo bar");
+        propertyset.setReferenceProperty("e", manager.findPropertyset(id));
+        propertyset.setComplexProperty("f", manager.createPropertyset());
+        ValueList list = newList();
+        list.add("foobar");
+        propertyset.setListProperty("g", list);
     }
 
 }
