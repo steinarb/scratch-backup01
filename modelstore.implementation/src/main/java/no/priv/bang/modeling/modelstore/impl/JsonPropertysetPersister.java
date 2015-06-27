@@ -152,7 +152,7 @@ public class JsonPropertysetPersister {
             }
         }
 
-        return toListValue(propertyList);
+        return toListValue(propertyList, false);
     }
 
     private Value parseObject(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
@@ -223,7 +223,7 @@ public class JsonPropertysetPersister {
             }
         }
 
-        return toComplexValue(createPropertysetIfNull(propertyset));
+        return toComplexValue(createPropertysetIfNull(propertyset), false);
     }
 
     private Propertyset createPropertysetIfNull(Propertyset propertyset) {

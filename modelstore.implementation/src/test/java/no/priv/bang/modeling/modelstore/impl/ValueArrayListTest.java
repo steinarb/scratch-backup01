@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
+import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
 import org.junit.Test;
@@ -23,18 +24,49 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddGetPutRemove() {
+        PropertysetManager manager = new PropertysetManagerProvider().get();
         ValueList list = newList();
         assertEquals(0, list.size());
         list.add(toStringValue("a"));
         list.add(toLongValue(4L));
-        assertEquals(2, list.size());
+        Propertyset propertyset = manager.createPropertyset();
+        propertyset.setStringProperty("a", "foo bar");
+        list.add(propertyset);
+        ValueList listelement = newList();
+        listelement.add("foo");
+        list.add(listelement);
+        assertEquals(4, list.size());
         assertEquals(4L, list.get(1).asLong().longValue());
         list.set(1, toLongValue(3L));
         list.remove(0);
-        assertEquals(1, list.size());
+        assertEquals(3, list.size());
         assertEquals(3L, list.get(0).asLong().longValue());
+        list.add((Value)null);
+        assertEquals(getNilPropertyset(), list.get(3).asComplexProperty());
+        list.set(3, (Value)null);
+        assertEquals(getNilPropertyset(), list.get(3).asComplexProperty());
 
-        // TODO verify deep copy for Propertysets and lists
+        // Verify deep copy for Propertysets and lists
+        ValueList addlist = newList();
+        addlist.add(list.get(1)); // Complex value
+        addlist.add(list.get(2));
+        addlist.get(0).asComplexProperty().setStringProperty("a", "bar foo");
+        assertEquals("bar foo", addlist.get(0).asComplexProperty().getStringProperty("a"));
+        assertEquals("Expected original to be unchanged", "foo bar", list.get(1).asComplexProperty().getStringProperty("a"));
+        addlist.get(1).asList().add("bar");
+        assertEquals(2, addlist.get(1).asList().size());
+        assertEquals("Expected original to be unchanged", 1, list.get(2).asList().size());
+        ValueList setlist = newList();
+        setlist.add(true);
+        setlist.add(true); // Just add something to be able to set index 0 and 1
+        setlist.set(0, list.get(1));
+        setlist.set(1, list.get(2));
+        setlist.get(0).asComplexProperty().setStringProperty("a", "foobar");
+        assertEquals("foobar", setlist.get(0).asComplexProperty().getStringProperty("a"));
+        assertEquals("Expected original to be unchanged", "foo bar", list.get(1).asComplexProperty().getStringProperty("a"));
+        setlist.get(1).asList().add("bar");
+        assertEquals(2, setlist.get(1).asList().size());
+        assertEquals("Expected original to be unchanged", 1, list.get(2).asList().size());
     }
 
     /**
@@ -138,7 +170,18 @@ public class ValueArrayListTest {
         assertTrue(list.get(1).isComplexProperty());
         assertTrue(list.get(2).isReference());
 
-        //TODO Verify deep copy of propertysets
+        // Verify deep copy of propertysets in add and set
+        ValueList otherlist = newList();
+        otherlist.add(list.get(1).asComplexProperty());
+        otherlist.get(0).asComplexProperty().setDoubleProperty("c", 3.78);
+        assertEquals(3.78, otherlist.get(0).asComplexProperty().getDoubleProperty("c"), 0.0);
+        assertEquals("Expected original value to be unchanged", 3.14, list.get(1).asComplexProperty().getDoubleProperty("c"), 0.0);
+        ValueList otherlist2 = newList();
+        otherlist2.add(true); // Dummy add to get a settable position in the list
+        otherlist2.set(0, list.get(1).asComplexProperty());
+        otherlist2.get(0).asComplexProperty().setDoubleProperty("c", 2.78);
+        assertEquals(2.78, otherlist2.get(0).asComplexProperty().getDoubleProperty("c"), 0.0);
+        assertEquals("Expected original value to be unchanged", 3.14, list.get(1).asComplexProperty().getDoubleProperty("c"), 0.0);
     }
 
     /**
@@ -175,7 +218,17 @@ public class ValueArrayListTest {
         assertEquals(3, list.get(1).asList().size());
         assertEquals(2, list.get(2).asList().size());
 
-        //TODO Verify deep copy of lists
+        // Verify deep copy of lists in add and set
+        ValueList otherlist = newList();
+        otherlist.add(list.get(1).asList());
+        otherlist.add(true); // Dummy add to get a settable position in the list
+        otherlist.set(1, list.get(2).asList());
+        otherlist.get(0).asList().add(3.7);
+        assertEquals(4, otherlist.get(0).asList().size());
+        assertEquals("Expected the original to be unchanged", 3, list.get(1).asList().size());
+        otherlist.get(1).asList().add(54);
+        assertEquals(3, otherlist.get(1).asList().size());
+        assertEquals("Expected the original to be unchanged", 2, list.get(2).asList().size());
     }
 
     /**

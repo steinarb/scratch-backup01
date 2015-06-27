@@ -26,7 +26,7 @@ public class ComplexValueTest {
         complexProperty.setLongProperty("long", Long.valueOf(42));
         complexProperty.setDoubleProperty("double", Double.valueOf(2.78));
         complexProperty.setStringProperty("string", "foo bar");
-        value = toComplexValue(complexProperty);
+        value = toComplexValue(complexProperty, false);
     }
 
     @Test

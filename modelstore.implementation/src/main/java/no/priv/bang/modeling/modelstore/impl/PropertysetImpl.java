@@ -41,9 +41,9 @@ public class PropertysetImpl implements Propertyset {
     	for (String propertyname : propertyset.getPropertynames()) {
             Value value = propertyset.getProperty(propertyname);
             if (value.isComplexProperty()) {
-                properties.put(propertyname, toComplexValue(new PropertysetImpl(value.asComplexProperty())));
+                properties.put(propertyname, toComplexValue(value.asComplexProperty()));
             } else if (value.isList()) {
-                properties.put(propertyname, toListValue(new ValueArrayList(value.asList())));
+                properties.put(propertyname, toListValue(new ValueArrayList(value.asList()), false));
             } else {
                 properties.put(propertyname, value);
             }
@@ -63,7 +63,13 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public void setProperty(String propertyname, Value property) {
-        properties.put(propertyname, property);
+    	if (null != property && property.isComplexProperty()) {
+            properties.put(propertyname, toComplexValue(property.asComplexProperty()));
+    	} else if (null != property && property.isList()) {
+            properties.put(propertyname, toListValue(property.asList()));
+    	} else {
+            properties.put(propertyname, property);
+    	}
     }
 
     public boolean isNil() {
@@ -98,7 +104,7 @@ public class PropertysetImpl implements Propertyset {
     	} else {
             ValueList aspectList = newList();
             aspectList.add(Values.toReferenceValue(aspect));
-            properties.put(aspectsKey, Values.toListValue(aspectList));
+            properties.put(aspectsKey, Values.toListValue(aspectList, false));
     	}
     }
 

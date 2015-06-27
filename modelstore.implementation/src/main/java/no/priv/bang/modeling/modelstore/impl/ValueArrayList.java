@@ -30,16 +30,24 @@ class ValueArrayList extends AbstractList<Value> implements ValueList {
         for (int i = 0; i < arrayList.size(); i++) {
             Value v = arrayList.get(i);
             if (v.isComplexProperty()) {
-                arrayList.set(i, toComplexValue(new PropertysetImpl(v.asComplexProperty())));
+                arrayList.set(i, toComplexValue(v.asComplexProperty()));
             } else if (v.isList()) {
-                arrayList.set(i, toListValue(new ValueArrayList(v.asList())));
+                arrayList.set(i, toListValue(v.asList()));
             }
         }
     }
 
     @Override
-    public Value set(int paramInt, Value paramE) {
-        return arrayList.set(paramInt, paramE);
+    public Value set(int i, Value value) {
+    	if (null == value) {
+            return arrayList.set(i, getNil());
+    	} else if (value.isComplexProperty()) {
+            return arrayList.set(i, toComplexValue(value.asComplexProperty()));
+    	} else if (value.isList()) {
+            return arrayList.set(i, toListValue(value.asList()));
+    	} else {
+            return arrayList.set(i, value);
+    	}
     }
 
     public Value set(int i, Boolean value) {
@@ -83,8 +91,16 @@ class ValueArrayList extends AbstractList<Value> implements ValueList {
     }
 
     @Override
-    public void add(int paramInt, Value paramE) {
-        arrayList.add(paramInt, paramE);
+    public void add(int i, Value value) {
+    	if (value == null) {
+            arrayList.add(i, getNil());
+    	} else if (value.isComplexProperty()) {
+            arrayList.add(i, toComplexValue(value.asComplexProperty()));
+    	} else if (value.isList()) {
+            arrayList.add(i, toListValue(value.asList()));
+    	} else {
+            arrayList.add(i, value);
+    	}
     }
 
     public void add(Boolean value) {

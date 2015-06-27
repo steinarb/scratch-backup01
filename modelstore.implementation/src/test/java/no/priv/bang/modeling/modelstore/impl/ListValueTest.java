@@ -25,7 +25,7 @@ public class ListValueTest {
         valueList.add(toLongValue(42));
         valueList.add(toDoubleValue(2.78));
         valueList.add(toStringValue("foo bar"));
-        value = toListValue(valueList);
+        value = toListValue(valueList, false);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class ListValueTest {
      */
     @Test
     public void testEmptyListEqualsNilList() {
-    	Value emptylist = toListValue(newList());
+    	Value emptylist = toListValue(newList(), false);
     	Value nil = getNil();
     	assertTrue(emptylist.equals(nil));
 
@@ -131,7 +131,7 @@ public class ListValueTest {
     public void testHashCode() {
         Value nullListValue = toListValue(null);
         assertEquals(32, nullListValue.hashCode());
-        Value foo = toListValue(newList());
+        Value foo = toListValue(newList(), false);
         assertEquals(63, foo.hashCode());
         assertEquals(-24528609, value.hashCode());
     }
@@ -142,10 +142,10 @@ public class ListValueTest {
     @Test
     public void testEquals() {
         Value nullListValue = toListValue(null);
-        Value emptyvalue = toListValue(newList());
+        Value emptyvalue = toListValue(newList(), false);
         ValueList list = newList();
         list.add(toDoubleValue(3.14));
-        Value otherValue = toListValue(list);
+        Value otherValue = toListValue(list, false);
         assertFalse(nullListValue.equals(null));
         assertTrue(nullListValue.equals(getNil()));
         assertTrue(nullListValue.equals(nullListValue));
@@ -171,7 +171,7 @@ public class ListValueTest {
         list.add(toStringValue("foo"));
         list.add(toStringValue("bar"));
         list.add(toDoubleValue(2.78));
-        Value otherValue = toListValue(list);
+        Value otherValue = toListValue(list, false);
         assertEquals("ListValue [value=[StringValue [value=foo], StringValue [value=bar], DoubleValue [value=2.78]]]", otherValue.toString());
         assertEquals("ListValue [value=[BooleanValue [value=true], LongValue [value=42], DoubleValue [value=2.78], StringValue [value=foo bar]]]", value.toString());
     }

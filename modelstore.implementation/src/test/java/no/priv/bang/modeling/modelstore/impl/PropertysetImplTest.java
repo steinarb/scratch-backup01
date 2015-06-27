@@ -284,10 +284,11 @@ public class PropertysetImplTest {
      */
     @Test
     public void testGetComplexProperty() {
-        Propertyset propertyset = new PropertysetImpl();
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        Propertyset propertyset = manager.createPropertyset();
 
         // Set a complex property and retrieve it.
-        Propertyset point = new PropertysetImpl();
+        Propertyset point = manager.createPropertyset();
         point.setDoubleProperty("x", 75.3);
         point.setDoubleProperty("y", 145.3);
         propertyset.setComplexProperty("upperLeftCorner", point);
@@ -327,6 +328,13 @@ public class PropertysetImplTest {
         Propertyset referencedObject = new PropertysetImpl();
         propertyset.setReferenceProperty("referenceValue", referencedObject);
         assertEquals(getNilPropertyset(), propertyset.getComplexProperty("referenceValue"));
+
+        // Verify deep copy on set
+        Propertyset otherpropertyset = manager.createPropertyset();
+        otherpropertyset.setComplexProperty("corner", propertyset.getComplexProperty("upperLeftCorner"));
+        otherpropertyset.getComplexProperty("corner").setDoubleProperty("x", 77);
+        assertEquals(77.0, otherpropertyset.getComplexProperty("corner").getDoubleProperty("x"), 0.0);
+        assertEquals("Expected original to be unchanged", 75.3, propertyset.getComplexProperty("upperLeftCorner").getDoubleProperty("x"), 0.0);
     }
 
     /**
@@ -380,7 +388,8 @@ public class PropertysetImplTest {
      */
     @Test
     public void testGetListProperty() {
-        Propertyset propertyset = new PropertysetImpl();
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        Propertyset propertyset = manager.createPropertyset();
 
         // Set and get a list value, and verify that its members can be accessed.
         ValueList listValue = newList();
@@ -415,6 +424,13 @@ public class PropertysetImplTest {
         Propertyset referencedObject = new PropertysetImpl();
         propertyset.setReferenceProperty("referencedObject", referencedObject);
         assertEquals(getNil().asList(), propertyset.getListProperty("referencedObject"));
+
+        // Verify deep copy on set
+        Propertyset otherpropertyset = manager.createPropertyset();
+        otherpropertyset.setListProperty("listValue", propertyset.getListProperty("listValue"));
+        otherpropertyset.getListProperty("listValue").add(378);
+        assertEquals(3, otherpropertyset.getListProperty("listValue").size());
+        assertEquals("Expected original to be unchanged", 2, propertyset.getListProperty("listValue").size());
     }
 
     @Test
@@ -427,9 +443,29 @@ public class PropertysetImplTest {
 
     @Test
     public void testGetProperty() {
-        Propertyset emptypropertyset = new PropertysetImpl();
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+        Propertyset emptypropertyset = manager.createPropertyset();
         Value nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
         assertEquals(getNil(), nosuchproperty);
+        Propertyset propertyset = manager.createPropertyset();
+        propertyset.setProperty("null", null);
+        assertEquals(getNilPropertyset(), propertyset.getComplexProperty("null"));
+
+        // Verify deep copy for complex and list properties
+        propertyset.setComplexProperty("a", manager.createPropertyset());
+        propertyset.getComplexProperty("a").setLongProperty("l", 42);
+        propertyset.setListProperty("b", newList());
+        propertyset.getListProperty("b").add(345);
+
+        Propertyset otherpropertyset = manager.createPropertyset();
+        otherpropertyset.setProperty("a", propertyset.getProperty("a"));
+        otherpropertyset.getComplexProperty("a").setLongProperty("l", 43);
+        assertEquals(43, otherpropertyset.getComplexProperty("a").getLongProperty("l").longValue());
+        assertEquals("Expected original value to be unchanged", 42, propertyset.getComplexProperty("a").getLongProperty("l").longValue());
+        otherpropertyset.setProperty("b", propertyset.getProperty("b"));
+        otherpropertyset.getListProperty("b").add("wow");
+        assertEquals(2, otherpropertyset.getListProperty("b").size());
+        assertEquals("Expected original value to be unchanged", 1, propertyset.getListProperty("b").size());
     }
 
     @Test

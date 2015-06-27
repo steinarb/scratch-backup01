@@ -109,7 +109,19 @@ public class Values {
      * @return a {@link ComplexValue} instance
      */
     static public Value toComplexValue(Propertyset complexValue) {
-        return new ComplexValue(complexValue);
+        return toComplexValue(complexValue, true);
+    }
+
+    /**
+     * Create new instances of {@link ComplexValue}
+     *
+     * @param complexValue the value to wrap
+     * @param makeDefensiveCopy if true, create a copy of the complexValue and give the copy to the value
+     * @return a {@link ComplexValue} instance
+     */
+    static public Value toComplexValue(Propertyset complexValue, boolean makeDefensiveCopy) {
+        Propertyset value = makeDefensiveCopy && complexValue != null ? new PropertysetImpl(complexValue) : complexValue;
+        return new ComplexValue(value);
     }
 
     /**
@@ -129,7 +141,19 @@ public class Values {
      * @return a {@link ListValue} instance
      */
     static Value toListValue(ValueList listValue) {
-        return new ListValue(listValue);
+        return toListValue(listValue, true);
+    }
+
+    /**
+     * Create new instances of {@link ListValue}
+     *
+     * @param listValue the value to wrap
+     * @param makeDefensiveCopy if true, create a copy of the list and give the copy to the value
+     * @return a {@link ListValue} instance
+     */
+    static Value toListValue(ValueList listValue, boolean makeDefensiveCopy) {
+        ValueList value = makeDefensiveCopy && listValue != null ? new ValueArrayList(listValue) : listValue;
+        return new ListValue(value);
     }
 
     /**
