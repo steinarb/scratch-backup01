@@ -35,7 +35,7 @@ public class PropertysetManagerTest {
 
     @Test
     public void testCreatePropertySet() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
 
         // Get a propertyset instance and verify that it is a non-nil instance
         // that can be modified.
@@ -53,7 +53,7 @@ public class PropertysetManagerTest {
 
     @Test
     public void testFindPropertysetById() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
 
         // Get a propertyset by id and verify that it is empty initially
         UUID newPropertysetId = UUID.randomUUID();
@@ -94,7 +94,7 @@ public class PropertysetManagerTest {
 
     @Test
     public void testFindPropertysetOfAspect() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
 
         buildModelWithAspects(propertysetManager);
 
@@ -116,7 +116,7 @@ public class PropertysetManagerTest {
      */
     @Test
     public void testPropertysetWithMultipleAspects() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
 
         // Create two aspects
         Propertyset generalObjectAspect = buildGeneralObjectAspect(propertysetManager);
@@ -144,7 +144,7 @@ public class PropertysetManagerTest {
 
     @Test
     public void experimentalJacksonPersist() throws IOException {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider();
+        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
         buildModelWithAspects(propertysetManager);
 
         JsonFactory jsonFactory = new JsonFactory();;
@@ -165,7 +165,7 @@ public class PropertysetManagerTest {
     public void testJsonGeneratorWithReference() throws IOException {
         // Create two propertysets with ids, and make a reference to propertyset
     	// "b" from propertyset "a".
-    	PropertysetManager propertysetManager = new PropertysetManagerProvider();
+    	PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
         UUID idA = UUID.randomUUID();
         Propertyset a = propertysetManager.findPropertyset(idA);
         UUID idB = UUID.randomUUID();
