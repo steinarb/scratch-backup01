@@ -36,6 +36,10 @@ class PropertysetManagerBase implements PropertysetManager {
         return new PropertysetImpl();
     }
 
+    public ValueList createList() {
+        return newList();
+    }
+
     public Propertyset findPropertyset(UUID id) {
         Propertyset propertyset = propertysets.get(id);
         if (null == propertyset) {

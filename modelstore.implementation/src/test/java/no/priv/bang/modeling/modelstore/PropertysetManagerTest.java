@@ -1,5 +1,6 @@
 package no.priv.bang.modeling.modelstore;
 
+
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -49,6 +50,43 @@ public class PropertysetManagerTest {
         propertyset.setDoubleProperty("stringProperty", Double.valueOf(3.14));
         // Verify that the property now contains a non-default value
         assertEquals("3.14", propertyset.getStringProperty("stringProperty"));
+    }
+
+    @Test
+    public void testList() {
+        PropertysetManager manager = new PropertysetManagerProvider().get();
+
+        ValueList list = manager.createList();
+        assertEquals(0, list.size());
+        list.add(true);
+        assertTrue(list.get(0).asBoolean());
+        list.add(3.14);
+        assertEquals(3.14, list.get(1).asDouble(), 0.0);
+
+        Propertyset referencedPropertyset = manager.findPropertyset(UUID.randomUUID());
+        list.add(referencedPropertyset);
+        assertTrue(list.get(2).isReference());
+
+        Propertyset containedPropertyset = manager.createPropertyset();
+        list.add(containedPropertyset);
+        assertTrue(list.get(3).isComplexProperty());
+
+        list.set(0, 42); // Overwrite boolean with long
+        assertTrue(list.get(0).asBoolean()); // Non-null value gives true boolean
+        assertEquals(42, list.get(0).asLong().longValue()); // The actual long value is still there
+
+        ValueList containedlist = manager.createList();
+        containedlist.add(100);
+        list.add(containedlist);
+        assertEquals(1, list.get(4).asList().size());
+        // Modifying original does not affect list element
+        containedlist.add(2.5);
+        assertEquals(2, containedlist.size());
+        assertEquals(1, list.get(4).asList().size());
+
+        assertEquals(5, list.size());
+        list.remove(1);
+        assertEquals(4, list.size());
     }
 
     @Test

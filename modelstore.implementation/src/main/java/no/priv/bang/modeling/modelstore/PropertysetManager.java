@@ -1,5 +1,6 @@
 package no.priv.bang.modeling.modelstore;
 
+
 import java.util.Collection;
 import java.util.UUID;
 
@@ -21,6 +22,8 @@ public interface PropertysetManager {
      * @return a {@link PropertySet} without an id property set
      */
     Propertyset createPropertyset();
+
+    ValueList createList();
 
     /**
      * Return a propertyset identified by an {@link UUID}, or create a
