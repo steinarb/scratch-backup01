@@ -44,23 +44,22 @@ Having "property" in the name doesn't make sense for the list of values, and mak
 ** DONE Add list creation method on the PropertysetManager interface, to make it possible to create ValueList instances outside of the bundle
 ** TODO Add propertyvalue creation methods on the PropertysetManager interface, to make them accessible to the world
 ** DONE Put some basic aspects in place (object, relationship, model, aspectcontainer)
-** TODO Add AspectViwer (connected to aspect container and used as a filter)
-** TODO Test serialization/deserialization using YAML (YAML has object id and object reference)
-** TODO Split off ModelContext/PropertyContext
+** TODO Split off PropertysetContext
  - PropertysetManager will be the access point for creating and saving ModelContext instances
  - This is an approach at making the system multithreaded and performant
    - Minimal locking on the propertysets themselves, because there is only on thread using them at a time
    - No need to copy the property values, because they are immutable (except for complexproperty and listproperty, that is...)
      - Use shallow copy on list and complex object property get, perhaps?
-*** TODO Persist and instantiation should use with ModelContext/PropertyContext
+*** DONE Persist and instantiation should use PropertysetContext
 *** TODO Store metadata (last modification time, at first)
-*** TODO Create a clone operation (shallow collection copy, propertyvalues are immutable)
 *** TODO Create a merge operation that will merge all aspects and propertysets
 *** TODO Move ModelContext/PropertyContext to a library bundle (or possibly one with a factory service for modelcontexts?)
  - Alternatively:
    - Just move the interface definitions to a separate bundle
      - Does this have any benefits
 *** TODO Move Jackson serialization to a separate bundle (maybe a library bundle?)
+** TODO Test serialization/deserialization using YAML (YAML has object id and object reference)
+** TODO Add AspectViwer (connected to aspect container and used as a filter)
 ** TODO Storage based on SQL for relationships and references and individual JSON files
 *** TODO Individual Propertyset files git versioned
 *** TODO Metatada into the RDBMS

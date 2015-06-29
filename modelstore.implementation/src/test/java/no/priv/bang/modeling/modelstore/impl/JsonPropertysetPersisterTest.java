@@ -45,7 +45,7 @@ public class JsonPropertysetPersisterTest {
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
-        persister.restore(carsAndBicycles, propertysetManager);
+        persister.restore(carsAndBicycles, propertysetManager.getContext());
 
         assertEquals(8, propertysetManager.listAllAspects().size());
         assertEquals(8, propertysetManager.listAllPropertysets().size());
@@ -66,7 +66,7 @@ public class JsonPropertysetPersisterTest {
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
-        persister.restore(carsAndBicyclesIdNotFirst, propertysetManager);
+        persister.restore(carsAndBicyclesIdNotFirst, propertysetManager.getContext());
 
         assertEquals(8, propertysetManager.listAllAspects().size());
         assertEquals(8, propertysetManager.listAllPropertysets().size());
@@ -74,7 +74,7 @@ public class JsonPropertysetPersisterTest {
         // Verify that the results are identical to the ones with the id first
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
         File carsAndBicycles = getResourceAsFile("/json/cars_and_bicycles.json");
-        persister.restore(carsAndBicycles, propertysetManager2);
+        persister.restore(carsAndBicycles, propertysetManager2.getContext());
         compareAllPropertysets(propertysetManager, propertysetManager2);
     }
 
@@ -92,7 +92,7 @@ public class JsonPropertysetPersisterTest {
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
-        persister.restore(withBoolean, propertysetManager);
+        persister.restore(withBoolean, propertysetManager.getContext());
 
         // Check the parsed values
         Propertyset propertyset = propertysetManager.listAllPropertysets().iterator().next();
@@ -101,11 +101,11 @@ public class JsonPropertysetPersisterTest {
 
         // Output the boolean values to a different file
         File propertysetsFile = folder.newFile("boolean.json");
-        persister.persist(propertysetsFile, propertysetManager);
+        persister.persist(propertysetsFile, propertysetManager.getContext());
 
         // Read the file back in and compare it with the original
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
-        persister.restore(propertysetsFile, propertysetManager2);
+        persister.restore(propertysetsFile, propertysetManager2.getContext());
 
         // Verify that the results of the second parse are identical to the first
         compareAllPropertysets(propertysetManager, propertysetManager2);
@@ -129,18 +129,18 @@ public class JsonPropertysetPersisterTest {
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
-        persister.restore(withBoolean, propertysetManager);
+        persister.restore(withBoolean, propertysetManager.getContext());
 
         // Check the parsed values
         assertEquals(2, propertysetManager.listAllPropertysets().size());
 
         // Output the two propertysets to a different file
         File twoObjectsFile = folder.newFile("two_objects.json");
-        persister.persist(twoObjectsFile, propertysetManager);
+        persister.persist(twoObjectsFile, propertysetManager.getContext());
 
         // Read the file back in and compare it with the original
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
-        persister.restore(twoObjectsFile, propertysetManager2);
+        persister.restore(twoObjectsFile, propertysetManager2.getContext());
 
         // Verify that the results of the second parse are identical to the first
         compareAllPropertysets(propertysetManager, propertysetManager2);
@@ -161,7 +161,7 @@ public class JsonPropertysetPersisterTest {
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
-        persister.restore(withListProperty, propertysetManager);
+        persister.restore(withListProperty, propertysetManager.getContext());
 
         // Check the parsed values
         assertEquals(1, propertysetManager.listAllPropertysets().size());
@@ -170,11 +170,11 @@ public class JsonPropertysetPersisterTest {
 
         // Output the two propertysets to a different file
         File saveRestoreFile = folder.newFile("list_property.json");
-        persister.persist(saveRestoreFile, propertysetManager);
+        persister.persist(saveRestoreFile, propertysetManager.getContext());
 
         // Read the file back in and compare it with the original
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
-        persister.restore(saveRestoreFile, propertysetManager2);
+        persister.restore(saveRestoreFile, propertysetManager2.getContext());
 
         // Verify that the results of the second parse are identical to the first
         assertEquals(1, propertysetManager2.listAllPropertysets().size());
@@ -198,7 +198,7 @@ public class JsonPropertysetPersisterTest {
         JsonFactory jsonFactory = new JsonFactory();;
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         File propertysetsFile = folder.newFile("propertyset.json");
-        persister.persist(propertysetsFile, propertysetManager);
+        persister.persist(propertysetsFile, propertysetManager.getContext());
         String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
         System.out.println(contents);
     }

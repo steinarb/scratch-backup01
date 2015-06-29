@@ -4,6 +4,8 @@ package no.priv.bang.modeling.modelstore;
 import java.util.Collection;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.impl.PropertysetContextImpl;
+
 /**
  * An interface that defines the access to all {@link Propertyset} instances
  * in memory.
@@ -67,5 +69,7 @@ public interface PropertysetManager {
     Collection<Propertyset> findObjectsOfAspect(Propertyset aspect);
 
     Collection<Propertyset> listAllPropertysets();
+
+    public abstract PropertysetContextImpl getContext();
 
 }

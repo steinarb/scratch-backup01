@@ -36,18 +36,18 @@ public class JsonPropertysetPersister {
         this.factory = factory;
     }
 
-    public void persist(File propertysetsFile, PropertysetManager propertysetManager) throws IOException {
-        outputPropertySets(factory, propertysetsFile, propertysetManager.listAllPropertysets());
+    public void persist(File propertysetsFile, PropertysetContextImpl propertysetContext) throws IOException {
+        outputPropertySets(factory, propertysetsFile, propertysetContext.listAllPropertysets());
     }
 
-    public void restore(File propertysetsFile, PropertysetManager propertysetManager) throws JsonParseException, IOException {
+    public void restore(File propertysetsFile, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
         JsonParser parser = factory.createParser(propertysetsFile);
-        parseUntilEnd(propertysetManager, parser);
+        parseUntilEnd(propertysetContext, parser);
     }
 
-    public void restore(InputStream propertysetsFile, PropertysetManagerBase propertysetManager) throws JsonParseException, IOException {
+    public void restore(InputStream propertysetsFile, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
         JsonParser parser = factory.createParser(propertysetsFile);
-        parseUntilEnd(propertysetManager, parser);
+        parseUntilEnd(propertysetContext, parser);
     }
 
     private void outputPropertySets(JsonFactory jsonFactory, File propertysetsFile, Collection<Propertyset> propertysets) throws IOException {
@@ -127,19 +127,19 @@ public class JsonPropertysetPersister {
         generator.writeEndArray();
     }
 
-    private void parseUntilEnd(PropertysetManager propertysetManager,
+    private void parseUntilEnd(PropertysetContextImpl propertysetContext,
                                JsonParser parser) throws IOException, JsonParseException {
         while (parser.nextToken() != null) {
             JsonToken currentToken = parser.getCurrentToken();
             if (currentToken == JsonToken.START_ARRAY) {
-                parseArray(parser, propertysetManager);
+                parseArray(parser, propertysetContext);
             } else if (currentToken == JsonToken.START_OBJECT) {
-                parseObject(parser, propertysetManager);
+                parseObject(parser, propertysetContext);
             }
         }
     }
 
-    private Value parseArray(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
+    private Value parseArray(JsonParser parser, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
         ValueList propertyList = newList();
         while (parser.nextToken() != JsonToken.END_ARRAY) {
             JsonToken currentToken = parser.getCurrentToken();
@@ -154,16 +154,16 @@ public class JsonPropertysetPersister {
             } else if (currentToken == JsonToken.VALUE_FALSE) {
                 propertyList.add(toBooleanValue(false));
             } else if (currentToken == JsonToken.START_OBJECT) {
-                propertyList.add(parseObject(parser, propertysetManager));
+                propertyList.add(parseObject(parser, propertysetContext));
             } else if (currentToken == JsonToken.START_ARRAY) {
-                propertyList.add(parseArray(parser, propertysetManager));
+                propertyList.add(parseArray(parser, propertysetContext));
             }
         }
 
         return toListValue(propertyList, false);
     }
 
-    private Value parseObject(JsonParser parser, PropertysetManager propertysetManager) throws JsonParseException, IOException {
+    private Value parseObject(JsonParser parser, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
         Propertyset propertyset = null;
         while (parser.nextToken() != JsonToken.END_OBJECT) {
             String currentFieldName = parser.getCurrentName();
@@ -177,7 +177,7 @@ public class JsonPropertysetPersister {
                 // hasn't been parsed yet.
                 // When the referenced object is parsed it will retrieve the same
                 // placeholder and start filling in its properties.
-                Propertyset referencedPropertyset = propertysetManager.findPropertyset(refId);
+                Propertyset referencedPropertyset = propertysetContext.findPropertyset(refId);
 
                 // Complete the object, by consuming the END_OBJECT before returning
                 parser.nextToken();
@@ -193,11 +193,11 @@ public class JsonPropertysetPersister {
                 String idValue = parser.getText();
                 UUID id = UUID.fromString(idValue);
                 if (propertyset == null) {
-                    propertyset = propertysetManager.findPropertyset(id);
+                    propertyset = propertysetContext.findPropertyset(id);
                 } else {
                     // Need to copy existing properties parsed earlier
                     Propertyset complexvalue = propertyset;
-                    propertyset = propertysetManager.findPropertyset(id);
+                    propertyset = propertysetContext.findPropertyset(id);
                     for (String propertyname : complexvalue.getPropertynames()) {
                         propertyset.setProperty(propertyname, complexvalue.getProperty(propertyname));
                     }
@@ -223,10 +223,10 @@ public class JsonPropertysetPersister {
                     propertyset.setBooleanProperty(currentFieldName, false);
                 } else if (currentToken == JsonToken.START_OBJECT) {
                     propertyset = createPropertysetIfNull(propertyset);
-                    propertyset.setProperty(currentFieldName, parseObject(parser, propertysetManager));
+                    propertyset.setProperty(currentFieldName, parseObject(parser, propertysetContext));
                 } else if (currentToken == JsonToken.START_ARRAY) {
                     propertyset = createPropertysetIfNull(propertyset);
-                    propertyset.setProperty(currentFieldName, parseArray(parser, propertysetManager));
+                    propertyset.setProperty(currentFieldName, parseArray(parser, propertysetContext));
                 }
             }
         }
