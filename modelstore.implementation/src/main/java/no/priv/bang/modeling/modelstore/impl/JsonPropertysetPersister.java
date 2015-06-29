@@ -2,6 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -12,6 +13,7 @@ import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
+
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -39,7 +41,13 @@ public class JsonPropertysetPersister {
     }
 
     public void restore(File propertysetsFile, PropertysetManager propertysetManager) throws JsonParseException, IOException {
-        restore(factory, propertysetsFile, propertysetManager);
+        JsonParser parser = factory.createParser(propertysetsFile);
+        parseUntilEnd(propertysetManager, parser);
+    }
+
+    public void restore(InputStream propertysetsFile, PropertysetManagerBase propertysetManager) throws JsonParseException, IOException {
+        JsonParser parser = factory.createParser(propertysetsFile);
+        parseUntilEnd(propertysetManager, parser);
     }
 
     private void outputPropertySets(JsonFactory jsonFactory, File propertysetsFile, Collection<Propertyset> propertysets) throws IOException {
@@ -119,8 +127,8 @@ public class JsonPropertysetPersister {
         generator.writeEndArray();
     }
 
-    private void restore(JsonFactory jsonFactory, File propertysetsFile, PropertysetManager propertysetManager) throws IOException, JsonParseException {
-        JsonParser parser = jsonFactory.createParser(propertysetsFile);
+    private void parseUntilEnd(PropertysetManager propertysetManager,
+                               JsonParser parser) throws IOException, JsonParseException {
         while (parser.nextToken() != null) {
             JsonToken currentToken = parser.getCurrentToken();
             if (currentToken == JsonToken.START_ARRAY) {

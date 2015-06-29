@@ -47,7 +47,7 @@ public class JsonPropertysetPersisterTest {
         // Read the contents of the file into memory
         persister.restore(carsAndBicycles, propertysetManager);
 
-        assertEquals(3, propertysetManager.listAllAspects().size());
+        assertEquals(8, propertysetManager.listAllAspects().size());
         assertEquals(8, propertysetManager.listAllPropertysets().size());
     }
 
@@ -68,7 +68,7 @@ public class JsonPropertysetPersisterTest {
         // Read the contents of the file into memory
         persister.restore(carsAndBicyclesIdNotFirst, propertysetManager);
 
-        assertEquals(3, propertysetManager.listAllAspects().size());
+        assertEquals(8, propertysetManager.listAllAspects().size());
         assertEquals(8, propertysetManager.listAllPropertysets().size());
 
         // Verify that the results are identical to the ones with the id first

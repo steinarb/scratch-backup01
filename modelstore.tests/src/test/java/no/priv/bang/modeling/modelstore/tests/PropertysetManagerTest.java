@@ -6,6 +6,7 @@ import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -90,6 +91,14 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
         assertEquals(5, list.size());
         list.remove(1);
         assertEquals(4, list.size());
+    }
+
+    @Test
+    public void testEmbeddedAspects() {
+        int numberOfEmbeddedAspects = 5; // Adjust when adding embedded aspects
+
+        Collection<Propertyset> aspects = propertysetManagerService.listAllAspects();
+        assertEquals(numberOfEmbeddedAspects, aspects.size());
     }
 
 }
