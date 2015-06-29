@@ -1,11 +1,6 @@
 package no.priv.bang.modeling.modelstore.impl;
 
-import java.io.File;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -115,9 +110,7 @@ class PropertysetManagerBase implements PropertysetManager {
             JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
             persister.restore(aspectsFile, this);
             embeddedAspects = new HashSet<Propertyset>(propertysets.values());
-        } catch (Exception e) {
-            System.out.println("Error reading embedded aspects: " + e);
-        }
+        } catch (Exception e) { }
     }
 
     private Set<Propertyset> followInheritanceChain(Propertyset aspect) {
@@ -132,20 +125,6 @@ class PropertysetManagerBase implements PropertysetManager {
             aspects.add(aspect);
             return aspects;
         }
-    }
-
-    /**
-     * Get a {@link File} referencing a resource.
-     *
-     * @param resource the name of the resource to get a File for
-     * @return a {@link File} object referencing the resource
-     * @throws URISyntaxException
-     */
-    public File getResourceAsFile(String resource) throws URISyntaxException {
-        URI getresource = getClass().getResource(resource).toURI();
-        Path paths = Paths.get(getresource);
-        File file = paths.toFile();
-        return Paths.get(getClass().getResource(resource).toURI()).toFile();
     }
 
 }
