@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -48,30 +49,32 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
     	assertNotNull(propertysetManagerService);
 
     	// Actually use the service to create some propertysets
+    	PropertysetContext context = propertysetManagerService.getDefaultContext();
     	UUID propertysetId = UUID.randomUUID();
     	// Create a new propertyset
-        Propertyset propertyset = propertysetManagerService.findPropertyset(propertysetId);
+        Propertyset propertyset = context.findPropertyset(propertysetId);
         propertyset.setStringProperty("stringPropertyOfPi", "3.14");
         assertEquals(Double.valueOf(3.14), propertyset.getDoubleProperty("stringPropertyOfPi"));
         // Verify that using the same ID will result in the same propertyset
-        Propertyset newPropertyset = propertysetManagerService.findPropertyset(propertysetId);
+        Propertyset newPropertyset = context.findPropertyset(propertysetId);
         assertEquals(propertyset, newPropertyset);
     }
 
     @Test
     public void testList() {
-        ValueList list = propertysetManagerService.createList();
+    	PropertysetContext context = propertysetManagerService.getDefaultContext();
+        ValueList list = context.createList();
         assertEquals(0, list.size());
         list.add(true);
         assertTrue(list.get(0).asBoolean());
         list.add(3.14);
         assertEquals(3.14, list.get(1).asDouble(), 0.0);
 
-        Propertyset referencedPropertyset = propertysetManagerService.findPropertyset(UUID.randomUUID());
+        Propertyset referencedPropertyset = context.findPropertyset(UUID.randomUUID());
         list.add(referencedPropertyset);
         assertTrue(list.get(2).isReference());
 
-        Propertyset containedPropertyset = propertysetManagerService.createPropertyset();
+        Propertyset containedPropertyset = context.createPropertyset();
         list.add(containedPropertyset);
         assertTrue(list.get(3).isComplexProperty());
 
@@ -79,7 +82,7 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
         assertTrue(list.get(0).asBoolean()); // Non-null value gives true boolean
         assertEquals(42, list.get(0).asLong().longValue()); // The actual long value is still there
 
-        ValueList containedlist = propertysetManagerService.createList();
+        ValueList containedlist = context.createList();
         containedlist.add(100);
         list.add(containedlist);
         assertEquals(1, list.get(4).asList().size());
@@ -95,9 +98,10 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
 
     @Test
     public void testEmbeddedAspects() {
+    	PropertysetContext context = propertysetManagerService.getDefaultContext();
         int numberOfEmbeddedAspects = 5; // Adjust when adding embedded aspects
 
-        Collection<Propertyset> aspects = propertysetManagerService.listAllAspects();
+        Collection<Propertyset> aspects = context.listAllAspects();
         assertEquals(numberOfEmbeddedAspects, aspects.size());
     }
 
