@@ -24,30 +24,24 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 /**
- * Unit test for the {@link PropertysetManager} interface and its
+ * Unit test for the {@link PropertysetContext} interface and its
  * implementations.
  *
  * @author Steinar Bang
  *
  */
-public class PropertysetManagerTest {
+public class PropertysetContextTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void testGetPropertysetContext() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
-        assertNotNull(context);
-    }
-
-    @Test
     public void testCreatePropertyset() {
         PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        PropertysetContext context = propertysetManager.getDefaultContext();
 
         // Get a propertyset instance and verify that it is a non-nil instance
         // that can be modified.
-        Propertyset propertyset = propertysetManager.createPropertyset();
+        Propertyset propertyset = context.createPropertyset();
         assertFalse(propertyset.isNil());
         assertFalse(propertyset.hasId());
         assertEquals(getNil().asId(), propertyset.getId());
@@ -62,19 +56,20 @@ public class PropertysetManagerTest {
     @Test
     public void testList() {
         PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext context = manager.getDefaultContext();
 
-        ValueList list = manager.createList();
+        ValueList list = context.createList();
         assertEquals(0, list.size());
         list.add(true);
         assertTrue(list.get(0).asBoolean());
         list.add(3.14);
         assertEquals(3.14, list.get(1).asDouble(), 0.0);
 
-        Propertyset referencedPropertyset = manager.findPropertyset(UUID.randomUUID());
+        Propertyset referencedPropertyset = context.findPropertyset(UUID.randomUUID());
         list.add(referencedPropertyset);
         assertTrue(list.get(2).isReference());
 
-        Propertyset containedPropertyset = manager.createPropertyset();
+        Propertyset containedPropertyset = context.createPropertyset();
         list.add(containedPropertyset);
         assertTrue(list.get(3).isComplexProperty());
 
@@ -82,7 +77,7 @@ public class PropertysetManagerTest {
         assertTrue(list.get(0).asBoolean()); // Non-null value gives true boolean
         assertEquals(42, list.get(0).asLong().longValue()); // The actual long value is still there
 
-        ValueList containedlist = manager.createList();
+        ValueList containedlist = context.createList();
         containedlist.add(100);
         list.add(containedlist);
         assertEquals(1, list.get(4).asList().size());
@@ -99,19 +94,21 @@ public class PropertysetManagerTest {
     @Test
     public void testEmbeddedAspects() {
         PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext context = manager.getDefaultContext();
         int numberOfEmbeddedAspects = 5; // Adjust when adding embedded aspects
 
-        Collection<Propertyset> aspects = manager.listAllAspects();
+        Collection<Propertyset> aspects = context.listAllAspects();
         assertEquals(numberOfEmbeddedAspects, aspects.size());
     }
 
     @Test
     public void testFindPropertysetById() {
         PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        PropertysetContext context = propertysetManager.getDefaultContext();
 
         // Get a propertyset by id and verify that it is empty initially
         UUID newPropertysetId = UUID.randomUUID();
-        Propertyset propertyset = propertysetManager.findPropertyset(newPropertysetId);
+        Propertyset propertyset = context.findPropertyset(newPropertysetId);
         assertTrue(propertyset.hasId());
         assertEquals(newPropertysetId, propertyset.getId());
 
@@ -129,13 +126,13 @@ public class PropertysetManagerTest {
         assertEquals("Expected the \"id\" property to not be affected by setting an integer value", Long.valueOf(0), propertyset.getLongProperty("id"));
         propertyset.setDoubleProperty("id", Double.valueOf(3.14));
         assertEquals("Expected the \"id\" property to not be affected by setting an integer value", Double.valueOf(0.0), propertyset.getDoubleProperty("id"));
-        Propertyset complexValue = propertysetManager.createPropertyset();
+        Propertyset complexValue = context.createPropertyset();
         propertyset.setComplexProperty("id", complexValue);
         Propertyset returnedComplexProperty = propertyset.getComplexProperty("id");
         assertEquals("Expected the \"id\" property not to be affected by setting a complex value", getNilPropertyset(), returnedComplexProperty);
         assertFalse(returnedComplexProperty.hasId());
         assertEquals(getNil().asId(), returnedComplexProperty.getId());
-        Propertyset referencedPropertyset = propertysetManager.findPropertyset(UUID.randomUUID());
+        Propertyset referencedPropertyset = context.findPropertyset(UUID.randomUUID());
         referencedPropertyset.setReferenceProperty("id", referencedPropertyset);
         assertEquals("Expected the \"id\" property not to be affected by setting an object reference", getNilPropertyset(), propertyset.getReferenceProperty("id"));
         ValueList listValue = newList();
@@ -143,25 +140,26 @@ public class PropertysetManagerTest {
         assertEquals("Expected the \"id\" property not to be affected by setting an object reference", getNil().asList(), propertyset.getListProperty("id"));
 
         // Verify that asking for the same id again will return the same object
-        assertEquals(propertyset, propertysetManager.findPropertyset(newPropertysetId));
+        assertEquals(propertyset, context.findPropertyset(newPropertysetId));
     }
 
     @Test
     public void testFindPropertysetOfAspect() {
         PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        PropertysetContext context = propertysetManager.getDefaultContext();
 
-        buildModelWithAspects(propertysetManager);
+        buildModelWithAspects(context);
 
         // Get all aspects currently in the manager
-        Collection<Propertyset> aspects = propertysetManager.listAllAspects();
+        Collection<Propertyset> aspects = context.listAllAspects();
         assertEquals(8, aspects.size());
 
         Propertyset vehicle = findAspectByTitle(aspects, "vehicle");
-        Collection<Propertyset> vehicles = propertysetManager.findObjectsOfAspect(vehicle);
+        Collection<Propertyset> vehicles = context.findObjectsOfAspect(vehicle);
         assertEquals(5, vehicles.size());
 
         Propertyset car = findAspectByTitle(aspects, "car");
-        Collection<Propertyset> cars = propertysetManager.findObjectsOfAspect(car);
+        Collection<Propertyset> cars = context.findObjectsOfAspect(car);
         assertEquals(3, cars.size());
     }
 
@@ -171,13 +169,14 @@ public class PropertysetManagerTest {
     @Test
     public void testPropertysetWithMultipleAspects() {
         PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        PropertysetContext context = propertysetManager.getDefaultContext();
 
         // Create two aspects
-        Propertyset generalObjectAspect = buildGeneralObjectAspect(propertysetManager);
-        Propertyset positionAspect = buildPositionAspect(propertysetManager);
+        Propertyset generalObjectAspect = buildGeneralObjectAspect(context);
+        Propertyset positionAspect = buildPositionAspect(context);
 
         // Get a brand new aspectless Propertyset
-        Propertyset propertyset = propertysetManager.findPropertyset(UUID.randomUUID());
+        Propertyset propertyset = context.findPropertyset(UUID.randomUUID());
 
         // Verify that the propertyset has no aspects
         assertEquals(0, propertyset.getAspects().size());
@@ -199,20 +198,22 @@ public class PropertysetManagerTest {
     @Test
     public void experimentalJacksonPersist() throws IOException {
         PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
-        buildModelWithAspects(propertysetManager);
+        PropertysetContext context = propertysetManager.getDefaultContext();
+        buildModelWithAspects(context);
 
         JsonFactory jsonFactory = new JsonFactory();;
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         File propertysetsFile = folder.newFile("propertysets.json");
-        persister.persist(propertysetsFile, propertysetManager.getDefaultContext());
+        persister.persist(propertysetsFile, context);
 
         // Parse the written data
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
-        persister.restore(propertysetsFile, propertysetManager2.getDefaultContext());
+        PropertysetContext context2 = propertysetManager2.getDefaultContext();
+        persister.restore(propertysetsFile, context2);
 
         // verify that what's parsed is what went in.
-        assertEquals(propertysetManager.listAllPropertysets().size(), propertysetManager2.listAllPropertysets().size());
-        compareAllPropertysets(propertysetManager, propertysetManager2);
+        assertEquals(context.listAllPropertysets().size(), context2.listAllPropertysets().size());
+        compareAllPropertysets(context, context2);
     }
 
     @Test
@@ -220,10 +221,11 @@ public class PropertysetManagerTest {
         // Create two propertysets with ids, and make a reference to propertyset
     	// "b" from propertyset "a".
     	PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        PropertysetContext context = propertysetManager.getDefaultContext();
         UUID idA = UUID.randomUUID();
-        Propertyset a = propertysetManager.findPropertyset(idA);
+        Propertyset a = context.findPropertyset(idA);
         UUID idB = UUID.randomUUID();
-        Propertyset b = propertysetManager.findPropertyset(idB);
+        Propertyset b = context.findPropertyset(idB);
         a.setReferenceProperty("b", b);
 
         // Create a factory
@@ -264,51 +266,51 @@ public class PropertysetManagerTest {
     	return getNilPropertyset();
     }
 
-    private Propertyset buildGeneralObjectAspect(PropertysetManager propertysetManager) {
+    private Propertyset buildGeneralObjectAspect(PropertysetContext context) {
         UUID generalObjectAspectId = UUID.randomUUID();
-        Propertyset generalObjectAspect = propertysetManager.findPropertyset(generalObjectAspectId);
+        Propertyset generalObjectAspect = context.findPropertyset(generalObjectAspectId);
         generalObjectAspect.setStringProperty("title", "general object");
         generalObjectAspect.setStringProperty("aspect", "object");
-        Propertyset generalObjectAspectProperties = propertysetManager.createPropertyset();
-        Propertyset nameProperty = propertysetManager.createPropertyset();
+        Propertyset generalObjectAspectProperties = context.createPropertyset();
+        Propertyset nameProperty = context.createPropertyset();
         nameProperty.setStringProperty("aspect", "string");
         generalObjectAspectProperties.setComplexProperty("name", nameProperty);
-        Propertyset descriptionProperty = propertysetManager.createPropertyset();
+        Propertyset descriptionProperty = context.createPropertyset();
         descriptionProperty.setStringProperty("aspect", "string");
         generalObjectAspectProperties.setComplexProperty("description", descriptionProperty);
         generalObjectAspect.setComplexProperty("properties", generalObjectAspectProperties);
         return generalObjectAspect;
     }
 
-    private Propertyset buildPositionAspect(PropertysetManager propertysetManager) {
+    private Propertyset buildPositionAspect(PropertysetContext context) {
         UUID positionAspectId = UUID.randomUUID();
-        Propertyset positionAspect = propertysetManager.findPropertyset(positionAspectId);
+        Propertyset positionAspect = context.findPropertyset(positionAspectId);
         positionAspect.setStringProperty("title", "position");
         positionAspect.setStringProperty("aspect", "object");
-        Propertyset positionAspectProperties = propertysetManager.createPropertyset();
-        Propertyset xposProperty = propertysetManager.createPropertyset();
+        Propertyset positionAspectProperties = context.createPropertyset();
+        Propertyset xposProperty = context.createPropertyset();
         xposProperty.setStringProperty("aspect", "number");
         positionAspectProperties.setComplexProperty("xpos", xposProperty);
-        Propertyset yposProperty = propertysetManager.createPropertyset();
+        Propertyset yposProperty = context.createPropertyset();
         yposProperty.setStringProperty("aspect", "number");
         positionAspectProperties.setComplexProperty("ypos", yposProperty);
         positionAspect.setComplexProperty("properties", positionAspectProperties);
         return positionAspect;
     }
 
-    private void buildModelWithAspects(PropertysetManager propertysetManager) {
+    private void buildModelWithAspects(PropertysetContext context) {
         // Base aspect "vehicle"
         UUID vechicleAspectId = UUID.randomUUID();
-        Propertyset vehicleAspect = propertysetManager.findPropertyset(vechicleAspectId);
+        Propertyset vehicleAspect = context.findPropertyset(vechicleAspectId);
         vehicleAspect.setStringProperty("title", "vehicle");
         vehicleAspect.setStringProperty("aspect", "object");
-        Propertyset vehicleAspectProperties = propertysetManager.createPropertyset();
-        Propertyset manufacturerDefinition = propertysetManager.createPropertyset();
+        Propertyset vehicleAspectProperties = context.createPropertyset();
+        Propertyset manufacturerDefinition = context.createPropertyset();
         manufacturerDefinition.setStringProperty("aspect", "string");
-        Propertyset modelnameDefinition = propertysetManager.createPropertyset();
+        Propertyset modelnameDefinition = context.createPropertyset();
         modelnameDefinition.setStringProperty("aspect", "string");
         vehicleAspectProperties.setComplexProperty("modelname", modelnameDefinition);
-        Propertyset wheelCountDefinition = propertysetManager.createPropertyset();
+        Propertyset wheelCountDefinition = context.createPropertyset();
         wheelCountDefinition.setStringProperty("description", "Number of wheels on the vehicle");
         wheelCountDefinition.setStringProperty("aspect", "integer");
         wheelCountDefinition.setLongProperty("minimum", Long.valueOf(0));
@@ -317,57 +319,57 @@ public class PropertysetManagerTest {
 
         // Subaspect "bicycle"
         UUID bicycleAspectId = UUID.randomUUID();
-        Propertyset bicycleAspect = propertysetManager.findPropertyset(bicycleAspectId);
+        Propertyset bicycleAspect = context.findPropertyset(bicycleAspectId);
         bicycleAspect.setStringProperty("title", "bicycle");
         bicycleAspect.setStringProperty("aspect", "object");
         bicycleAspect.setReferenceProperty("inherits", vehicleAspect);
-        Propertyset bicycleAspectProperties = propertysetManager.createPropertyset();
-        Propertyset frameNumber = propertysetManager.createPropertyset();
+        Propertyset bicycleAspectProperties = context.createPropertyset();
+        Propertyset frameNumber = context.createPropertyset();
         frameNumber.setStringProperty("definition", "Unique identifier for the bicycle");
         bicycleAspectProperties.setComplexProperty("framenumber", frameNumber);
         bicycleAspect.setComplexProperty("properties", bicycleAspectProperties);
 
         // Subaspect "car"
         UUID carAspectId = UUID.randomUUID();
-        Propertyset carAspect = propertysetManager.findPropertyset(carAspectId);
+        Propertyset carAspect = context.findPropertyset(carAspectId);
         carAspect.setStringProperty("title", "car");
         carAspect.setStringProperty("aspect", "object");
         carAspect.setReferenceProperty("inherits", vehicleAspect);
-        Propertyset carAspectProperties = propertysetManager.createPropertyset();
-        Propertyset engineSize = propertysetManager.createPropertyset();
+        Propertyset carAspectProperties = context.createPropertyset();
+        Propertyset engineSize = context.createPropertyset();
         engineSize.setStringProperty("description", "Engine displacement in litres");
         engineSize.setStringProperty("aspect", "number");
         carAspectProperties.setComplexProperty("engineSize", engineSize);
-        Propertyset enginePower = propertysetManager.createPropertyset();
+        Propertyset enginePower = context.createPropertyset();
         enginePower.setStringProperty("description", "Engine power in kW");
         enginePower.setStringProperty("aspect", "number");
         carAspectProperties.setComplexProperty("enginePower", enginePower);
         carAspect.setComplexProperty("properties", carAspectProperties);
 
         // Make some instances with aspects
-        Propertyset head = propertysetManager.findPropertyset(UUID.randomUUID());
+        Propertyset head = context.findPropertyset(UUID.randomUUID());
         head.addAspect(bicycleAspect);
         head.setStringProperty("manufacturer", "HEAD");
         head.setStringProperty("model", "Tacoma I");
         head.setStringProperty("frameNumber", "001-234-509-374-331");
-        Propertyset nakamura = propertysetManager.findPropertyset(UUID.randomUUID());
+        Propertyset nakamura = context.findPropertyset(UUID.randomUUID());
         nakamura.addAspect(bicycleAspect);
         nakamura.setStringProperty("manufacturer", "Nakamura");
         nakamura.setStringProperty("model", "Fatbike 2015");
         nakamura.setStringProperty("frameNumber", "003-577-943-547-931");
-        Propertyset ferrari = propertysetManager.findPropertyset(UUID.randomUUID());
+        Propertyset ferrari = context.findPropertyset(UUID.randomUUID());
         ferrari.addAspect(carAspect);
         ferrari.setStringProperty("manufacturer", "Ferrari");
         ferrari.setStringProperty("model", "550 Barchetta");
         ferrari.setDoubleProperty("engineSize", 5.5);
         ferrari.setDoubleProperty("enginePower", 357.0);
-        Propertyset subaru = propertysetManager.findPropertyset(UUID.randomUUID());
+        Propertyset subaru = context.findPropertyset(UUID.randomUUID());
         subaru.addAspect(carAspect);
         subaru.setStringProperty("manufacturer", "Subaru");
         subaru.setStringProperty("model", "Outback");
         subaru.setDoubleProperty("engineSize", 2.5);
         subaru.setDoubleProperty("enginePower", 125.0);
-        Propertyset volvo = propertysetManager.findPropertyset(UUID.randomUUID());
+        Propertyset volvo = context.findPropertyset(UUID.randomUUID());
         volvo.addAspect(carAspect);
         volvo.setStringProperty("manufacturer", "Volvo");
         volvo.setStringProperty("model", "P1800");

@@ -6,7 +6,7 @@ import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetManager;
+import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -24,7 +24,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddGetPutRemove() {
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext manager = new PropertysetManagerProvider().get().getDefaultContext();
         ValueList list = newList();
         assertEquals(0, list.size());
         list.add(toStringValue("a"));
@@ -147,7 +147,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddSetGetPropertyset() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        PropertysetContext propertysetManager = new PropertysetManagerProvider().get().getDefaultContext();
         Propertyset objectWithoutId = propertysetManager.createPropertyset();
         objectWithoutId.setDoubleProperty("c", 3.14);
         UUID id = UUID.randomUUID();
@@ -236,7 +236,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testCopyConstructor() {
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext manager = new PropertysetManagerProvider().get().getDefaultContext();
         UUID id = UUID.randomUUID();
         ValueList original = newList();
         populateList(original, manager, id);
@@ -270,7 +270,7 @@ public class ValueArrayListTest {
         assertEquals("Expected original to be unchanged", 1, original.get(6).asList().size());
     }
 
-    private void populateList(ValueList list, PropertysetManager manager, UUID id) {
+    private void populateList(ValueList list, PropertysetContext manager, UUID id) {
         list.add(true);
         list.add(42);
         list.add(2.7);

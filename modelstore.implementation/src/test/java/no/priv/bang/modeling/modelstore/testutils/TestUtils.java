@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.Value;
 
@@ -33,12 +34,12 @@ public class TestUtils {
      * {@link PropertysetManager} and compare them to the propertyesets
      * of a different PropertysetManager and assert that they match.
      *
-     * @param propertysetManager the {@link PropertysetManager} to iterate over
-     * @param propertysetManager2 the {@link PropertysetManager} to compare with
+     * @param context the {@link PropertysetContext} to iterate over
+     * @param context2 the {@link PropertysetContext} to compare with
      */
-    public static void compareAllPropertysets(PropertysetManager propertysetManager, PropertysetManager propertysetManager2) {
-        for (Propertyset propertyset : propertysetManager.listAllPropertysets()) {
-            Propertyset parsedPropertyset = propertysetManager2.findPropertyset(propertyset.getId());
+    public static void compareAllPropertysets(PropertysetContext context, PropertysetContext context2) {
+        for (Propertyset propertyset : context.listAllPropertysets()) {
+            Propertyset parsedPropertyset = context2.findPropertyset(propertyset.getId());
             for (String propertyname : propertyset.getPropertynames()) {
                 Value originalValue = propertyset.getProperty(propertyname);
                 Value parsedValue = parsedPropertyset.getProperty(propertyname);

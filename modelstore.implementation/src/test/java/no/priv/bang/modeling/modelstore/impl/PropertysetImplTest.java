@@ -6,6 +6,7 @@ import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
@@ -285,10 +286,11 @@ public class PropertysetImplTest {
     @Test
     public void testGetComplexProperty() {
         PropertysetManager manager = new PropertysetManagerProvider().get();
-        Propertyset propertyset = manager.createPropertyset();
+        PropertysetContext context = manager.getDefaultContext();
+        Propertyset propertyset = context.createPropertyset();
 
         // Set a complex property and retrieve it.
-        Propertyset point = manager.createPropertyset();
+        Propertyset point = context.createPropertyset();
         point.setDoubleProperty("x", 75.3);
         point.setDoubleProperty("y", 145.3);
         propertyset.setComplexProperty("upperLeftCorner", point);
@@ -330,7 +332,7 @@ public class PropertysetImplTest {
         assertEquals(getNilPropertyset(), propertyset.getComplexProperty("referenceValue"));
 
         // Verify deep copy on set
-        Propertyset otherpropertyset = manager.createPropertyset();
+        Propertyset otherpropertyset = context.createPropertyset();
         otherpropertyset.setComplexProperty("corner", propertyset.getComplexProperty("upperLeftCorner"));
         otherpropertyset.getComplexProperty("corner").setDoubleProperty("x", 77);
         assertEquals(77.0, otherpropertyset.getComplexProperty("corner").getDoubleProperty("x"), 0.0);
@@ -389,7 +391,8 @@ public class PropertysetImplTest {
     @Test
     public void testGetListProperty() {
         PropertysetManager manager = new PropertysetManagerProvider().get();
-        Propertyset propertyset = manager.createPropertyset();
+        PropertysetContext context = manager.getDefaultContext();
+        Propertyset propertyset = context.createPropertyset();
 
         // Set and get a list value, and verify that its members can be accessed.
         ValueList listValue = newList();
@@ -426,7 +429,7 @@ public class PropertysetImplTest {
         assertEquals(getNil().asList(), propertyset.getListProperty("referencedObject"));
 
         // Verify deep copy on set
-        Propertyset otherpropertyset = manager.createPropertyset();
+        Propertyset otherpropertyset = context.createPropertyset();
         otherpropertyset.setListProperty("listValue", propertyset.getListProperty("listValue"));
         otherpropertyset.getListProperty("listValue").add(378);
         assertEquals(3, otherpropertyset.getListProperty("listValue").size());
@@ -444,20 +447,21 @@ public class PropertysetImplTest {
     @Test
     public void testGetProperty() {
         PropertysetManager manager = new PropertysetManagerProvider().get();
-        Propertyset emptypropertyset = manager.createPropertyset();
+        PropertysetContext context = manager.getDefaultContext();
+        Propertyset emptypropertyset = context.createPropertyset();
         Value nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
         assertEquals(getNil(), nosuchproperty);
-        Propertyset propertyset = manager.createPropertyset();
+        Propertyset propertyset = context.createPropertyset();
         propertyset.setProperty("null", null);
         assertEquals(getNilPropertyset(), propertyset.getComplexProperty("null"));
 
         // Verify deep copy for complex and list properties
-        propertyset.setComplexProperty("a", manager.createPropertyset());
+        propertyset.setComplexProperty("a", context.createPropertyset());
         propertyset.getComplexProperty("a").setLongProperty("l", 42);
         propertyset.setListProperty("b", newList());
         propertyset.getListProperty("b").add(345);
 
-        Propertyset otherpropertyset = manager.createPropertyset();
+        Propertyset otherpropertyset = context.createPropertyset();
         otherpropertyset.setProperty("a", propertyset.getProperty("a"));
         otherpropertyset.getComplexProperty("a").setLongProperty("l", 43);
         assertEquals(43, otherpropertyset.getComplexProperty("a").getLongProperty("l").longValue());
@@ -472,10 +476,10 @@ public class PropertysetImplTest {
     public void testHashCode() {
         Propertyset emptypropertyset = new PropertysetImpl();
         assertEquals(31, emptypropertyset.hashCode());
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext context = new PropertysetManagerProvider().get().getDefaultContext();
         UUID id = UUID.fromString("8ce20479-8876-4d84-98a3-c14b53715c5d");
         Propertyset propertyset = new PropertysetImpl();
-        populatePropertyset(propertyset, manager, id);
+        populatePropertyset(propertyset, context, id);
         assertEquals(201512373, propertyset.hashCode());
     }
 
@@ -487,12 +491,12 @@ public class PropertysetImplTest {
         assertTrue(emptypropertyset.equals(getNilPropertyset()));
 
         // Compare two identical but propertysets that aren't the same object
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext context = new PropertysetManagerProvider().get().getDefaultContext();
         UUID id = UUID.randomUUID();
         Propertyset propertyset1 = new PropertysetImpl();
-        populatePropertyset(propertyset1, manager, id);
+        populatePropertyset(propertyset1, context, id);
         Propertyset propertyset2 = new PropertysetImpl();
-        populatePropertyset(propertyset2, manager, id);
+        populatePropertyset(propertyset2, context, id);
         assertTrue(propertyset1.equals(propertyset2));
         assertTrue(propertyset2.equals(propertyset1));
     }
@@ -506,33 +510,31 @@ public class PropertysetImplTest {
 
     @Test
     public void testCopyConstructor() {
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext context = new PropertysetManagerProvider().get().getDefaultContext();
         UUID id = UUID.randomUUID();
         Propertyset propertyset = new PropertysetImpl();
-        populatePropertyset(propertyset, manager, id);
+        populatePropertyset(propertyset, context, id);
 
         Propertyset copy = new PropertysetImpl(propertyset);
-        compareOriginalUnchangedByCopyChange(manager, propertyset, copy);
+        compareOriginalUnchangedByCopyChange(context, propertyset, copy);
     }
 
     @Test
     public void testCopyConstructorOnPropertysetWithIdAndAspect() {
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        PropertysetContext context = new PropertysetManagerProvider().get().getDefaultContext();
         UUID id = UUID.randomUUID();
         UUID propsetId = UUID.randomUUID();
-        Propertyset propertyset = manager.findPropertyset(propsetId);
+        Propertyset propertyset = context.findPropertyset(propsetId);
         UUID aspectId = UUID.randomUUID();
-        Propertyset aspect = manager.findPropertyset(aspectId);
+        Propertyset aspect = context.findPropertyset(aspectId);
         propertyset.addAspect(aspect);
-        populatePropertyset(propertyset, manager, id);
+        populatePropertyset(propertyset, context, id);
 
         Propertyset copy = new PropertysetImpl(propertyset);
-        compareOriginalUnchangedByCopyChange(manager, propertyset, copy);
+        compareOriginalUnchangedByCopyChange(context, propertyset, copy);
     }
 
-    private void compareOriginalUnchangedByCopyChange(
-                                                      PropertysetManager manager, Propertyset propertyset,
-                                                      Propertyset copy) {
+    private void compareOriginalUnchangedByCopyChange(PropertysetContext context, Propertyset propertyset, Propertyset copy) {
         assertNotSame(propertyset, copy); // Obviously...
         assertEquals(propertyset, copy);
 
@@ -550,7 +552,7 @@ public class PropertysetImplTest {
         assertEquals("bar foo", copy.getStringProperty("d"));
         assertEquals("Expected unchanged value", "foo bar", propertyset.getStringProperty("d"));
         Propertyset originalReferencedPropertyset = copy.getReferenceProperty("e");
-        Propertyset newReferencedPropertyset = manager.findPropertyset(UUID.randomUUID());
+        Propertyset newReferencedPropertyset = context.findPropertyset(UUID.randomUUID());
         copy.setReferenceProperty("e", newReferencedPropertyset);
         assertEquals(newReferencedPropertyset, copy.getReferenceProperty("e"));
         assertEquals("Expected unchanged value", originalReferencedPropertyset, propertyset.getReferenceProperty("e"));
@@ -562,13 +564,13 @@ public class PropertysetImplTest {
         assertEquals("Expected unchanged value", 1, propertyset.getListProperty("g").size());
     }
 
-    private void populatePropertyset(Propertyset propertyset, PropertysetManager manager, UUID id) {
+    private void populatePropertyset(Propertyset propertyset, PropertysetContext context, UUID id) {
         propertyset.setBooleanProperty("a", true);
         propertyset.setLongProperty("b", 42);
         propertyset.setDoubleProperty("c", 2.7);
         propertyset.setStringProperty("d", "foo bar");
-        propertyset.setReferenceProperty("e", manager.findPropertyset(id));
-        propertyset.setComplexProperty("f", manager.createPropertyset());
+        propertyset.setReferenceProperty("e", context.findPropertyset(id));
+        propertyset.setComplexProperty("f", context.createPropertyset());
         ValueList list = newList();
         list.add("foobar");
         propertyset.setListProperty("g", list);
