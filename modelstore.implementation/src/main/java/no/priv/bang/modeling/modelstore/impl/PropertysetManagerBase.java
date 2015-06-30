@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.inject.Provider;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -18,7 +19,7 @@ import no.priv.bang.modeling.modelstore.ValueList;
  */
 class PropertysetManagerBase implements PropertysetManager {
 
-    private PropertysetContextImpl context = new PropertysetContextImpl();
+    private PropertysetContext context = new PropertysetContextImpl();
 
     protected PropertysetManagerBase() {
     }
@@ -47,7 +48,7 @@ class PropertysetManagerBase implements PropertysetManager {
         return context.findObjectsOfAspect(aspect);
     }
 
-    public PropertysetContextImpl getContext() {
+    public PropertysetContext getDefaultContext() {
         return context;
     }
 

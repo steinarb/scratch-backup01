@@ -12,7 +12,6 @@ import java.util.UUID;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
-import no.priv.bang.modeling.modelstore.impl.PropertysetContextImpl;
 import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
 
@@ -38,7 +37,7 @@ public class PropertysetManagerTest {
     @Test
     public void testGetPropertysetContext() {
         PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
-        PropertysetContextImpl context = propertysetManager.getContext();
+        PropertysetContext context = propertysetManager.getDefaultContext();
         assertNotNull(context);
     }
 
@@ -205,11 +204,11 @@ public class PropertysetManagerTest {
         JsonFactory jsonFactory = new JsonFactory();;
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         File propertysetsFile = folder.newFile("propertysets.json");
-        persister.persist(propertysetsFile, propertysetManager.getContext());
+        persister.persist(propertysetsFile, propertysetManager.getDefaultContext());
 
         // Parse the written data
         PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
-        persister.restore(propertysetsFile, propertysetManager2.getContext());
+        persister.restore(propertysetsFile, propertysetManager2.getDefaultContext());
 
         // verify that what's parsed is what went in.
         assertEquals(propertysetManager.listAllPropertysets().size(), propertysetManager2.listAllPropertysets().size());

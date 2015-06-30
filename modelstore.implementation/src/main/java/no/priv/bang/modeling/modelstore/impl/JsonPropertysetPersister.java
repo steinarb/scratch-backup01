@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
@@ -36,16 +37,16 @@ public class JsonPropertysetPersister {
         this.factory = factory;
     }
 
-    public void persist(File propertysetsFile, PropertysetContextImpl propertysetContext) throws IOException {
+    public void persist(File propertysetsFile, PropertysetContext propertysetContext) throws IOException {
         outputPropertySets(factory, propertysetsFile, propertysetContext.listAllPropertysets());
     }
 
-    public void restore(File propertysetsFile, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
+    public void restore(File propertysetsFile, PropertysetContext propertysetContext) throws JsonParseException, IOException {
         JsonParser parser = factory.createParser(propertysetsFile);
         parseUntilEnd(propertysetContext, parser);
     }
 
-    public void restore(InputStream propertysetsFile, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
+    public void restore(InputStream propertysetsFile, PropertysetContext propertysetContext) throws JsonParseException, IOException {
         JsonParser parser = factory.createParser(propertysetsFile);
         parseUntilEnd(propertysetContext, parser);
     }
@@ -127,7 +128,7 @@ public class JsonPropertysetPersister {
         generator.writeEndArray();
     }
 
-    private void parseUntilEnd(PropertysetContextImpl propertysetContext,
+    private void parseUntilEnd(PropertysetContext propertysetContext,
                                JsonParser parser) throws IOException, JsonParseException {
         while (parser.nextToken() != null) {
             JsonToken currentToken = parser.getCurrentToken();
@@ -139,7 +140,7 @@ public class JsonPropertysetPersister {
         }
     }
 
-    private Value parseArray(JsonParser parser, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
+    private Value parseArray(JsonParser parser, PropertysetContext propertysetContext) throws JsonParseException, IOException {
         ValueList propertyList = newList();
         while (parser.nextToken() != JsonToken.END_ARRAY) {
             JsonToken currentToken = parser.getCurrentToken();
@@ -163,7 +164,7 @@ public class JsonPropertysetPersister {
         return toListValue(propertyList, false);
     }
 
-    private Value parseObject(JsonParser parser, PropertysetContextImpl propertysetContext) throws JsonParseException, IOException {
+    private Value parseObject(JsonParser parser, PropertysetContext propertysetContext) throws JsonParseException, IOException {
         Propertyset propertyset = null;
         while (parser.nextToken() != JsonToken.END_OBJECT) {
             String currentFieldName = parser.getCurrentName();
