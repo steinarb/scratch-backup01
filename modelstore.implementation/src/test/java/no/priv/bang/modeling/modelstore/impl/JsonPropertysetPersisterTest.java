@@ -43,7 +43,7 @@ public class JsonPropertysetPersisterTest {
         PropertysetContext context = propertysetManager.getDefaultContext();
         File carsAndBicycles = getResourceAsFile("/json/cars_and_bicycles.json");
 
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory

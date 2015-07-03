@@ -6,6 +6,11 @@ import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -14,6 +19,7 @@ import javax.inject.Inject;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
+import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
 import org.junit.Test;
@@ -103,6 +109,53 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
 
         Collection<Propertyset> aspects = context.listAllAspects();
         assertEquals(numberOfEmbeddedAspects, aspects.size());
+    }
+
+    /**
+     * Test saving a {@link PropertysetContext} to a {@link PipedOutputStream}
+     * and then restoring the context from a {@link PipedInputStream}.
+     *
+     * Have to write to the pipe from a different thread than the reader,
+     * or else it will deadlock.
+     *
+     * @throws IOException
+     */
+    @Test
+    public void testPersistRestorePropertysetContextUsingPipedStreams() throws IOException {
+        InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
+        final PropertysetContext context1 = propertysetManagerService.restoreContext(carsAndBicylesStream);
+        assertEquals(5, context1.listAllAspects().size());
+
+        PipedInputStream loadStream = new PipedInputStream();
+        final OutputStream saveStream = new PipedOutputStream(loadStream);
+        new Thread(new Runnable() {
+                public void run() {
+                    propertysetManagerService.persistContext(saveStream, context1);
+                }
+            }).start();
+
+        PropertysetContext context2 = propertysetManagerService.restoreContext(loadStream);
+
+        compareAllPropertysets(context1, context2);
+    }
+
+    /**
+     * Iterate over all of the {@link Propertyset} instances of a
+     * {@link PropertysetManager} and compare them to the propertyesets
+     * of a different PropertysetManager and assert that they match.
+     *
+     * @param context the {@link PropertysetContext} to iterate over
+     * @param context2 the {@link PropertysetContext} to compare with
+     */
+    public static void compareAllPropertysets(PropertysetContext context, PropertysetContext context2) {
+        for (Propertyset propertyset : context.listAllPropertysets()) {
+            Propertyset parsedPropertyset = context2.findPropertyset(propertyset.getId());
+            for (String propertyname : propertyset.getPropertynames()) {
+                Value originalValue = propertyset.getProperty(propertyname);
+                Value parsedValue = parsedPropertyset.getProperty(propertyname);
+                assertEquals(originalValue, parsedValue);
+            }
+        }
     }
 
 }

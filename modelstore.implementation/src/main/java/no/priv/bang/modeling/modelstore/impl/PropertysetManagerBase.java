@@ -1,6 +1,11 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.inject.Provider;
+
+import com.fasterxml.jackson.core.JsonFactory;
 
 import no.priv.bang.modeling.modelstore.PropertysetContext;
 import no.priv.bang.modeling.modelstore.PropertysetManager;
@@ -21,6 +26,21 @@ class PropertysetManagerBase implements PropertysetManager {
 
     public PropertysetContext getDefaultContext() {
         return context;
+    }
+
+    public PropertysetContext restoreContext(InputStream jsonfilestream) {
+        PropertysetContextImpl ctxt = new PropertysetContextImpl();
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+        persister.restore(jsonfilestream, ctxt);
+
+        return ctxt;
+    }
+
+    public void persistContext(OutputStream jsonfilestream, PropertysetContext context) {
+        JsonFactory jsonFactory = new JsonFactory();
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+        persister.persist(jsonfilestream, context);
     }
 
 }

@@ -3,6 +3,7 @@ package no.priv.bang.modeling.modelstore.impl;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -38,7 +39,24 @@ public class JsonPropertysetPersister {
     }
 
     public void persist(File propertysetsFile, PropertysetContext propertysetContext) throws IOException {
-        outputPropertySets(factory, propertysetsFile, propertysetContext.listAllPropertysets());
+        JsonGenerator generator = new JsonGeneratorWithReferences(factory.createGenerator(propertysetsFile, JsonEncoding.UTF8));
+        outputPropertySets(generator, propertysetContext.listAllPropertysets());
+    }
+
+    public void persist(OutputStream jsonstream, PropertysetContext context) {
+        try {
+            JsonGenerator generator = factory.createGenerator(jsonstream);
+            outputPropertySets(generator, context.listAllPropertysets());
+        } catch (Exception e) {
+            // TODO add logging
+        } finally {
+            try {
+                jsonstream.flush();
+                jsonstream.close();
+            } catch (Exception e) {
+                // TODO add logging
+            }
+        }
     }
 
     public void restore(File propertysetsFile, PropertysetContext propertysetContext) throws JsonParseException, IOException {
@@ -46,14 +64,23 @@ public class JsonPropertysetPersister {
         parseUntilEnd(propertysetContext, parser);
     }
 
-    public void restore(InputStream propertysetsFile, PropertysetContext propertysetContext) throws JsonParseException, IOException {
-        JsonParser parser = factory.createParser(propertysetsFile);
-        parseUntilEnd(propertysetContext, parser);
+    public void restore(InputStream jsonstream, PropertysetContext context) {
+        try {
+            JsonParser parser = factory.createParser(jsonstream);
+            parseUntilEnd(context, parser);
+        } catch (Exception e) {
+            // TODO add logging
+        } finally {
+            try {
+                jsonstream.close();
+            } catch (Exception e) {
+                // TODO add logging
+            }
+        }
     }
 
-    private void outputPropertySets(JsonFactory jsonFactory, File propertysetsFile, Collection<Propertyset> propertysets) throws IOException {
-        JsonGenerator generator = new JsonGeneratorWithReferences(jsonFactory.createGenerator(propertysetsFile, JsonEncoding.UTF8));
-        if (generator.canWriteObjectId()) {
+    private void outputPropertySets(JsonGenerator generator, Collection<Propertyset> propertysets) throws IOException {
+        if (!generator.canWriteObjectId()) {
             generator = new JsonGeneratorWithReferences(generator);
         }
 

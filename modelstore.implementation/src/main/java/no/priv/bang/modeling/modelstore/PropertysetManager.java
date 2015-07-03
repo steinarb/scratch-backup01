@@ -1,5 +1,8 @@
 package no.priv.bang.modeling.modelstore;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
  * An interface that defines the access to all {@link Propertyset} instances
  * in memory.
@@ -13,5 +16,7 @@ package no.priv.bang.modeling.modelstore;
 public interface PropertysetManager {
 
     PropertysetContext getDefaultContext();
+    PropertysetContext restoreContext(InputStream jsonfilestream);
+    void persistContext(OutputStream jsonfilestream, PropertysetContext context);
 
 }
