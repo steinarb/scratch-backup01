@@ -6,6 +6,7 @@ import static no.priv.bang.modeling.modelstore.impl.Values.newList;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +24,7 @@ import no.priv.bang.modeling.modelstore.ValueList;
 
 public class PropertysetContextImpl implements PropertysetContext {
 
+    protected final UUID metadataId = UUID.fromString("b1ad694b-4003-412b-8249-a7d1a0a24cf3");
     private Map<UUID, Propertyset> propertysets = new HashMap<UUID, Propertyset>();
     private Set<Propertyset> embeddedAspects;
 
@@ -135,6 +137,11 @@ public class PropertysetContextImpl implements PropertysetContext {
             aspects.add(aspect);
             return aspects;
         }
+    }
+
+    public Date getLastmodifieddate(Propertyset propertyset) {
+        // This class does not store metadata for its propertysets
+        return null;
     }
 
 }

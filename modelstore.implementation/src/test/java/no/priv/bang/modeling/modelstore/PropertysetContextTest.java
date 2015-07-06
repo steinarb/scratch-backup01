@@ -95,7 +95,7 @@ public class PropertysetContextTest {
     public void testEmbeddedAspects() {
         PropertysetManager manager = new PropertysetManagerProvider().get();
         PropertysetContext context = manager.getDefaultContext();
-        int numberOfEmbeddedAspects = 5; // Adjust when adding embedded aspects
+        int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
         Collection<Propertyset> aspects = context.listAllAspects();
         assertEquals(numberOfEmbeddedAspects, aspects.size());
@@ -152,7 +152,7 @@ public class PropertysetContextTest {
 
         // Get all aspects currently in the manager
         Collection<Propertyset> aspects = context.listAllAspects();
-        assertEquals(8, aspects.size());
+        assertEquals(9, aspects.size());
 
         Propertyset vehicle = findAspectByTitle(aspects, "vehicle");
         Collection<Propertyset> vehicles = context.findObjectsOfAspect(vehicle);

@@ -1,0 +1,112 @@
+package no.priv.bang.modeling.modelstore.impl;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.UUID;
+
+import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ValueList;
+
+public class PropertysetContextRecordingMetadata implements PropertysetContext {
+
+    private final static UUID metadataAspectId = UUID.fromString("ad7ac2e9-70ee-4b1d-8529-d3ed78806714");
+    private final static UUID metadataId = UUID.fromString("b1ad694b-4003-412b-8249-a7d1a0a24cf3");
+    private final static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+    private PropertysetContext impl;
+    private Map<UUID,Date> lastmodifiedtime = new HashMap<UUID, Date>();
+
+    public PropertysetContextRecordingMetadata(PropertysetContext nonMetadataRecordingContext) {
+        impl = nonMetadataRecordingContext;
+        Propertyset metadata = impl.findPropertyset(metadataId);
+        setLastmodfiedtimes(metadata);
+    }
+
+    /**
+     * UUIDs of propertysets are the propertynames of the "lastmodifiedtimes"
+     * complex property.  The values are strings containing {@link Date} values
+     * from the propertyset's last modified date.
+     *
+     * @param metadata a {@link Propertyset} to extract saved last modified times from
+     */
+    private void setLastmodfiedtimes(Propertyset metadata) {
+        Propertyset lastmodifiedtimes = metadata.getComplexProperty("lastmodifiedtimes");
+        for (String uuidAsString : lastmodifiedtimes.getPropertynames()) {
+            String dateAsString = lastmodifiedtimes.getStringProperty(uuidAsString);
+            try {
+                lastmodifiedtime.put(UUID.fromString(uuidAsString), dateFormat.parse(dateAsString));
+            } catch (ParseException e) { }
+        }
+    }
+
+    public ValueList createList() {
+        return impl.createList();
+    }
+
+    public Propertyset createPropertyset() {
+        return impl.createPropertyset();
+    }
+
+    public Propertyset findPropertyset(UUID id) {
+        return new PropertysetRecordingSaveTime(this, impl.findPropertyset(id));
+    }
+
+    public Collection<Propertyset> listAllPropertysets() {
+        Collection<Propertyset> implist = impl.listAllPropertysets();
+        ArrayList<Propertyset> retlist = new ArrayList<Propertyset>(implist.size() + 1);
+        retlist.add(createMetadata());
+        for (Propertyset propertyset : implist) {
+            if (!metadataId.equals(propertyset.getId())) {
+                retlist.add(propertyset);
+            }
+        }
+
+        return retlist;
+    }
+
+    public Collection<Propertyset> listAllAspects() {
+        return impl.listAllAspects();
+    }
+
+    public Collection<Propertyset> findObjectsOfAspect(Propertyset aspect) {
+    	if (aspect instanceof PropertysetRecordingSaveTime) {
+            PropertysetRecordingSaveTime outerAspect = (PropertysetRecordingSaveTime) aspect;
+            return impl.findObjectsOfAspect(outerAspect.getPropertyset());
+    	}
+
+    	return impl.findObjectsOfAspect(aspect);
+    }
+
+    /**
+     * Set a timestamp for the propertyset given as an argument
+     *
+     * @param propertyset the {@link Propertyset} to set a timestamp for
+     */
+    public void modifiedPropertyset(Propertyset propertyset) {
+        lastmodifiedtime.put(propertyset.getId(), new Date());
+    }
+
+    public Date getLastmodifieddate(Propertyset propertyset) {
+        return lastmodifiedtime.get(propertyset.getId());
+    }
+
+    private Propertyset createMetadata() {
+        Propertyset lastmodifiedtimes = impl.createPropertyset();
+        for (Entry<UUID, Date> modifiedtime : lastmodifiedtime.entrySet()) {
+            lastmodifiedtimes.setStringProperty(modifiedtime.getKey().toString(), dateFormat.format(modifiedtime.getValue()));
+        }
+
+        Propertyset metadata = impl.findPropertyset(metadataId);
+        metadata.addAspect(findPropertyset(metadataAspectId));
+        metadata.setComplexProperty("lastmodifiedtimes", lastmodifiedtimes);
+        return metadata;
+    }
+
+}

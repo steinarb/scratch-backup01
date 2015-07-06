@@ -34,7 +34,7 @@ class PropertysetManagerBase implements PropertysetManager {
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         persister.restore(jsonfilestream, ctxt);
 
-        return ctxt;
+        return new PropertysetContextRecordingMetadata(ctxt);
     }
 
     public void persistContext(OutputStream jsonfilestream, PropertysetContext context) {

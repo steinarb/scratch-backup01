@@ -105,7 +105,7 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
     @Test
     public void testEmbeddedAspects() {
     	PropertysetContext context = propertysetManagerService.getDefaultContext();
-        int numberOfEmbeddedAspects = 5; // Adjust when adding embedded aspects
+        int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
         Collection<Propertyset> aspects = context.listAllAspects();
         assertEquals(numberOfEmbeddedAspects, aspects.size());
@@ -124,7 +124,7 @@ public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
     public void testPersistRestorePropertysetContextUsingPipedStreams() throws IOException {
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
         final PropertysetContext context1 = propertysetManagerService.restoreContext(carsAndBicylesStream);
-        assertEquals(5, context1.listAllAspects().size());
+        assertEquals(6, context1.listAllAspects().size());
 
         PipedInputStream loadStream = new PipedInputStream();
         final OutputStream saveStream = new PipedOutputStream(loadStream);

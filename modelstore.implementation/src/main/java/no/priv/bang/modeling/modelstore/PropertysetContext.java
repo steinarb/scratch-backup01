@@ -1,6 +1,7 @@
 package no.priv.bang.modeling.modelstore;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
@@ -80,4 +81,12 @@ public interface PropertysetContext {
      * @return a collection of {@link Propertyset} instances
      */
     Collection<Propertyset> findObjectsOfAspect(Propertyset aspect);
+
+    /**
+     * Get the last modified date and time of a propertyset.
+     *
+     * @param propertyset the {@link Propertyset} to find the last modified time for
+     * @return date and time of the last modification for the propertyset, or null if no modification date could be found
+     */
+    Date getLastmodifieddate(Propertyset propertyset);
 }

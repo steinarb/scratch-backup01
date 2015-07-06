@@ -1,5 +1,15 @@
 [
   {
+    "id" : "ad7ac2e9-70ee-4b1d-8529-d3ed78806714",
+    "title": "metadata",
+    "aspect": "object",
+    "properties": {
+      "lastmodifiedtimes": {
+        "aspect": "object"
+      }
+    }
+  },
+  {
     "id" : "06cee83c-2ca8-44b8-8035-c79586665532",
     "title": "general object",
     "aspect": "object",

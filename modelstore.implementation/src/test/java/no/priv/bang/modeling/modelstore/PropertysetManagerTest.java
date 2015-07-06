@@ -38,7 +38,7 @@ public class PropertysetManagerTest {
         PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
         assertNotNull(context);
-        assertEquals("Expected the built-in aspects", 5, context.listAllAspects().size());
+        assertEquals("Expected the built-in aspects", 6, context.listAllAspects().size());
     }
 
     /**
@@ -51,8 +51,8 @@ public class PropertysetManagerTest {
     	InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
     	PropertysetContext context = propertysetManager.restoreContext(carsAndBicylesStream);
 
-    	assertEquals(8, context.listAllAspects().size());
-        assertEquals(8, context.listAllPropertysets().size());
+    	assertEquals(9, context.listAllAspects().size());
+        assertEquals(9, context.listAllPropertysets().size());
     }
 
     /**
