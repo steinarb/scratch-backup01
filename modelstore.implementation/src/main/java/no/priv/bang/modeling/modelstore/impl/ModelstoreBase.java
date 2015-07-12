@@ -8,20 +8,20 @@ import javax.inject.Provider;
 import com.fasterxml.jackson.core.JsonFactory;
 
 import no.priv.bang.modeling.modelstore.PropertysetContext;
-import no.priv.bang.modeling.modelstore.PropertysetManager;
+import no.priv.bang.modeling.modelstore.Modelstore;
 
 /**
- * Class implementing {@link PropertysetManager} for use as a base
- * class for {@link Provider} classes for {@link PropertysetManager}
+ * Class implementing {@link Modelstore} for use as a base
+ * class for {@link Provider} classes for {@link Modelstore}
  *
  * @author Steinar Bang
  *
  */
-class PropertysetManagerBase implements PropertysetManager {
+class ModelstoreBase implements Modelstore {
 
     private PropertysetContext context = new PropertysetContextImpl();
 
-    protected PropertysetManagerBase() {
+    protected ModelstoreBase() {
     }
 
     public PropertysetContext getDefaultContext() {

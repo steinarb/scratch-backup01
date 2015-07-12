@@ -13,7 +13,7 @@ import java.io.OutputStream;
  * @author Steinar Bang
  *
  */
-public interface PropertysetManager {
+public interface Modelstore {
 
     PropertysetContext getDefaultContext();
     PropertysetContext restoreContext(InputStream jsonfilestream);

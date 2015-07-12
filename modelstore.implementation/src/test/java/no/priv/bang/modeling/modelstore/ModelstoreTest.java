@@ -12,30 +12,30 @@ import java.io.PipedOutputStream;
 import java.nio.file.Files;
 
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
-import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
+import no.priv.bang.modeling.modelstore.impl.ModelstoreProvider;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 /**
- * Unit test for the {@link PropertysetManager} interface and its
+ * Unit test for the {@link Modelstore} interface and its
  * implementations.
  *
  * @author Steinar Bang
  *
  */
-public class PropertysetManagerTest {
+public class ModelstoreTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     /**
      * Test fetching the default context of a
-     * {@link PropertysetManager}.
+     * {@link Modelstore}.
      */
     @Test
     public void testGetPropertysetContext() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        Modelstore propertysetManager = new ModelstoreProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
         assertNotNull(context);
         assertEquals("Expected the built-in aspects", 6, context.listAllAspects().size());
@@ -47,7 +47,7 @@ public class PropertysetManagerTest {
      */
     @Test
     public void testRestorePropertysetContext() {
-    	PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+    	Modelstore propertysetManager = new ModelstoreProvider().get();
     	InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
     	PropertysetContext context = propertysetManager.restoreContext(carsAndBicylesStream);
 
@@ -62,7 +62,7 @@ public class PropertysetManagerTest {
      */
     @Test
     public void testPersistRestorePropertysetContext() throws IOException {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        Modelstore propertysetManager = new ModelstoreProvider().get();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
         PropertysetContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
 
@@ -87,7 +87,7 @@ public class PropertysetManagerTest {
      */
     @Test
     public void testPersistRestorePropertysetContextUsingPipedStreams() throws IOException {
-        final PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        final Modelstore propertysetManager = new ModelstoreProvider().get();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
         final PropertysetContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
 

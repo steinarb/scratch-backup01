@@ -12,7 +12,7 @@ import java.util.UUID;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
-import no.priv.bang.modeling.modelstore.impl.PropertysetManagerProvider;
+import no.priv.bang.modeling.modelstore.impl.ModelstoreProvider;
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
 
 import org.junit.Rule;
@@ -36,7 +36,7 @@ public class PropertysetContextTest {
 
     @Test
     public void testCreatePropertyset() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        Modelstore propertysetManager = new ModelstoreProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
 
         // Get a propertyset instance and verify that it is a non-nil instance
@@ -55,7 +55,7 @@ public class PropertysetContextTest {
 
     @Test
     public void testList() {
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        Modelstore manager = new ModelstoreProvider().get();
         PropertysetContext context = manager.getDefaultContext();
 
         ValueList list = context.createList();
@@ -93,7 +93,7 @@ public class PropertysetContextTest {
 
     @Test
     public void testEmbeddedAspects() {
-        PropertysetManager manager = new PropertysetManagerProvider().get();
+        Modelstore manager = new ModelstoreProvider().get();
         PropertysetContext context = manager.getDefaultContext();
         int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
@@ -103,7 +103,7 @@ public class PropertysetContextTest {
 
     @Test
     public void testFindPropertysetById() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        Modelstore propertysetManager = new ModelstoreProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
 
         // Get a propertyset by id and verify that it is empty initially
@@ -145,7 +145,7 @@ public class PropertysetContextTest {
 
     @Test
     public void testFindPropertysetOfAspect() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        Modelstore propertysetManager = new ModelstoreProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
 
         buildModelWithAspects(context);
@@ -168,7 +168,7 @@ public class PropertysetContextTest {
      */
     @Test
     public void testPropertysetWithMultipleAspects() {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        Modelstore propertysetManager = new ModelstoreProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
 
         // Create two aspects
@@ -197,7 +197,7 @@ public class PropertysetContextTest {
 
     @Test
     public void experimentalJacksonPersist() throws IOException {
-        PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+        Modelstore propertysetManager = new ModelstoreProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
         buildModelWithAspects(context);
 
@@ -207,7 +207,7 @@ public class PropertysetContextTest {
         persister.persist(propertysetsFile, context);
 
         // Parse the written data
-        PropertysetManager propertysetManager2 = new PropertysetManagerProvider();
+        Modelstore propertysetManager2 = new ModelstoreProvider();
         PropertysetContext context2 = propertysetManager2.getDefaultContext();
         persister.restore(propertysetsFile, context2);
 
@@ -220,7 +220,7 @@ public class PropertysetContextTest {
     public void testJsonGeneratorWithReference() throws IOException {
         // Create two propertysets with ids, and make a reference to propertyset
     	// "b" from propertyset "a".
-    	PropertysetManager propertysetManager = new PropertysetManagerProvider().get();
+    	Modelstore propertysetManager = new ModelstoreProvider().get();
         PropertysetContext context = propertysetManager.getDefaultContext();
         UUID idA = UUID.randomUUID();
         Propertyset a = context.findPropertyset(idA);

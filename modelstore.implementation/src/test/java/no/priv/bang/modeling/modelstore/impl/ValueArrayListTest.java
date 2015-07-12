@@ -24,7 +24,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddGetPutRemove() {
-        PropertysetContext manager = new PropertysetManagerProvider().get().getDefaultContext();
+        PropertysetContext manager = new ModelstoreProvider().get().getDefaultContext();
         ValueList list = newList();
         assertEquals(0, list.size());
         list.add(toStringValue("a"));
@@ -147,7 +147,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddSetGetPropertyset() {
-        PropertysetContext propertysetManager = new PropertysetManagerProvider().get().getDefaultContext();
+        PropertysetContext propertysetManager = new ModelstoreProvider().get().getDefaultContext();
         Propertyset objectWithoutId = propertysetManager.createPropertyset();
         objectWithoutId.setDoubleProperty("c", 3.14);
         UUID id = UUID.randomUUID();
@@ -236,7 +236,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testCopyConstructor() {
-        PropertysetContext manager = new PropertysetManagerProvider().get().getDefaultContext();
+        PropertysetContext manager = new ModelstoreProvider().get().getDefaultContext();
         UUID id = UUID.randomUUID();
         ValueList original = newList();
         populateList(original, manager, id);

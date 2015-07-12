@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetContext;
-import no.priv.bang.modeling.modelstore.PropertysetManager;
+import no.priv.bang.modeling.modelstore.Modelstore;
 import no.priv.bang.modeling.modelstore.Value;
 
 /**
@@ -31,7 +31,7 @@ public class TestUtils {
 
     /**
      * Iterate over all of the {@link Propertyset} instances of a
-     * {@link PropertysetManager} and compare them to the propertyesets
+     * {@link Modelstore} and compare them to the propertyesets
      * of a different PropertysetManager and assert that they match.
      *
      * @param context the {@link PropertysetContext} to iterate over

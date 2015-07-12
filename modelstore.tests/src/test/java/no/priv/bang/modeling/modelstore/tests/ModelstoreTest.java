@@ -16,9 +16,9 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
+import no.priv.bang.modeling.modelstore.Modelstore;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetContext;
-import no.priv.bang.modeling.modelstore.PropertysetManager;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -32,10 +32,10 @@ import org.ops4j.pax.exam.spi.reactors.PerClass;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
-public class PropertysetManagerTest extends ModelstoreIntegrationtestBase {
+public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Inject
-    private PropertysetManager propertysetManagerService;
+    private Modelstore propertysetManagerService;
 
     @Configuration
     public Option[] config() {

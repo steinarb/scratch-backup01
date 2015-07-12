@@ -10,7 +10,7 @@ import java.util.UUID;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.PropertysetContext;
-import no.priv.bang.modeling.modelstore.PropertysetManager;
+import no.priv.bang.modeling.modelstore.Modelstore;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
@@ -24,7 +24,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 
 /**
- * This persist and restore the contents of a {@link PropertysetManager} to/from a
+ * This persist and restore the contents of a {@link Modelstore} to/from a
  * JSON {@link File}.
  *
  * @author Steinar Bang
