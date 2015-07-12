@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Modelstore;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
@@ -38,12 +38,12 @@ public class JsonPropertysetPersister {
         this.factory = factory;
     }
 
-    public void persist(File propertysetsFile, PropertysetContext propertysetContext) throws IOException {
+    public void persist(File propertysetsFile, ModelContext modelContext) throws IOException {
         JsonGenerator generator = new JsonGeneratorWithReferences(factory.createGenerator(propertysetsFile, JsonEncoding.UTF8));
-        outputPropertySets(generator, propertysetContext.listAllPropertysets());
+        outputPropertySets(generator, modelContext.listAllPropertysets());
     }
 
-    public void persist(OutputStream jsonstream, PropertysetContext context) {
+    public void persist(OutputStream jsonstream, ModelContext context) {
         try {
             JsonGenerator generator = factory.createGenerator(jsonstream);
             outputPropertySets(generator, context.listAllPropertysets());
@@ -59,12 +59,12 @@ public class JsonPropertysetPersister {
         }
     }
 
-    public void restore(File propertysetsFile, PropertysetContext propertysetContext) throws JsonParseException, IOException {
+    public void restore(File propertysetsFile, ModelContext modelContext) throws JsonParseException, IOException {
         JsonParser parser = factory.createParser(propertysetsFile);
-        parseUntilEnd(propertysetContext, parser);
+        parseUntilEnd(modelContext, parser);
     }
 
-    public void restore(InputStream jsonstream, PropertysetContext context) {
+    public void restore(InputStream jsonstream, ModelContext context) {
         try {
             JsonParser parser = factory.createParser(jsonstream);
             parseUntilEnd(context, parser);
@@ -155,19 +155,18 @@ public class JsonPropertysetPersister {
         generator.writeEndArray();
     }
 
-    private void parseUntilEnd(PropertysetContext propertysetContext,
-                               JsonParser parser) throws IOException, JsonParseException {
+    private void parseUntilEnd(ModelContext modelContext, JsonParser parser) throws IOException, JsonParseException {
         while (parser.nextToken() != null) {
             JsonToken currentToken = parser.getCurrentToken();
             if (currentToken == JsonToken.START_ARRAY) {
-                parseArray(parser, propertysetContext);
+                parseArray(parser, modelContext);
             } else if (currentToken == JsonToken.START_OBJECT) {
-                parseObject(parser, propertysetContext);
+                parseObject(parser, modelContext);
             }
         }
     }
 
-    private Value parseArray(JsonParser parser, PropertysetContext propertysetContext) throws JsonParseException, IOException {
+    private Value parseArray(JsonParser parser, ModelContext modelContext) throws JsonParseException, IOException {
         ValueList propertyList = newList();
         while (parser.nextToken() != JsonToken.END_ARRAY) {
             JsonToken currentToken = parser.getCurrentToken();
@@ -182,16 +181,16 @@ public class JsonPropertysetPersister {
             } else if (currentToken == JsonToken.VALUE_FALSE) {
                 propertyList.add(toBooleanValue(false));
             } else if (currentToken == JsonToken.START_OBJECT) {
-                propertyList.add(parseObject(parser, propertysetContext));
+                propertyList.add(parseObject(parser, modelContext));
             } else if (currentToken == JsonToken.START_ARRAY) {
-                propertyList.add(parseArray(parser, propertysetContext));
+                propertyList.add(parseArray(parser, modelContext));
             }
         }
 
         return toListValue(propertyList, false);
     }
 
-    private Value parseObject(JsonParser parser, PropertysetContext propertysetContext) throws JsonParseException, IOException {
+    private Value parseObject(JsonParser parser, ModelContext modelContext) throws JsonParseException, IOException {
         Propertyset propertyset = null;
         while (parser.nextToken() != JsonToken.END_OBJECT) {
             String currentFieldName = parser.getCurrentName();
@@ -205,7 +204,7 @@ public class JsonPropertysetPersister {
                 // hasn't been parsed yet.
                 // When the referenced object is parsed it will retrieve the same
                 // placeholder and start filling in its properties.
-                Propertyset referencedPropertyset = propertysetContext.findPropertyset(refId);
+                Propertyset referencedPropertyset = modelContext.findPropertyset(refId);
 
                 // Complete the object, by consuming the END_OBJECT before returning
                 parser.nextToken();
@@ -221,11 +220,11 @@ public class JsonPropertysetPersister {
                 String idValue = parser.getText();
                 UUID id = UUID.fromString(idValue);
                 if (propertyset == null) {
-                    propertyset = propertysetContext.findPropertyset(id);
+                    propertyset = modelContext.findPropertyset(id);
                 } else {
                     // Need to copy existing properties parsed earlier
                     Propertyset complexvalue = propertyset;
-                    propertyset = propertysetContext.findPropertyset(id);
+                    propertyset = modelContext.findPropertyset(id);
                     for (String propertyname : complexvalue.getPropertynames()) {
                         propertyset.setProperty(propertyname, complexvalue.getProperty(propertyname));
                     }
@@ -251,10 +250,10 @@ public class JsonPropertysetPersister {
                     propertyset.setBooleanProperty(currentFieldName, false);
                 } else if (currentToken == JsonToken.START_OBJECT) {
                     propertyset = createPropertysetIfNull(propertyset);
-                    propertyset.setProperty(currentFieldName, parseObject(parser, propertysetContext));
+                    propertyset.setProperty(currentFieldName, parseObject(parser, modelContext));
                 } else if (currentToken == JsonToken.START_ARRAY) {
                     propertyset = createPropertysetIfNull(propertyset);
-                    propertyset.setProperty(currentFieldName, parseArray(parser, propertysetContext));
+                    propertyset.setProperty(currentFieldName, parseArray(parser, modelContext));
                 }
             }
         }

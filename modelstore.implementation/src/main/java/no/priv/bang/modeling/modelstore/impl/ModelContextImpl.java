@@ -18,36 +18,36 @@ import java.util.UUID;
 import com.fasterxml.jackson.core.JsonFactory;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
-public class PropertysetContextImpl implements PropertysetContext {
+public class ModelContextImpl implements ModelContext {
 
     protected final UUID metadataId = UUID.fromString("b1ad694b-4003-412b-8249-a7d1a0a24cf3");
     private Map<UUID, Propertyset> propertysets = new HashMap<UUID, Propertyset>();
     private Set<Propertyset> embeddedAspects;
 
-    public PropertysetContextImpl() {
+    public ModelContextImpl() {
         loadEmbeddedAspects();
     }
 
     /* (non-Javadoc)
-     * @see no.priv.bang.modeling.modelstore.impl.PropertysetContext#createPropertyset()
+     * @see no.priv.bang.modeling.modelstore.ModelContext#createPropertyset()
      */
     public Propertyset createPropertyset() {
         return new PropertysetImpl();
     }
 
     /* (non-Javadoc)
-     * @see no.priv.bang.modeling.modelstore.impl.PropertysetContext#createList()
+     * @see no.priv.bang.modeling.modelstore.ModelContext#createList()
      */
     public ValueList createList() {
         return newList();
     }
 
     /* (non-Javadoc)
-     * @see no.priv.bang.modeling.modelstore.impl.PropertysetContext#findPropertyset(java.util.UUID)
+     * @see no.priv.bang.modeling.modelstore.ModelContext#findPropertyset(java.util.UUID)
      */
     public Propertyset findPropertyset(UUID id) {
         Propertyset propertyset = propertysets.get(id);
@@ -60,7 +60,7 @@ public class PropertysetContextImpl implements PropertysetContext {
     }
 
     /* (non-Javadoc)
-     * @see no.priv.bang.modeling.modelstore.impl.PropertysetContext#listAllPropertysets()
+     * @see no.priv.bang.modeling.modelstore.ModelContext#listAllPropertysets()
      */
     public Collection<Propertyset> listAllPropertysets() {
         List<Propertyset> allPropertysetsExcludingEmbedded = new ArrayList<Propertyset>(propertysets.size());
@@ -74,7 +74,7 @@ public class PropertysetContextImpl implements PropertysetContext {
     }
 
     /* (non-Javadoc)
-     * @see no.priv.bang.modeling.modelstore.impl.PropertysetContext#listAllAspects()
+     * @see no.priv.bang.modeling.modelstore.ModelContext#listAllAspects()
      */
     public Collection<Propertyset> listAllAspects() {
         Set<Propertyset> allAspects = new HashSet<Propertyset>(embeddedAspects);
@@ -98,7 +98,7 @@ public class PropertysetContextImpl implements PropertysetContext {
     }
 
     /* (non-Javadoc)
-     * @see no.priv.bang.modeling.modelstore.impl.PropertysetContext#findObjectsOfAspect(no.priv.bang.modeling.modelstore.Propertyset)
+     * @see no.priv.bang.modeling.modelstore.ModelContext#findObjectsOfAspect(no.priv.bang.modeling.modelstore.Propertyset)
      */
     public Collection<Propertyset> findObjectsOfAspect(Propertyset aspect) {
         List<Propertyset> objectsOfAspect = new ArrayList<Propertyset>();

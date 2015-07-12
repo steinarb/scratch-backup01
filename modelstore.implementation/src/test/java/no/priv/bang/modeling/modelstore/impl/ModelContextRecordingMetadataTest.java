@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.ValueList;
 
 import org.junit.Before;
@@ -19,19 +19,19 @@ import org.junit.rules.TemporaryFolder;
 import com.fasterxml.jackson.core.JsonFactory;
 
 /**
- * Unit tests for {@link PropertysetContextRecordingMetadata} which
- * is an implementation of {@link PropertysetContext} that records
+ * Unit tests for {@link ModelContextRecordingMetadata} which
+ * is an implementation of {@link ModelContext} that records
  * changes to other propertysets in a propertyset saved with
  * the rest.
  *
  * @author Steinar Bang
  *
  */
-public class PropertysetContextRecordingMetadataTest {
+public class ModelContextRecordingMetadataTest {
     private JsonFactory jsonFactory;
     private JsonPropertysetPersister persister;
-    private PropertysetContextImpl nonMetadataRecordingContext;
-    private PropertysetContextRecordingMetadata context;
+    private ModelContextImpl nonMetadataRecordingContext;
+    private ModelContextRecordingMetadata context;
     private Propertyset vehicleAspect;
     private PropertysetRecordingSaveTime carAspect;
 
@@ -42,9 +42,9 @@ public class PropertysetContextRecordingMetadataTest {
     public void setup() {
         jsonFactory = new JsonFactory();;
         persister = new JsonPropertysetPersister(jsonFactory);
-        nonMetadataRecordingContext = new PropertysetContextImpl();
+        nonMetadataRecordingContext = new ModelContextImpl();
         persister.restore(getClass().getResourceAsStream("/json/cars_and_bicycles_id_not_first.json"), nonMetadataRecordingContext);
-        context = new PropertysetContextRecordingMetadata(nonMetadataRecordingContext);
+        context = new ModelContextRecordingMetadata(nonMetadataRecordingContext);
         vehicleAspect = context.findPropertyset(UUID.fromString("42810a4d-b757-430a-a839-75737a027c59"));
         carAspect = (PropertysetRecordingSaveTime)context.findPropertyset(UUID.fromString("7d4a452a-a502-4333-bd0b-f42dc4d1bc82"));
     }
@@ -54,7 +54,7 @@ public class PropertysetContextRecordingMetadataTest {
      * wrapper and comparing the propertyset and propertyset-with-a-wrapper.
      */
     @Test
-    public void testCreatePropertysetContextRecordingMetadata() {
+    public void testCreateModelContextRecordingMetadata() {
         UUID outbackId = UUID.fromString("5b66f36b-4de8-4099-9044-ad9fcc6dc4d1");
         Propertyset unwrappedOutback = nonMetadataRecordingContext.findPropertyset(outbackId);
         Propertyset wrappedOutback = context.findPropertyset(outbackId);
@@ -110,9 +110,9 @@ public class PropertysetContextRecordingMetadataTest {
         persister.persist(Files.newOutputStream(propertysetsFile.toPath()), context);
         String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
         System.out.println(contents);
-        PropertysetContext nonMetadataRecordingContext2 = new PropertysetContextImpl();
+        ModelContext nonMetadataRecordingContext2 = new ModelContextImpl();
         persister.restore(Files.newInputStream(propertysetsFile.toPath()), nonMetadataRecordingContext2);
-        PropertysetContext context2 = new PropertysetContextRecordingMetadata(nonMetadataRecordingContext2);
+        ModelContext context2 = new ModelContextRecordingMetadata(nonMetadataRecordingContext2);
 
         // Compare time stamps of restored context context3 with timstamps before storage (context2)
         Propertyset outback3 = context2.findPropertyset(outbackId);
@@ -128,7 +128,7 @@ public class PropertysetContextRecordingMetadataTest {
     }
 
     /**
-     * Unit test for {@link PropertysetContextRecordingMetadata#createList()}.
+     * Unit test for {@link ModelContextRecordingMetadata#createList()}.
      */
     @Test
     public void testCreateList() {
@@ -141,7 +141,7 @@ public class PropertysetContextRecordingMetadataTest {
     }
 
     /**
-     * Unit test for {@link PropertysetContextRecordingMetadata#createPropertyset()}.
+     * Unit test for {@link ModelContextRecordingMetadata#createPropertyset()}.
      */
     @Test
     public void testCreatePropertyset() {
@@ -155,7 +155,7 @@ public class PropertysetContextRecordingMetadataTest {
     }
 
     /**
-     * Unit test for {@link PropertysetContextRecordingMetadata#listAllPropertysets()}.
+     * Unit test for {@link ModelContextRecordingMetadata#listAllPropertysets()}.
      */
     @Test
     public void testListAllPropertysets() {
@@ -163,7 +163,7 @@ public class PropertysetContextRecordingMetadataTest {
     }
 
     /**
-     * Unit test for {@link PropertysetContextRecordingMetadata#listAllAspects()}.
+     * Unit test for {@link ModelContextRecordingMetadata#listAllAspects()}.
      */
     @Test
     public void testListAllAspects() {
@@ -171,7 +171,7 @@ public class PropertysetContextRecordingMetadataTest {
     }
 
     /**
-     * Unit test for {@link PropertysetContextRecordingMetadata#findObjectsOfAspect(Propertyset)}.
+     * Unit test for {@link ModelContextRecordingMetadata#findObjectsOfAspect(Propertyset)}.
      */
     @Test
     public void testFindObjectsOfAspects() {

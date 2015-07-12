@@ -10,7 +10,7 @@ import no.priv.bang.modeling.modelstore.ValueList;
 /**
  * This is an implementation of {@link Propertyset} that wraps a
  * {@link PropertysetImpl} object, and has a back reference to
- * the {@link PropertysetContextRecordingMetadata} that is used
+ * the {@link ModelContextRecordingMetadata} that is used
  * to set the lastmodifiedtime of the {@link Propertyset}.
  *
  * @author Steinar Bang
@@ -18,10 +18,10 @@ import no.priv.bang.modeling.modelstore.ValueList;
  */
 class PropertysetRecordingSaveTime implements Propertyset {
 
-    private PropertysetContextRecordingMetadata context;
+    private ModelContextRecordingMetadata context;
     private Propertyset propertyset;
 
-    public PropertysetRecordingSaveTime(PropertysetContextRecordingMetadata context, Propertyset propertyset) {
+    public PropertysetRecordingSaveTime(ModelContextRecordingMetadata context, Propertyset propertyset) {
         this.context = context;
         this.propertyset = propertyset;
     }

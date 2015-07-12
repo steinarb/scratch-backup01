@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 import no.priv.bang.modeling.modelstore.Modelstore;
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
 
@@ -55,7 +55,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
     	assertNotNull(propertysetManagerService);
 
     	// Actually use the service to create some propertysets
-    	PropertysetContext context = propertysetManagerService.getDefaultContext();
+    	ModelContext context = propertysetManagerService.getDefaultContext();
     	UUID propertysetId = UUID.randomUUID();
     	// Create a new propertyset
         Propertyset propertyset = context.findPropertyset(propertysetId);
@@ -68,7 +68,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Test
     public void testList() {
-    	PropertysetContext context = propertysetManagerService.getDefaultContext();
+    	ModelContext context = propertysetManagerService.getDefaultContext();
         ValueList list = context.createList();
         assertEquals(0, list.size());
         list.add(true);
@@ -104,7 +104,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Test
     public void testEmbeddedAspects() {
-    	PropertysetContext context = propertysetManagerService.getDefaultContext();
+    	ModelContext context = propertysetManagerService.getDefaultContext();
         int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
         Collection<Propertyset> aspects = context.listAllAspects();
@@ -112,7 +112,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
     }
 
     /**
-     * Test saving a {@link PropertysetContext} to a {@link PipedOutputStream}
+     * Test saving a {@link ModelContext} to a {@link PipedOutputStream}
      * and then restoring the context from a {@link PipedInputStream}.
      *
      * Have to write to the pipe from a different thread than the reader,
@@ -121,9 +121,9 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
      * @throws IOException
      */
     @Test
-    public void testPersistRestorePropertysetContextUsingPipedStreams() throws IOException {
+    public void testPersistRestoreModelContextUsingPipedStreams() throws IOException {
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-        final PropertysetContext context1 = propertysetManagerService.restoreContext(carsAndBicylesStream);
+        final ModelContext context1 = propertysetManagerService.restoreContext(carsAndBicylesStream);
         assertEquals(6, context1.listAllAspects().size());
 
         PipedInputStream loadStream = new PipedInputStream();
@@ -134,7 +134,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
                 }
             }).start();
 
-        PropertysetContext context2 = propertysetManagerService.restoreContext(loadStream);
+        ModelContext context2 = propertysetManagerService.restoreContext(loadStream);
 
         compareAllPropertysets(context1, context2);
     }
@@ -144,10 +144,10 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
      * {@link PropertysetManager} and compare them to the propertyesets
      * of a different PropertysetManager and assert that they match.
      *
-     * @param context the {@link PropertysetContext} to iterate over
-     * @param context2 the {@link PropertysetContext} to compare with
+     * @param context the {@link ModelContext} to iterate over
+     * @param context2 the {@link ModelContext} to compare with
      */
-    public static void compareAllPropertysets(PropertysetContext context, PropertysetContext context2) {
+    public static void compareAllPropertysets(ModelContext context, ModelContext context2) {
         for (Propertyset propertyset : context.listAllPropertysets()) {
             Propertyset parsedPropertyset = context2.findPropertyset(propertyset.getId());
             for (String propertyname : propertyset.getPropertynames()) {

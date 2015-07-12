@@ -12,18 +12,18 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.ValueList;
 
-public class PropertysetContextRecordingMetadata implements PropertysetContext {
+public class ModelContextRecordingMetadata implements ModelContext {
 
     private final static UUID metadataAspectId = UUID.fromString("ad7ac2e9-70ee-4b1d-8529-d3ed78806714");
     private final static UUID metadataId = UUID.fromString("b1ad694b-4003-412b-8249-a7d1a0a24cf3");
     private final static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
-    private PropertysetContext impl;
+    private ModelContext impl;
     private Map<UUID,Date> lastmodifiedtime = new HashMap<UUID, Date>();
 
-    public PropertysetContextRecordingMetadata(PropertysetContext nonMetadataRecordingContext) {
+    public ModelContextRecordingMetadata(ModelContext nonMetadataRecordingContext) {
         impl = nonMetadataRecordingContext;
         Propertyset metadata = impl.findPropertyset(metadataId);
         setLastmodfiedtimes(metadata);

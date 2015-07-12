@@ -24,20 +24,20 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 /**
- * Unit test for the {@link PropertysetContext} interface and its
+ * Unit test for the {@link ModelContext} interface and its
  * implementations.
  *
  * @author Steinar Bang
  *
  */
-public class PropertysetContextTest {
+public class ModelContextTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void testCreatePropertyset() {
         Modelstore propertysetManager = new ModelstoreProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
+        ModelContext context = propertysetManager.getDefaultContext();
 
         // Get a propertyset instance and verify that it is a non-nil instance
         // that can be modified.
@@ -56,7 +56,7 @@ public class PropertysetContextTest {
     @Test
     public void testList() {
         Modelstore manager = new ModelstoreProvider().get();
-        PropertysetContext context = manager.getDefaultContext();
+        ModelContext context = manager.getDefaultContext();
 
         ValueList list = context.createList();
         assertEquals(0, list.size());
@@ -94,7 +94,7 @@ public class PropertysetContextTest {
     @Test
     public void testEmbeddedAspects() {
         Modelstore manager = new ModelstoreProvider().get();
-        PropertysetContext context = manager.getDefaultContext();
+        ModelContext context = manager.getDefaultContext();
         int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
         Collection<Propertyset> aspects = context.listAllAspects();
@@ -104,7 +104,7 @@ public class PropertysetContextTest {
     @Test
     public void testFindPropertysetById() {
         Modelstore propertysetManager = new ModelstoreProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
+        ModelContext context = propertysetManager.getDefaultContext();
 
         // Get a propertyset by id and verify that it is empty initially
         UUID newPropertysetId = UUID.randomUUID();
@@ -146,7 +146,7 @@ public class PropertysetContextTest {
     @Test
     public void testFindPropertysetOfAspect() {
         Modelstore propertysetManager = new ModelstoreProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
+        ModelContext context = propertysetManager.getDefaultContext();
 
         buildModelWithAspects(context);
 
@@ -169,7 +169,7 @@ public class PropertysetContextTest {
     @Test
     public void testPropertysetWithMultipleAspects() {
         Modelstore propertysetManager = new ModelstoreProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
+        ModelContext context = propertysetManager.getDefaultContext();
 
         // Create two aspects
         Propertyset generalObjectAspect = buildGeneralObjectAspect(context);
@@ -198,7 +198,7 @@ public class PropertysetContextTest {
     @Test
     public void experimentalJacksonPersist() throws IOException {
         Modelstore propertysetManager = new ModelstoreProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
+        ModelContext context = propertysetManager.getDefaultContext();
         buildModelWithAspects(context);
 
         JsonFactory jsonFactory = new JsonFactory();;
@@ -208,7 +208,7 @@ public class PropertysetContextTest {
 
         // Parse the written data
         Modelstore propertysetManager2 = new ModelstoreProvider();
-        PropertysetContext context2 = propertysetManager2.getDefaultContext();
+        ModelContext context2 = propertysetManager2.getDefaultContext();
         persister.restore(propertysetsFile, context2);
 
         // verify that what's parsed is what went in.
@@ -221,7 +221,7 @@ public class PropertysetContextTest {
         // Create two propertysets with ids, and make a reference to propertyset
     	// "b" from propertyset "a".
     	Modelstore propertysetManager = new ModelstoreProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
+        ModelContext context = propertysetManager.getDefaultContext();
         UUID idA = UUID.randomUUID();
         Propertyset a = context.findPropertyset(idA);
         UUID idB = UUID.randomUUID();
@@ -266,7 +266,7 @@ public class PropertysetContextTest {
     	return getNilPropertyset();
     }
 
-    private Propertyset buildGeneralObjectAspect(PropertysetContext context) {
+    private Propertyset buildGeneralObjectAspect(ModelContext context) {
         UUID generalObjectAspectId = UUID.randomUUID();
         Propertyset generalObjectAspect = context.findPropertyset(generalObjectAspectId);
         generalObjectAspect.setStringProperty("title", "general object");
@@ -282,7 +282,7 @@ public class PropertysetContextTest {
         return generalObjectAspect;
     }
 
-    private Propertyset buildPositionAspect(PropertysetContext context) {
+    private Propertyset buildPositionAspect(ModelContext context) {
         UUID positionAspectId = UUID.randomUUID();
         Propertyset positionAspect = context.findPropertyset(positionAspectId);
         positionAspect.setStringProperty("title", "position");
@@ -298,7 +298,7 @@ public class PropertysetContextTest {
         return positionAspect;
     }
 
-    private void buildModelWithAspects(PropertysetContext context) {
+    private void buildModelWithAspects(ModelContext context) {
         // Base aspect "vehicle"
         UUID vechicleAspectId = UUID.randomUUID();
         Propertyset vehicleAspect = context.findPropertyset(vechicleAspectId);

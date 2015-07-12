@@ -15,8 +15,8 @@ import java.io.OutputStream;
  */
 public interface Modelstore {
 
-    PropertysetContext getDefaultContext();
-    PropertysetContext restoreContext(InputStream jsonfilestream);
-    void persistContext(OutputStream jsonfilestream, PropertysetContext context);
+    ModelContext getDefaultContext();
+    ModelContext restoreContext(InputStream jsonfilestream);
+    void persistContext(OutputStream jsonfilestream, ModelContext context);
 
 }

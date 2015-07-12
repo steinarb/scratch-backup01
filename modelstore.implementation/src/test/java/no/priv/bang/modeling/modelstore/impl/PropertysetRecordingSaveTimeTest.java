@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.ValueList;
 
 import org.junit.Before;
@@ -23,13 +23,13 @@ public class PropertysetRecordingSaveTimeTest {
 
     private final static UUID generalObjectId = UUID.fromString("06cee83c-2ca8-44b8-8035-c79586665532");
     private final static UUID propertysetId = UUID.fromString("a72f6189-f132-4714-8f11-6258967a74ce");
-    private PropertysetContext innerContext;
-    private PropertysetContext context;
+    private ModelContext innerContext;
+    private ModelContext context;
     private Propertyset propertyset;
     @Before
     public void setup() {
-        innerContext = new PropertysetContextImpl();
-        context = new PropertysetContextRecordingMetadata(innerContext);
+        innerContext = new ModelContextImpl();
+        context = new ModelContextRecordingMetadata(innerContext);
         propertyset = context.findPropertyset(propertysetId );
         addProperties(propertyset);
     }
@@ -291,7 +291,7 @@ public class PropertysetRecordingSaveTimeTest {
         assertTrue(copyOfPropertyset.equals(propertyset));
 
         // Same underlying object, different context
-        PropertysetContext context2 = new PropertysetContextRecordingMetadata(innerContext);
+        ModelContext context2 = new ModelContextRecordingMetadata(innerContext);
         Propertyset otherContextPropertyset = context2.findPropertyset(propertysetId);
         assertFalse(propertyset.equals(otherContextPropertyset));
 

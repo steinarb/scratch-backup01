@@ -7,7 +7,7 @@ import javax.inject.Provider;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
-import no.priv.bang.modeling.modelstore.PropertysetContext;
+import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Modelstore;
 
 /**
@@ -19,25 +19,25 @@ import no.priv.bang.modeling.modelstore.Modelstore;
  */
 class ModelstoreBase implements Modelstore {
 
-    private PropertysetContext context = new PropertysetContextImpl();
+    private ModelContext context = new ModelContextImpl();
 
     protected ModelstoreBase() {
     }
 
-    public PropertysetContext getDefaultContext() {
+    public ModelContext getDefaultContext() {
         return context;
     }
 
-    public PropertysetContext restoreContext(InputStream jsonfilestream) {
-        PropertysetContextImpl ctxt = new PropertysetContextImpl();
+    public ModelContext restoreContext(InputStream jsonfilestream) {
+        ModelContextImpl ctxt = new ModelContextImpl();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         persister.restore(jsonfilestream, ctxt);
 
-        return new PropertysetContextRecordingMetadata(ctxt);
+        return new ModelContextRecordingMetadata(ctxt);
     }
 
-    public void persistContext(OutputStream jsonfilestream, PropertysetContext context) {
+    public void persistContext(OutputStream jsonfilestream, ModelContext context) {
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         persister.persist(jsonfilestream, context);

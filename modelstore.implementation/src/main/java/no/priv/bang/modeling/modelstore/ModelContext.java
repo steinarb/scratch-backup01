@@ -7,16 +7,16 @@ import java.util.UUID;
 import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
 
 /**
- * A PropertysetContext is a reference to a set of interconnected
+ * A ModelContext is a reference to a set of interconnected
  * {@link Propertyset} instances forming a model or several models.
  *
- * A PropertysetContext can be persisted with
- * {@link JsonPropertysetPersister#persist(java.io.File, PropertysetContext)} and
+ * A ModelContext can be persisted with
+ * {@link JsonPropertysetPersister#persist(java.io.File, ModelContext)} and
  * restored with
- * {@link JsonPropertysetPersister#restore(java.io.File, PropertysetContext)}.
+ * {@link JsonPropertysetPersister#restore(java.io.File, ModelContext)}.
  *
- * A {@link PropertysetContext} will keep track of the last modification
- * time of each {@link Propertyset} and when merging two PropertysetContexts
+ * A {@link ModelContext} will keep track of the last modification
+ * time of each {@link Propertyset} and when merging two ModelContexts
  * all {@link Propertyset}s will be merged, and when merging each
  * {@link Propertyset}, the {@link Propertyset} with the newest modification date
  * will win in case of conflict.
@@ -24,7 +24,7 @@ import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
  * @author Steinar Bang
  *
  */
-public interface PropertysetContext {
+public interface ModelContext {
     /**
      * Create a new empty {@link ValueList}.
      *

@@ -34,50 +34,50 @@ public class ModelstoreTest {
      * {@link Modelstore}.
      */
     @Test
-    public void testGetPropertysetContext() {
+    public void testGetModelContext() {
         Modelstore propertysetManager = new ModelstoreProvider().get();
-        PropertysetContext context = propertysetManager.getDefaultContext();
+        ModelContext context = propertysetManager.getDefaultContext();
         assertNotNull(context);
         assertEquals("Expected the built-in aspects", 6, context.listAllAspects().size());
     }
 
     /**
-     * Test loading a {@link PropertysetContext} from a stream
+     * Test loading a {@link ModelContext} from a stream
      * containing a JSON file.
      */
     @Test
-    public void testRestorePropertysetContext() {
+    public void testRestoreModelContext() {
     	Modelstore propertysetManager = new ModelstoreProvider().get();
     	InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-    	PropertysetContext context = propertysetManager.restoreContext(carsAndBicylesStream);
+    	ModelContext context = propertysetManager.restoreContext(carsAndBicylesStream);
 
     	assertEquals(9, context.listAllAspects().size());
         assertEquals(9, context.listAllPropertysets().size());
     }
 
     /**
-     * Test saving a {@link PropertysetContext} to a file stream
+     * Test saving a {@link ModelContext} to a file stream
      * and then restoring the file into a different context.
      * @throws IOException
      */
     @Test
-    public void testPersistRestorePropertysetContext() throws IOException {
+    public void testPersistRestoreModelContext() throws IOException {
         Modelstore propertysetManager = new ModelstoreProvider().get();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-        PropertysetContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
+        ModelContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
 
         File saveFile = folder.newFile();
         OutputStream saveStream = Files.newOutputStream(saveFile.toPath());
         propertysetManager.persistContext(saveStream, context1);
 
         InputStream loadStream = Files.newInputStream(saveFile.toPath());
-        PropertysetContext context2 = propertysetManager.restoreContext(loadStream);
+        ModelContext context2 = propertysetManager.restoreContext(loadStream);
 
         compareAllPropertysets(context1, context2);
     }
 
     /**
-     * Test saving a {@link PropertysetContext} to a {@link PipedOutputStream}
+     * Test saving a {@link ModelContext} to a {@link PipedOutputStream}
      * and then restoring the context from a {@link PipedInputStream}.
      *
      * Have to write to the pipe from a different thread than the reader,
@@ -86,10 +86,10 @@ public class ModelstoreTest {
      * @throws IOException
      */
     @Test
-    public void testPersistRestorePropertysetContextUsingPipedStreams() throws IOException {
+    public void testPersistRestoreModelContextUsingPipedStreams() throws IOException {
         final Modelstore propertysetManager = new ModelstoreProvider().get();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-        final PropertysetContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
+        final ModelContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
 
         PipedInputStream loadStream = new PipedInputStream();
         final OutputStream saveStream = new PipedOutputStream(loadStream);
@@ -99,7 +99,7 @@ public class ModelstoreTest {
                 }
             }).start();
 
-        PropertysetContext context2 = propertysetManager.restoreContext(loadStream);
+        ModelContext context2 = propertysetManager.restoreContext(loadStream);
 
         compareAllPropertysets(context1, context2);
     }
