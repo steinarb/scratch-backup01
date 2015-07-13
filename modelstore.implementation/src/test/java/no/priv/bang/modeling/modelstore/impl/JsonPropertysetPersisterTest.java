@@ -39,8 +39,8 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testParseComplexFile() throws URISyntaxException, JsonParseException, IOException {
-        Modelstore propertysetManager = new ModelstoreProvider();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider();
+        ModelContext context = modelstore.getDefaultContext();
         File carsAndBicycles = getResourceAsFile("/json/cars_and_bicycles.json");
 
         JsonFactory jsonFactory = new JsonFactory();
@@ -61,8 +61,8 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testParseIdNotFirst() throws URISyntaxException, JsonParseException, IOException {
-        Modelstore propertysetManager = new ModelstoreProvider();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider();
+        ModelContext context = modelstore.getDefaultContext();
         File carsAndBicyclesIdNotFirst = getResourceAsFile("/json/cars_and_bicycles_id_not_first.json");
 
         JsonFactory jsonFactory = new JsonFactory();;
@@ -75,8 +75,8 @@ public class JsonPropertysetPersisterTest {
         assertEquals(8, context.listAllPropertysets().size());
 
         // Verify that the results are identical to the ones with the id first
-        Modelstore propertysetManager2 = new ModelstoreProvider();
-        ModelContext context2 = propertysetManager2.getDefaultContext();
+        Modelstore modelstore2 = new ModelstoreProvider();
+        ModelContext context2 = modelstore2.getDefaultContext();
         File carsAndBicycles = getResourceAsFile("/json/cars_and_bicycles.json");
         persister.restore(carsAndBicycles, context2);
         compareAllPropertysets(context, context2);
@@ -90,8 +90,8 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void parseBooleanProperties() throws URISyntaxException, JsonParseException, IOException {
-        Modelstore propertysetManager = new ModelstoreProvider();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider();
+        ModelContext context = modelstore.getDefaultContext();
         File withBoolean = getResourceAsFile("/json/with_boolean.json");
         JsonFactory jsonFactory = new JsonFactory();;
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -109,8 +109,8 @@ public class JsonPropertysetPersisterTest {
         persister.persist(propertysetsFile, context);
 
         // Read the file back in and compare it with the original
-        Modelstore propertysetManager2 = new ModelstoreProvider();
-        ModelContext context2 = propertysetManager2.getDefaultContext();
+        Modelstore modelstore2 = new ModelstoreProvider();
+        ModelContext context2 = modelstore2.getDefaultContext();
         persister.restore(propertysetsFile, context2);
 
         // Verify that the results of the second parse are identical to the first
@@ -129,8 +129,8 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void parseObjectOnTop() throws URISyntaxException, JsonParseException, IOException {
-        Modelstore propertysetManager = new ModelstoreProvider();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider();
+        ModelContext context = modelstore.getDefaultContext();
         File withBoolean = getResourceAsFile("/json/object_on_top.json");
         JsonFactory jsonFactory = new JsonFactory();;
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -146,8 +146,8 @@ public class JsonPropertysetPersisterTest {
         persister.persist(twoObjectsFile, context);
 
         // Read the file back in and compare it with the original
-        Modelstore propertysetManager2 = new ModelstoreProvider();
-        ModelContext context2 = propertysetManager2.getDefaultContext();
+        Modelstore modelstore2 = new ModelstoreProvider();
+        ModelContext context2 = modelstore2.getDefaultContext();
         persister.restore(twoObjectsFile, context2);
 
         // Verify that the results of the second parse are identical to the first
@@ -163,8 +163,8 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void parseListProperty() throws URISyntaxException, JsonParseException, IOException {
-        Modelstore propertysetManager = new ModelstoreProvider();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider();
+        ModelContext context = modelstore.getDefaultContext();
         File withListProperty = getResourceAsFile("/json/with_list_property.json");
         JsonFactory jsonFactory = new JsonFactory();;
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -182,8 +182,8 @@ public class JsonPropertysetPersisterTest {
         persister.persist(saveRestoreFile, context);
 
         // Read the file back in and compare it with the original
-        Modelstore propertysetManager2 = new ModelstoreProvider();
-        ModelContext context2 = propertysetManager2.getDefaultContext();
+        Modelstore modelstore2 = new ModelstoreProvider();
+        ModelContext context2 = modelstore2.getDefaultContext();
         persister.restore(saveRestoreFile, context2);
 
         // Verify that the results of the second parse are identical to the first
@@ -202,8 +202,8 @@ public class JsonPropertysetPersisterTest {
     @Ignore
     @Test
     public void generatePropertysetWithId() throws IOException {
-        Modelstore propertysetManager = new ModelstoreProvider();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider();
+        ModelContext context = modelstore.getDefaultContext();
         context.findPropertyset(UUID.randomUUID());
         context.findPropertyset(UUID.randomUUID());
         JsonFactory jsonFactory = new JsonFactory();;

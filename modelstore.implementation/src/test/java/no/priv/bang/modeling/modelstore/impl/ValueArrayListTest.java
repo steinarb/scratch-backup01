@@ -147,11 +147,11 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddSetGetPropertyset() {
-        ModelContext propertysetManager = new ModelstoreProvider().get().getDefaultContext();
-        Propertyset objectWithoutId = propertysetManager.createPropertyset();
+        ModelContext modelContext = new ModelstoreProvider().get().getDefaultContext();
+        Propertyset objectWithoutId = modelContext.createPropertyset();
         objectWithoutId.setDoubleProperty("c", 3.14);
         UUID id = UUID.randomUUID();
-        Propertyset objectWithId = propertysetManager.findPropertyset(id);
+        Propertyset objectWithId = modelContext.findPropertyset(id);
         objectWithId.setLongProperty("a", Long.valueOf(2));
         objectWithId.setStringProperty("b", "foo bar");
         Propertyset nullObject = null;

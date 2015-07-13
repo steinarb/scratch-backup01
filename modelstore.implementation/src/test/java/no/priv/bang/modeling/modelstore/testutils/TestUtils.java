@@ -31,8 +31,8 @@ public class TestUtils {
 
     /**
      * Iterate over all of the {@link Propertyset} instances of a
-     * {@link Modelstore} and compare them to the propertyesets
-     * of a different PropertysetManager and assert that they match.
+     * {@link Modelstore} and compare them to the propertysets
+     * of a different Modelstore and assert that they match.
      *
      * @param context the {@link ModelContext} to iterate over
      * @param context2 the {@link ModelContext} to compare with

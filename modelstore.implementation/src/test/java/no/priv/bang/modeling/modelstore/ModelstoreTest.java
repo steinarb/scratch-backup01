@@ -35,8 +35,8 @@ public class ModelstoreTest {
      */
     @Test
     public void testGetModelContext() {
-        Modelstore propertysetManager = new ModelstoreProvider().get();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
         assertNotNull(context);
         assertEquals("Expected the built-in aspects", 6, context.listAllAspects().size());
     }
@@ -47,9 +47,9 @@ public class ModelstoreTest {
      */
     @Test
     public void testRestoreModelContext() {
-    	Modelstore propertysetManager = new ModelstoreProvider().get();
+    	Modelstore modelstore = new ModelstoreProvider().get();
     	InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-    	ModelContext context = propertysetManager.restoreContext(carsAndBicylesStream);
+    	ModelContext context = modelstore.restoreContext(carsAndBicylesStream);
 
     	assertEquals(9, context.listAllAspects().size());
         assertEquals(9, context.listAllPropertysets().size());
@@ -62,16 +62,16 @@ public class ModelstoreTest {
      */
     @Test
     public void testPersistRestoreModelContext() throws IOException {
-        Modelstore propertysetManager = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider().get();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-        ModelContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
+        ModelContext context1 = modelstore.restoreContext(carsAndBicylesStream);
 
         File saveFile = folder.newFile();
         OutputStream saveStream = Files.newOutputStream(saveFile.toPath());
-        propertysetManager.persistContext(saveStream, context1);
+        modelstore.persistContext(saveStream, context1);
 
         InputStream loadStream = Files.newInputStream(saveFile.toPath());
-        ModelContext context2 = propertysetManager.restoreContext(loadStream);
+        ModelContext context2 = modelstore.restoreContext(loadStream);
 
         compareAllPropertysets(context1, context2);
     }
@@ -87,19 +87,19 @@ public class ModelstoreTest {
      */
     @Test
     public void testPersistRestoreModelContextUsingPipedStreams() throws IOException {
-        final Modelstore propertysetManager = new ModelstoreProvider().get();
+        final Modelstore modelstore = new ModelstoreProvider().get();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-        final ModelContext context1 = propertysetManager.restoreContext(carsAndBicylesStream);
+        final ModelContext context1 = modelstore.restoreContext(carsAndBicylesStream);
 
         PipedInputStream loadStream = new PipedInputStream();
         final OutputStream saveStream = new PipedOutputStream(loadStream);
         new Thread(new Runnable() {
                 public void run() {
-                    propertysetManager.persistContext(saveStream, context1);
+                    modelstore.persistContext(saveStream, context1);
                 }
             }).start();
 
-        ModelContext context2 = propertysetManager.restoreContext(loadStream);
+        ModelContext context2 = modelstore.restoreContext(loadStream);
 
         compareAllPropertysets(context1, context2);
     }

@@ -35,7 +35,7 @@ import org.ops4j.pax.exam.spi.reactors.PerClass;
 public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Inject
-    private Modelstore propertysetManagerService;
+    private Modelstore modelstoreService;
 
     @Configuration
     public Option[] config() {
@@ -50,12 +50,12 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
     }
 
     @Test
-    public void propertysetManagerIntegrationTest() {
+    public void modelstoreIntegrationTest() {
     	// Verify that the service could be injected
-    	assertNotNull(propertysetManagerService);
+    	assertNotNull(modelstoreService);
 
     	// Actually use the service to create some propertysets
-    	ModelContext context = propertysetManagerService.getDefaultContext();
+    	ModelContext context = modelstoreService.getDefaultContext();
     	UUID propertysetId = UUID.randomUUID();
     	// Create a new propertyset
         Propertyset propertyset = context.findPropertyset(propertysetId);
@@ -68,7 +68,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Test
     public void testList() {
-    	ModelContext context = propertysetManagerService.getDefaultContext();
+    	ModelContext context = modelstoreService.getDefaultContext();
         ValueList list = context.createList();
         assertEquals(0, list.size());
         list.add(true);
@@ -104,7 +104,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Test
     public void testEmbeddedAspects() {
-    	ModelContext context = propertysetManagerService.getDefaultContext();
+    	ModelContext context = modelstoreService.getDefaultContext();
         int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
         Collection<Propertyset> aspects = context.listAllAspects();
@@ -123,26 +123,26 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
     @Test
     public void testPersistRestoreModelContextUsingPipedStreams() throws IOException {
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-        final ModelContext context1 = propertysetManagerService.restoreContext(carsAndBicylesStream);
+        final ModelContext context1 = modelstoreService.restoreContext(carsAndBicylesStream);
         assertEquals(6, context1.listAllAspects().size());
 
         PipedInputStream loadStream = new PipedInputStream();
         final OutputStream saveStream = new PipedOutputStream(loadStream);
         new Thread(new Runnable() {
                 public void run() {
-                    propertysetManagerService.persistContext(saveStream, context1);
+                    modelstoreService.persistContext(saveStream, context1);
                 }
             }).start();
 
-        ModelContext context2 = propertysetManagerService.restoreContext(loadStream);
+        ModelContext context2 = modelstoreService.restoreContext(loadStream);
 
         compareAllPropertysets(context1, context2);
     }
 
     /**
      * Iterate over all of the {@link Propertyset} instances of a
-     * {@link PropertysetManager} and compare them to the propertyesets
-     * of a different PropertysetManager and assert that they match.
+     * {@link Modelstore} and compare them to the propertyesets
+     * of a different Modelstore and assert that they match.
      *
      * @param context the {@link ModelContext} to iterate over
      * @param context2 the {@link ModelContext} to compare with

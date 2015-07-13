@@ -36,8 +36,8 @@ public class ModelContextTest {
 
     @Test
     public void testCreatePropertyset() {
-        Modelstore propertysetManager = new ModelstoreProvider().get();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
 
         // Get a propertyset instance and verify that it is a non-nil instance
         // that can be modified.
@@ -103,8 +103,8 @@ public class ModelContextTest {
 
     @Test
     public void testFindPropertysetById() {
-        Modelstore propertysetManager = new ModelstoreProvider().get();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
 
         // Get a propertyset by id and verify that it is empty initially
         UUID newPropertysetId = UUID.randomUUID();
@@ -145,8 +145,8 @@ public class ModelContextTest {
 
     @Test
     public void testFindPropertysetOfAspect() {
-        Modelstore propertysetManager = new ModelstoreProvider().get();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
 
         buildModelWithAspects(context);
 
@@ -168,8 +168,8 @@ public class ModelContextTest {
      */
     @Test
     public void testPropertysetWithMultipleAspects() {
-        Modelstore propertysetManager = new ModelstoreProvider().get();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
 
         // Create two aspects
         Propertyset generalObjectAspect = buildGeneralObjectAspect(context);
@@ -197,8 +197,8 @@ public class ModelContextTest {
 
     @Test
     public void experimentalJacksonPersist() throws IOException {
-        Modelstore propertysetManager = new ModelstoreProvider().get();
-        ModelContext context = propertysetManager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
         buildModelWithAspects(context);
 
         JsonFactory jsonFactory = new JsonFactory();;
@@ -207,8 +207,8 @@ public class ModelContextTest {
         persister.persist(propertysetsFile, context);
 
         // Parse the written data
-        Modelstore propertysetManager2 = new ModelstoreProvider();
-        ModelContext context2 = propertysetManager2.getDefaultContext();
+        Modelstore modelstore2 = new ModelstoreProvider();
+        ModelContext context2 = modelstore2.getDefaultContext();
         persister.restore(propertysetsFile, context2);
 
         // verify that what's parsed is what went in.
@@ -220,8 +220,8 @@ public class ModelContextTest {
     public void testJsonGeneratorWithReference() throws IOException {
         // Create two propertysets with ids, and make a reference to propertyset
     	// "b" from propertyset "a".
-    	Modelstore propertysetManager = new ModelstoreProvider().get();
-        ModelContext context = propertysetManager.getDefaultContext();
+    	Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
         UUID idA = UUID.randomUUID();
         Propertyset a = context.findPropertyset(idA);
         UUID idB = UUID.randomUUID();
