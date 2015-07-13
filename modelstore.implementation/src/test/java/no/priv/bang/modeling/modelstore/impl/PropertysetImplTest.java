@@ -285,8 +285,8 @@ public class PropertysetImplTest {
      */
     @Test
     public void testGetComplexProperty() {
-        Modelstore manager = new ModelstoreProvider().get();
-        ModelContext context = manager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
         Propertyset propertyset = context.createPropertyset();
 
         // Set a complex property and retrieve it.
@@ -390,8 +390,8 @@ public class PropertysetImplTest {
      */
     @Test
     public void testGetListProperty() {
-        Modelstore manager = new ModelstoreProvider().get();
-        ModelContext context = manager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
         Propertyset propertyset = context.createPropertyset();
 
         // Set and get a list value, and verify that its members can be accessed.
@@ -446,8 +446,8 @@ public class PropertysetImplTest {
 
     @Test
     public void testGetProperty() {
-        Modelstore manager = new ModelstoreProvider().get();
-        ModelContext context = manager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
         Propertyset emptypropertyset = context.createPropertyset();
         Value nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
         assertEquals(getNil(), nosuchproperty);

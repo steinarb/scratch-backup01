@@ -24,12 +24,12 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddGetPutRemove() {
-        ModelContext manager = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
         ValueList list = newList();
         assertEquals(0, list.size());
         list.add(toStringValue("a"));
         list.add(toLongValue(4L));
-        Propertyset propertyset = manager.createPropertyset();
+        Propertyset propertyset = context.createPropertyset();
         propertyset.setStringProperty("a", "foo bar");
         list.add(propertyset);
         ValueList listelement = newList();
@@ -236,10 +236,10 @@ public class ValueArrayListTest {
      */
     @Test
     public void testCopyConstructor() {
-        ModelContext manager = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
         UUID id = UUID.randomUUID();
         ValueList original = newList();
-        populateList(original, manager, id);
+        populateList(original, context, id);
 
         ValueList copy = new ValueArrayList(original);
         assertNotSame(original, copy); // Obviously...
@@ -258,7 +258,7 @@ public class ValueArrayListTest {
         copy.set(3, "bar foo");
         assertEquals("bar foo", copy.get(3).asString());
         Propertyset originalReference = copy.get(4).asReference();
-        Propertyset newReference = manager.findPropertyset(UUID.randomUUID());
+        Propertyset newReference = context.findPropertyset(UUID.randomUUID());
         copy.set(4, newReference);
         assertEquals(newReference, copy.get(4).asReference());
         assertEquals("Expected original to be unchanged", originalReference, original.get(4).asReference());
@@ -270,13 +270,13 @@ public class ValueArrayListTest {
         assertEquals("Expected original to be unchanged", 1, original.get(6).asList().size());
     }
 
-    private void populateList(ValueList list, ModelContext manager, UUID id) {
+    private void populateList(ValueList list, ModelContext context, UUID id) {
         list.add(true);
         list.add(42);
         list.add(2.7);
         list.add("foo bar");
-        list.add(manager.findPropertyset(id));
-        Propertyset propertyset = manager.createPropertyset();
+        list.add(context.findPropertyset(id));
+        Propertyset propertyset = context.createPropertyset();
         propertyset.setBooleanProperty("a", true);
         propertyset.setLongProperty("b", 47);
         propertyset.setDoubleProperty("c", 3.14);

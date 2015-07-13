@@ -55,8 +55,8 @@ public class ModelContextTest {
 
     @Test
     public void testList() {
-        Modelstore manager = new ModelstoreProvider().get();
-        ModelContext context = manager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
 
         ValueList list = context.createList();
         assertEquals(0, list.size());
@@ -93,8 +93,8 @@ public class ModelContextTest {
 
     @Test
     public void testEmbeddedAspects() {
-        Modelstore manager = new ModelstoreProvider().get();
-        ModelContext context = manager.getDefaultContext();
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.getDefaultContext();
         int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
         Collection<Propertyset> aspects = context.listAllAspects();
@@ -150,7 +150,7 @@ public class ModelContextTest {
 
         buildModelWithAspects(context);
 
-        // Get all aspects currently in the manager
+        // Get all aspects currently in the context
         Collection<Propertyset> aspects = context.listAllAspects();
         assertEquals(9, aspects.size());
 
