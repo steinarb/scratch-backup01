@@ -108,8 +108,6 @@ public class ModelContextRecordingMetadataTest {
         // Save to and restore from a file
         File propertysetsFile = folder.newFile("save_restore_cars_and_bikes.json");
         persister.persist(Files.newOutputStream(propertysetsFile.toPath()), context);
-        String contents = new String(Files.readAllBytes(propertysetsFile.toPath()));
-        System.out.println(contents);
         ModelContext nonMetadataRecordingContext2 = new ModelContextImpl();
         persister.restore(Files.newInputStream(propertysetsFile.toPath()), nonMetadataRecordingContext2);
         ModelContext context2 = new ModelContextRecordingMetadata(nonMetadataRecordingContext2);
