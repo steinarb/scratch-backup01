@@ -2,7 +2,9 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import no.priv.bang.modeling.modelstore.Propertyset;
@@ -472,6 +474,34 @@ public class PropertysetImplTest {
         assertEquals("Expected original value to be unchanged", 1, propertyset.getListProperty("b").size());
     }
 
+    /**
+     * Corner case unit tests for {@link Propertyset#setProperty(String, Value)}.
+     */
+    @Test
+    public void testSetProperty() {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+
+        // Verify that id can't be set
+        Value idValue = createIdValue(context);
+        Propertyset propertyset = context.createPropertyset();
+        propertyset.setProperty(idKey, idValue);
+        assertEquals(getNil(), propertyset.getProperty(idKey));
+        assertEquals(getNilPropertyset().getId(), propertyset.getId());
+
+        // Verify that aspects can't be set as a property
+        Value aspectsValue = createAspectsValue(context);
+        propertyset.setProperty(aspectsKey, aspectsValue);
+        assertEquals(getNil(), propertyset.getProperty(aspectsKey));
+        assertFalse(propertyset.hasAspect());
+        assertEquals(0, propertyset.getAspects().size());
+
+        // Verify that a regular value can be set and retrieved
+        // (reusing the aspectsValue which is a list of references.)
+        propertyset.setProperty("reference_list", aspectsValue);
+        assertEquals(aspectsValue, propertyset.getProperty("reference_list"));
+    }
+
     @Test
     public void testHashCode() {
         Propertyset emptypropertyset = new PropertysetImpl();
@@ -534,6 +564,89 @@ public class PropertysetImplTest {
         compareOriginalUnchangedByCopyChange(context, propertyset, copy);
     }
 
+    @Test
+    public void testCopyValues() {
+        ModelContext context = new ModelContextImpl();
+        Propertyset propertyset = context.createPropertyset();
+        UUID referencedPropertysetId = UUID.randomUUID();
+        populatePropertyset(propertyset, context, referencedPropertysetId);
+
+        // Make a copy to compare with afterwards
+        PropertysetImpl copyOfPropertyset = new PropertysetImpl(propertyset);
+        assertNotSame(propertyset, copyOfPropertyset);
+        assertEquals(propertyset, copyOfPropertyset);
+
+        // Try copying in a null propertyset
+        propertyset.copyValues(null);
+
+        // Expected the propertyset to be unchanged by the null-copying
+        assertEquals(propertyset, copyOfPropertyset);
+
+        // Copy from a propertyset with id
+        Propertyset propertysetWithId = context.findPropertyset(UUID.randomUUID());
+        populatePropertyset(propertysetWithId, context, referencedPropertysetId);
+
+        // propertysets are not equal because one has an id
+        assertNotEquals(propertyset, propertysetWithId);
+
+        // Make a non-id copy of the propertyset with id
+        Propertyset copyOfPropertysetWithId = context.createPropertyset();
+        copyOfPropertysetWithId.copyValues(propertysetWithId);
+
+        // The copy if the propertyset with id is equal to the propertyset without id
+        assertEquals(propertyset, copyOfPropertysetWithId);
+    }
+
+    @Test
+    public void testCopyValuesOnPropertysetWithIdAndAspect() {
+        ModelContext context = new ModelContextImpl();
+        UUID id = UUID.randomUUID();
+        UUID propsetId = UUID.randomUUID();
+        Propertyset propertyset = context.findPropertyset(propsetId);
+        UUID aspectId = UUID.randomUUID();
+        Propertyset aspect = context.findPropertyset(aspectId);
+        propertyset.addAspect(aspect);
+        populatePropertyset(propertyset, context, id);
+
+        // Create a Propertyset with the same id in a different context and assign the values of the first
+        ModelContext context2 = new ModelContextImpl();
+        Propertyset copy = context2.findPropertyset(propsetId);
+        copy.copyValues(propertyset);
+        assertNotSame(propertyset, copy); // Obviously...
+        // Compare the inner Propertyset since the metadata-recording wrappers compare context in their equals methods
+        assertEquals(propertyset, findWrappedPropertyset(copy));
+
+        // Create a Propertyset without id and copy into it and compare
+        Propertyset propertysetWithoutId = context.createPropertyset();
+        propertysetWithoutId.copyValues(propertyset);
+        assertNotSame(propertyset, propertysetWithoutId); // Obviously...
+        assertNotEquals(propertyset, propertysetWithoutId); // No "id" on one of them, so not the same
+        assertEquals(propertyset.getAspects(), propertysetWithoutId.getAspects());
+        assertAllPropertiesExceptIdAndAspectEquals(propertyset, propertysetWithoutId);
+
+        // Test copy to a propertyset with a different id in the same context
+        Propertyset propertysetWithNewId = context.findPropertyset(UUID.randomUUID());
+        propertysetWithNewId.copyValues(propertyset);
+        assertNotEquals(propertyset, propertysetWithNewId); // Different "id" on the two
+        assertEquals(propertyset.getAspects(), propertysetWithNewId.getAspects());
+        assertAllPropertiesExceptIdAndAspectEquals(propertyset, propertysetWithNewId);
+    }
+
+    private void assertAllPropertiesExceptIdAndAspectEquals(Propertyset propertyset1, Propertyset propertyset2) {
+    	Collection<String> propertynames1 = propertyset1.getPropertynames();
+    	propertynames1.remove(idKey);
+    	propertynames1.remove(aspectsKey);
+    	Collection<String> propertynames2 = propertyset2.getPropertynames();
+    	propertynames2.remove(idKey);
+    	propertynames2.remove(aspectsKey);
+    	assertEquals(propertynames1, propertynames2);
+    	for (String propertyname : propertynames1) {
+            Value value1 = propertyset1.getProperty(propertyname);
+            Value value2 = propertyset2.getProperty(propertyname);
+            assertEquals(value1, value2);
+        }
+    }
+
     private void compareOriginalUnchangedByCopyChange(ModelContext context, Propertyset propertyset, Propertyset copy) {
         assertNotSame(propertyset, copy); // Obviously...
         assertEquals(propertyset, copy);
@@ -562,6 +675,21 @@ public class PropertysetImplTest {
         copy.getListProperty("g").add(3.7);
         assertEquals(2, copy.getListProperty("g").size());
         assertEquals("Expected unchanged value", 1, propertyset.getListProperty("g").size());
+    }
+
+    private Value createIdValue(ModelContext context) {
+        Propertyset propertysetWithId = context.findPropertyset(UUID.randomUUID());
+        Value idValue = propertysetWithId.getProperty(idKey);
+        return idValue;
+    }
+
+    private Value createAspectsValue(ModelContext context) {
+        ValueList aspectlist = context.createList();
+        aspectlist.add(context.findPropertyset(UUID.randomUUID()));
+        aspectlist.add(context.findPropertyset(UUID.randomUUID()));
+        aspectlist.add(context.findPropertyset(UUID.randomUUID()));
+        Value aspectsValue = Values.toListValue(aspectlist, false);
+        return aspectsValue;
     }
 
     private void populatePropertyset(Propertyset propertyset, ModelContext context, UUID id) {

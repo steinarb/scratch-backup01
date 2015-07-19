@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Modelstore;
@@ -215,7 +216,7 @@ public class JsonPropertysetPersister {
                 return toReferenceValue(referencedPropertyset);
             }
 
-            if ("id".equals(currentFieldName)) {
+            if (idKey.equals(currentFieldName)) {
                 parser.nextToken();
                 String idValue = parser.getText();
                 UUID id = UUID.fromString(idValue);
@@ -225,8 +226,17 @@ public class JsonPropertysetPersister {
                     // Need to copy existing properties parsed earlier
                     Propertyset complexvalue = propertyset;
                     propertyset = modelContext.findPropertyset(id);
-                    for (String propertyname : complexvalue.getPropertynames()) {
-                        propertyset.setProperty(propertyname, complexvalue.getProperty(propertyname));
+                    propertyset.copyValues(complexvalue);
+                }
+            } else if (aspectsKey.equals(currentFieldName)) {
+                propertyset = createPropertysetIfNull(propertyset);
+                parser.nextToken();
+                JsonToken currentToken = parser.getCurrentToken();
+                if (currentToken == JsonToken.START_ARRAY) {
+                    propertyset = createPropertysetIfNull(propertyset);
+                    Value aspects = parseArray(parser, modelContext);
+                    for (Value aspectValue : aspects.asList()) {
+                        propertyset.addAspect(aspectValue.asReference());
                     }
                 }
             } else {

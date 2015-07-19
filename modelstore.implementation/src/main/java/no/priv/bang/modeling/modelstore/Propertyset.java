@@ -19,6 +19,15 @@ import java.util.UUID;
  */
 public interface Propertyset {
 
+    /**
+     * Copy all property values from the propertyset given as
+     * argument into the current propertyset, except for the
+     * "id" property.
+     *
+     * @param propertyset the {@link Propertyset} to copy from
+     */
+    void copyValues(Propertyset propertyset);
+
     boolean isNil();
 
     Collection<String> getPropertynames();
@@ -60,5 +69,4 @@ public interface Propertyset {
 
     ValueList getListProperty(String propertyname);
     void setListProperty(String propertyname, ValueList listValue);
-
 }

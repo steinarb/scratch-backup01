@@ -26,6 +26,10 @@ class PropertysetRecordingSaveTime implements Propertyset {
         this.propertyset = propertyset;
     }
 
+    public void copyValues(Propertyset propertyset) {
+    	this.propertyset.copyValues(propertyset);
+    }
+
     Propertyset getPropertyset() {
         return propertyset;
     }

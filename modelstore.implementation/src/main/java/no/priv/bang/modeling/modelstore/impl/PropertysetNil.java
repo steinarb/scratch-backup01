@@ -29,6 +29,10 @@ public final class PropertysetNil implements Propertyset {
         return singleton;
     }
 
+    public void copyValues(Propertyset propertyset) {
+        // No-op
+    }
+
     private PropertysetNil() {}
 
     public boolean isNil() {

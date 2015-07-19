@@ -64,7 +64,7 @@ class ReferenceValue extends PropertysetValueBase {
 
     @Override
     public String toString() {
-        return "ReferenceValue [value=" + value + "]";
+        return "ReferenceValue [value=" + value.getId() + "]";
     }
 
 }

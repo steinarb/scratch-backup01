@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.Value;
 import no.priv.bang.modeling.modelstore.ValueList;
@@ -17,8 +18,6 @@ import no.priv.bang.modeling.modelstore.ValueList;
  *
  */
 public class PropertysetImpl implements Propertyset {
-    final private String idKey = "id";
-    final private String aspectsKey = "aspects";
     final private Map<String, Value> properties = new HashMap<String, Value>();
 
     public PropertysetImpl(UUID id) {
@@ -32,22 +31,27 @@ public class PropertysetImpl implements Propertyset {
             properties.put(idKey, new IdValue(propertyset.getId()));
     	}
 
-    	if (propertyset.hasAspect()) {
-            for (Value aspect : propertyset.getAspects()) {
-                addAspect(aspect.asReference());
-            }
+    	copyValues(propertyset);
+    }
+
+    public void copyValues(Propertyset propertyset) {
+    	if (propertyset == null) {
+            return; // Leave this propertyset unchanged
     	}
 
     	for (String propertyname : propertyset.getPropertynames()) {
-            Value value = propertyset.getProperty(propertyname);
-            if (value.isComplexProperty()) {
-                properties.put(propertyname, toComplexValue(value.asComplexProperty()));
-            } else if (value.isList()) {
-                properties.put(propertyname, toListValue(new ValueArrayList(value.asList()), false));
-            } else {
-                properties.put(propertyname, value);
+            if (!aspectsKey.equals(propertyname) && !idKey.equals(propertyname)) {
+                Value propertyvalue = propertyset.getProperty(propertyname);
+                setProperty(propertyname, propertyvalue);
             }
         }
+
+    	if (propertyset.hasAspect()) {
+            ValueList propertysetAspects = propertyset.getAspects();
+            for (Value aspect : propertysetAspects) {
+                addAspect(aspect.asReference());
+            }
+    	}
     }
 
     public Collection<String> getPropertynames() {
@@ -63,7 +67,9 @@ public class PropertysetImpl implements Propertyset {
     }
 
     public void setProperty(String propertyname, Value property) {
-    	if (null != property && property.isComplexProperty()) {
+    	if (idKey.equals(propertyname) || aspectsKey.equals(propertyname)) {
+            return; // Set nothing
+    	} else if (null != property && property.isComplexProperty()) {
             properties.put(propertyname, toComplexValue(property.asComplexProperty()));
     	} else if (null != property && property.isList()) {
             properties.put(propertyname, toListValue(property.asList()));

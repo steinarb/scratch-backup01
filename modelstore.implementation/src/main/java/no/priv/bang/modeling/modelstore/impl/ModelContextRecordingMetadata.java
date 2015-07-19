@@ -14,11 +14,11 @@ import java.util.UUID;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.ValueList;
+import static no.priv.bang.modeling.modelstore.impl.Aspects.*;
+import static no.priv.bang.modeling.modelstore.impl.ModelContexts.*;
 
 public class ModelContextRecordingMetadata implements ModelContext {
 
-    private final static UUID metadataAspectId = UUID.fromString("ad7ac2e9-70ee-4b1d-8529-d3ed78806714");
-    private final static UUID metadataId = UUID.fromString("b1ad694b-4003-412b-8249-a7d1a0a24cf3");
     private final static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
     private ModelContext impl;
     private Map<UUID,Date> lastmodifiedtime = new HashMap<UUID, Date>();
@@ -44,6 +44,10 @@ public class ModelContextRecordingMetadata implements ModelContext {
                 lastmodifiedtime.put(UUID.fromString(uuidAsString), dateFormat.parse(dateAsString));
             } catch (ParseException e) { }
         }
+    }
+
+    ModelContext getWrappedModelContext() {
+        return impl;
     }
 
     public ValueList createList() {
@@ -107,6 +111,46 @@ public class ModelContextRecordingMetadata implements ModelContext {
         metadata.addAspect(findPropertyset(metadataAspectId));
         metadata.setComplexProperty("lastmodifiedtimes", lastmodifiedtimes);
         return metadata;
+    }
+
+    public void merge(ModelContext otherContext) {
+    	ModelContexts.merge(this, otherContext);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + impl.hashCode();
+        result = prime * result + lastmodifiedtime.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        ModelContextRecordingMetadata other = (ModelContextRecordingMetadata) obj;
+        if (!impl.equals(other.impl)) {
+            return false;
+        }
+
+        return lastmodifiedtime.equals(other.lastmodifiedtime);
+    }
+
+    @Override
+    public String toString() {
+        return "ModelContextRecordingMetadata [impl=" + impl + "]";
     }
 
 }

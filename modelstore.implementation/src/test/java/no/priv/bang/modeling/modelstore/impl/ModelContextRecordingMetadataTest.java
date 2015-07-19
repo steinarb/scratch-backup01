@@ -1,5 +1,6 @@
 package no.priv.bang.modeling.modelstore.impl;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -175,6 +176,67 @@ public class ModelContextRecordingMetadataTest {
     public void testFindObjectsOfAspects() {
         assertEquals(5, context.findObjectsOfAspect(vehicleAspect).size());
         assertEquals(3, context.findObjectsOfAspect(carAspect.getPropertyset()).size());
+    }
+
+    /**
+     * Unit test for {@link ModelContextImpl#hashCode()}.
+     */
+    @Test
+    public void testHashCode() {
+        ModelContext inner = new ModelContextImpl();
+        ModelContext context = new ModelContextRecordingMetadata(inner);
+        assertEquals(-2131111121, context.hashCode());
+        addPropertysetsToContext(inner);
+        assertEquals(-531780947, context.hashCode());
+    }
+
+    /**
+     * Unit test for {@link ModelContextImpl#equals()}.
+     */
+    @Test
+    public void testEquals() {
+        ModelContext inner = new ModelContextImpl();
+        addPropertysetsToContext(inner);
+        ModelContext context = new ModelContextRecordingMetadata(inner);
+        assertTrue(context.equals(context));
+        assertFalse(context.equals(null));
+        assertFalse(context.equals(new PropertysetImpl()));
+        assertFalse(context.equals(new ModelContextRecordingMetadata(new ModelContextImpl())));
+        ModelContext identicalInner = new ModelContextImpl();
+        addPropertysetsToContext(identicalInner);
+        ModelContext identicalContext = new ModelContextRecordingMetadata(identicalInner);
+        assertTrue(context.equals(identicalContext));
+    }
+
+    /**
+     * Unit test for {@link ModelContextImpl#toString()}.
+     */
+    @Test
+    public void testToString() {
+        ModelContext inner = new ModelContextImpl();
+        addPropertysetsToContext(inner);
+        ModelContext context = new ModelContextRecordingMetadata(inner);
+        addPropertysetsToContext(context);
+        assertThat(context.toString(), startsWith("ModelContextRecordingMetadata "));
+    }
+
+    private void addPropertysetsToContext(ModelContext context) {
+        UUID aId = UUID.fromString("481f1eda-2acc-4d8e-8618-c29534408e2e");
+        buildPropertysetA(context, aId);
+        UUID bId = UUID.fromString("018bbff7-369a-4dfd-8e02-92fcc581819d");
+        buildPropertysetB(context, bId);
+    }
+
+    private void buildPropertysetA(ModelContext context, UUID aId) {
+        Propertyset propertyset1 = context.findPropertyset(aId);
+        propertyset1.setStringProperty("name", "a");
+        propertyset1.setDoubleProperty("value", 2.1);
+    }
+
+    private void buildPropertysetB(ModelContext context, UUID bId) {
+        Propertyset propertyset1 = context.findPropertyset(bId);
+        propertyset1.setStringProperty("name", "b");
+        propertyset1.setDoubleProperty("value", 1.2);
     }
 
 

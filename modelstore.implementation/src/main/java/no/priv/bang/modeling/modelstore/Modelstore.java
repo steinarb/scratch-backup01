@@ -16,6 +16,7 @@ import java.io.OutputStream;
 public interface Modelstore {
 
     ModelContext getDefaultContext();
+    ModelContext createContext();
     ModelContext restoreContext(InputStream jsonfilestream);
     void persistContext(OutputStream jsonfilestream, ModelContext context);
 

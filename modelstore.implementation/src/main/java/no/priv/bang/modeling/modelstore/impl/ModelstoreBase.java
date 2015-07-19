@@ -28,6 +28,11 @@ class ModelstoreBase implements Modelstore {
         return context;
     }
 
+    public ModelContext createContext() {
+        ModelContextImpl ctxt = new ModelContextImpl();
+        return new ModelContextRecordingMetadata(ctxt);
+    }
+
     public ModelContext restoreContext(InputStream jsonfilestream) {
         ModelContextImpl ctxt = new ModelContextImpl();
         JsonFactory jsonFactory = new JsonFactory();

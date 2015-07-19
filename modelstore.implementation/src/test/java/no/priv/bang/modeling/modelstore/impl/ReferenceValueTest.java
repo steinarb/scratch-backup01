@@ -149,8 +149,8 @@ public class ReferenceValueTest {
     @Test
     public void testToString() {
         Value nullReferenceValue = toReferenceValue(null);
-        assertEquals("ReferenceValue [value=PropertysetNil []]", nullReferenceValue.toString());
-        assertEquals("ReferenceValue [value=PropertysetImpl [properties={id=IdValue [value=276dbd6e-dc46-4c14-af9e-83c63c10e0b3], string=StringValue [value=foo bar], boolean=BooleanValue [value=true], double=DoubleValue [value=2.78], long=LongValue [value=42]}]]", value.toString());
+        assertEquals("ReferenceValue [value=00000000-0000-0000-0000-000000000000]", nullReferenceValue.toString());
+        assertEquals("ReferenceValue [value=276dbd6e-dc46-4c14-af9e-83c63c10e0b3]", value.toString());
     }
 
 }

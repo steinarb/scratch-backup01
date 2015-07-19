@@ -5,11 +5,15 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.UUID;
 
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
+import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
+import static no.priv.bang.modeling.modelstore.impl.Aspects.*;
 import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
 import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
 import no.priv.bang.modeling.modelstore.impl.ModelstoreProvider;
@@ -201,7 +205,7 @@ public class ModelContextTest {
         ModelContext context = modelstore.getDefaultContext();
         buildModelWithAspects(context);
 
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         File propertysetsFile = folder.newFile("propertysets.json");
         persister.persist(propertysetsFile, context);
@@ -254,6 +258,136 @@ public class ModelContextTest {
         String expectedObjectReferenceAsJson = "{\"ref\":\"" + idB.toString() + "\"}";
         String objectReference = new String(Files.readAllBytes(objectReferenceFile.toPath()));
         assertEquals(expectedObjectReferenceAsJson, objectReference);
+    }
+
+    /**
+     * Unit test for {@link ModelContext#merge(ModelContext} when the
+     * two modelcontexts being merged has no overlap.
+     * @throws IOException
+     */
+    @Test
+    public void testMergeNoOverlapBetweenContexts() throws IOException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        buildPropertysetA(context, UUID.randomUUID());
+        assertEquals("Expected context to contain metadata+1 propertyset", 2, context.listAllPropertysets().size());
+
+        ModelContext otherContext = modelstore.createContext();
+        UUID bId = UUID.randomUUID();
+        buildPropertysetB(otherContext, bId);
+        assertEquals("Expected otherContext to contain metadata+1 propertyset", 2, otherContext.listAllPropertysets().size());
+
+        context.merge(otherContext);
+        assertEquals("Expected context to contain metadata+2 propertysets", 3, context.listAllPropertysets().size());
+        // Verify that the copied "B" is the same as the original B
+        // TODO decide if PropertysetRecordingSaveTime.equals() should include the context in comparison, for now: get the inner PropertysetImpl instances and compare them instead
+        Propertyset originalB = findWrappedPropertyset(otherContext.findPropertyset(bId));
+        Propertyset mergedB = findWrappedPropertyset(context.findPropertyset(bId));
+        assertEquals(originalB, mergedB);
+
+        // Save and restore the merged context and verify that the restored context is the same as the merged context
+        File propertysetsFile = folder.newFile("mergedcontext.json");
+        OutputStream saveStream = Files.newOutputStream(propertysetsFile.toPath());
+        modelstore.persistContext(saveStream, context);
+        InputStream loadStream = Files.newInputStream(propertysetsFile.toPath());
+        ModelContext restoredContext = modelstore.restoreContext(loadStream);
+        compareAllPropertysets(context, restoredContext);
+    }
+
+    /**
+     * Unit test for {@link ModelContext#merge(ModelContext} when the
+     * two modelcontexts being merged has overlap: the and b objects exists
+     * in both contexts and the newest values are kept. a is newest in the
+     * otherContext and b is newest in context.
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMergeWithOverlapBetweenContexts() throws IOException, InterruptedException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        UUID aId = UUID.randomUUID();
+        buildPropertysetA(context, aId);
+        assertEquals("Expected context to contain metadata+1 propertyset", 2, context.listAllPropertysets().size());
+
+        // Wait a few milliseconds to get a different time stamp
+        Thread.sleep(10);
+        ModelContext otherContext = modelstore.createContext();
+        UUID bId = UUID.randomUUID();
+        buildPropertysetA(otherContext, aId);
+        otherContext.findPropertyset(aId).setLongProperty("value", 42);
+        Propertyset generalObjectAspect = otherContext.findPropertyset(generalObjectAspectId);
+        otherContext.findPropertyset(aId).addAspect(generalObjectAspect);
+        buildPropertysetB(otherContext, bId);
+        otherContext.findPropertyset(bId).addAspect(generalObjectAspect);
+        assertEquals("Expected otherContext to contain metadata+2 propertysets", 3, otherContext.listAllPropertysets().size());
+
+        // Wait a few milliseconds to get a different time stamp, then create "b" in the
+        // in the first context, with a slightly newer time stamp, meaning it should be kept
+        Thread.sleep(10);
+        buildPropertysetB(context, bId);
+        context.findPropertyset(bId).setLongProperty("value", 4); // Change the value, should be kept after merge
+        Propertyset modelAspect = context.findPropertyset(modelAspectId);
+        context.findPropertyset(bId).addAspect(modelAspect);
+        assertEquals("Expected context to contain metadata+2 propertysets", 3, context.listAllPropertysets().size());
+
+        context.merge(otherContext);
+
+        // Verify the merge results
+        assertEquals("Expected context to contain metadata+2 propertysets", 3, context.listAllPropertysets().size());
+        // Check that the "value" in "b" is from "context" and the "value" in "a" is from "otherContext"
+        assertEquals(42, context.findPropertyset(aId).getLongProperty("value").longValue());
+        assertEquals(4, context.findPropertyset(bId).getLongProperty("value").longValue());
+        // Check that "a" has aspect "general object"
+        assertEquals(1, context.findPropertyset(aId).getAspects().size());
+        assertEquals(generalObjectAspectId, context.findPropertyset(aId).getAspects().get(0).asReference().getId());
+        // Check that "b" has two aspects: first "model" (oldest) and then "general object" (newest)
+        assertEquals(2, context.findPropertyset(bId).getAspects().size());
+        assertEquals(modelAspectId, context.findPropertyset(bId).getAspects().get(0).asReference().getId());
+        assertEquals(generalObjectAspectId, context.findPropertyset(bId).getAspects().get(1).asReference().getId());
+
+        // Save and restore the merged context and verify that the restored context is the same as the merged context
+        File propertysetsFile = folder.newFile("mergedcontext.json");
+        OutputStream saveStream = Files.newOutputStream(propertysetsFile.toPath());
+        modelstore.persistContext(saveStream, context);
+        InputStream loadStream = Files.newInputStream(propertysetsFile.toPath());
+        ModelContext restoredContext = modelstore.restoreContext(loadStream);
+        compareAllPropertysets(context, restoredContext);
+    }
+
+    /**
+     * Corner case unit test for {@link ModelContext#merge(ModelContext}.
+     * Test what happens when merging with a null.
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testMergeWithNull() throws IOException, InterruptedException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        UUID aId = UUID.randomUUID();
+        buildPropertysetA(context, aId);
+        assertEquals("Expected context to contain metadata+1 propertyset", 2, context.listAllPropertysets().size());
+        Collection<Propertyset> propertysetsBeforeMerge = context.listAllPropertysets();
+
+        // Try merging with null
+        context.merge(null);
+
+        // Verify that the contents are the same as before merging with null
+        assertEquals(propertysetsBeforeMerge, context.listAllPropertysets());
+    }
+
+    private void buildPropertysetA(ModelContext context, UUID aId) {
+        Propertyset propertyset1 = context.findPropertyset(aId);
+        propertyset1.setStringProperty("name", "a");
+        propertyset1.setDoubleProperty("value", 2.1);
+    }
+
+    private void buildPropertysetB(ModelContext context, UUID bId) {
+        Propertyset propertyset1 = context.findPropertyset(bId);
+        propertyset1.setStringProperty("name", "b");
+        propertyset1.setDoubleProperty("value", 1.2);
     }
 
     private Propertyset findAspectByTitle(Collection<Propertyset> aspects, String aspectTitle) {

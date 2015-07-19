@@ -140,8 +140,43 @@ public class ModelContextImpl implements ModelContext {
     }
 
     public Date getLastmodifieddate(Propertyset propertyset) {
-        // This class does not store metadata for its propertysets
-        return null;
+        // This class does not store metadata for its propertysets, just give the current time
+        return new Date();
+    }
+
+    public void merge(ModelContext otherContext) {
+    	ModelContexts.merge(this, otherContext);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + propertysets.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        ModelContextImpl other = (ModelContextImpl) obj;
+        return propertysets.equals(other.propertysets);
+    }
+
+    @Override
+    public String toString() {
+        return "ModelContextImpl [propertysets=" + propertysets + "]";
     }
 
 }

@@ -89,4 +89,6 @@ public interface ModelContext {
      * @return date and time of the last modification for the propertyset, or null if no modification date could be found
      */
     Date getLastmodifieddate(Propertyset propertyset);
+
+    void merge(ModelContext otherContext);
 }
