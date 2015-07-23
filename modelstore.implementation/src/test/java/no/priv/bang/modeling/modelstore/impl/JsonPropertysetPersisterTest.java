@@ -78,7 +78,7 @@ public class JsonPropertysetPersisterTest {
         ModelContext context = modelstore.getDefaultContext();
         File carsAndBicyclesIdNotFirst = getResourceAsFile("/json/cars_and_bicycles_id_not_first.json");
 
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -106,7 +106,7 @@ public class JsonPropertysetPersisterTest {
         Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         File withBoolean = getResourceAsFile("/json/with_boolean.json");
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -145,7 +145,7 @@ public class JsonPropertysetPersisterTest {
         Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         File withBoolean = getResourceAsFile("/json/object_on_top.json");
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -179,7 +179,7 @@ public class JsonPropertysetPersisterTest {
         Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         File withListProperty = getResourceAsFile("/json/with_list_property.json");
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -216,7 +216,7 @@ public class JsonPropertysetPersisterTest {
         thrown.expect(NullPointerException.class);
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -233,7 +233,7 @@ public class JsonPropertysetPersisterTest {
         thrown.expect(FileNotFoundException.class);
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // A File in a non-existing directory
@@ -251,7 +251,7 @@ public class JsonPropertysetPersisterTest {
     public void testPersistNullStream() {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -279,7 +279,7 @@ public class JsonPropertysetPersisterTest {
     public void testPersistIntoStreamThrowingExceptions() {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -309,7 +309,7 @@ public class JsonPropertysetPersisterTest {
     public void testRestoreNullFile() throws JsonParseException, IOException {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -337,7 +337,7 @@ public class JsonPropertysetPersisterTest {
         thrown.expect(JsonParseException.class);
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // A file that isn't JSON
@@ -355,7 +355,7 @@ public class JsonPropertysetPersisterTest {
     public void testRestoreNullStream() {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // Read the contents of the file into memory
@@ -382,7 +382,7 @@ public class JsonPropertysetPersisterTest {
     public void testRestoreStreamNotJson() throws URISyntaxException, IOException {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // A file that isn't JSON
@@ -411,7 +411,7 @@ public class JsonPropertysetPersisterTest {
     public void testRestoreFromStream() throws URISyntaxException, IOException {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // A file that isn't JSON
@@ -441,7 +441,7 @@ public class JsonPropertysetPersisterTest {
     public void testRestoreEmptyArrayFromStream() throws URISyntaxException, IOException {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // A file that isn't JSON
@@ -471,7 +471,7 @@ public class JsonPropertysetPersisterTest {
     public void testRestoreObjectOnTopLevelFromStream() throws URISyntaxException, IOException {
         Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.createContext();
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
 
         // A file that isn't JSON
@@ -503,7 +503,7 @@ public class JsonPropertysetPersisterTest {
         ModelContext context = modelstore.getDefaultContext();
         context.findPropertyset(UUID.randomUUID());
         context.findPropertyset(UUID.randomUUID());
-        JsonFactory jsonFactory = new JsonFactory();;
+        JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         File propertysetsFile = folder.newFile("propertyset.json");
         persister.persist(propertysetsFile, context);

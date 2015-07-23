@@ -125,7 +125,7 @@ public class ModelContextImpl implements ModelContext {
     private void loadEmbeddedAspects() {
         try {
             InputStream aspectsFile = getClass().getResourceAsStream("/json/aspects.json");
-            JsonFactory jsonFactory = new JsonFactory();;
+            JsonFactory jsonFactory = new JsonFactory();
             JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
             persister.restore(aspectsFile, this);
             embeddedAspects = new HashSet<Propertyset>(propertysets.values());

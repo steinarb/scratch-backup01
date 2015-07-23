@@ -43,7 +43,7 @@ public class ModelContextRecordingMetadataTest {
 
     @Before
     public void setup() {
-        jsonFactory = new JsonFactory();;
+        jsonFactory = new JsonFactory();
         persister = new JsonPropertysetPersister(jsonFactory);
         nonMetadataRecordingContext = new ModelContextImpl();
         persister.restore(getClass().getResourceAsStream("/json/cars_and_bicycles_id_not_first.json"), nonMetadataRecordingContext);
