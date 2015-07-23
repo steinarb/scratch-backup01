@@ -26,7 +26,7 @@ public class ModelContextRecordingMetadata implements ModelContext {
     public ModelContextRecordingMetadata(ModelContext nonMetadataRecordingContext) {
         impl = nonMetadataRecordingContext;
         Propertyset metadata = impl.findPropertyset(metadataId);
-        setLastmodfiedtimes(metadata);
+        setLastmodifiedtimes(metadata);
     }
 
     /**
@@ -36,13 +36,17 @@ public class ModelContextRecordingMetadata implements ModelContext {
      *
      * @param metadata a {@link Propertyset} to extract saved last modified times from
      */
-    private void setLastmodfiedtimes(Propertyset metadata) {
+    void setLastmodifiedtimes(Propertyset metadata) {
         Propertyset lastmodifiedtimes = metadata.getComplexProperty("lastmodifiedtimes");
         for (String uuidAsString : lastmodifiedtimes.getPropertynames()) {
             String dateAsString = lastmodifiedtimes.getStringProperty(uuidAsString);
             try {
                 lastmodifiedtime.put(UUID.fromString(uuidAsString), dateFormat.parse(dateAsString));
-            } catch (ParseException e) { }
+            } catch (IllegalArgumentException e) {
+            	logError("Metadata \"lastmodifiedtime\" Propertyset id not parsable as a UUID", uuidAsString, e);
+            } catch (ParseException e) {
+            	logError("Metadata \"lastmodifiedtime\" value not parsable as a Date", dateAsString, e);
+            }
         }
     }
 
@@ -151,6 +155,10 @@ public class ModelContextRecordingMetadata implements ModelContext {
     @Override
     public String toString() {
         return "ModelContextRecordingMetadata [impl=" + impl + "]";
+    }
+
+    public void logError(String message, Object fileOrStream, Exception e) {
+        impl.logError(message, fileOrStream, e);
     }
 
 }

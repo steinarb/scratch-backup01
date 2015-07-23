@@ -91,4 +91,13 @@ public interface ModelContext {
     Date getLastmodifieddate(Propertyset propertyset);
 
     void merge(ModelContext otherContext);
+
+    /**
+     * Log an error situation that resulted in a caught exception.
+     *
+     * @param message a human readable message explaining where the error occurred
+     * @param fileOrStream a {@link File} or stream involved in the error, null if not relevant
+     * @param e the exception caught by the code logging the error
+     */
+    void logError(String message, Object fileOrStream, Exception e);
 }

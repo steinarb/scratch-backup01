@@ -2,11 +2,16 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Provider;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
+import no.priv.bang.modeling.modelstore.ErrorBean;
 import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Modelstore;
 
@@ -19,7 +24,8 @@ import no.priv.bang.modeling.modelstore.Modelstore;
  */
 class ModelstoreBase implements Modelstore {
 
-    private ModelContext context = new ModelContextImpl();
+    private ModelContext context = new ModelContextImpl(this);
+    private List<ErrorBean> errors = Collections.synchronizedList(new ArrayList<ErrorBean>());
 
     protected ModelstoreBase() {
     }
@@ -29,12 +35,12 @@ class ModelstoreBase implements Modelstore {
     }
 
     public ModelContext createContext() {
-        ModelContextImpl ctxt = new ModelContextImpl();
+        ModelContextImpl ctxt = new ModelContextImpl(this);
         return new ModelContextRecordingMetadata(ctxt);
     }
 
     public ModelContext restoreContext(InputStream jsonfilestream) {
-        ModelContextImpl ctxt = new ModelContextImpl();
+        ModelContextImpl ctxt = new ModelContextImpl(this);
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         persister.restore(jsonfilestream, ctxt);
@@ -46,6 +52,17 @@ class ModelstoreBase implements Modelstore {
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
         persister.persist(jsonfilestream, context);
+    }
+
+    public void logError(String message, Object fileOrStream, Exception execption) {
+        errors.add(new ErrorBean(new Date(), message, fileOrStream, execption));
+    }
+
+    public List<ErrorBean> getErrors() {
+    	synchronized (errors) {
+            // Defensive copy
+            return new ArrayList<ErrorBean>(errors);
+        }
     }
 
 }

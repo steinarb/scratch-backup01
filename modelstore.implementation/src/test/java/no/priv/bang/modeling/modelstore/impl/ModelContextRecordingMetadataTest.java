@@ -6,8 +6,10 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Date;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.Modelstore;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.ValueList;
@@ -179,6 +181,35 @@ public class ModelContextRecordingMetadataTest {
     }
 
     /**
+     * Corner case unit test for {@link ModelContextRecordingMetadata#setLastmodifiedtimes(Propertyset)}.
+     * Test unparsable {@link UUID} and {@link Date} values.
+     */
+    @Test
+    public void testSetLastmodfiedtimes() {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContextRecordingMetadata context = (ModelContextRecordingMetadata) modelstore.createContext();
+        Propertyset metadataWithErrors = createMetadataWithErrors(context);
+        context.setLastmodifiedtimes(metadataWithErrors);
+
+        assertEquals(2, modelstore.getErrors().size());
+    }
+
+    private void buildPropertysetB(ModelContext context, UUID bId) {
+        Propertyset propertyset1 = context.findPropertyset(bId);
+        propertyset1.setStringProperty("name", "b");
+        propertyset1.setDoubleProperty("value", 1.2);
+    }
+
+    private Propertyset createMetadataWithErrors(ModelContext context) {
+        Propertyset metadataWithErrors = context.createPropertyset();
+        Propertyset lastmodifiedtimes = context.createPropertyset();
+        lastmodifiedtimes.setStringProperty("not-a-uuid", "2015-06-16 22:37");
+        lastmodifiedtimes.setStringProperty("be43c1da-229a-4b1e-9af6-8dbe98811586", "Not a parsable date");
+        metadataWithErrors.setComplexProperty("lastmodifiedtimes", lastmodifiedtimes);
+        return metadataWithErrors;
+    }
+
+    /**
      * Unit test for {@link ModelContextImpl#hashCode()}.
      */
     @Test
@@ -231,12 +262,6 @@ public class ModelContextRecordingMetadataTest {
         Propertyset propertyset1 = context.findPropertyset(aId);
         propertyset1.setStringProperty("name", "a");
         propertyset1.setDoubleProperty("value", 2.1);
-    }
-
-    private void buildPropertysetB(ModelContext context, UUID bId) {
-        Propertyset propertyset1 = context.findPropertyset(bId);
-        propertyset1.setStringProperty("name", "b");
-        propertyset1.setDoubleProperty("value", 1.2);
     }
 
 

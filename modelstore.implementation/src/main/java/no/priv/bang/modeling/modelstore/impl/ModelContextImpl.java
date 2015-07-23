@@ -17,6 +17,7 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
+import no.priv.bang.modeling.modelstore.Modelstore;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Value;
@@ -27,8 +28,14 @@ public class ModelContextImpl implements ModelContext {
     protected final UUID metadataId = UUID.fromString("b1ad694b-4003-412b-8249-a7d1a0a24cf3");
     private Map<UUID, Propertyset> propertysets = new HashMap<UUID, Propertyset>();
     private Set<Propertyset> embeddedAspects;
+    private Modelstore modelstore; // Only used for logging
 
     public ModelContextImpl() {
+    	this(null);
+    }
+
+    public ModelContextImpl(Modelstore modelstore) {
+    	this.modelstore = modelstore;
         loadEmbeddedAspects();
     }
 
@@ -177,6 +184,10 @@ public class ModelContextImpl implements ModelContext {
     @Override
     public String toString() {
         return "ModelContextImpl [propertysets=" + propertysets + "]";
+    }
+
+    public void logError(String message, Object fileOrStream, Exception e) {
+        modelstore.logError(message, fileOrStream, e);
     }
 
 }

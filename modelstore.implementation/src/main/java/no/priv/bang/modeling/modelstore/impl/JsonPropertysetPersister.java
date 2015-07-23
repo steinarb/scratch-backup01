@@ -49,20 +49,22 @@ public class JsonPropertysetPersister {
             JsonGenerator generator = factory.createGenerator(jsonstream);
             outputPropertySets(generator, context.listAllPropertysets());
         } catch (Exception e) {
-            // TODO add logging
+            context.logError("Caught exception outputting stream", jsonstream, e);
         } finally {
             try {
                 jsonstream.flush();
                 jsonstream.close();
             } catch (Exception e) {
-                // TODO add logging
+            	context.logError("Caught exception closing output stream", jsonstream, e);
             }
         }
     }
 
     public void restore(File propertysetsFile, ModelContext modelContext) throws JsonParseException, IOException {
-        JsonParser parser = factory.createParser(propertysetsFile);
-        parseUntilEnd(modelContext, parser);
+    	if (propertysetsFile != null) {
+            JsonParser parser = factory.createParser(propertysetsFile);
+            parseUntilEnd(modelContext, parser);
+    	}
     }
 
     public void restore(InputStream jsonstream, ModelContext context) {
@@ -70,12 +72,12 @@ public class JsonPropertysetPersister {
             JsonParser parser = factory.createParser(jsonstream);
             parseUntilEnd(context, parser);
         } catch (Exception e) {
-            // TODO add logging
+            context.logError("Caught exception parsing a JSON file", jsonstream, e);
         } finally {
             try {
                 jsonstream.close();
             } catch (Exception e) {
-                // TODO add logging
+                context.logError("Caught exception trying to close a JSON file", jsonstream, e);
             }
         }
     }

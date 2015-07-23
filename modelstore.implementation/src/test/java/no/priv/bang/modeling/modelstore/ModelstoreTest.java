@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.nio.file.Files;
+import java.util.List;
 
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
 import no.priv.bang.modeling.modelstore.impl.ModelstoreProvider;
@@ -102,6 +103,54 @@ public class ModelstoreTest {
         ModelContext context2 = modelstore.restoreContext(loadStream);
 
         compareAllPropertysets(context1, context2);
+    }
+
+    /**
+     * Try logging from two threads to reveal race conditions.
+     * One thread log 10000 entries with 1ms interval
+     *
+     * The main thread waits a couple of milliseconds, then logs
+     * one entry, gets the list of errors, logs another error,
+     * then gets the list of error 1000 times with 2ms intervals.
+     *
+     * Then the threads are joined and let list of errors should
+     * have a size of 10002.
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testLogMultithreading() throws IOException, InterruptedException {
+        final Modelstore modelstore = new ModelstoreProvider().get();
+
+        Thread other = new Thread(new Runnable() {
+                public void run() {
+                    for (int i = 0; i < 500; i++) {
+                        String message = "Error in other thread " + i;
+                        modelstore.logError(message, null, null);
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException e) { }
+                    }
+                }
+            });
+        other.start();
+
+        // Throw a little sand in the works in this thread
+        Thread.sleep(10);
+        modelstore.logError("Error in this thread 1", null, null);
+        List<ErrorBean> temp = modelstore.getErrors();
+        assertNotNull(temp);
+        modelstore.logError("Error in this thread 2", null, null);
+        for (int i = 0; i < 500; i++) {
+            modelstore.logError("Error in this thread " + i, null, null);
+            temp = modelstore.getErrors();
+        }
+
+        other.join();
+
+        // Verify that the expected number of log messages have been logged
+        assertEquals(1002, modelstore.getErrors().size());
     }
 
 }

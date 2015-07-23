@@ -1,21 +1,31 @@
 package no.priv.bang.modeling.modelstore.impl;
 
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import no.priv.bang.modeling.modelstore.ErrorBean;
 import no.priv.bang.modeling.modelstore.Propertyset;
 import no.priv.bang.modeling.modelstore.ModelContext;
 import no.priv.bang.modeling.modelstore.Modelstore;
+import no.priv.bang.modeling.modelstore.mocks.MockOutputStreamThatThrowsIOExceptionOnEverything;
 
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import com.fasterxml.jackson.core.JsonFactory;
@@ -30,6 +40,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 public class JsonPropertysetPersisterTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     /**
      * Parse a file with propertysets and aspects.
@@ -191,6 +204,290 @@ public class JsonPropertysetPersisterTest {
         Propertyset propertyset2 = context2.listAllPropertysets().iterator().next();
         assertEquals(7, propertyset2.getListProperty("listofthings").size());
         compareAllPropertysets(context, context2);
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#persist(File, ModelContext)}
+     * try output into a null {@link File}.
+     * @throws IOException
+     */
+    @Test
+    public void testPersistNullFile() throws IOException {
+        thrown.expect(NullPointerException.class);
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // Read the contents of the file into memory
+        persister.persist((File)null, context);
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#persist(File, ModelContext)}
+     * try output into a null {@link File} in a directory that doesn't exist.
+     * @throws IOException
+     */
+    @Test
+    public void testPersistFileInNonexistingDirectory() throws IOException {
+        thrown.expect(FileNotFoundException.class);
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // A File in a non-existing directory
+        File noSuchDirectory = new File("/nosuchdirectory/file.json");
+
+        // Read the contents of the file into memory
+        persister.persist(noSuchDirectory, context);
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#persist(java.io.OutputStream, ModelContext)}
+     * try output into a null {@link OutputStream}.
+     */
+    @Test
+    public void testPersistNullStream() {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // Read the contents of the file into memory
+        persister.persist((OutputStream)null, context);
+        Date now = new Date(); // Will be within 1ms of the stream close error
+
+        // Check that the exception has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(2, errors.size());
+        assertEquals(now, errors.get(0).getDate());
+        assertEquals("Caught exception outputting stream", errors.get(0).getMessage());
+        assertNull(errors.get(0).getFileOrStream());
+        assertEquals(NullPointerException.class, errors.get(0).getException().getClass());
+        assertEquals(now, errors.get(1).getDate());
+        assertEquals("Caught exception closing output stream", errors.get(1).getMessage());
+        assertNull(errors.get(1).getFileOrStream());
+        assertEquals(NullPointerException.class, errors.get(1).getException().getClass());
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#persist(java.io.OutputStream, ModelContext)}
+     * try output into a {@link MockOutputStreamThatThrowsIOExceptionOnEverything}.
+     */
+    @Test
+    public void testPersistIntoStreamThrowingExceptions() {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // Read the contents of the file into memory
+        persister.persist(new MockOutputStreamThatThrowsIOExceptionOnEverything(), context);
+        Date now = new Date(); // Will be within 1ms of the stream close error
+
+        // Check that the exception has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(2, errors.size());
+        assertEquals(now, errors.get(0).getDate());
+        assertEquals("Caught exception outputting stream", errors.get(0).getMessage());
+        assertThat(errors.get(0).getFileOrStream(), startsWith("no.priv.bang.modeling.modelstore.mocks.MockOutputStreamThatThrowsIOExceptionOnEverything"));
+        assertEquals(IOException.class, errors.get(0).getException().getClass());
+        assertEquals(now, errors.get(1).getDate());
+        assertEquals("Caught exception closing output stream", errors.get(1).getMessage());
+        assertThat(errors.get(1).getFileOrStream(), startsWith("no.priv.bang.modeling.modelstore.mocks.MockOutputStreamThatThrowsIOExceptionOnEverything"));
+        assertEquals(IOException.class, errors.get(1).getException().getClass());
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#restore(File, ModelContext)}
+     * try parsing a null {@link InputStream}.
+     * @throws IOException
+     * @throws JsonParseException
+     */
+    @Test
+    public void testRestoreNullFile() throws JsonParseException, IOException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // Read the contents of the file into memory
+        Collection<Propertyset> beforeContents = context.listAllPropertysets();
+        persister.restore((File)null, context);
+
+        // Check that no exception has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(0, errors.size());
+
+        // Verify that the contents of the context hasn't changed
+        assertEquals(beforeContents, context.listAllPropertysets());
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#restore(File, ModelContext)}
+     * try parsing a file that doesn't contain JSON.
+     *
+     * @throws URISyntaxException
+     * @throws IOException
+     * @throws JsonParseException
+     */
+    @Test
+    public void testRestoreFileNotJson() throws URISyntaxException, JsonParseException, IOException {
+        thrown.expect(JsonParseException.class);
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // A file that isn't JSON
+        File notJsonFile = getResourceAsFile("/json/not_json.json");
+
+        // Read the contents of the file into memory
+        persister.restore(notJsonFile, context);
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#restore(java.io.InputStream, ModelContext)}
+     * try parsing a null {@link InputStream}.
+     */
+    @Test
+    public void testRestoreNullStream() {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // Read the contents of the file into memory
+        persister.restore((InputStream)null, context);
+        Date now = new Date(); // Will be within 1ms of the stream close error
+
+        // Check that the exception has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(1, errors.size());
+        assertEquals(now, errors.get(0).getDate());
+        assertEquals("Caught exception trying to close a JSON file", errors.get(0).getMessage());
+        assertNull(errors.get(0).getFileOrStream());
+        assertEquals(NullPointerException.class, errors.get(0).getException().getClass());
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#restore(java.io.InputStream, ModelContext)}
+     * try parsing a file that doesn't contain JSON.
+     *
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    @Test
+    public void testRestoreStreamNotJson() throws URISyntaxException, IOException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // A file that isn't JSON
+        File notJsonFile = getResourceAsFile("/json/not_json.json");
+        InputStream notJsonStream = Files.newInputStream(notJsonFile.toPath());
+
+        // Read the contents of the file into memory
+        persister.restore(notJsonStream, context);
+
+        // Check that the exception has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(1, errors.size());
+        assertNotNull(errors.get(0).getDate());
+        assertEquals("Caught exception parsing a JSON file", errors.get(0).getMessage());
+        assertThat(errors.get(0).getFileOrStream(), startsWith("sun.nio.ch.ChannelInputStream"));
+        assertEquals(JsonParseException.class, errors.get(0).getException().getClass());
+    }
+
+    /**
+     * Unit test for {@link JsonPropertysetPersister#restore(java.io.InputStream, ModelContext)}
+     *
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    @Test
+    public void testRestoreFromStream() throws URISyntaxException, IOException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // A file that isn't JSON
+        File jsonFile = getResourceAsFile("/json/cars_and_bicycles.json");
+        InputStream jsonStream = Files.newInputStream(jsonFile.toPath());
+
+        // Read the contents of the file into memory
+        persister.restore(jsonStream, context);
+
+        // Check that no exceptions has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(0, errors.size());
+
+        // Test that the expected number of propertysets and aspects are in place
+        assertEquals(9, context.listAllAspects().size()); // Both built-in and parsed
+        assertEquals(9, context.listAllPropertysets().size()); // Only parsed aspects and propertysets + metadata
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#restore(java.io.InputStream, ModelContext)}
+     * Test parsing an empty array.
+     *
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    @Test
+    public void testRestoreEmptyArrayFromStream() throws URISyntaxException, IOException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // A file that isn't JSON
+        File jsonFile = getResourceAsFile("/json/empty_array.json");
+        InputStream jsonStream = Files.newInputStream(jsonFile.toPath());
+
+        // Read the contents of the file into memory
+        persister.restore(jsonStream, context);
+
+        // Check that no exceptions has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(0, errors.size());
+
+        // Test that the expected number of propertysets and aspects are in place
+        assertEquals(6, context.listAllAspects().size()); // Only built-in aspects
+        assertEquals(1, context.listAllPropertysets().size()); // Only the metadata object
+    }
+
+    /**
+     * Corner case unit test for {@link JsonPropertysetPersister#restore(java.io.InputStream, ModelContext)}
+     * Test parsing a JSON file with an object on the top level instead of an array.
+     *
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    @Test
+    public void testRestoreObjectOnTopLevelFromStream() throws URISyntaxException, IOException {
+        Modelstore modelstore = new ModelstoreProvider().get();
+        ModelContext context = modelstore.createContext();
+        JsonFactory jsonFactory = new JsonFactory();;
+        JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
+
+        // A file that isn't JSON
+        File jsonFile = getResourceAsFile("/json/object_on_top.json");
+        InputStream jsonStream = Files.newInputStream(jsonFile.toPath());
+
+        // Read the contents of the file into memory
+        persister.restore(jsonStream, context);
+
+        // Check that no exceptions has been logged
+        List<ErrorBean> errors = modelstore.getErrors();
+        assertEquals(0, errors.size());
+
+        // Test that the expected number of propertysets and aspects are in place
+        assertEquals(6, context.listAllAspects().size()); // Only built-in aspects
+        assertEquals(3, context.listAllPropertysets().size()); // The metadata object and the two objects in "propertysets"
     }
 
     /**
