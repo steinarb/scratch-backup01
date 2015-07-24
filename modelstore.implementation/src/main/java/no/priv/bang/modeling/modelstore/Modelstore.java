@@ -14,7 +14,7 @@ import java.util.List;
  * @author Steinar Bang
  *
  */
-public interface Modelstore {
+public interface Modelstore extends BuiltinAspects {
 
     ModelContext getDefaultContext();
     ModelContext createContext();

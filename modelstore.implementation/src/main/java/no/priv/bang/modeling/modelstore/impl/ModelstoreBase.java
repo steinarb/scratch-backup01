@@ -22,7 +22,7 @@ import no.priv.bang.modeling.modelstore.Modelstore;
  * @author Steinar Bang
  *
  */
-class ModelstoreBase implements Modelstore {
+class ModelstoreBase extends BuiltinAspectsBase implements Modelstore {
 
     private ModelContext context = new ModelContextImpl(this);
     private List<ErrorBean> errors = Collections.synchronizedList(new ArrayList<ErrorBean>());
