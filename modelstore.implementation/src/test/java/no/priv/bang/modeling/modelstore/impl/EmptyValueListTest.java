@@ -2,6 +2,7 @@ package no.priv.bang.modeling.modelstore.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.Collections;
 import java.util.List;
 import static no.priv.bang.modeling.modelstore.impl.Values.*;
 import no.priv.bang.modeling.modelstore.Value;
@@ -109,12 +110,12 @@ public class EmptyValueListTest {
 
     @Test
     public void testRemoveAll() {
-        assertFalse(list.removeAll(null));
+        assertFalse(list.removeAll(Collections.emptyList()));
     }
 
     @Test
     public void testRetainAll() {
-        assertFalse(list.retainAll(null));
+        assertFalse(list.retainAll(Collections.emptyList()));
     }
 
     @Test
