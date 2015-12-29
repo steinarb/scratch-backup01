@@ -141,7 +141,7 @@ public class ComplexValueTest {
     public void testToString() {
         Value nullComplexValue = toComplexValue(null);
         assertEquals("ComplexValue [value=PropertysetNil []]", nullComplexValue.toString());
-        assertEquals("ComplexValue [value=PropertysetImpl [properties={string=StringValue [value=foo bar], boolean=BooleanValue [value=true], double=DoubleValue [value=2.78], long=LongValue [value=42]}]]", value.toString());
+        assertEquals("ComplexValue [value=PropertysetImpl [properties={boolean=BooleanValue [value=true], string=StringValue [value=foo bar], double=DoubleValue [value=2.78], long=LongValue [value=42]}]]", value.toString());
     }
 
 }
