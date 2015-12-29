@@ -52,8 +52,8 @@ public class ModelContexts {
      * information otherContext propertysets will be copied into context
      * propertysets.
      *
-     * @param context
-     * @param otherContext
+     * @param context the context that will contain the merge results
+     * @param otherContext the context that is merged into the other context, this context is unchanged after the merge
      */
     static public void merge(ModelContext context, ModelContext otherContext) {
     	if (otherContext == null) {
