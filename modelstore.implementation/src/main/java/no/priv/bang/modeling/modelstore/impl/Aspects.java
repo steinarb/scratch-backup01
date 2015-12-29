@@ -4,7 +4,7 @@ import java.util.UUID;
 
 /**
  * Constants and static functions related to aspects, which are
- * {@link Propertyset} instances defining {@link Propertyset} schemas.
+ * Propertyset instances defining Propertyset schemas.
  *
  * @author Steinar Bang
  *

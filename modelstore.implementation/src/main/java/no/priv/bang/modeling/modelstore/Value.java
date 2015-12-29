@@ -4,7 +4,7 @@ import java.util.UUID;
 
 
 /**
- * Defines a wrapper for a property in a {@link PropertySet}.
+ * Defines a wrapper for a property in a PropertySet.
  *
  * @author Steinar Bang
  *

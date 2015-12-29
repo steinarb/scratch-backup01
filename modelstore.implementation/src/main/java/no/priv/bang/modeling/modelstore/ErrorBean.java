@@ -23,7 +23,7 @@ public class ErrorBean {
      *
      * @param date the date and time when the error occurred, with millisecond accuracy
      * @param message a human readable message describing where in the code the exception occurred
-     * @param fileOrStream a string description of the {@link File} or {@link InputStream}/{@link OutputStream} object involved, or null if no such object was involved
+     * @param fileOrStream a string description of the File or {@link InputStream}/{@link OutputStream} object involved, or null if no such object was involved
      * @param exception the caught exception causing this error to be logged
      */
     public ErrorBean(Date date, String message, Object fileOrStream, Exception exception) {
@@ -52,7 +52,7 @@ public class ErrorBean {
     }
 
     /**
-     * The {@link File} or {@link InputStream}/{@link OutputStream} object involved in
+     * The File or {@link InputStream}/{@link OutputStream} object involved in
      * the error.
      *
      * @return a {@link String} description of the file/stream object involved in the error, or null if none are involved
