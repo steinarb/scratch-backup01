@@ -13,7 +13,7 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
     }
 
     return (
-        <div className="Login">
+        <div className="Login transition-item">
             <h1>Ukelønn login</h1>
             <form  onSubmit={ e => { e.preventDefault(); }}>
                 <label htmlFor="username">Brukernavn:</label>

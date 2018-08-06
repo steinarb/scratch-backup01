@@ -26,7 +26,7 @@ class User extends Component {
         }
 
         return (
-            <div>
+            <div className="transition-item">
                 <h1>Ukelønn for {account.firstName}</h1>
                 <div>Til gode: { account.balance }</div><br/>
                 <form onSubmit={ e => { e.preventDefault(); }}>

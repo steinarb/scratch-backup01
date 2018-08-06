@@ -44,7 +44,7 @@ class Admin extends Component {
         }
 
         return (
-            <div>
+            <div className="transition-item">
                 <h1>Registrer betaling</h1>
                 <form onSubmit={ e => { e.preventDefault(); }}>
                     <label htmlFor="account-selector">Velg hvem det skal betales til:</label>

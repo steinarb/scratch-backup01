@@ -12,7 +12,7 @@ let Home = ({loginResponse}) => {
     }
 
     return (
-        <div>
+        <div className="transition-item">
             <h1>Ukelønn hjem</h1>
         </div>
     );

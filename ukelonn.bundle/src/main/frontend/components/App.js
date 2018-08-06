@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
 import { Switch, Route, BrowserRouter as Router, NavLink } from 'react-router-dom';
+import PageTransition from 'react-router-page-transition';
 import Home from "./Home";
 import Login from "./Login";
 import User from "./User";
 import PerformedJobs from "./PerformedJobs";
 import PerformedPayments from "./PerformedPayments";
 import Admin from "./Admin";
+import '../ukelonn.css';
 
 
 class App extends Component {
@@ -23,14 +25,16 @@ class App extends Component {
         return(
             <Provider store={this.state.store}>
                 <Router>
-                    <Switch>
-                        <Route exact path="/ukelonn/" component={Home} />
-                        <Route path="/ukelonn/login" component={Login} />
-                        <Route path="/ukelonn/user" component={User} />
-                        <Route path="/ukelonn/performedjobs" component={PerformedJobs} />
-                        <Route path="/ukelonn/performedpayments" component={PerformedPayments} />
-                        <Route path="/ukelonn/admin" component={Admin} />
-                    </Switch>
+                    <PageTransition>
+                        <Switch location={this.props.location}>
+                            <Route exact path="/ukelonn/" component={Home} />
+                            <Route path="/ukelonn/login" component={Login} />
+                            <Route path="/ukelonn/user" component={User} />
+                            <Route path="/ukelonn/performedjobs" component={PerformedJobs} />
+                            <Route path="/ukelonn/performedpayments" component={PerformedPayments} />
+                            <Route path="/ukelonn/admin" component={Admin} />
+                        </Switch>
+                    </PageTransition>
                 </Router>
             </Provider>
         );

@@ -24,7 +24,7 @@ class PerformedPayments extends Component {
         }
 
         return (
-            <div>
+            <div className="transition-item">
                 <Link to="/ukelonn/">Register betaling</Link>
                 <br/>
                 <h1>Utførte jobber for {account.firstName}</h1>
