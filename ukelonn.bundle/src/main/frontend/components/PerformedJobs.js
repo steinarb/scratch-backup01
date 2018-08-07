@@ -56,6 +56,10 @@ class PerformedJobs extends Component {
     }
 };
 
+PerformedJobs.defaultProps = {
+    'data-transition-id': 'jobs-page',
+};
+
 const mapStateToProps = state => {
     return {
         loginResponse: state.loginResponse,

@@ -70,6 +70,10 @@ class Admin extends Component {
     };
 };
 
+Admin.defaultProps = {
+    'data-transition-id': 'admin-page',
+};
+
 const emptyAccount = {
     accountId: -1,
     fullName: '',

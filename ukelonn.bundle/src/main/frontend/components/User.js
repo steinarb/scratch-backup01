@@ -47,6 +47,10 @@ class User extends Component {
     }
 };
 
+User.defaultProps = {
+    'data-transition-id': 'user-page',
+};
+
 const emptyJob = {
     account: { accountId: -1 },
     id: -1,

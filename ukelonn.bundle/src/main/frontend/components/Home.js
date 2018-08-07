@@ -18,6 +18,10 @@ let Home = ({loginResponse}) => {
     );
 };
 
+Home.defaultProps = {
+    'data-transition-id': 'home-page',
+};
+
 const mapStateToProps = state => {
     return {
         loginResponse: state.loginResponse

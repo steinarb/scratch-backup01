@@ -27,6 +27,10 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
     );
 };
 
+Login.defaultProps = {
+    'data-transition-id': 'login-page',
+};
+
 const mapStateToProps = state => {
     return {
         username: state.username,

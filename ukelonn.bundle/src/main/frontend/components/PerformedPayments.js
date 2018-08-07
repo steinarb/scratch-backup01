@@ -54,6 +54,10 @@ class PerformedPayments extends Component {
     }
 };
 
+PerformedPayments.defaultProps = {
+    'data-transition-id': 'payments-page',
+};
+
 const mapStateToProps = state => {
     return {
         loginResponse: state.loginResponse,
