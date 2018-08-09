@@ -7,6 +7,10 @@ import User from "./User";
 import PerformedJobs from "./PerformedJobs";
 import PerformedPayments from "./PerformedPayments";
 import Admin from "./Admin";
+import 'material-design-lite/dist/material.indigo-pink.min.css';
+import 'material-design-lite/material.min.js';
+import 'material-design-icons/iconfont/material-icons.css';
+import '../ukelonn.css';
 
 
 class App extends Component {

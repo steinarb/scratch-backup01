@@ -16,11 +16,27 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
         <div className="Login">
             <h1>Ukelønn login</h1>
             <form  onSubmit={ e => { e.preventDefault(); }}>
-                <label htmlFor="username">Brukernavn:</label>
-                <input id="username" type='text' name='username' onChange={(event) => onFieldChange({ username: event.target.value })}></input><br/>
-                <label htmlFor="password">Passord:</label>
-                <input id="password" type='password' name='password' onChange={(event) => onFieldChange({ password: event.target.value })}/><br/>
-                <button onClick={() => onLogin(username, password)}>Login</button>
+                <div className="mdl-grid">
+                    <div className="mdl-cell mdl-cell--2-col graybox">
+                        <label htmlFor="username">Brukernavn:</label>
+                    </div>
+                    <div className="mdl-cell mdl-cell--2-col">
+                        <input type='text' name='username' onChange={(event) => onFieldChange({ username: event.target.value })}></input>
+                    </div>
+                </div>
+                <div className="mdl-grid">
+                    <div className="mdl-cell mdl-cell--2-col graybox">
+                        <label htmlFor="password">Passord:</label>
+                    </div>
+                    <div className="mdl-cell mdl-cell--2-col">
+                        <input type='password' name='password' onChange={(event) => onFieldChange({ password: event.target.value })}/>
+                    </div>
+                </div>
+                <div className="mdl-grid">
+                    <div className="mdl-cell mdl-cell--4-col">
+                        <button onClick={() => onLogin(username, password)}>Login</button>
+                    </div>
+                </div>
             </form>
             <LoginErrorMessage loginResponse={loginResponse} />
         </div>

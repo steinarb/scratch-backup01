@@ -1,0 +1,58 @@
+.graybox {
+    background-color:#ddd;
+}
+
+.hline-bottom {
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ddd; /* whichever color you prefer */
+}
+
+.right-align {
+    text-align: right;
+}
+
+h1,
+.h1 {
+  font-size: 33px;
+}
+h2,
+.h2 {
+  font-size: 30px;
+}
+h3,
+.h3 {
+  font-size: 24px;
+}
+h4,
+.h4 {
+  font-size: 18px;
+}
+h5,
+.h5 {
+  font-size: 14px;
+}
+h6,
+.h6 {
+  font-size: 12px;
+}
+
+.mdl-data-table tbody tr {
+    height: auto;
+}
+
+.transaction-table {
+    width: 100%;
+}
+.transaction-table-col {
+    max-width: 0;
+}
+.transaction-table-col-hide-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.transaction-table-col1 { width: 6em }
+.transaction-table-col2 {  }
+.transaction-table-col3 { width: 2em }
+.transaction-table-col3b { width: 4em }
+.transaction-table-col4 { width: 2em }

@@ -28,20 +28,54 @@ class User extends Component {
         return (
             <div>
                 <h1>Ukelønn for {account.firstName}</h1>
-                <div>Til gode: { account.balance }</div><br/>
+                <div className="hline-bottom"/>
+                <div className="hline-bottom">Til gode: { account.balance }</div><br/>
                 <form onSubmit={ e => { e.preventDefault(); }}>
-                    <label htmlFor="jobtype">Velg jobb</label>
-                    <Jobtypes id="jobtype" jobtypes={jobtypes} jobtypesMap={jobtypesMap} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
-                    <br/>
-                    <label htmlFor="amount">Beløp</label>
-                    <input id="amount" type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
-                    <button onClick={() => onRegisterJob(performedjob)}>Registrer jobb</button>
+                    <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
+                        <div className="mdl-cell mdl-cell--2-col">
+                            <label htmlFor="jobtype">Velg jobb</label>
+                        </div>
+                        <div className="mdl-cell mdl-cell--2-col">
+                            <Jobtypes id="jobtype" jobtypes={jobtypes} jobtypesMap={jobtypesMap} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
+                        </div>
+                    </div>
+                    <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
+                        <div className="mdl-cell mdl-cell--2-col">
+                            <label htmlFor="amount">Beløp</label>
+                        </div>
+                        <div className="mdl-cell mdl-cell--2-col">
+                            <input id="amount" type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
+                        </div>
+                    </div>
+                    <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
+                        <div className="mdl-cell--2-col">
+                            &nbsp;
+                        </div>
+                        <div className="mdl-cell mdl-cell--2-col">
+                            <button onClick={() => onRegisterJob(performedjob)}>Registrer jobb</button>
+                        </div>
+                    </div>
                 </form>
-                <br/>
-                <Link to="/ukelonn/performedjobs">Utforte jobber</Link><br/>
-                <Link to="/ukelonn/performedpayments">Siste utbetalinger til bruker</Link><br/>
-                <br/>
+                <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
+                    <div className="mdl-cell mdl-cell--4-col mdl-cell--hide-phone">
+                        &nbsp;
+                    </div>
+                    <div className="mdl-cell mdl-cell--4-col right-align">
+                        <Link to="/ukelonn/performedjobs">Utforte jobber</Link>
+                        <i className="material-icons right">arrow_forward_ios</i>
+                    </div>
+                </div>
+                <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
+                    <div className="mdl-cell mdl-cell--4-col mdl-cell--hide-phone">
+                        &nbsp;
+                    </div>
+                    <div className="mdl-cell mdl-cell--middle mdl-cell--4-col right-align">
+                        <Link to="/ukelonn/performedpayments">Siste utbetalinger til bruker</Link>
+                        <i className="material-icons right">arrow_forward_ios</i>
+                    </div>
+                </div>
                 <button onClick={() => onLogout()}>Logout</button>
+                <hr/>
             </div>
         );
     }
