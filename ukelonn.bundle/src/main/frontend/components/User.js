@@ -61,7 +61,7 @@ class User extends Component {
                         &nbsp;
                     </div>
                     <div className="mdl-cell mdl-cell--4-col right-align">
-                        <Link to="/ukelonn/performedjobs">Utforte jobber</Link>
+                        <Link to="/ukelonn/performedjobs">Utførte jobber</Link>
                         <i className="material-icons right">arrow_forward_ios</i>
                     </div>
                 </div>
