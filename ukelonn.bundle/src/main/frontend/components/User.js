@@ -60,18 +60,22 @@ class User extends Component {
                     <div className="mdl-cell mdl-cell--4-col mdl-cell--hide-phone">
                         &nbsp;
                     </div>
-                    <div className="mdl-cell mdl-cell--4-col right-align">
-                        <Link to="/ukelonn/performedjobs">Utførte jobber</Link>
-                        <i className="material-icons right">arrow_forward_ios</i>
+                    <div className="mdl-cell mdl-cell--4-col right-align mdl-button mdl-js-button mdl-button--raised">
+                        <Link className="mdl-navigation__link" to="/ukelonn/performedjobs">
+                            Utførte jobber
+                            <i className="material-icons right">arrow_forward_ios</i>
+                        </Link>
                     </div>
                 </div>
                 <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
                     <div className="mdl-cell mdl-cell--4-col mdl-cell--hide-phone">
                         &nbsp;
                     </div>
-                    <div className="mdl-cell mdl-cell--middle mdl-cell--4-col right-align">
-                        <Link to="/ukelonn/performedpayments">Siste utbetalinger til bruker</Link>
-                        <i className="material-icons right">arrow_forward_ios</i>
+                    <div className="mdl-cell mdl-cell--middle mdl-cell--4-col right-align mdl-button mdl-js-button mdl-button--raised">
+                        <Link className="mdl-navigation__link" to="/ukelonn/performedpayments">
+                            Siste utbetalinger
+                            <i className="material-icons right">arrow_forward_ios</i>
+                        </Link>
                     </div>
                 </div>
                 <button className="mdl-button mdl-js-button mdl-button--raised" onClick={() => onLogout()}>Logout</button>
