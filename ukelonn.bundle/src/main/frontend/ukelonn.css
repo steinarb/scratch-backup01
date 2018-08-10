@@ -36,13 +36,19 @@ h6,
   font-size: 12px;
 }
 
-.mdl-data-table tbody tr {
+.mdl-data-table tbody tr, .mdl-data-table tbody td {
     height: auto;
+}
+
+.mdl-data-table tbody td {
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
 .transaction-table {
     width: 100%;
 }
+
 .transaction-table-col {
     max-width: 0;
 }
