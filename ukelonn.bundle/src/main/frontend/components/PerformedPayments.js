@@ -28,20 +28,20 @@ class PerformedPayments extends Component {
                 <Link to="/ukelonn/">Register betaling</Link>
                 <br/>
                 <h1>Utførte jobber for {account.firstName}</h1>
-                <table className="table table-bordered">
+                <table className="mdl-data-table mdl-js-data-table transaction-table">
                     <thead>
                         <tr>
-                            <td>Dato</td>
-                            <td>Utbetalinger</td>
-                            <td>Beløp</td>
+                            <td className="mdl-data-table__cell--non-numeric transaction-table-col transaction-table-col1">Dato</td>
+                            <td className="mdl-data-table__cell--non-numeric transaction-table-col transaction-table-col-hide-overflow transaction-table-col2">Utbetalinger</td>
+                            <td className="transaction-table-col transaction-table-col3b">Beløp</td>
                         </tr>
                     </thead>
                     <tbody>
                         {payments.map((payment) =>
                             <tr key={payment.id}>
-                                <td>{payment.transactionTime}</td>
-                                <td>{payment.name}</td>
-                                <td>{payment.transactionAmount}</td>
+                                <td className="mdl-data-table__cell--non-numeric transaction-table-col">{payment.transactionTime}</td>
+                                <td className="mdl-data-table__cell--non-numeric transaction-table-col transaction-table-col-hide-overflow">{payment.name}</td>
+                                <td className="transaction-table-col">{payment.transactionAmount}</td>
                             </tr>
                         )}
                     </tbody>
