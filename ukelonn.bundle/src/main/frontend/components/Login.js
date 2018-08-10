@@ -34,7 +34,7 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
                 </div>
                 <div className="mdl-grid">
                     <div className="mdl-cell mdl-cell--4-col">
-                        <button onClick={() => onLogin(username, password)}>Login</button>
+                        <button className="mdl-button mdl-js-button mdl-button--raised" onClick={() => onLogin(username, password)}>Login</button>
                     </div>
                 </div>
             </form>

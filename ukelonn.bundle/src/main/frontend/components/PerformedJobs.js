@@ -50,7 +50,7 @@ class PerformedJobs extends Component {
                 </table>
                 <br/>
                 <br/>
-                <button onClick={() => onLogout()}>Logout</button>
+                <button className="mdl-button mdl-js-button mdl-button--raised" onClick={() => onLogout()}>Logout</button>
             </div>
         );
     }

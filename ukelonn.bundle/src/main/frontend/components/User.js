@@ -52,7 +52,7 @@ class User extends Component {
                             &nbsp;
                         </div>
                         <div className="mdl-cell mdl-cell--2-col">
-                            <button onClick={() => onRegisterJob(performedjob)}>Registrer jobb</button>
+                            <button className="mdl-button mdl-js-button mdl-button--raised" onClick={() => onRegisterJob(performedjob)}>Registrer jobb</button>
                         </div>
                     </div>
                 </form>
@@ -74,7 +74,7 @@ class User extends Component {
                         <i className="material-icons right">arrow_forward_ios</i>
                     </div>
                 </div>
-                <button onClick={() => onLogout()}>Logout</button>
+                <button className="mdl-button mdl-js-button mdl-button--raised" onClick={() => onLogout()}>Logout</button>
                 <hr/>
             </div>
         );
