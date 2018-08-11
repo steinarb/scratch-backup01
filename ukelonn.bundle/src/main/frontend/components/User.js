@@ -11,6 +11,8 @@ class User extends Component {
     }
 
     componentDidMount() {
+        const title = 'Ukelønn for ' + this.state.account.firstName;
+        this.props.onUpdate({ title: 'Ukelønn login' });
         this.props.onAccount(this.props.loginResponse.username);
         this.props.onJobtypeList();
     }
@@ -26,9 +28,7 @@ class User extends Component {
         }
 
         return (
-            <div>
-                <h1>Ukelønn for {account.firstName}</h1>
-                <div className="hline-bottom"/>
+            <div className="User">
                 <div className="hline-bottom">Til gode: { account.balance }</div><br/>
                 <form onSubmit={ e => { e.preventDefault(); }}>
                     <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
@@ -108,6 +108,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onUpdate: (field) => dispatch({ type: 'UPDATE', data: field }),
         onLogout: () => dispatch({ type: 'LOGOUT_REQUEST' }),
         onAccount: (username) => dispatch({ type: 'ACCOUNT_REQUEST', username }),
         onJobtypeList: () => dispatch({ type: 'JOBTYPELIST_REQUEST' }),

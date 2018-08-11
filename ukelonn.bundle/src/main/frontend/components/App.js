@@ -25,18 +25,26 @@ class App extends Component {
 
     render() {
         return(
-            <Provider store={this.state.store}>
-                <Router>
-                    <Switch>
-                        <Route exact path="/ukelonn/" component={Home} />
-                        <Route path="/ukelonn/login" component={Login} />
-                        <Route path="/ukelonn/user" component={User} />
-                        <Route path="/ukelonn/performedjobs" component={PerformedJobs} />
-                        <Route path="/ukelonn/performedpayments" component={PerformedPayments} />
-                        <Route path="/ukelonn/admin" component={Admin} />
-                    </Switch>
-                </Router>
-            </Provider>
+            <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+                <header className="mdl-layout__header">
+                    <div className="mdl-layout__header-row">
+                        <span className="mdl-layout-title">{this.props.title}</span>
+                        <div className="mdl-layout-spacer"></div>
+                    </div>
+                </header>
+                <Provider store={this.state.store}>
+                    <Router>
+                        <Switch>
+                            <Route exact path="/ukelonn/" component={Home} />
+                            <Route path="/ukelonn/login" component={Login} />
+                            <Route path="/ukelonn/user" component={User} />
+                            <Route path="/ukelonn/performedjobs" component={PerformedJobs} />
+                            <Route path="/ukelonn/performedpayments" component={PerformedPayments} />
+                            <Route path="/ukelonn/admin" component={Admin} />
+                        </Switch>
+                    </Router>
+                </Provider>
+            </div>
         );
     }
 }
