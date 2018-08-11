@@ -13,8 +13,13 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
     }
 
     return (
-        <div className="Login">
-            <h1>Ukelønn login</h1>
+        <div className="Login mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header className="mdl-layout__header">
+                <div className="mdl-layout__header-row">
+                    <span className="mdl-layout-title">Ukelønn login</span>
+                    <div className="mdl-layout-spacer"></div>
+                </div>
+            </header>
             <form  onSubmit={ e => { e.preventDefault(); }}>
                 <div className="mdl-grid">
                     <div className="mdl-cell mdl-cell--2-col graybox">
