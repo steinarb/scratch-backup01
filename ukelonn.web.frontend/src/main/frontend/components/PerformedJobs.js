@@ -14,12 +14,20 @@ class PerformedJobs extends Component {
     }
 
     componentWillReceiveProps(props) {
+        if (this.state.account.accountId === -1 && props.haveReceivedResponseFromLogin && props.loginResponse.roles.length > 0 && props.loginResponse.roles.includes('user')) {
+            this.props.onAccount(this.props.loginResponse.username);
+        }
+
+        if (this.state.account != props.account) {
+            this.props.onJobs(this.props.account);
+        }
+
         this.setState({...props});
     }
 
     render() {
-        let { loginResponse, account, jobs, onLogout } = this.state;
-        if (loginResponse.roles.length === 0) {
+        let { haveReceivedResponseFromLogin, loginResponse, account, jobs, onLogout } = this.state;
+        if (haveReceivedResponseFromLogin && loginResponse.roles.length === 0) {
             return <Redirect to="/ukelonn/login" />;
         }
 
@@ -58,6 +66,7 @@ class PerformedJobs extends Component {
 
 const mapStateToProps = state => {
     return {
+        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
         loginResponse: state.loginResponse,
         account: state.account,
         jobs: state.jobs,
@@ -66,6 +75,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onLogout: () => dispatch({ type: 'LOGOUT_REQUEST' }),
+        onAccount: (username) => dispatch({ type: 'ACCOUNT_REQUEST', username }),
         onJobs: (account) => dispatch({ type: 'RECENTJOBS_REQUEST', account: account }),
     };
 };
