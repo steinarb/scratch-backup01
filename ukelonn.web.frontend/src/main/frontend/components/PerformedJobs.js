@@ -68,7 +68,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onLogout: () => dispatch({ type: 'LOGOUT_REQUEST' }),
         onAccount: (username) => dispatch({ type: 'ACCOUNT_REQUEST', username }),
-        onJobs: (account) => dispatch({ type: 'RECENTJOBS_REQUEST', account: account }),
+        onJobs: (account) => dispatch({ type: 'RECENTJOBS_REQUEST', accountId: account.accountId }),
     };
 };
 
