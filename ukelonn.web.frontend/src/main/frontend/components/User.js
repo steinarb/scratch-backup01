@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import { stringify } from 'qs';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
@@ -24,6 +25,7 @@ class User extends Component {
 
     render() {
         let { loginResponse, account, jobtypes, jobtypesMap, performedjob, onJobtypeFieldChange, onDateFieldChange, onRegisterJob, onLogout } = this.state;
+        const performedjobs = "/ukelonn/performedjobs?" + stringify({ accountId: account.accountId });
         if (loginResponse.roles.length === 0) {
             return <Redirect to="/ukelonn/login" />;
         }
@@ -46,7 +48,7 @@ class User extends Component {
                     <button onClick={() => onRegisterJob(performedjob)}>Registrer jobb</button>
                 </form>
                 <br/>
-                <Link to="/ukelonn/performedjobs">Utforte jobber</Link><br/>
+                <Link to={performedjobs}>Utforte jobber</Link><br/>
                 <Link to="/ukelonn/performedpayments">Siste utbetalinger til bruker</Link><br/>
                 <br/>
                 <button onClick={() => onLogout()}>Logout</button>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import { parse } from 'qs';
 
 class PerformedJobs extends Component {
     constructor(props) {
@@ -10,10 +11,19 @@ class PerformedJobs extends Component {
     }
 
     componentDidMount() {
-        this.props.onJobs(this.props.account);
+        let { account } = this.props;
+        let queryParams = parse(this.props.location.search, { ignoreQueryPrefix: true });
+        const accountId = account.firstName === "Ukjent" ? queryParams.accountId : account.accountId;
+        this.props.onJobs(accountId);
     }
 
     componentWillReceiveProps(props) {
+        let { haveReceivedResponseFromLogin, loginResponse } = props;
+        let { account } = this.props;
+        if (account.firstName === "Ukjent" && haveReceivedResponseFromLogin) {
+            this.props.onAccount(loginResponse.username);
+        }
+
         this.setState({...props});
     }
 
@@ -68,7 +78,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onLogout: () => dispatch({ type: 'LOGOUT_REQUEST' }),
         onAccount: (username) => dispatch({ type: 'ACCOUNT_REQUEST', username }),
-        onJobs: (account) => dispatch({ type: 'RECENTJOBS_REQUEST', accountId: account.accountId }),
+        onJobs: (accountId) => dispatch({ type: 'RECENTJOBS_REQUEST', accountId: accountId }),
     };
 };
 
