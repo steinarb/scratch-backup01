@@ -44,7 +44,7 @@ class Admin extends Component {
             return <Redirect to="/ukelonn/login" />;
         }
 
-        const performedjobs = "/ukelonn/performedjobs?" + stringify({ accountId: account.accountId });
+        const performedjobs = "/ukelonn/performedjobs?" + stringify({ accountId: account.accountId, username: account.username });
 
         return (
             <div>

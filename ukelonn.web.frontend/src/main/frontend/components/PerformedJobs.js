@@ -15,15 +15,13 @@ class PerformedJobs extends Component {
         let queryParams = parse(this.props.location.search, { ignoreQueryPrefix: true });
         const accountId = account.firstName === "Ukjent" ? queryParams.accountId : account.accountId;
         this.props.onJobs(accountId);
+
+        if (account.firstName === "Ukjent" && queryParams.username) {
+            this.props.onAccount(queryParams.username);
+        }
     }
 
     componentWillReceiveProps(props) {
-        let { haveReceivedResponseFromLogin, loginResponse } = props;
-        let { account } = this.props;
-        if (account.firstName === "Ukjent" && haveReceivedResponseFromLogin) {
-            this.props.onAccount(loginResponse.username);
-        }
-
         this.setState({...props});
     }
 
