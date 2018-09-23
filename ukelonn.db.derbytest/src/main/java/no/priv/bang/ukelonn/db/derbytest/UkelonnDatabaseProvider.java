@@ -135,7 +135,9 @@ public class UkelonnDatabaseProvider implements UkelonnDatabase {
 
     @Override
     public PreparedStatement prepareStatement(String sql) {
+        logInfo(String.format("derby prepareStatement(1) sql: %s", sql));
         try {
+            logInfo("derby prepareStatement(2)");
             return connect.getConnection().prepareStatement(sql);
         } catch (Exception e) {
             logError("Derby mock database failed to create prepared statement", e);
@@ -145,21 +147,27 @@ public class UkelonnDatabaseProvider implements UkelonnDatabase {
 
     @Override
     public ResultSet query(PreparedStatement statement) throws SQLException {
+        logInfo("derby query(1)");
         if (statement != null) {
+            logInfo("derby query(2)");
             return statement.executeQuery();
         }
 
+        logInfo("derby query(3)");
         return null;
     }
 
     @Override
     public int update(PreparedStatement statement) {
+        logInfo("derby update(1)");
         try(PreparedStatement closableStatement = statement) {
+            logInfo("derby update(2)");
             return closableStatement.executeUpdate();
         } catch (Exception e) {
             logError("Derby mock database update failed", e);
         }
 
+        logInfo("derby update(1)");
         return 0;
     }
 
@@ -170,6 +178,12 @@ public class UkelonnDatabaseProvider implements UkelonnDatabase {
             liquibase.forceReleaseLocks(connect);
         } catch (Exception e) {
             logError("Failed to force release Liquibase changelog lock on PostgreSQL database", e);
+        }
+    }
+
+    private void logInfo(String message) {
+        if (logService != null) {
+            logService.log(LogService.LOG_INFO, message);
         }
     }
 
