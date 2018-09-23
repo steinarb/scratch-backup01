@@ -137,7 +137,7 @@ public class UkelonnDatabaseProvider implements UkelonnDatabase {
     public PreparedStatement prepareStatement(String sql) {
         logInfo(String.format("derby prepareStatement(1) sql: %s", sql));
         try {
-            logInfo("derby prepareStatement(2)");
+            logInfo(String.format("derby prepareStatement(2) sql: %s", sql));
             return connect.getConnection().prepareStatement(sql);
         } catch (Exception e) {
             logError("Derby mock database failed to create prepared statement", e);
@@ -147,9 +147,9 @@ public class UkelonnDatabaseProvider implements UkelonnDatabase {
 
     @Override
     public ResultSet query(PreparedStatement statement) throws SQLException {
-        logInfo("derby query(1)");
+        logInfo(String.format("derby query(1) sql: %s", statement.toString()));
         if (statement != null) {
-            logInfo("derby query(2)");
+            logInfo(String.format("derby query(2) sql: %s", statement.toString()));
             return statement.executeQuery();
         }
 
