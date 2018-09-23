@@ -25,10 +25,11 @@ class User extends Component {
 
     render() {
         let { loginResponse, account, jobtypes, jobtypesMap, performedjob, onJobtypeFieldChange, onDateFieldChange, onRegisterJob, onLogout } = this.state;
-        const performedjobs = "/ukelonn/performedjobs?" + stringify({ accountId: account.accountId });
         if (loginResponse.roles.length === 0) {
             return <Redirect to="/ukelonn/login" />;
         }
+
+        const performedjobs = "/ukelonn/performedjobs?" + stringify({ accountId: account.accountId });
 
         return (
             <div>
