@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
 import { Switch, Route, BrowserRouter as Router, NavLink } from 'react-router-dom';
+import { NotificationSystem } from 'react-notification-system';
 import Home from "./Home";
 import Login from "./Login";
 import User from "./User";
