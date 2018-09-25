@@ -64,12 +64,12 @@ class AdminUsersChangePassword extends Component {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        users: state.users,
-        usersMap: new Map(state.users.map(i => [i.fullname, i])),
-        user: state.user,
-        passwords: state.passwords,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        users: state.ukelonn.users,
+        usersMap: new Map(state.ukelonn.users.map(i => [i.fullname, i])),
+        user: state.ukelonn.user,
+        passwords: state.ukelonn.passwords,
     };
 };
 

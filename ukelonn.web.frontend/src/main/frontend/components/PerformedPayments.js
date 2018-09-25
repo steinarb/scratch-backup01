@@ -64,10 +64,10 @@ class PerformedPayments extends Component {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        account: state.account,
-        payments: state.payments,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        account: state.ukelonn.account,
+        payments: state.ukelonn.payments,
     };
 };
 const mapDispatchToProps = dispatch => {

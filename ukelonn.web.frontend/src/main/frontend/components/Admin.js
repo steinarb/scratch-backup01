@@ -85,15 +85,15 @@ const emptyAccount = {
 
 const mapStateToProps = state => {
     return {
-        loginResponse: state.loginResponse,
-        firstTimeAfterLogin: state.firstTimeAfterLogin,
-        account: state.account,
-        payment: state.payment,
-        paymenttype: state.paymenttype,
-        accounts: state.accounts,
-        accountsMap: state.accountsMap,
-        paymenttypes: state.paymenttypes,
-        paymenttypesMap: new Map(state.paymenttypes.map(i => [i.transactionTypeName, i])),
+        loginResponse: state.ukelonn.loginResponse,
+        firstTimeAfterLogin: state.ukelonn.firstTimeAfterLogin,
+        account: state.ukelonn.account,
+        payment: state.ukelonn.payment,
+        paymenttype: state.ukelonn.paymenttype,
+        accounts: state.ukelonn.accounts,
+        accountsMap: state.ukelonn.accountsMap,
+        paymenttypes: state.ukelonn.paymenttypes,
+        paymenttypesMap: new Map(state.ukelonn.paymenttypes.map(i => [i.transactionTypeName, i])),
     };
 };
 

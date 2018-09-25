@@ -57,10 +57,10 @@ const emptyPaymenttype = {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        paymenttypes: state.paymenttypes,
-        transactiontype: state.transactiontype,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        paymenttypes: state.ukelonn.paymenttypes,
+        transactiontype: state.ukelonn.transactiontype,
     };
 };
 

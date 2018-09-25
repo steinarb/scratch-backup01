@@ -20,7 +20,7 @@ let Home = ({loginResponse}) => {
 
 const mapStateToProps = state => {
     return {
-        loginResponse: state.loginResponse
+        loginResponse: state.ukelonn.loginResponse
     };
 };
 

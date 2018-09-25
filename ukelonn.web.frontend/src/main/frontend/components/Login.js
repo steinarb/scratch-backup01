@@ -29,9 +29,9 @@ let Login = ({username, password, loginResponse, onFieldChange, onLogin}) => {
 
 const mapStateToProps = state => {
     return {
-        username: state.username,
-        password: state.password,
-        loginResponse: state.loginResponse
+        username: state.ukelonn.username,
+        password: state.ukelonn.password,
+        loginResponse: state.ukelonn.loginResponse
     };
 };
 

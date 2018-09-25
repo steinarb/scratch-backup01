@@ -59,16 +59,16 @@ const emptyPaymenttype = {
 
 
 const mapStateToProps = state => {
-    if (!state.paymenttypes.find((payment) => payment.id === -1)) {
-        state.paymenttypes.unshift(emptyPaymenttype);
+    if (!state.ukelonn.paymenttypes.find((payment) => payment.id === -1)) {
+        state.ukelonn.paymenttypes.unshift(emptyPaymenttype);
     }
 
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        paymenttypes: state.paymenttypes,
-        paymenttypesMap: new Map(state.paymenttypes.map(i => [i.transactionTypeName, i])),
-        transactiontype: state.transactiontype,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        paymenttypes: state.ukelonn.paymenttypes,
+        paymenttypesMap: new Map(state.ukelonn.paymenttypes.map(i => [i.transactionTypeName, i])),
+        transactiontype: state.ukelonn.transactiontype,
     };
 };
 

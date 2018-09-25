@@ -57,10 +57,10 @@ const emptyJobtype = {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        jobtypes: state.jobtypes,
-        transactiontype: state.transactiontype,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        jobtypes: state.ukelonn.jobtypes,
+        transactiontype: state.ukelonn.transactiontype,
     };
 };
 

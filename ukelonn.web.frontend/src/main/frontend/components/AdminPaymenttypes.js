@@ -36,8 +36,8 @@ class AdminPaymenttypes extends Component {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
     };
 };
 

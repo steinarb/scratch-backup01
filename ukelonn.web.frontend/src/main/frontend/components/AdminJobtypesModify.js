@@ -59,16 +59,16 @@ const emptyJobtype = {
 
 
 const mapStateToProps = state => {
-    if (!state.jobtypes.find((job) => job.id === -1)) {
-        state.jobtypes.unshift(emptyJobtype);
+    if (!state.ukelonn.jobtypes.find((job) => job.id === -1)) {
+        state.ukelonn.jobtypes.unshift(emptyJobtype);
     }
 
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        jobtypes: state.jobtypes,
-        jobtypesMap: new Map(state.jobtypes.map(i => [i.transactionTypeName, i])),
-        transactiontype: state.transactiontype,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        jobtypes: state.ukelonn.jobtypes,
+        jobtypesMap: new Map(state.ukelonn.jobtypes.map(i => [i.transactionTypeName, i])),
+        transactiontype: state.ukelonn.transactiontype,
     };
 };
 

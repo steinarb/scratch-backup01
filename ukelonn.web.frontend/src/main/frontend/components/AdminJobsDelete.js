@@ -75,12 +75,12 @@ class AdminJobsDelete extends Component {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        account: state.account,
-        jobs: state.jobs,
-        accounts: state.accounts,
-        accountsMap: state.accountsMap,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        account: state.ukelonn.account,
+        jobs: state.ukelonn.jobs,
+        accounts: state.ukelonn.accounts,
+        accountsMap: state.ukelonn.accountsMap,
     };
 };
 const mapDispatchToProps = dispatch => {

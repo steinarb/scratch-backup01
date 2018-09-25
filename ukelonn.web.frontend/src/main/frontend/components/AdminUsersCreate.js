@@ -71,10 +71,10 @@ class AdminUsersCreate extends Component {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        user: state.user,
-        passwords: state.passwords,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        user: state.ukelonn.user,
+        passwords: state.ukelonn.passwords,
     };
 };
 

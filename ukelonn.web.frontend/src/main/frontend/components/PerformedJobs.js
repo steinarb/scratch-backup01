@@ -66,10 +66,10 @@ class PerformedJobs extends Component {
 
 const mapStateToProps = state => {
     return {
-        haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
-        loginResponse: state.loginResponse,
-        account: state.account,
-        jobs: state.jobs,
+        haveReceivedResponseFromLogin: state.ukelonn.haveReceivedResponseFromLogin,
+        loginResponse: state.ukelonn.loginResponse,
+        account: state.ukelonn.account,
+        jobs: state.ukelonn.jobs,
     };
 };
 const mapDispatchToProps = dispatch => {
