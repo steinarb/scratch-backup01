@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
 import { Switch, Route, BrowserRouter as Router, NavLink } from 'react-router-dom';
-import NotificationSystem from 'react-notification-system';
+import Notifications from 'react-notification-system-redux';
 import Home from "./Home";
 import Login from "./Login";
 import User from "./User";
@@ -32,10 +32,12 @@ class App extends Component {
     }
 
     render() {
+        const {notifications} = this.props;
+
         return(
             <Provider store={this.state.store}>
                 <div>
-                    <NotificationSystem/>
+                    <Notifications notifications={notifications}/>
                     <Router>
                         <Switch>
                             <Route exact path="/ukelonn/" component={Home} />
