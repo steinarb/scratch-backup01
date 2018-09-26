@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { info } from 'react-notification-system-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { stringify } from 'qs';
@@ -149,7 +150,11 @@ const mapDispatchToProps = dispatch => {
             };
             dispatch({ type: 'UPDATE', data: changedField });
         },
-        onRegisterPayment: (payment) => dispatch({ type: 'REGISTERPAYMENT_REQUEST', payment }),
+        onRegisterPayment: (payment) => {
+            dispatch({ type: 'REGISTERPAYMENT_REQUEST', payment });
+            const infoMessage = 'Betalt ' + payment.transactionAmount + ' til konto';
+            dispatch(info(infoMessage));
+        },
     };
 };
 
