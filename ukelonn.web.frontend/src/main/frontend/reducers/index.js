@@ -38,6 +38,7 @@ export const ukelonnReducer = (state =
                                { username: null,
                                  password: null,
                                  firstTimeAfterLogin: false,
+                                 notificationAvailable: false,
                                  account: { firstName: 'Ukjent', fullName: '', balance: 0.0 },
                                  paymenttype: { id: -1, transactionTypeName: '', transactionAmount: 0.0, transactionIsWork: false, transactionIsWagePayment: true },
                                  payment: {...emptyPerformedTransaction},
