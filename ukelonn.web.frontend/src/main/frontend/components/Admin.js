@@ -152,7 +152,10 @@ const mapDispatchToProps = dispatch => {
         },
         onRegisterPayment: (payment) => {
             dispatch({ type: 'REGISTERPAYMENT_REQUEST', payment });
-            const infoMessage = 'Betalt ' + payment.transactionAmount + ' til konto';
+            const infoMessage = {
+                title: 'Betaling',
+                message: 'Betalt ' + payment.transactionAmount + ' til konto',
+            };
             dispatch(info(infoMessage));
         },
     };
