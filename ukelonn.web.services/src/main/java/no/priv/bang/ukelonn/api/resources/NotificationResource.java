@@ -17,18 +17,35 @@ package no.priv.bang.ukelonn.api.resources;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import no.priv.bang.ukelonn.UkelonnService;
 import no.priv.bang.ukelonn.beans.Notification;
 
+@Path("")
+@Produces(MediaType.APPLICATION_JSON)
 public class NotificationResource {
 
+    @Inject
     UkelonnService ukelonn;
 
-    public List<Notification> notificationsTo(String username) {
+    @GET
+    @Path("/notificationsto/{username}")
+    public List<Notification> notificationsTo(@PathParam("username") String username) {
         return ukelonn.notificationsTo(username);
     }
 
-    public void notificationTo(String username, Notification notification) {
+    @POST
+    @Path("/notificationto/{username}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void notificationTo(@PathParam("username") String username, Notification notification) {
         ukelonn.notificationTo(username, notification);
     }
 
