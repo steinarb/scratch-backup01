@@ -460,7 +460,7 @@ function* receiveChangePasswordSaga(action) {
 
 // watcher saga
 export function* startNotificationListening() {
-    yield takeLatest("START_NOTIFICATION_LISTENING", receiveChangePasswordSaga);
+    yield takeLatest("START_NOTIFICATION_LISTENING", pollNotification);
 }
 
 // worker saga
