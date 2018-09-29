@@ -1,4 +1,6 @@
 import moment from 'moment';
+import { createNotification } from "../notification";
+
 
 const emptyPerformedTransaction = {
     account: { id: -1 },
@@ -205,6 +207,13 @@ export const ukelonnReducer = (state =
             ...state,
             user: {...emptyUser},
             passwords: {...emptyPasswords},
+        };
+    }
+
+    if (action.type === 'RECEIVED_NOTIFICATION') {
+        createNotification(action.notifications[0]);
+        return {
+            ...state,
         };
     }
 
