@@ -1,5 +1,6 @@
 import { takeLatest, call, put, fork } from "redux-saga/effects";
 import axios from "axios";
+import delay from "delay";
 
 // Constants
 const emptyLoginResponse = { username: '', roles: [], error: '' };
@@ -457,6 +458,29 @@ function* receiveChangePasswordSaga(action) {
 }
 
 
+// watcher saga
+export function* startNotificationListening() {
+    yield takeLatest("START_NOTIFICATION_LISTENING", receiveChangePasswordSaga);
+}
+
+// worker saga
+function* pollNotification(action) {
+    const notificationsRestEndpoint = '/ukelonn/api/notificationsto/' + action.username;
+    while (true) {
+        try {
+            const { data } = yield call(() => axios({ url: notificationsRestEndpoint }));
+            if (data.length > 0) {
+                yield put({ type: 'RECEIVED_NOTIFICATION', notifications: data });
+            }
+
+            yield call(delay, 4000);
+        } catch (err) {
+            yield put({ type: 'ERROR_RECEIVED_NOTIFICATION', err });
+    }
+  }
+}
+
+
 export function* rootSaga() {
     yield [
         fork(requestInitialLoginStateSaga),
@@ -480,5 +504,6 @@ export function* rootSaga() {
         fork(requestModifyUserSaga),
         fork(requestCreateUserSaga),
         fork(requestChangePasswordSaga),
+        fork(startNotificationListening),
     ];
 };

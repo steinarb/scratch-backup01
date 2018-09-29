@@ -16,6 +16,7 @@ class User extends Component {
 
     componentDidMount() {
         this.props.onAccount(this.props.loginResponse.username);
+        this.props.onNotifyStart(this.props.loginResponse.username);
         this.props.onJobtypeList();
     }
 
@@ -84,6 +85,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onLogout: () => dispatch({ type: 'LOGOUT_REQUEST' }),
         onAccount: (username) => dispatch({ type: 'ACCOUNT_REQUEST', username }),
+        onNotifyStart: (username) => dispatch({ type: 'START_NOTIFICATION_LISTENING', username }),
         onJobtypeList: () => dispatch({ type: 'JOBTYPELIST_REQUEST' }),
         onJobtypeFieldChange: (selectedValue, jobtypesMap, account, performedjob) => {
             let jobtype = jobtypesMap.get(selectedValue);
