@@ -1,13 +1,10 @@
- import React from 'react';
+import { spawnNotification } from "./spawnnotification.js";
+import React from 'react';
 
 const Notification = ({notificationMessage}) => {
-    if (notification) {
+    if (notificationMessage) {
         if (Notification) {
-            if (Notification.permission === "granted") {
-                var notification = new Notification(notificationMessage.title, { text: notificationMessage.message } );
-            } else {
-                console.log("Notification is denied");
-            }
+            spawnNotification(notificationMessage);
         } else {
             console.log("Notification not supported by browser");
         }
