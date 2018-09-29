@@ -478,7 +478,7 @@ function* pollNotification(action) {
                 loop = false;
             }
 
-            yield call(delay, 4000);
+            yield call(delay, 60000);
         }
     } catch (err) {
         // Error will break the loop
