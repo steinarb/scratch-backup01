@@ -1758,7 +1758,9 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         MockHttpServletResponse sendNotificationResponse = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
         servlet.service(sendNotificationRequest, sendNotificationResponse);
 
-        System.err.println("Error from POST: " + sendNotificationResponse.getOutput().toString());
+        if (sendNotificationResponse.getStatus() == HttpServletResponse.SC_BAD_REQUEST) {
+            System.err.println("Error in POST request: " + sendNotificationResponse.getOutput().toString());
+        }
 
         // A new REST API request for notifications to "jad" will return a single notification
         MockHttpServletResponse notificationsResponse2 = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
