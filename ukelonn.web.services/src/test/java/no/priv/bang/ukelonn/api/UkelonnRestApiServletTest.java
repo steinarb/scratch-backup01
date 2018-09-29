@@ -1755,8 +1755,10 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         HttpServletRequest sendNotificationRequest = buildRequestFromStringBody(utbetaltAsJson);
         when(sendNotificationRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/user/password"));
         when(sendNotificationRequest.getRequestURI()).thenReturn("/ukelonn/api/admin/user/password");
-        HttpServletResponse sendNotificationResponse = mock(HttpServletResponse.class);
+        MockHttpServletResponse sendNotificationResponse = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
         servlet.service(sendNotificationRequest, sendNotificationResponse);
+
+        System.err.println("Error from POST: " + sendNotificationResponse.getOutput().toString());
 
         // A new REST API request for notifications to "jad" will return a single notification
         MockHttpServletResponse notificationsResponse2 = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
