@@ -1753,8 +1753,8 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         Notification utbetalt = new Notification("Ukelønn", "150 kroner betalt til konto");
         String utbetaltAsJson = mapper.writeValueAsString(utbetalt);
         HttpServletRequest sendNotificationRequest = buildRequestFromStringBody(utbetaltAsJson);
-        when(sendNotificationRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/user/password"));
-        when(sendNotificationRequest.getRequestURI()).thenReturn("/ukelonn/api/admin/user/password");
+        when(sendNotificationRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/notificationto/jad"));
+        when(sendNotificationRequest.getRequestURI()).thenReturn("/ukelonn/api/notificationto/jad");
         MockHttpServletResponse sendNotificationResponse = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
         servlet.service(sendNotificationRequest, sendNotificationResponse);
 
