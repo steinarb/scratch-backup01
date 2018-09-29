@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { createNotification } from "../notification";
 
 
 const emptyPerformedTransaction = {
@@ -211,8 +210,8 @@ export const ukelonnReducer = (state =
     }
 
     if (action.type === 'RECEIVED_NOTIFICATION') {
-        createNotification(action.notifications[0]);
         return {
+            notificationMessage: action.notifications[0],
             ...state,
         };
     }

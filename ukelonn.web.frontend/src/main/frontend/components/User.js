@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 import Jobtypes from './Jobtypes';
+import Notification from './Notification';
 
 class User extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class User extends Component {
     }
 
     render() {
-        let { loginResponse, account, jobtypes, jobtypesMap, performedjob, onJobtypeFieldChange, onDateFieldChange, onRegisterJob, onLogout } = this.state;
+        let { loginResponse, account, jobtypes, jobtypesMap, performedjob, notificationMessage, onJobtypeFieldChange, onDateFieldChange, onRegisterJob, onLogout } = this.state;
         if (loginResponse.roles.length === 0) {
             return <Redirect to="/ukelonn/login" />;
         }
@@ -35,6 +36,7 @@ class User extends Component {
 
         return (
             <div>
+                <Notification notificationMessage={notificationMessage}/>
                 <h1>Ukelønn for {account.firstName}</h1>
                 <div>Til gode: { account.balance }</div><br/>
                 <form onSubmit={ e => { e.preventDefault(); }}>
@@ -78,6 +80,7 @@ const mapStateToProps = state => {
         jobtypes: state.jobtypes,
         jobtypesMap: new Map(state.jobtypes.map(i => [i.transactionTypeName, i])),
         performedjob: state.performedjob,
+        notificationMessage: state.notificationMessage,
     };
 };
 
