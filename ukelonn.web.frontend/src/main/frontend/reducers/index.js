@@ -53,6 +53,7 @@ export const ukelonnReducer = (state =
                                      error: ''
                                  },
                                  performedjob: {...emptyPerformedTransaction, transactionDate: moment()},
+                                 selectedjob: {...emptyPerformedTransaction, transactionDate: moment()},
                                  accounts: [],
                                  accountsMap: {},
                                  paymenttypes: [],
