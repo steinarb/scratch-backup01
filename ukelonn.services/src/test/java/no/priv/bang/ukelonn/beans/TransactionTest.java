@@ -17,6 +17,7 @@ package no.priv.bang.ukelonn.beans;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class TransactionTest {
     public void testConstructorWithArgs() {
         int id = 5;
         TransactionType transactionType = new TransactionType();
-        Date transactionTime = new Date();
+        LocalDateTime transactionTime = LocalDateTime.now();
         double transactionAmount = 100.0;
         boolean paidOut = true;
         Transaction bean = new Transaction(id, transactionType, transactionTime, transactionAmount, paidOut);

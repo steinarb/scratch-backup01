@@ -15,12 +15,12 @@
  */
 package no.priv.bang.ukelonn.beans;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Transaction {
     private int id = -1;
     private TransactionType transactionType = null;
-    private Date transactionTime = null;
+    private LocalDateTime transactionTime = null;
     private double transactionAmount = 0.0;
     private boolean paidOut = false;
 
@@ -29,7 +29,7 @@ public class Transaction {
     }
 
 
-    public Transaction(int id,TransactionType transactionType, Date transactionTime, double transactionAmount, boolean paidOut) {
+    public Transaction(int id,TransactionType transactionType, LocalDateTime transactionTime, double transactionAmount, boolean paidOut) {
         setId(id);
         setTransactionType(transactionType);
         setTransactionTime(transactionTime);
@@ -61,11 +61,11 @@ public class Transaction {
     }
 
 
-    public Date getTransactionTime() {
+    public LocalDateTime getTransactionTime() {
         return transactionTime;
     }
 
-    public void setTransactionTime(Date transactionTime) {
+    public void setTransactionTime(LocalDateTime transactionTime) {
         this.transactionTime = transactionTime;
     }
 
