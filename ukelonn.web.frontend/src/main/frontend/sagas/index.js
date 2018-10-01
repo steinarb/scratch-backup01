@@ -137,7 +137,7 @@ export function* requestRegisterJobSaga() {
 }
 
 function doRegisterJob(performedJob) {
-    return axios.post('/ukelonn/api/registerjob', performedJob);
+    return axios.post('/ukelonn/api/job/register', performedJob);
 }
 
 // worker saga

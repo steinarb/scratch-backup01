@@ -40,7 +40,7 @@ import no.priv.bang.ukelonn.beans.Account;
 import no.priv.bang.ukelonn.beans.PerformedTransaction;
 import no.priv.bang.ukelonn.beans.TransactionType;
 
-public class RegisterJobTest extends ServletTestBase {
+public class JobResourceTest extends ServletTestBase {
 
     @BeforeClass
     public static void setupForAllTests() {
@@ -67,7 +67,7 @@ public class RegisterJobTest extends ServletTestBase {
         HttpServletResponse response = mock(HttpServletResponse.class);
 
         // Create the object to be tested
-        RegisterJob resource = new RegisterJob();
+        JobResource resource = new JobResource();
 
         // Log the user in to shiro
         loginUser(request, response, "jad", "1ad");
@@ -110,7 +110,7 @@ public class RegisterJobTest extends ServletTestBase {
         loginUser(request, response, "jad", "1ad");
 
         // Create the object to be tested
-        RegisterJob resource = new RegisterJob();
+        JobResource resource = new JobResource();
 
         // Create mock OSGi services to inject and inject it
         MockLogService logservice = new MockLogService();
@@ -147,7 +147,7 @@ public class RegisterJobTest extends ServletTestBase {
         loginUser(request, response, "admin", "admin");
 
         // Create the object to be tested
-        RegisterJob resource = new RegisterJob();
+        JobResource resource = new JobResource();
 
         // Create mock OSGi services to inject and inject it
         MockLogService logservice = new MockLogService();
@@ -180,7 +180,7 @@ public class RegisterJobTest extends ServletTestBase {
         // Log the user in to shiro
         loginUser(request, response, "jad", "1ad");
 
-        RegisterJob resource = new RegisterJob();
+        JobResource resource = new JobResource();
 
         // Create mock OSGi services to inject and inject it
         MockLogService logservice = new MockLogService();
@@ -210,7 +210,7 @@ public class RegisterJobTest extends ServletTestBase {
         PerformedTransaction job = new PerformedTransaction(account, jobTypes.get(0).getId(), jobTypes.get(0).getTransactionAmount(), new Date());
 
         // Create the object to be tested
-        RegisterJob resource = new RegisterJob();
+        JobResource resource = new JobResource();
 
         // Create mock OSGi services to inject and inject it
         MockLogService logservice = new MockLogService();

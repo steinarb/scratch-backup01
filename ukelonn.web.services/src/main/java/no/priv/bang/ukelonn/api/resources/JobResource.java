@@ -29,9 +29,9 @@ import no.priv.bang.ukelonn.UkelonnService;
 import no.priv.bang.ukelonn.beans.Account;
 import no.priv.bang.ukelonn.beans.PerformedTransaction;
 
-@Path("/registerjob")
+@Path("/job")
 @Produces(MediaType.APPLICATION_JSON)
-public class RegisterJob extends ResourceBase {
+public class JobResource extends ResourceBase {
 
     @Inject
     LogService logservice;
@@ -39,6 +39,7 @@ public class RegisterJob extends ResourceBase {
     @Inject
     UkelonnService ukelonn;
 
+    @Path("/register")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Account doRegisterJob(PerformedTransaction performedJob) {
