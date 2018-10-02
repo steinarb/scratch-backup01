@@ -15,13 +15,16 @@
  */
 package no.priv.bang.ukelonn.api.resources;
 
+import static no.priv.bang.ukelonn.backend.CommonDatabaseMethods.getAccountInfoFromDatabase;
 import static no.priv.bang.ukelonn.testutils.TestUtils.*;
 import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,10 +38,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
+import no.priv.bang.ukelonn.UkelonnService;
 import no.priv.bang.ukelonn.api.ServletTestBase;
 import no.priv.bang.ukelonn.beans.Account;
 import no.priv.bang.ukelonn.beans.PerformedTransaction;
+import no.priv.bang.ukelonn.beans.Transaction;
 import no.priv.bang.ukelonn.beans.TransactionType;
+import no.priv.bang.ukelonn.beans.UpdatedTransaction;
 
 public class JobResourceTest extends ServletTestBase {
 
@@ -225,6 +231,50 @@ public class JobResourceTest extends ServletTestBase {
 
         // Run the method under test
         resource.doRegisterJob(job);
+    }
+
+    @Test
+    public void testUpdateJob() {
+        try {
+            UkelonnService ukelonn = getUkelonnServiceSingleton();
+            JobResource resource = new JobResource();
+
+            // Create mock OSGi services to inject and inject it
+            MockLogService logservice = new MockLogService();
+            resource.logservice = logservice;
+            resource.ukelonn = ukelonn;
+
+            String username = "jad";
+            Account account = getAccountInfoFromDatabase(getClass(), getUkelonnServiceSingleton(), username);
+            Transaction job = ukelonn.getJobs(account.getAccountId()).get(0);
+            int jobId = job.getId();
+
+            // Save initial values of the job for comparison later
+            Integer originalTransactionTypeId = job.getTransactionType().getId();
+            Date originalTransactionTime = job.getTransactionTime();
+            double originalTransactionAmount = job.getTransactionAmount();
+
+            // Find a different job type that has a different amount
+            TransactionType newJobType = findJobTypeWithDifferentIdAndAmount(ukelonn, originalTransactionTypeId, originalTransactionAmount);
+
+            // Create a new job object with a different jobtype and the same id
+            Date now = new Date();
+            UpdatedTransaction editedJob = new UpdatedTransaction(jobId, account.getAccountId(), newJobType.getId(), now, newJobType.getTransactionAmount());
+
+            List<Transaction> updatedJobs = resource.doUpdateJob(editedJob);
+
+            Transaction editedJobFromDatabase = updatedJobs.stream().filter(t->t.getId() == job.getId()).collect(Collectors.toList()).get(0);
+
+            assertEquals(editedJob.getTransactionTypeId(), editedJobFromDatabase.getTransactionType().getId().intValue());
+            assertThat(editedJobFromDatabase.getTransactionTime().getTime()).isGreaterThan(originalTransactionTime.getTime());
+            assertEquals(editedJob.getTransactionAmount(), editedJobFromDatabase.getTransactionAmount(), 0.0);
+        } finally {
+            restoreTestDatabase();
+        }
+    }
+
+    private TransactionType findJobTypeWithDifferentIdAndAmount(UkelonnService ukelonn, Integer transactionTypeId, double amount) {
+        return ukelonn.getJobTypes().stream().filter(t->!t.getId().equals(transactionTypeId)).filter(t->t.getTransactionAmount() != amount).collect(Collectors.toList()).get(0);
     }
 
 }

@@ -268,6 +268,20 @@ public class UkelonnServiceProviderTest {
         }
     }
 
+    @Test(expected=UkelonnException.class)
+    public void testUpdateJobGetSQLException() throws Exception {
+        UkelonnServiceProvider ukelonn = new UkelonnServiceProvider();
+        UkelonnDatabase database = mock(UkelonnDatabase.class);
+        PreparedStatement statement = mock(PreparedStatement.class);
+        when(database.prepareStatement(anyString())).thenReturn(statement);
+        doThrow(SQLException.class).when(statement).setInt(anyInt(), anyInt());
+
+        ukelonn.setUkelonnDatabase(database);
+
+        ukelonn.updateJob(new UpdatedTransaction());
+        fail("Should never get here");
+    }
+
     private TransactionType findJobTypeWithDifferentIdAndAmount(UkelonnService ukelonn, Integer transactionTypeId, double amount) {
         return ukelonn.getJobTypes().stream().filter(t->!t.getId().equals(transactionTypeId)).filter(t->t.getTransactionAmount() != amount).collect(Collectors.toList()).get(0);
     }
