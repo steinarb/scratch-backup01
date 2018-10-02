@@ -15,6 +15,8 @@
  */
 package no.priv.bang.ukelonn.api.resources;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.ForbiddenException;
@@ -28,6 +30,8 @@ import org.osgi.service.log.LogService;
 import no.priv.bang.ukelonn.UkelonnService;
 import no.priv.bang.ukelonn.beans.Account;
 import no.priv.bang.ukelonn.beans.PerformedTransaction;
+import no.priv.bang.ukelonn.beans.Transaction;
+import no.priv.bang.ukelonn.beans.UpdatedTransaction;
 
 @Path("/job")
 @Produces(MediaType.APPLICATION_JSON)
@@ -50,6 +54,13 @@ public class JobResource extends ResourceBase {
         }
 
         return ukelonn.registerPerformedJob(performedJob);
+    }
+
+    @Path("/update")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Transaction> doUpdateJob(UpdatedTransaction editedJob) {
+        return ukelonn.updateJob(editedJob);
     }
 
 }
