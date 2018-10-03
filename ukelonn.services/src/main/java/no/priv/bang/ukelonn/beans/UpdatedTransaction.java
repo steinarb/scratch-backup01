@@ -27,6 +27,7 @@ public class UpdatedTransaction {
     private int transactionTypeId;
     private Date transactionTime;
     private double transactionAmount;
+
     public UpdatedTransaction(int id, int accountId, int transactionTypeId, Date transactionTime, double transactionAmount) {
         this.id = id;
         this.accountId = accountId;
