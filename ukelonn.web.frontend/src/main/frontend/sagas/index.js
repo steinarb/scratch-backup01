@@ -336,7 +336,7 @@ export function* requestUpdateJobSaga() {
 }
 
 function doUpdateJob(updatedJob) {
-    return axios.post('/ukelonn/api/admin/job/update', updatedJob);
+    return axios.post('/ukelonn/api/job/update', updatedJob);
 }
 
 // worker saga

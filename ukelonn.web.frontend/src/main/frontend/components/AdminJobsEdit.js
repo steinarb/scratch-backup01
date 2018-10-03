@@ -155,7 +155,7 @@ const mapDispatchToProps = dispatch => {
             dispatch({ type: 'UPDATE', data: changedField });
         },
         onSaveEditedJob: (selectedjob) => {
-            dispatch({ type: 'EDIT_JOB_SAVE_REQUEST', selectedjob });
+            dispatch({ type: 'UPDATE_JOB_REQUEST', selectedjob });
         },
     };
 };

@@ -17,6 +17,9 @@ package no.priv.bang.ukelonn.beans;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class UpdatedTransaction {
 
     private int id;
