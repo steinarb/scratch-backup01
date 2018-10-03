@@ -125,9 +125,14 @@ export const ukelonnReducer = (state =
     }
 
     if (action.type === 'JOBTYPELIST_RECEIVE') {
+        if (!action.jobtypes.find((job) => job.id === -1)) {
+            action.jobtypes.unshift(emptyTransactionType);
+        }
+
         return {
             ...state,
-            jobtypes: action.jobtypes
+            jobtypes: action.jobtypes,
+            jobtypesMap: new Map(action.jobtypes.map(i => [i.transactionTypeName, i])),
         };
     }
 

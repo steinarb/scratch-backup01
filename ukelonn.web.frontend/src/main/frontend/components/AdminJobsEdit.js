@@ -58,7 +58,7 @@ class AdminJobsEdit extends Component {
                     </thead>
                     <tbody>
                         {jobs.map((job) =>
-                            <tr onClick={ ()=>onRowClick(job) } key={job.id}>
+                            <tr onClick={ ()=>onRowClick(account, job) } key={job.id}>
                                 <td>{moment(job.transactionTime).format("YYYY-MM-DD")}</td>
                                 <td>{job.name}</td>
                                 <td>{job.transactionAmount}</td>
@@ -99,6 +99,14 @@ const mapStateToProps = state => {
     };
 };
 
+const emptyJob = {
+    accountId: -1,
+    transactionType: { transactionTypeName: '' },
+    transactionTypeId: -1,
+    transactionAmount: 0.0,
+    transactionTime: moment(),
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         onLogout: () => dispatch({ type: 'LOGOUT_REQUEST' }),
@@ -109,14 +117,16 @@ const mapDispatchToProps = dispatch => {
             let account = accountsMap.get(selectedValue);
             let changedField = {
                 account,
+                selectedjob: { ...emptyJob },
             };
             dispatch({ type: 'UPDATE', data: changedField });
         },
-        onRowClick: (job) => {
+        onRowClick: (account, job) => {
             const jobtype = job.transactionType;
             let changedField = {
                 selectedjob: {
                     ...job,
+                    accountId: account.accountId,
                     transactionTypeId: jobtype.id,
                     transactionTime: moment(job.transactionTime),
                 },
@@ -128,9 +138,8 @@ const mapDispatchToProps = dispatch => {
             let changedField = {
                 selectedjob: {
                     ...selectedjob,
+                    transactionType: jobtype,
                     transactionTypeId: jobtype.id,
-                    transactionName: jobtype.transactionName,
-                    transactionDate: moment(selectedjob.transactionTime),
                     transactionAmount: jobtype.transactionAmount,
                 }
             };
@@ -140,7 +149,7 @@ const mapDispatchToProps = dispatch => {
             let changedField = {
                 selectedjob: {
                     ...selectedjob,
-                    transactionDate: selectedValue,
+                    transactionTime: selectedValue,
                 }
             };
             dispatch({ type: 'UPDATE', data: changedField });
