@@ -20,6 +20,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.ForbiddenException;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -27,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.osgi.service.log.LogService;
 
+import no.priv.bang.ukelonn.UkelonnException;
 import no.priv.bang.ukelonn.UkelonnService;
 import no.priv.bang.ukelonn.beans.Account;
 import no.priv.bang.ukelonn.beans.PerformedTransaction;
@@ -60,7 +62,12 @@ public class JobResource extends ResourceBase {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public List<Transaction> doUpdateJob(UpdatedTransaction editedJob) {
-        return ukelonn.updateJob(editedJob);
+        try {
+            return ukelonn.updateJob(editedJob);
+        } catch (UkelonnException e) {
+            logservice.log(LogService.LOG_ERROR, "REST endpoint /api/job/update failed", e);
+            throw new InternalServerErrorException("See log for details");
+        }
     }
 
 }

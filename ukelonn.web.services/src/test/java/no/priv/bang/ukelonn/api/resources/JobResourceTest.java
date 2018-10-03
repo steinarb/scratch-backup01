@@ -18,10 +18,15 @@ package no.priv.bang.ukelonn.api.resources;
 import static no.priv.bang.ukelonn.backend.CommonDatabaseMethods.getAccountInfoFromDatabase;
 import static no.priv.bang.ukelonn.testutils.TestUtils.*;
 import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +43,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
+import no.priv.bang.ukelonn.UkelonnDatabase;
 import no.priv.bang.ukelonn.UkelonnService;
 import no.priv.bang.ukelonn.api.ServletTestBase;
+import no.priv.bang.ukelonn.backend.UkelonnServiceProvider;
 import no.priv.bang.ukelonn.beans.Account;
 import no.priv.bang.ukelonn.beans.PerformedTransaction;
 import no.priv.bang.ukelonn.beans.Transaction;
@@ -271,6 +278,26 @@ public class JobResourceTest extends ServletTestBase {
         } finally {
             restoreTestDatabase();
         }
+    }
+
+    @Test(expected=InternalServerErrorException.class)
+    public void testUpdateJobGetSQLException() throws Exception {
+        // Create an ukelonn service with a mock database that throws exception
+        UkelonnServiceProvider ukelonn = new UkelonnServiceProvider();
+        UkelonnDatabase database = mock(UkelonnDatabase.class);
+        PreparedStatement statement = mock(PreparedStatement.class);
+        when(database.prepareStatement(anyString())).thenReturn(statement);
+        doThrow(SQLException.class).when(statement).setInt(anyInt(), anyInt());
+        ukelonn.setUkelonnDatabase(database);
+
+        // Create a resource and inject OSGi services
+        JobResource resource = new JobResource();
+        resource.ukelonn = ukelonn;
+        MockLogService logservice = new MockLogService();
+        resource.logservice = logservice;
+
+        resource.doUpdateJob(new UpdatedTransaction());
+        fail("Should never get here");
     }
 
     private TransactionType findJobTypeWithDifferentIdAndAmount(UkelonnService ukelonn, Integer transactionTypeId, double amount) {
