@@ -13,6 +13,13 @@ const emptyTransactionType = {
     transactionAmount: 0.0
 };
 
+const emptyTransaction = {
+    id: -1,
+    transactionType: { ...emptyTransactionType },
+    transactionAmount: 0.0,
+    transactionTime: moment(),
+};
+
 const emptyUser = {
     userId: -1,
     fullName: '',
@@ -53,7 +60,7 @@ export const ukelonnReducer = (state =
                                      error: ''
                                  },
                                  performedjob: {...emptyPerformedTransaction, transactionDate: moment()},
-                                 selectedjob: {...emptyPerformedTransaction, transactionDate: moment()},
+                                 selectedjob: { ...emptyTransaction },
                                  accounts: [],
                                  accountsMap: {},
                                  paymenttypes: [],

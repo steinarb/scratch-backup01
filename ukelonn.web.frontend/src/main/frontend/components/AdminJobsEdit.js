@@ -68,7 +68,7 @@ class AdminJobsEdit extends Component {
                 </table>
                 <h2>Endre jobb</h2>
                 <label htmlFor="jobtype">Jobbtype</label>
-                <Jobtypes id="jobtype" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={selectedjob.name} account={account} performedjob={selectedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
+                <Jobtypes id="jobtype" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={selectedjob.transactionType.transactionTypeName} account={account} performedjob={selectedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
                 <br/>
                 <label htmlFor="amount">Beløp</label>
                 <input id="amount" type="text" value={selectedjob.transactionAmount} readOnly="true" />
@@ -159,6 +159,7 @@ const mapDispatchToProps = dispatch => {
             let changedField = {
                 selectedjob: {
                     ...emptyJob,
+                    transactionType: { transactionTypeName: '' },
                 }
             };
             dispatch({ type: 'UPDATE', data: changedField });
