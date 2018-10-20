@@ -55,16 +55,12 @@ class User extends Component {
                     </div>
                     <form onSubmit={ e => { e.preventDefault(); }}>
                         <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>
-                            <Jobtypes id="jobtype" className="mdl-textfield__input stretch-to-fill" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
                             <label htmlFor='jobtype' className='mdl-textfield__label'>Velg jobb</label>
+                            <Jobtypes id="jobtype" className="mdl-textfield__input stretch-to-fill" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
                         </div>
-                        <div className="mdl-grid hline-bottom">
-                            <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--3-col-tablet mdl-cell--3-col-desktop">
-                                <label htmlFor="amount">Beløp</label>
-                            </div>
-                            <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <input id="amount" className='mdl-textfield__input stretch-to-fill' type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
-                            </div>
+                        <div className='mdl-textfield mdl-js-textfield '>
+                            <label htmlFor="amount" className='mdl-textfield__label'>Beløp</label>
+                            <input id="amount" className='mdl-textfield__input stretch-to-fill' type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
                         </div>
                         <div className="mdl-grid hline-bottom">
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--3-col-tablet mdl-cell--3-col-desktop">
