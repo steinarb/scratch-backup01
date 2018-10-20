@@ -54,13 +54,9 @@ class User extends Component {
                         </div>
                     </div>
                     <form onSubmit={ e => { e.preventDefault(); }}>
-                        <div className="mdl-grid hline-bottom">
-                            <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--3-col-tablet mdl-cell--3-col-desktop">
-                                <label htmlFor="jobtype">Velg jobb</label>
-                            </div>
-                            <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <Jobtypes id="jobtype" className="stretch-to-fill" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
-                            </div>
+                        <div className='mdl-textfield mdl-js-textfield mdl-textfield--floating-label'>
+                            <Jobtypes id="jobtype" className="mdl-textfield__input stretch-to-fill" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
+                            <label htmlFor='jobtype' className='mdl-textfield__label'>Velg jobb</label>
                         </div>
                         <div className="mdl-grid hline-bottom">
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--3-col-tablet mdl-cell--3-col-desktop">
