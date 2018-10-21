@@ -62,7 +62,9 @@ class Admin extends Component {
                                 <label htmlFor="account-selector">Velg hvem det skal betales til:</label>
                             </div>
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <Accounts id="account-selector" className="stretch-to-fill" accounts={accounts} accountsMap={accountsMap} account={account} paymenttype={paymenttype} onAccountsFieldChange={onAccountsFieldChange}/>
+                                <div className='mdl-textfield mdl-js-textfield'>
+                                    <Accounts id="account-selector" className="mdl-textfield__input stretch-to-fill" accounts={accounts} accountsMap={accountsMap} account={account} paymenttype={paymenttype} onAccountsFieldChange={onAccountsFieldChange}/>
+                                </div>
                             </div>
                         </div>
                         <div className="mdl-grid hline-bottom">
@@ -70,7 +72,9 @@ class Admin extends Component {
                                 <label htmlFor="account-balance">Til gode:</label>
                             </div>
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <input id="account-balance" className='mdl-textfield__input stretch-to-fill' type="text" value={account.balance} readOnly="true" />
+                                <div className='mdl-textfield mdl-js-textfield'>
+                                    <input id="account-balance" className='mdl-textfield__input stretch-to-fill' type="text" value={account.balance} readOnly="true" />
+                                </div>
                             </div>
                         </div>
                         <div className="mdl-grid hline-bottom">
@@ -78,7 +82,9 @@ class Admin extends Component {
                                 <label htmlFor="paymenttype-selector">Type av utbetaling:</label>
                             </div>
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <Paymenttypes id="paymenttype-selector" className="stretch-to-fill" value={paymenttype.transactionName} paymenttypes={paymenttypes} paymenttypesMap={paymenttypesMap} account={account} paymenttype={paymenttype} onPaymenttypeFieldChange={onPaymenttypeFieldChange} />
+                                <div className='mdl-textfield mdl-js-textfield'>
+                                    <Paymenttypes id="paymenttype-selector" className="mdl-textfield__input stretch-to-fill" value={paymenttype.transactionName} paymenttypes={paymenttypes} paymenttypesMap={paymenttypesMap} account={account} paymenttype={paymenttype} onPaymenttypeFieldChange={onPaymenttypeFieldChange} />
+                                </div>
                             </div>
                         </div>
                         <div className="mdl-grid hline-bottom">
@@ -86,7 +92,9 @@ class Admin extends Component {
                                 <label htmlFor="amount">Beløp:</label>
                             </div>
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <Amount id="amount" className="stretch-to-fill" payment={payment} onAmountFieldChange={onAmountFieldChange} />
+                                <div className='mdl-textfield mdl-js-textfield'>
+                                    <Amount id="amount" className="mdl-textfield__input stretch-to-fill" payment={payment} onAmountFieldChange={onAmountFieldChange} />
+                                </div>
                             </div>
                         </div>
                         <div className="mdl-grid mdl-grid--no-spacing hline-bottom">
