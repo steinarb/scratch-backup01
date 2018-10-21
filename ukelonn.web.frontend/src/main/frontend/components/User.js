@@ -59,7 +59,9 @@ class User extends Component {
                                 <label htmlFor="jobtype">Velg jobb</label>
                             </div>
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <Jobtypes id="jobtype" className="stretch-to-fill" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
+                                <div className='mdl-textfield mdl-js-textfield stretch-to-fill'>
+                                    <Jobtypes id="jobtype" className="mdl-textfield__input stretch-to-fill" jobtypes={jobtypes} jobtypesMap={jobtypesMap} value={performedjob.transactionName} account={account} performedjob={performedjob} onJobtypeFieldChange={onJobtypeFieldChange} />
+                                </div>
                             </div>
                         </div>
                         <div className="mdl-grid hline-bottom">
@@ -67,7 +69,9 @@ class User extends Component {
                                 <label htmlFor="amount">Beløp</label>
                             </div>
                             <div className="mdl-cell mdl-cell--2-col-phone mdl-cell--5-col-tablet mdl-cell--9-col-desktop">
-                                <input id="amount" className='mdl-textfield__input stretch-to-fill' type="text" value={performedjob.transactionAmount} readOnly="true" /><br/>
+                                <div className='mdl-textfield mdl-js-textfield'>
+                                    <input id="amount" className='mdl-textfield__input stretch-to-fill' type="text" value={performedjob.transactionAmount} readOnly="true" />
+                                </div>
                             </div>
                         </div>
                         <div className="mdl-grid hline-bottom">
