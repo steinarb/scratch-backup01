@@ -46,6 +46,7 @@
     </properties>
 
     <modules>
+        <module>handlereg.db.liquibase</module>
     </modules>
 
     <dependencyManagement>

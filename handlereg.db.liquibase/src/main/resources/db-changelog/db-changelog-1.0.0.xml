@@ -1,0 +1,108 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <!-- Copyright 2018 Steinar Bang                                                     -->
+    <!--                                                                                 -->
+    <!-- Licensed under the Apache License, Version 2.0 (the "License");                 -->
+    <!-- you may not use this file except in compliance with the License.                -->
+    <!-- You may obtain a copy of the License at                                         -->
+    <!--   http://www.apache.org/licenses/LICENSE-2.0                                    -->
+    <!-- Unless required by applicable law or agreed to in writing,                      -->
+    <!-- software distributed under the License is distributed on an "AS IS" BASIS,      -->
+    <!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.        -->
+    <!-- See the License for the specific language governing permissions and limitations -->
+    <!-- under the License.                                                              -->
+
+    <changeSet author="sb" id="handlereg-1.0.0">
+
+        <createTable tableName="users">
+            <column autoIncrement="true" name="user_id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="users_primary_key"/>
+            </column>
+            <column name="username" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="firstname" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="users_id_index" tableName="users">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createTable tableName="password">
+            <column name="user_id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="password_primary_key"/>
+            </column>
+            <column name="username" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salt" type="blob">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="password_id_index" tableName="password">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex indexName="password_username_index" tableName="password">
+            <column name="username"/>
+        </createIndex>
+
+        <createTable tableName="stores">
+            <column autoIncrement="true" name="store_id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="stores_primary_key"/>
+            </column>
+            <column name="store_name" type="VARCHAR(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gruppe" type="INTEGER">
+            </column>
+            <column name="rekkefolge" type="INTEGER">
+            </column>
+        </createTable>
+
+        <createTable tableName="transactions">
+            <column autoIncrement="true" name="transaction_id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="transactions_primary_key"/>
+            </column>
+            <column name="user_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="store_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_time" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_amount" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="transactions_user_id_index" tableName="transactions">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex indexName="transactions_store_id_index" tableName="transactions">
+            <column name="store_id"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transactions" constraintName="SQL170518210719090" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_id" referencedTableName="users"/>
+
+        <addForeignKeyConstraint baseColumnNames="store_id" baseTableName="transactions" constraintName="SQL170518210719091" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="store_id" referencedTableName="stores"/>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="handlereg">
+<?xml version="1.0" ?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
 
     <!-- Copyright 2018 Steinar Bang                                                     -->
     <!--                                                                                 -->
@@ -13,5 +13,5 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase/${project.version}/xml/features</repository>
-</features>
+    <namespace ns="http://www.liquibase.org/xml/ns/dbchangelog" uri="dbchangelog-3.5.rnc" />
+</locatingRules>
