@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="handlereg">
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
     <!-- Copyright 2018 Steinar Bang                                                     -->
     <!--                                                                                 -->
@@ -13,5 +14,6 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase/${project.version}/xml/features</repository>
-</features>
+    <include file="db-changelog/db-changelog-1.0.1.xml"/>
+
+</databaseChangeLog>
