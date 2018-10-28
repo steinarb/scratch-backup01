@@ -1,0 +1,8 @@
+*.log
+.classpath
+.project
+.settings/
+/README.md
+/ukelonn.gogoshell/runner/
+node_modules/
+target/

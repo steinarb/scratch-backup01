@@ -1,0 +1,7 @@
+* Registrering av handling
+
+Dette er en webapp som brukes til å registrere handling i butikker.
+
+** Lisens
+
+Denne software'n er lisensiert under Apache License v2.  Se fila LICENSE for detaljer
