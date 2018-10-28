@@ -1,0 +1,5 @@
+* Scratch repository
+
+The branches in this repository is work-in-progress or experiments in other repos and is put here to avoid "pollution" of those repos.
+
+The branches in this repository may be deleted or rebased and change completely and cannot be relied on in any way.
