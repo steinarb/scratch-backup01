@@ -48,6 +48,7 @@
     <modules>
         <module>handlereg.db.liquibase</module>
         <module>handlereg.services</module>
+        <module>handlereg.db.derby.test</module>
     </modules>
 
     <dependencyManagement>
