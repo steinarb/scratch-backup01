@@ -47,6 +47,7 @@
 
     <modules>
         <module>handlereg.db.liquibase</module>
+        <module>handlereg.services</module>
     </modules>
 
     <dependencyManagement>
