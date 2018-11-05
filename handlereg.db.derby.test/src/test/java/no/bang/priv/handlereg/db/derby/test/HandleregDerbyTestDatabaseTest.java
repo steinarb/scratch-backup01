@@ -34,15 +34,18 @@ import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 class HandleregDerbyTestDatabaseTest {
 
     @Test
-    void testCreateAndFindDataInAllTables() throws Exception {
+    void testCreateAndVerifySomeDataInSomeTables() throws Exception {
         DataSourceFactory dataSourceFactory = new DerbyDataSourceFactory();
         MockLogService logservice = new MockLogService();
         HandleregDerbyTestDatabase database = new HandleregDerbyTestDatabase();
         database.setLogService(logservice);
         database.setDataSourceFactory(dataSourceFactory);
         database.activate();
-        addUsers(database);
         assertUsers(database);
+        int originalNumberOfTransactions = findNumberOfTransactions(database);
+        addTransaction(database, 138);
+        int updatedNumberOfTransactions = findNumberOfTransactions(database);
+        assertEquals(originalNumberOfTransactions + 1, updatedNumberOfTransactions);
 
         // Connection brukes av Shiro JdbcRealm
         DataSource datasource = database.getDatasource();
@@ -96,42 +99,10 @@ class HandleregDerbyTestDatabaseTest {
         assertFalse(result);
     }
 
-    private void addUsers(HandleregDerbyTestDatabase database) throws Exception {
-        addUser(database, "admin", "admin@gmail.com", "Admin", "Istrator", "pepper", "salt");
-    }
-
     private void assertUsers(HandleregDerbyTestDatabase database) throws Exception {
         try(PreparedStatement statement = database.prepareStatement("select * from users join password on users.user_id=password.user_id")) {
             ResultSet results = database.query(statement);
-            assertUser(results, "admin", "admin@gmail.com", "Admin", "Istrator", "pepper", "salt");
-        }
-    }
-
-    private void addUser(HandleregDerbyTestDatabase database, String username, String email, String firstname, String lastname, String password, String salt) throws Exception {
-        String userSql = "insert into users (username, email, firstname, lastname) values (?, ?, ?, ?)";
-        try(PreparedStatement statement = database.prepareStatement(userSql)) {
-            statement.setString(1, username);
-            statement.setString(2, email);
-            statement.setString(3, firstname);
-            statement.setString(4, lastname);
-            database.update(statement);
-        }
-
-        int userid = -1;
-        try(PreparedStatement queryForUserid = database.prepareStatement("select user_id from users where username=?")) {
-            queryForUserid.setString(1, username);
-            ResultSet results = database.query(queryForUserid);
-            results.next();
-            userid = results.getInt(1);
-        }
-
-        String passwordSql = "insert into password (user_id, username, password, salt) values (?, ?, ?, ?)";
-        try(PreparedStatement statement = database.prepareStatement(passwordSql)) {
-            statement.setInt(1, userid);
-            statement.setString(2, username);
-            statement.setString(3, password);
-            statement.setString(4, salt);
-            database.update(statement);
+            assertUser(results, "jd", "johndoe21@gmail.com", "John", "Doe", "secret", "salt");
         }
     }
 
@@ -143,6 +114,25 @@ class HandleregDerbyTestDatabaseTest {
         assertEquals(lastname, results.getString(5));
         assertEquals(password, results.getString(8));
         assertEquals(salt, results.getString(9));
+    }
+
+    private void addTransaction(HandleregDerbyTestDatabase database, double amount) throws SQLException {
+        try(PreparedStatement statement = database.prepareStatement("insert into transactions (user_id, store_id, transaction_amount) values (1, 1, ?)")) {
+            statement.setDouble(1, amount);
+            database.update(statement);
+        }
+    }
+
+    private int findNumberOfTransactions(HandleregDerbyTestDatabase database) throws SQLException {
+        try(PreparedStatement statement = database.prepareStatement("select * from transactions")) {
+            ResultSet results = database.query(statement);
+            int count = 0;
+            while(results.next()) {
+                ++count;
+            }
+
+            return count;
+        }
     }
 
 }

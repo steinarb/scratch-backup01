@@ -30,6 +30,11 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jdbc.DataSourceFactory;
 import org.osgi.service.log.LogService;
 
+import liquibase.Liquibase;
+import liquibase.database.DatabaseConnection;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.LiquibaseException;
+import liquibase.resource.ClassLoaderResourceAccessor;
 import no.bang.priv.handlereg.db.liquibase.HandleregLiquibase;
 import no.bang.priv.handlereg.services.HandleregDatabase;
 import no.bang.priv.handlereg.services.HandleregException;
@@ -59,6 +64,7 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
             connect = createConnection();
             HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
             handleregLiquibase.createInitialSchema(connect);
+            insertMockData(connect);
             handleregLiquibase.updateSchema(connect);
         } catch (Exception e) {
             String message = "Failed to create handlereg derby test database";
@@ -97,6 +103,13 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
     @Override
     public DataSource getDatasource() {
         return dataSource;
+    }
+
+    public void insertMockData(Connection connect) throws LiquibaseException, SQLException {
+        DatabaseConnection databaseConnection = new JdbcConnection(connect);
+        ClassLoaderResourceAccessor classLoaderResourceAccessor = new ClassLoaderResourceAccessor(getClass().getClassLoader());
+        Liquibase liquibase = new Liquibase("sql/data/db-changelog.xml", classLoaderResourceAccessor, databaseConnection);
+        liquibase.update("");
     }
 
     private void logError(String message, Exception exception) {
