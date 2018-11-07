@@ -49,6 +49,7 @@
         <module>handlereg.db.liquibase</module>
         <module>handlereg.services</module>
         <module>handlereg.db.derby.test</module>
+        <module>handlereg.backend</module>
     </modules>
 
     <dependencyManagement>
