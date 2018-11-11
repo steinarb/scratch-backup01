@@ -13,10 +13,19 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.shiro.sharedsession.testapplication1.services;
+package no.priv.bang.shiro.sharedsession.testapplication1.backend;
 
-public interface Counter {
-    public long current();
-    public long increment();
+import no.priv.bang.shiro.sharedsession.testapplication1.services.Counter;
+
+public class CounterProvider implements Counter {
+    private long counter;
+
+    public long current() {
+        return counter;
+    }
+
+    public long increment() {
+        return ++counter;
+    }
 
 }
