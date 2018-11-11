@@ -15,8 +15,11 @@
  */
 package no.priv.bang.shiro.sharedsession.testapplication1.backend;
 
+import org.osgi.service.component.annotations.Component;
+
 import no.priv.bang.shiro.sharedsession.testapplication1.services.Counter;
 
+@Component(service=Counter.class, immediate=true)
 public class CounterProvider implements Counter {
     private long counter;
 
