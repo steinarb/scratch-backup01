@@ -1,0 +1,11 @@
+* Shiro SessionManager shared across OSGi components
+
+This is an OSGi DS component that is intended as a "poor man's SSO" when using Apache Shiro for web application authentication and authorization, in Apache Karaf.
+
+This DS component exposes a service of type SessionManager and uses a MemorySessionManager to implement the service.
+
+The effect is that when using this session manager, then calling
+#+BEGIN_SRC java
+  Subject subject = SecurityUtils.getSubject();
+#+END_SRC
+in a web application, then based on the cookies of the request, a Subject for an already logged in user will be returned, if a user have been logged in to a different web application on the same server, from the same browser.
