@@ -31,5 +31,6 @@
         <module>sharedsession.testapplication1.services</module>
         <module>sharedsession.testapplication1.backend</module>
         <module>sharedsession.testapplication1.web.security</module>
+        <module>sharedsession.testapplication1.web.api</module>
     </modules>
 </project>
