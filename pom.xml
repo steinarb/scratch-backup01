@@ -239,7 +239,6 @@
                             <supportedProjectType>war</supportedProjectType>
                         </supportedProjectTypes>
                         <instructions>
-                            <Bundle-SymbolicName>${Bundle-SymbolicName}</Bundle-SymbolicName>
                             <Import-Package>*</Import-Package>
                             <Export-Package>!*</Export-Package>
                             <_removeheaders>
