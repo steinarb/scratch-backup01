@@ -26,6 +26,10 @@
 
     <name>Testtapplications ofr Shiro SessionManager shared across OSGi components</name>
 
+    <properties>
+        <sonar.exclusions>**/*</sonar.exclusions>
+    </properties>
+
     <modules>
         <module>sharedsessionmanager.testapplication1</module>
     </modules>
