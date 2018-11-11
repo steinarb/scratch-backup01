@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.shiro.sharedsession.testapplication1.backend;
+package no.priv.bang.shiro.sharedsession.testapplication1.web.security;
 
 import javax.servlet.Filter;
 import org.apache.shiro.config.Ini;
