@@ -17,8 +17,8 @@
     <!-- under the License.                                                              -->
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>no.priv.bang.shiro.sharedsessionmanager</groupId>
-    <artifactId>sharedsessionmanager</artifactId>
+    <groupId>no.priv.bang.shiro.sharedsession</groupId>
+    <artifactId>sharedsession</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
@@ -44,7 +44,7 @@
     </properties>
 
     <modules>
-        <module>sharedsessionmanager.testapplication</module>
+        <module>sharedsession.testapplication</module>
     </modules>
 
     <dependencyManagement>
@@ -338,7 +338,7 @@
                     </formats>
                     <instrumentation>
                         <excludes>
-                            <exclude>no/priv/bang/shiro/sharedsessionmanager/testapplication1/services/**/*.class</exclude>
+                            <exclude>no/priv/bang/shiro/sharedsession/testapplication1/services/**/*.class</exclude>
                         </excludes>
                     </instrumentation>
                     <aggregate>true</aggregate>

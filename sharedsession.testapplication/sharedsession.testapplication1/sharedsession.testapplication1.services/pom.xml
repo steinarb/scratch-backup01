@@ -17,17 +17,26 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>no.priv.bang.shiro.sharedsessionmanager</groupId>
-        <artifactId>sharedsessionmanager.testapplication</artifactId>
+        <groupId>no.priv.bang.shiro.sharedsession</groupId>
+        <artifactId>sharedsession.testapplication1</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sharedsessionmanager.testapplication1</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>sharedsession.testapplication1.services</artifactId>
 
-    <name>Testapplication for Shiro SessionManager shared across OSGi components</name>
-    <description>A simple hello world style web application with shiro login</description>
+    <name>OSGi Service definitions for testapplication for Shiro SessionManager shared across OSGi components</name>
+    <description>OSGi service definitions for a simple hello world style web application with shiro login</description>
 
-    <modules>
-        <module>sharedsessionmanager.testapplication1.services</module>
-    </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Import-Package>*</Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

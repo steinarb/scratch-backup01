@@ -17,20 +17,17 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>no.priv.bang.shiro.sharedsessionmanager</groupId>
-        <artifactId>sharedsessionmanager</artifactId>
+        <groupId>no.priv.bang.shiro.sharedsession</groupId>
+        <artifactId>sharedsession.testapplication</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>sharedsessionmanager.testapplication</artifactId>
+    <artifactId>sharedsession.testapplication1</artifactId>
     <packaging>pom</packaging>
 
-    <name>Testtapplications ofr Shiro SessionManager shared across OSGi components</name>
-
-    <properties>
-        <sonar.exclusions>**/*</sonar.exclusions>
-    </properties>
+    <name>Testapplication for Shiro SessionManager shared across OSGi components</name>
+    <description>A simple hello world style web application with shiro login</description>
 
     <modules>
-        <module>sharedsessionmanager.testapplication1</module>
+        <module>sharedsession.testapplication1.services</module>
     </modules>
 </project>
