@@ -26,6 +26,10 @@
     <name>OSGi Service definitions for testapplication for Shiro SessionManager shared across OSGi components</name>
     <description>OSGi service definitions for a simple hello world style web application with shiro login</description>
 
+    <properties>
+        <karaf-feature-name>shiro-shared-testapplication1-services</karaf-feature-name>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -36,6 +40,10 @@
                         <Export-Package>*</Export-Package>
                     </instructions>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
