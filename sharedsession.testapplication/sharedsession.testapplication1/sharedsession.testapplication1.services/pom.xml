@@ -23,7 +23,7 @@
     </parent>
     <artifactId>sharedsession.testapplication1.services</artifactId>
 
-    <name>OSGi Service definitions for testapplication for Shiro SessionManager shared across OSGi components</name>
+    <name>Shiro shared SessionManager Test1 OSGi Service definitions</name>
     <description>OSGi service definitions for a simple hello world style web application with shiro login</description>
 
     <properties>
