@@ -43,7 +43,7 @@
     </properties>
 
     <modules>
-        <module>sharedsession.testapplication</module>
+        <module>sharedsession.testapp</module>
     </modules>
 
     <dependencyManagement>
@@ -365,7 +365,7 @@
                     </formats>
                     <instrumentation>
                         <excludes>
-                            <exclude>no/priv/bang/shiro/sharedsession/testapplication1/services/**/*.class</exclude>
+                            <exclude>no/priv/bang/shiro/sharedsession/testapp1/services/**/*.class</exclude>
                         </excludes>
                     </instrumentation>
                     <aggregate>true</aggregate>
