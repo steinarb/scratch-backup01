@@ -45,6 +45,13 @@
             <classifier>features</classifier>
         </dependency>
         <dependency>
+            <groupId>no.priv.bang.shiro.sharedsession</groupId>
+            <artifactId>sharedsession.testapp1.web.security</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.service.component.annotations</artifactId>
         </dependency>
