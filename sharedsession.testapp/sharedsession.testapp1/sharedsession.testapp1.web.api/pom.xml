@@ -39,6 +39,13 @@
         </dependency>
         <dependency>
             <groupId>no.priv.bang.shiro.sharedsession</groupId>
+            <artifactId>sharedsession.testapp1.services</artifactId>
+            <version>${project.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>no.priv.bang.shiro.sharedsession</groupId>
             <artifactId>sharedsession.testapp1.backend</artifactId>
             <version>${project.version}</version>
             <type>xml</type>
@@ -74,10 +81,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -106,6 +115,9 @@
             <plugin>
                 <groupId>org.apache.karaf.tooling</groupId>
                 <artifactId>karaf-maven-plugin</artifactId>
+                <configuration>
+                    <includeTransitiveDependency>true</includeTransitiveDependency>
+                </configuration>
             </plugin>
         </plugins>
     </build>
