@@ -266,8 +266,10 @@
                             <supportedProjectType>war</supportedProjectType>
                         </supportedProjectTypes>
                         <instructions>
+                            <Karaf-Commands>*</Karaf-Commands>
                             <Import-Package>*</Import-Package>
                             <Export-Package>!*</Export-Package>
+                            <Include-Resource>/=target/classes/</Include-Resource>
                             <_removeheaders>
                                 Private-Package,
                                 Include-Resource,
