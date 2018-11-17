@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="handlereg">
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="ukelonn.db.liquibase">
 
     <!-- Copyright 2018 Steinar Bang                                                     -->
     <!--                                                                                 -->
@@ -13,9 +13,7 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.services/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.derby.test/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.backend/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.web.security/${project.version}/xml/features</repository>
+    <feature name="handlereg-web-security">
+        <feature>scr</feature>
+    </feature>
 </features>

@@ -50,6 +50,7 @@
         <module>handlereg.services</module>
         <module>handlereg.db.derby.test</module>
         <module>handlereg.backend</module>
+        <module>handlereg.web.security</module>
     </modules>
 
     <dependencyManagement>
