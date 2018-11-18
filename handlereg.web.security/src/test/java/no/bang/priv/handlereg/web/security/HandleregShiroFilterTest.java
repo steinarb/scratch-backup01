@@ -15,7 +15,6 @@
  */
 package no.bang.priv.handlereg.web.security;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.apache.shiro.authc.AuthenticationInfo;

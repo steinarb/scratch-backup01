@@ -62,7 +62,7 @@ public class HandleregShiroFilter extends AbstractShiroFilter { // NOSONAR
         DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) securityManagerFactory.createInstance();
         setSecurityManager(securityManager);
 
-        JdbcRealm realm = createRealmProgramaticallyBecauseOfShiroIniClassCastException();
+        JdbcRealm realm = createRealm();
         securityManager.setRealm(realm);
 
         IniFilterChainResolverFactory filterChainResolverFactory = new IniFilterChainResolverFactory(INI_FILE, securityManagerFactory.getBeans());
@@ -79,15 +79,10 @@ public class HandleregShiroFilter extends AbstractShiroFilter { // NOSONAR
         return database;
     }
 
-    /**
-     * Creating the {@link UkelonnRealm} was moved out of shiro.ini and into
-     * code, because the code interpreting the shiro.ini was unable to
-     * cast {@link UkelonnRealm} to {@link Realm}.
-     *
-     * @return The realm that is used to authenticate and authorize ukelonn users
-     */
-    private JdbcRealm createRealmProgramaticallyBecauseOfShiroIniClassCastException() {
+    private JdbcRealm createRealm() {
         JdbcRealm realm = new JdbcRealm();
+        realm.setDataSource(database.getDatasource());
+        realm.setAuthenticationQuery("select password, salt from password where username=?");
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
         credentialsMatcher.setHashAlgorithmName("SHA-256");
         credentialsMatcher.setStoredCredentialsHexEncoded(false); // base64 encoding, not hex
