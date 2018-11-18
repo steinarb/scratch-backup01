@@ -47,7 +47,7 @@
             <column name="password" type="VARCHAR(64)">
                 <constraints nullable="false"/>
             </column>
-            <column name="salt" type="VARCHAR(64)">
+            <column name="salt" type="blob">
                 <constraints nullable="false"/>
             </column>
         </createTable>
