@@ -28,6 +28,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -247,7 +248,7 @@ public class JdbcRealm extends AuthorizingRealm {
             info = new SimpleAuthenticationInfo(username, password.toCharArray(), getName());
             
             if (salt != null) {
-                info.setCredentialsSalt(ByteSource.Util.bytes(salt));
+                info.setCredentialsSalt(ByteSource.Util.bytes(Base64.decode(salt)));
             }
 
         } catch (SQLException e) {
