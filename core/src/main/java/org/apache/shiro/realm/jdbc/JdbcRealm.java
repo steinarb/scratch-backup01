@@ -114,6 +114,8 @@ public class JdbcRealm extends AuthorizingRealm {
     protected boolean permissionsLookupEnabled = false;
     
     protected SaltStyle saltStyle = SaltStyle.NO_SALT;
+    
+    protected boolean saltIsBase64Encoded = true;
 
     /*--------------------------------------------
     |         C O N S T R U C T O R S           |
@@ -202,11 +204,22 @@ public class JdbcRealm extends AuthorizingRealm {
         }
     }
 
+    /**
+     * Makes it possible to switch off base64 encoding of password salt.
+     * The default value is true, ie. expect the salt from a string
+     * value in a database to be base64 encoded. 
+     *
+	 * @param saltIsBase64Encoded the saltIsBase64Encoded to set
+	 */
+	public void setSaltIsBase64Encoded(boolean saltIsBase64Encoded) {
+		this.saltIsBase64Encoded = saltIsBase64Encoded;
+	}
+
     /*--------------------------------------------
     |               M E T H O D S               |
     ============================================*/
 
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();
