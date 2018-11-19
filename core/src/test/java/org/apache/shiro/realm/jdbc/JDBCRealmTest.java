@@ -142,7 +142,7 @@ public class JDBCRealmTest {
     public void testSaltColumnSuccess() throws Exception {
         String testMethodName = name.getMethodName();
         JdbcRealm realm = realmMap.get(testMethodName);
-        createSaltColumnSchema(testMethodName);
+        createSaltColumnSchema(testMethodName, false);
         realm.setSaltStyle(JdbcRealm.SaltStyle.COLUMN);
         realm.setSaltIsBase64Encoded(false);
         
@@ -157,7 +157,7 @@ public class JDBCRealmTest {
     public void testSaltColumnWrongPassword() throws Exception {
         String testMethodName = name.getMethodName();
         JdbcRealm realm = realmMap.get(testMethodName);
-        createSaltColumnSchema(testMethodName);
+        createSaltColumnSchema(testMethodName, false);
         realm.setSaltStyle(JdbcRealm.SaltStyle.COLUMN);
         
         Subject.Builder builder = new Subject.Builder(securityManager);
@@ -323,8 +323,10 @@ public class JDBCRealmTest {
     /**
      * Creates a test database with a separate salt column in the users table. Sets the
      * DataSource of the realm associated with the test to a DataSource connected to the database.
+     * @param The name of the test which is used as the key when saving the created realm in the realmMap
+     * @param base64EncodeSalt if true, the salt will be base64 encoded before it's stored in the database
      */
-    protected void createSaltColumnSchema(String testName) {
+    protected void createSaltColumnSchema(String testName, boolean base64EncodeSalt) {
         jdbcDataSource ds = new jdbcDataSource();
         ds.setDatabase("jdbc:hsqldb:mem:" + name);
         ds.setUser("SA");
