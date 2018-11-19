@@ -261,7 +261,11 @@ public class JdbcRealm extends AuthorizingRealm {
             info = new SimpleAuthenticationInfo(username, password.toCharArray(), getName());
             
             if (salt != null) {
-                info.setCredentialsSalt(ByteSource.Util.bytes(Base64.decode(salt)));
+            	if (saltStyle == SaltStyle.COLUMN && saltIsBase64Encoded) {
+                    info.setCredentialsSalt(ByteSource.Util.bytes(Base64.decode(salt)));
+            	} else {
+                    info.setCredentialsSalt(ByteSource.Util.bytes(salt));
+            	}
             }
 
         } catch (SQLException e) {
