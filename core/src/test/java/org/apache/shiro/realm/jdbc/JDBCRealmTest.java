@@ -144,6 +144,7 @@ public class JDBCRealmTest {
         JdbcRealm realm = realmMap.get(testMethodName);
         createSaltColumnSchema(testMethodName);
         realm.setSaltStyle(JdbcRealm.SaltStyle.COLUMN);
+        realm.setSaltIsBase64Encoded(false);
         
         Subject.Builder builder = new Subject.Builder(securityManager);
         Subject currentUser = builder.buildSubject();
