@@ -269,6 +269,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
      * Shiro fails because there is no WebSubject bound to the thread.
      * @throws Exception
      */
+    @Ignore
     @Test
     public void testLoginInternalServerError() throws Exception {
         // Set up the request
