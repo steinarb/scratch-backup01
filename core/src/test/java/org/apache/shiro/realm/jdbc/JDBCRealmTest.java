@@ -153,12 +153,28 @@ public class JDBCRealmTest {
         currentUser.logout();
     }
     
+    @Ignore
+    @Test
+    public void testBase64EncodedSaltColumnSuccess() throws Exception {
+        String testMethodName = name.getMethodName();
+        JdbcRealm realm = realmMap.get(testMethodName);
+        createSaltColumnSchema(testMethodName, true);
+        realm.setSaltStyle(JdbcRealm.SaltStyle.COLUMN);
+
+        Subject.Builder builder = new Subject.Builder(securityManager);
+        Subject currentUser = builder.buildSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, plainTextPassword);
+        currentUser.login(token);
+        currentUser.logout();
+    }
+
     @Test
     public void testSaltColumnWrongPassword() throws Exception {
         String testMethodName = name.getMethodName();
         JdbcRealm realm = realmMap.get(testMethodName);
         createSaltColumnSchema(testMethodName, false);
         realm.setSaltStyle(JdbcRealm.SaltStyle.COLUMN);
+        realm.setSaltIsBase64Encoded(false);
         
         Subject.Builder builder = new Subject.Builder(securityManager);
         Subject currentUser = builder.buildSubject();
