@@ -16,11 +16,14 @@
 package no.priv.bang.ukelonn.web.security;
 
 import javax.servlet.Filter;
+import javax.xml.bind.Binder;
+
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.web.config.IniFilterChainResolverFactory;
 import org.apache.shiro.web.config.WebIniSecurityManagerFactory;
+import org.apache.shiro.web.env.IniWebEnvironment;
 import org.apache.shiro.web.filter.mgt.FilterChainResolver;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
@@ -58,16 +61,18 @@ public class UkelonnShiroFilter extends AbstractShiroFilter { // NOSONAR
 
     @Activate
     public void activate() {
-        WebIniSecurityManagerFactory securityManagerFactory = new WebIniSecurityManagerFactory(INI_FILE);
-        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) securityManagerFactory.createInstance();
+        IniWebEnvironment webenvironment = new IniWebEnvironment();
+        webenvironment.setIni(INI_FILE);
+        webenvironment.setServletContext(getServletContext());
+        webenvironment.init();
+        
+        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) webenvironment.getSecurityManager();
         setSecurityManager(securityManager);
 
         UkelonnRealm realm = createRealmProgramaticallyBecauseOfShiroIniClassCastException();
         securityManager.setRealm(realm);
 
-        IniFilterChainResolverFactory filterChainResolverFactory = new IniFilterChainResolverFactory(INI_FILE, securityManagerFactory.getBeans());
-        FilterChainResolver resolver = filterChainResolverFactory.createInstance();
-        setFilterChainResolver(resolver);
+        setFilterChainResolver(webenvironment.getFilterChainResolver());
     }
 
     @Reference
