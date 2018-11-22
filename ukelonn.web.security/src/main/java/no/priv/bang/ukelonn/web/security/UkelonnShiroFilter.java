@@ -67,11 +67,10 @@ public class UkelonnShiroFilter extends AbstractShiroFilter { // NOSONAR
         webenvironment.init();
         
         DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) webenvironment.getSecurityManager();
-        setSecurityManager(securityManager);
-
         UkelonnRealm realm = createRealmProgramaticallyBecauseOfShiroIniClassCastException();
         securityManager.setRealm(realm);
 
+        setSecurityManager(securityManager);
         setFilterChainResolver(webenvironment.getFilterChainResolver());
     }
 
