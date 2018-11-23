@@ -16,15 +16,10 @@
 package no.priv.bang.ukelonn.web.security;
 
 import javax.servlet.Filter;
-import javax.xml.bind.Binder;
-
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.web.config.IniFilterChainResolverFactory;
-import org.apache.shiro.web.config.WebIniSecurityManagerFactory;
 import org.apache.shiro.web.env.IniWebEnvironment;
-import org.apache.shiro.web.filter.mgt.FilterChainResolver;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.osgi.service.component.annotations.Activate;
