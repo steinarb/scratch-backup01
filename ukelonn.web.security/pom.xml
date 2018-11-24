@@ -173,7 +173,7 @@
                         <Bundle-SymbolicName>${Bundle-SymbolicName}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Karaf-Commands>*</Karaf-Commands>
-                        <Import-Package>*</Import-Package>
+                        <Import-Package>org.apache.shiro.web.config,javax.servlet,no.priv.bang.ukelonn,org.apache.shiro.authc,org.apache.shiro.authc.credential,org.apache.shiro.authz,org.apache.shiro.config,org.apache.shiro.mgt,org.apache.shiro.realm,org.apache.shiro.subject,org.apache.shiro.util,org.apache.shiro.web.env,org.apache.shiro.web.filter.mgt,org.apache.shiro.web.mgt,org.apache.shiro.web.servlet,org.osgi.framework,org.osgi.framework.wiring,org.osgi.service.http.context</Import-Package>
                         <Export-Package>!*</Export-Package>
                         <Include-Resource>/=target/classes/</Include-Resource>
                         <_removeheaders>
