@@ -76,7 +76,7 @@ public class TestUtils {
         // Set up shiro
         shirofilter = new UkelonnShiroFilter();
         shirofilter.setUkelonnDatabase(ukelonnDatabaseProvider.get());
-        shirofilter.activate();
+        shirofilter.activate(null);
         SecurityUtils.setSecurityManager(shirofilter.getSecurityManager());
 
         ukelonnServiceSingleton.setUkelonnDatabase(ukelonnDatabaseProvider.get());

@@ -22,6 +22,8 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.web.env.IniWebEnvironment;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,18 +57,25 @@ public class UkelonnShiroFilter extends AbstractShiroFilter { // NOSONAR
     private UkelonnDatabase database;
 
     @Activate
-    public void activate() {
-        IniWebEnvironment webenvironment = new IniWebEnvironment();
-        webenvironment.setIni(INI_FILE);
-        webenvironment.setServletContext(getServletContext());
-        webenvironment.init();
-        
-        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) webenvironment.getSecurityManager();
-        UkelonnRealm realm = createRealmProgramaticallyBecauseOfShiroIniClassCastException();
-        securityManager.setRealm(realm);
-
-        setSecurityManager(securityManager);
-        setFilterChainResolver(webenvironment.getFilterChainResolver());
+    public void activate(BundleContext ctx) {
+        BundleWiring wiring = ctx.getBundle().adapt(BundleWiring.class);
+        ClassLoader bundleClassloader = wiring.getClassLoader();
+        Thread current = Thread.currentThread();
+        ClassLoader originalClassloader = current.getContextClassLoader();
+        current.setContextClassLoader(bundleClassloader);
+        try {
+            IniWebEnvironment webenvironment = new IniWebEnvironment();
+            webenvironment.setIni(INI_FILE);
+            webenvironment.setServletContext(getServletContext());
+            webenvironment.init();
+            DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) webenvironment.getSecurityManager();
+            UkelonnRealm realm = createRealmProgramaticallyBecauseOfShiroIniClassCastException();
+            securityManager.setRealm(realm);
+            setSecurityManager(securityManager);
+            setFilterChainResolver(webenvironment.getFilterChainResolver());
+        } finally {
+            current.setContextClassLoader(originalClassloader);
+        }
     }
 
     @Reference
