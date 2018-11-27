@@ -20,13 +20,13 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ukelonn.backend</artifactId>
+    <artifactId>ukelonn.web.security.dbrealm</artifactId>
 
-    <name>Ukelonn webapp backend</name>
+    <name>Custom shiro JDBC realm that supports base64 encoded password salt</name>
 
     <properties>
-        <Bundle-SymbolicName>no.priv.bang.ukelonn.backend</Bundle-SymbolicName>
-        <karaf-feature-name>ukelonn-backend</karaf-feature-name>
+        <Bundle-SymbolicName>no.priv.bang.ukelonn.web.security.dbrealm</Bundle-SymbolicName>
+        <karaf-feature-name>ukelonn-web-security-dbrealm</karaf-feature-name>
     </properties>
 
     <dependencies>
@@ -38,13 +38,6 @@
         </dependency>
         <dependency>
             <groupId>no.priv.bang.ukelonn</groupId>
-            <artifactId>ukelonn.services</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
-        </dependency>
-        <dependency>
-            <groupId>no.priv.bang.ukelonn</groupId>
             <artifactId>ukelonn.db.liquibase</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
@@ -52,6 +45,12 @@
         <dependency>
             <groupId>no.priv.bang.ukelonn</groupId>
             <artifactId>ukelonn.db.derbytest</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>no.priv.bang.ukelonn</groupId>
+            <artifactId>ukelonn.backend</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
@@ -98,10 +97,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.karaf.shell</groupId>
-            <artifactId>org.apache.karaf.shell.console</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <scope>compile</scope>
@@ -141,9 +136,7 @@
                         <Bundle-SymbolicName>${Bundle-SymbolicName}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Karaf-Commands>*</Karaf-Commands>
-                        <Import-Package>
-                            *
-                        </Import-Package>
+                        <Import-Package>*</Import-Package>
                         <Export-Package>!*</Export-Package>
                         <Include-Resource>/=target/classes/</Include-Resource>
                         <_removeheaders>
