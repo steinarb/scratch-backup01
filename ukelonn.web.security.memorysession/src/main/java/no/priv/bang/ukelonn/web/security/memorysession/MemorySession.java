@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.ukelonn.web.security.dbrealm;
+package no.priv.bang.ukelonn.web.security.memorysession;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 import no.priv.bang.ukelonn.UkelonnDatabase;
 
 @Component( service=Realm.class, immediate=true )
-public class UkelonnRealm extends AuthorizingRealm {
+public class MemorySession extends AuthorizingRealm {
 
     UkelonnDatabase database;
 
