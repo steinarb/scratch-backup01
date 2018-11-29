@@ -15,34 +15,23 @@
  */
 package no.priv.bang.ukelonn.web.security.memorysession;
 
-import static no.priv.bang.ukelonn.testutils.TestUtils.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.io.Serializable;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationException;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.junit.BeforeClass;
-import org.junit.Rule;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.SimpleSession;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import no.priv.bang.ukelonn.UkelonnDatabase;
 
 public class MemorySessionTest {
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
 
-    @BeforeClass
-    public static void setupForAllTests() {
-        setupFakeOsgiServices();
+    @Test
+    public void testCreateComponent() {
+        MemorySession component = new MemorySession();
+        component.activate();
+        Session session = new SimpleSession();
+        Serializable sessionid = component.create(session);
+        assertNotNull(sessionid);
     }
 
 }
