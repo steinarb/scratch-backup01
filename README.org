@@ -1,0 +1,46 @@
+* OSGi service definitions
+
+This repository defines OSGi services I have found useful, and where I have defined similar services in more than once project.
+
+There is no application in this project, only service definitions.
+
+The service definitions have been deployed to maven central.
+
+** Status of the project
+
+[[https://travis-ci.org/steinarb/osgi-service][file:https://travis-ci.org/steinarb/osgi-service.svg?branch=master]] [[https://coveralls.io/r/steinarb/osgi-service][file:https://coveralls.io/repos/steinarb/osgi-service/badge.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.sonar.osgi.service%3Aosgi.service][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service%3Aosgi.service&metric=alert_status#.svg]] [[https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service/osgi.service][file:https://maven-badges.herokuapp.com/maven-central/no.priv.bang.osgi.service/osgi.service/badge.svg]] [[https://www.javadoc.io/doc/no.priv.bang.osgi.service/osgi.service][file:https://www.javadoc.io/badge/no.priv.bang.osgi.service/osgi.service.svg]]
+
+*** SonarCloud
+
+[[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service%3Aosgi.service][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service%3Aosgi.service&metric=ncloc#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service%3Aosgi.service][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service%3Aosgi.service&metric=bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service%3Aosgi.service][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service%3Aosgi.service&metric=vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service%3Aosgi.service][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service%3Aosgi.service&metric=code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgi.service%3Aosgi.service][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgi.service%3Aosgi.service&metric=coverage#.svg]]
+
+** Services defined in this project
+*** no.priv.bang.osgi.service.database.DatabaseService
+
+The DatabaseService provides access to an actual JDBC database instance.  The DS components implementing this service typically:
+ 1. Receives a DataSourceFactory service
+ 2. From that DataSourceFactory:
+    1. Creates a DataSource (by e.g. connecting to a remote RDBMS like PostgreSQL or e.g. creating an in-memory derby database)
+    2. Uses liquibase to create a schema and provide initial data for the database in the DataSource
+
+To compile code using this OSGi service, add the following dependency to your maven POM:
+#+BEGIN_SRC xml
+  <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component.annotations</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>provided</scope>
+  </dependency>
+#+END_SRC
+
+To get runtime access to this OSGi service in apache karaf, add the following to the karaf feature definition of the OSGi bundle(s) using the interface:
+#+BEGIN_SRC xml
+  <repository>mvn:no.priv.bang.osgi.service/osgi.service/1.0.0-SNAPSHOT/xml/features</repository>
+  <feature name="myfeature">
+      <feature>sb-database-osgi-service</feature>
+  </feature>
+#+END_SRC
+
+** License
+
+This code is licensed under the Apache license v. 2.  See the LICENSE file for details.
