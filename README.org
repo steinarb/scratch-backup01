@@ -1,0 +1,19 @@
+* OSGi service definitions
+
+This repository defines OSGi services I have found useful, and where I have defined similar services in more than once project.
+
+There is no application in this project, only service definitions.
+
+The service definitions have been deployed to maven central.
+
+** Status of the project
+
+[[https://travis-ci.org/steinarb/sonar-collector][file:https://travis-ci.org/steinarb/sonar-collector.svg?branch=master]] [[https://coveralls.io/r/steinarb/sonar-collector][file:https://coveralls.io/repos/steinarb/sonar-collector/badge.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.sonar.sonar-collector%3Aparent][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.sonar.sonar-collector%3Aparent&metric=alert_status#.svg]] [[https://maven-badges.herokuapp.com/maven-central/no.priv.bang.sonar.sonar-collector/parent][file:https://maven-badges.herokuapp.com/maven-central/no.priv.bang.sonar.sonar-collector/parent/badge.svg]]
+
+*** SonarCloud
+
+[[https://sonarcloud.io/dashboard/index/no.priv.bang.sonar.sonar-collector%3Aparent][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.sonar.sonar-collector%3Aparent&metric=ncloc#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.sonar.sonar-collector%3Aparent][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.sonar.sonar-collector%3Aparent&metric=bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.sonar.sonar-collector%3Aparent][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.sonar.sonar-collector%3Aparent&metric=vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.sonar.sonar-collector%3Aparent][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.sonar.sonar-collector%3Aparent&metric=code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.sonar.sonar-collector%3Aparent][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.sonar.sonar-collector%3Aparent&metric=coverage#.svg]]
+
+** License
+
+This utility is licensend under the Apache license v. 2.  See the LICENSE file for details.
