@@ -15,10 +15,46 @@
  */
 package no.priv.bang.osgi.service.database;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import javax.activation.DataSource;
 
+/**
+ * This is an OSGi service that encapsulates a JDBC database connection.
+ *
+ * Implementations of this interface will typically connect to or start
+ * an RDBMS like PostgreSQL or Derby.  Implementations will typically
+ * also create and/or update the database schema using
+ * <a href="no.priv.bang.osgi.service.database">Liquibase</a>.
+ *
+ * @author Steinar Bang
+ *
+ */
 public interface DatabaseService {
 
+    /**
+     * Provide access to a database.
+     *
+     * @return a {@link DataSource} object that can be used to connect to a database
+     */
     DataSource getDatasource();
+
+    /**
+     * Get a connection to a database
+     *
+     * @return a {@link Connection} to a database
+     */
+    Connection getConnection();
+
+    /**
+     * Create a {@link PreparedStatement} that can have parameters replaced
+     * and then used to retrieve data with {@link PreparedStatement#executeQuery()}
+     * or modify the database with {@link PreparedStatement#executeUpdate()}.
+     *
+     * @param sql a {@link String} containing an SQL query with '?' where parts of the query should be replaced by parameters
+     * @return a {@link PreparedStatement} that can be used to retrieve data from or update data in the database
+     */
+    PreparedStatement prepareStatement(String sql);
 
 }

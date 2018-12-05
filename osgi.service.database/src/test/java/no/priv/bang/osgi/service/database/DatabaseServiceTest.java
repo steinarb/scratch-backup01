@@ -18,6 +18,8 @@ package no.priv.bang.osgi.service.database;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import javax.activation.DataSource;
 
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,11 @@ class DatabaseServiceTest {
         DatabaseService database = mock(DatabaseService.class);
         DataSource datasource = database.getDatasource();
         assertNull(datasource);
+        Connection connection = database.getConnection();
+        assertNull(connection);
+        String sql = "select * from users";
+        PreparedStatement statement = database.prepareStatement(sql);
+        assertNull(statement);
     }
 
 }
