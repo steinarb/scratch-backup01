@@ -18,13 +18,17 @@ package no.priv.bang.osgi.service.database;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import javax.activation.DataSource;
+
 import org.junit.jupiter.api.Test;
 
 class DatabaseServiceTest {
 
     @Test
-    void test() {
+    void testServiceDefinition() {
         DatabaseService database = mock(DatabaseService.class);
+        DataSource datasource = database.getDatasource();
+        assertNull(datasource);
     }
 
 }

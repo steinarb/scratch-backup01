@@ -15,6 +15,10 @@
  */
 package no.priv.bang.osgi.service.database;
 
+import javax.activation.DataSource;
+
 public interface DatabaseService {
+
+    DataSource getDatasource();
 
 }
