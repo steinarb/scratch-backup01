@@ -21,7 +21,7 @@
     </parent>
     <artifactId>osgi.service.database</artifactId>
 
-    <name>Database OSGo service</name>
+    <name>Database OSGi service</name>
     <description>Components implementing this service encapsulates database connection/creation and Liquibase schema setup.</description>
 
     <properties>
