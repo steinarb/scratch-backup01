@@ -18,7 +18,8 @@ package no.priv.bang.osgi.service.database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
+
 
 /**
  * This is an OSGi service that encapsulates a JDBC database connection.

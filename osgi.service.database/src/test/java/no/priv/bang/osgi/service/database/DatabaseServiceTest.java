@@ -20,7 +20,8 @@ import static org.mockito.Mockito.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import javax.activation.DataSource;
+
+import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
 
