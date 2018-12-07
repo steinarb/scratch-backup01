@@ -17,6 +17,7 @@ package no.priv.bang.osgi.service.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -55,7 +56,8 @@ public interface DatabaseService {
      *
      * @param sql a {@link String} containing an SQL query with '?' where parts of the query should be replaced by parameters
      * @return a {@link PreparedStatement} that can be used to retrieve data from or update data in the database
+     * @throws SQLException som er kastet av av {@link Connection#prepareStatement(String)}
      */
-    PreparedStatement prepareStatement(String sql);
+    PreparedStatement prepareStatement(String sql) throws SQLException;
 
 }

@@ -20,7 +20,6 @@ import static org.mockito.Mockito.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ import org.junit.jupiter.api.Test;
 class DatabaseServiceTest {
 
     @Test
-    void testServiceDefinition() {
+    void testServiceDefinition() throws Exception {
         DatabaseService database = mock(DatabaseService.class);
         DataSource datasource = database.getDatasource();
         assertNull(datasource);
