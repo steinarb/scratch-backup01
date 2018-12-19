@@ -28,14 +28,14 @@ To compile code using this OSGi service, add the following dependency to your ma
   <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.service.component.annotations</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0</version>
       <scope>provided</scope>
   </dependency>
 #+END_SRC
 
 To get runtime access to this OSGi service in apache karaf, add the following to the karaf feature definition of the OSGi bundle(s) using the interface:
 #+BEGIN_SRC xml
-  <repository>mvn:no.priv.bang.osgi.service/osgi.service/1.0.0-SNAPSHOT/xml/features</repository>
+  <repository>mvn:no.priv.bang.osgi.service/osgi.service/1.0.0/xml/features</repository>
   <feature name="myfeature">
       <feature>sb-database-osgi-service</feature>
   </feature>
