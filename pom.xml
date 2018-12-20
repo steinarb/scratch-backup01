@@ -8,7 +8,7 @@
 
     <packaging>pom</packaging>
 
-    <name>authservice parent project</name>
+    <name>authentication webapp parent</name>
 
     <modules>
         <module>authservice.definitions</module>
