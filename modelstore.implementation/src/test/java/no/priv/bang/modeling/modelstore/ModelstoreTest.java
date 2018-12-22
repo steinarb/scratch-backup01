@@ -48,11 +48,11 @@ public class ModelstoreTest {
      */
     @Test
     public void testRestoreModelContext() {
-    	Modelstore modelstore = new ModelstoreProvider().get();
-    	InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
-    	ModelContext context = modelstore.restoreContext(carsAndBicylesStream);
+        Modelstore modelstore = new ModelstoreProvider().get();
+        InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
+        ModelContext context = modelstore.restoreContext(carsAndBicylesStream);
 
-    	assertEquals(9, context.listAllAspects().size());
+        assertEquals(9, context.listAllAspects().size());
         assertEquals(9, context.listAllPropertysets().size());
     }
 

@@ -440,10 +440,10 @@ public class PropertysetImplTest {
 
     @Test
     public void testEmptyPropertysetEqualsPropertysetNil() {
-    	Propertyset emptypropertyset = new PropertysetImpl();
-    	Propertyset nil = getNilPropertyset();
-    	assertTrue(emptypropertyset.equals(nil));
-    	assertTrue(nil.equals(emptypropertyset));
+        Propertyset emptypropertyset = new PropertysetImpl();
+        Propertyset nil = getNilPropertyset();
+        assertTrue(emptypropertyset.equals(nil));
+        assertTrue(nil.equals(emptypropertyset));
     }
 
     @Test
@@ -633,14 +633,14 @@ public class PropertysetImplTest {
     }
 
     private void assertAllPropertiesExceptIdAndAspectEquals(Propertyset propertyset1, Propertyset propertyset2) {
-    	Collection<String> propertynames1 = propertyset1.getPropertynames();
-    	propertynames1.remove(idKey);
-    	propertynames1.remove(aspectsKey);
-    	Collection<String> propertynames2 = propertyset2.getPropertynames();
-    	propertynames2.remove(idKey);
-    	propertynames2.remove(aspectsKey);
-    	assertEquals(propertynames1, propertynames2);
-    	for (String propertyname : propertynames1) {
+        Collection<String> propertynames1 = propertyset1.getPropertynames();
+        propertynames1.remove(idKey);
+        propertynames1.remove(aspectsKey);
+        Collection<String> propertynames2 = propertyset2.getPropertynames();
+        propertynames2.remove(idKey);
+        propertynames2.remove(aspectsKey);
+        assertEquals(propertynames1, propertynames2);
+        for (String propertyname : propertynames1) {
             Value value1 = propertyset1.getProperty(propertyname);
             Value value2 = propertyset2.getProperty(propertyname);
             assertEquals(value1, value2);

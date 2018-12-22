@@ -15,11 +15,11 @@ class ListValue extends ValueBase {
      * @deprecated use {@link Values#toListValue(ValueList)} instead
      */
     public ListValue(ValueList value) {
-    	if (null == value) {
+        if (null == value) {
             this.value = getNil().asList();
-    	} else {
+        } else {
             this.value = value;
-    	}
+        }
     }
 
     public Boolean asBoolean() {

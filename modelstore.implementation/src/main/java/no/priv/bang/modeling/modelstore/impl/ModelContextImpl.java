@@ -31,11 +31,11 @@ public class ModelContextImpl implements ModelContext {
     private Modelstore modelstore; // Only used for logging
 
     public ModelContextImpl() {
-    	this(null);
+        this(null);
     }
 
     public ModelContextImpl(Modelstore modelstore) {
-    	this.modelstore = modelstore;
+        this.modelstore = modelstore;
         loadEmbeddedAspects();
     }
 
@@ -152,7 +152,7 @@ public class ModelContextImpl implements ModelContext {
     }
 
     public void merge(ModelContext otherContext) {
-    	ModelContexts.merge(this, otherContext);
+        ModelContexts.merge(this, otherContext);
     }
 
     @Override

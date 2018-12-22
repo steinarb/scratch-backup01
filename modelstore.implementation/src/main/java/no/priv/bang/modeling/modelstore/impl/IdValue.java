@@ -12,11 +12,11 @@ class IdValue implements Value {
     private UUID value;
 
     public IdValue(UUID value) {
-    	if (value != null) {
+        if (value != null) {
             this.value = value;
-    	} else {
+        } else {
             this.value = getNil().asId();
-    	}
+        }
     }
 
     public boolean isId() {

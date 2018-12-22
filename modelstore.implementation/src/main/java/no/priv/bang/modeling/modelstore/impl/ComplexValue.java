@@ -12,7 +12,7 @@ class ComplexValue extends PropertysetValueBase {
      * @deprecated use {@link Values#toComplexValue(Propertyset)} instead
      */
     public ComplexValue(Propertyset value) {
-    	super(value);
+        super(value);
     }
 
     @Override

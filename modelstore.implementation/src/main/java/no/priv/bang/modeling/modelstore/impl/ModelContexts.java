@@ -21,12 +21,12 @@ public class ModelContexts {
     final static UUID metadataId = UUID.fromString("b1ad694b-4003-412b-8249-a7d1a0a24cf3");
 
     public static ModelContext findWrappedModelContext(ModelContext modelcontext) {
-    	if (modelcontext instanceof ModelContextRecordingMetadata) {
+        if (modelcontext instanceof ModelContextRecordingMetadata) {
             ModelContextRecordingMetadata outer = (ModelContextRecordingMetadata) modelcontext;
             return outer.getWrappedModelContext();
-    	}
+        }
 
-    	return modelcontext;
+        return modelcontext;
     }
 
     /**
@@ -56,15 +56,15 @@ public class ModelContexts {
      * @param otherContext the context that is merged into the other context, this context is unchanged after the merge
      */
     static public void merge(ModelContext context, ModelContext otherContext) {
-    	if (otherContext == null) {
+        if (otherContext == null) {
             // No point in testing for null in the first comment, because this
             // will always be "this" when called from a ModelContext implementation
             // and if used in a differen way, must be done from inside this package
             // and it will be best to throw the exception during development
             return; // nothing to merge with, context is unchanged
-    	}
+        }
 
-    	Collection<UUID> propertysetIds = findPropertysetIds(context.listAllPropertysets());
+        Collection<UUID> propertysetIds = findPropertysetIds(context.listAllPropertysets());
         for (Propertyset propertyset : otherContext.listAllPropertysets()) {
             UUID propertysetId = propertyset.getId();
             if (!metadataId.equals(propertysetId)) {

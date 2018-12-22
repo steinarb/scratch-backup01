@@ -23,11 +23,11 @@ class DoubleValue extends ValueBase {
      * @deprecated use {@link Values#toDoubleValue(Double)} instead
      */
     public DoubleValue(Double value) {
-    	if (null == value) {
+        if (null == value) {
             this.value = getNil().asDouble();
-    	} else {
+        } else {
             this.value = value;
-    	}
+        }
     }
 
     public boolean isDouble() {

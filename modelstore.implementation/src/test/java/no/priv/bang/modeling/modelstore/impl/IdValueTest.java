@@ -27,12 +27,12 @@ public class IdValueTest {
 
     @Test
     public void testIsId() {
-    	assertTrue(value.isId());
+        assertTrue(value.isId());
     }
 
     @Test
     public void testAsId() {
-    	assertNotEquals(getNil().asId(), value.asId());
+        assertNotEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -102,8 +102,8 @@ public class IdValueTest {
 
     @Test
     public void testAsList() {
-    	ValueList emptyList = value.asList();
-    	assertTrue(emptyList.isEmpty());
+        ValueList emptyList = value.asList();
+        assertTrue(emptyList.isEmpty());
     }
 
     /**

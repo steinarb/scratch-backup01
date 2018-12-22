@@ -9,7 +9,7 @@ public class ModelstoreIntegrationtestBase {
     private String mavenProjectVersion;
 
     public ModelstoreIntegrationtestBase() {
-    	try {
+        try {
             Properties examProperties = new Properties();
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("exam.properties");
             examProperties.load(inputStream);

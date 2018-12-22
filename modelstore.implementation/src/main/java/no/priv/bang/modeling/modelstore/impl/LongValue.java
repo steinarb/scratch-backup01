@@ -23,11 +23,11 @@ class LongValue extends ValueBase {
      * @deprecated use {@link Values#toLongValue(Long)} instead
      */
     public LongValue(Long value) {
-    	if (null == value) {
+        if (null == value) {
             this.value = getNil().asLong();
-    	} else {
+        } else {
             this.value = value;
-    	}
+        }
     }
 
     public boolean isLong() {

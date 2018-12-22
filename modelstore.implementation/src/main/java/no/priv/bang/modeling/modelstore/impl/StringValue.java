@@ -23,11 +23,11 @@ class StringValue extends ValueBase {
      * @deprecated use {@link Values#toStringValue(String)} instead
      */
     public StringValue(String value) {
-    	if (null == value) {
+        if (null == value) {
             this.value = getNil().asString();
-    	} else {
+        } else {
             this.value = value;
-    	}
+        }
     }
 
     @Override

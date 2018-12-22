@@ -40,24 +40,24 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
     @Configuration
     public Option[] config() {
         return options(
-                       systemProperty("logback.configurationFile").value("file:src/test/resources/logback.xml"),
-                       mavenBundle("org.slf4j", "slf4j-api", "1.7.2"),
-                       mavenBundle("ch.qos.logback", "logback-core", "1.0.4"),
-                       mavenBundle("ch.qos.logback", "logback-classic", "1.0.4"),
-                       mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.5.3"),
-                       mavenBundle("no.priv.bang.modeling", "modelstore.implementation", getMavenProjectVersion()),
-                       junitBundles());
+            systemProperty("logback.configurationFile").value("file:src/test/resources/logback.xml"),
+            mavenBundle("org.slf4j", "slf4j-api", "1.7.2"),
+            mavenBundle("ch.qos.logback", "logback-core", "1.0.4"),
+            mavenBundle("ch.qos.logback", "logback-classic", "1.0.4"),
+            mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.5.3"),
+            mavenBundle("no.priv.bang.modeling", "modelstore.implementation", getMavenProjectVersion()),
+            junitBundles());
     }
 
     @Test
     public void modelstoreIntegrationTest() {
-    	// Verify that the service could be injected
-    	assertNotNull(modelstoreService);
+        // Verify that the service could be injected
+        assertNotNull(modelstoreService);
 
-    	// Actually use the service to create some propertysets
-    	ModelContext context = modelstoreService.getDefaultContext();
-    	UUID propertysetId = UUID.randomUUID();
-    	// Create a new propertyset
+        // Actually use the service to create some propertysets
+        ModelContext context = modelstoreService.getDefaultContext();
+        UUID propertysetId = UUID.randomUUID();
+        // Create a new propertyset
         Propertyset propertyset = context.findPropertyset(propertysetId);
         propertyset.setStringProperty("stringPropertyOfPi", "3.14");
         assertEquals(Double.valueOf(3.14), propertyset.getDoubleProperty("stringPropertyOfPi"));
@@ -68,7 +68,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Test
     public void testList() {
-    	ModelContext context = modelstoreService.getDefaultContext();
+        ModelContext context = modelstoreService.getDefaultContext();
         ValueList list = context.createList();
         assertEquals(0, list.size());
         list.add(true);
@@ -104,7 +104,7 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Test
     public void testEmbeddedAspects() {
-    	ModelContext context = modelstoreService.getDefaultContext();
+        ModelContext context = modelstoreService.getDefaultContext();
         int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
         Collection<Propertyset> aspects = context.listAllAspects();

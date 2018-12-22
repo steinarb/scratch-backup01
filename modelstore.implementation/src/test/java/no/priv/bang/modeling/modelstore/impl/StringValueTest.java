@@ -26,14 +26,14 @@ public class StringValueTest {
 
     @Test
     public void testIsId() {
-    	assertFalse(valueWithNumber.isId());
-    	assertFalse(valueNotANumber.isId());
+        assertFalse(valueWithNumber.isId());
+        assertFalse(valueNotANumber.isId());
     }
 
     @Test
     public void testAsId() {
-    	assertEquals(getNil().asId(), valueWithNumber.asId());
-    	assertEquals(getNil().asId(), valueNotANumber.asId());
+        assertEquals(getNil().asId(), valueWithNumber.asId());
+        assertEquals(getNil().asId(), valueNotANumber.asId());
     }
 
     @Test
@@ -116,10 +116,10 @@ public class StringValueTest {
 
     @Test
     public void testAsList() {
-    	ValueList emptyList1 = valueWithNumber.asList();
-    	assertTrue(emptyList1.isEmpty());
-    	ValueList emptyList2 = valueNotANumber.asList();
-    	assertTrue(emptyList2.isEmpty());
+        ValueList emptyList1 = valueWithNumber.asList();
+        assertTrue(emptyList1.isEmpty());
+        ValueList emptyList2 = valueNotANumber.asList();
+        assertTrue(emptyList2.isEmpty());
     }
 
     /**

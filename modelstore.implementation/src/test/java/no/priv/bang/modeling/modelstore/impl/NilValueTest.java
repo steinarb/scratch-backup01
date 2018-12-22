@@ -88,8 +88,8 @@ public class NilValueTest {
 
     @Test
     public void testAsList() {
-    	ValueList emptyList = getNil().asList();
-    	assertTrue(emptyList.isEmpty());
+        ValueList emptyList = getNil().asList();
+        assertTrue(emptyList.isEmpty());
         assertEquals(0, emptyList.size());
 
         // Verify that the list can't be modified.
@@ -97,7 +97,7 @@ public class NilValueTest {
         emptyList.add(toLongValue(13));
         emptyList.add(toDoubleValue(2.78));
         emptyList.add(toStringValue("foo bar!"));
-    	assertTrue(emptyList.isEmpty());
+        assertTrue(emptyList.isEmpty());
         assertEquals(0, emptyList.size());
     }
 

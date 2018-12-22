@@ -24,11 +24,11 @@ class BooleanValue extends ValueBase {
      * @deprecated Use {@link Values#toBooleanValue(Boolean)} instead
      */
     BooleanValue(Boolean value) {
-    	if (null == value) {
+        if (null == value) {
             this.value = getNil().asBoolean();
-    	} else {
+        } else {
             this.value = value;
-    	}
+        }
     }
 
     public boolean isBoolean() {

@@ -55,16 +55,16 @@ public class JsonPropertysetPersister {
                 jsonstream.flush();
                 jsonstream.close();
             } catch (Exception e) {
-            	context.logError("Caught exception closing output stream", jsonstream, e);
+                context.logError("Caught exception closing output stream", jsonstream, e);
             }
         }
     }
 
     public void restore(File propertysetsFile, ModelContext modelContext) throws JsonParseException, IOException {
-    	if (propertysetsFile != null) {
+        if (propertysetsFile != null) {
             JsonParser parser = factory.createParser(propertysetsFile);
             parseUntilEnd(modelContext, parser);
-    	}
+        }
     }
 
     public void restore(InputStream jsonstream, ModelContext context) {

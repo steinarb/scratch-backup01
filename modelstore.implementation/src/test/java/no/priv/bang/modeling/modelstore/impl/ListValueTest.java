@@ -30,12 +30,12 @@ public class ListValueTest {
 
     @Test
     public void testIsId() {
-    	assertFalse(value.isId());
+        assertFalse(value.isId());
     }
 
     @Test
     public void testAsId() {
-    	assertEquals(getNil().asId(), value.asId());
+        assertEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -105,9 +105,9 @@ public class ListValueTest {
 
     @Test
     public void testAsList() {
-    	ValueList list = value.asList();
-    	assertFalse(list.isEmpty());
-    	assertEquals(valueList.size(), list.size());
+        ValueList list = value.asList();
+        assertFalse(list.isEmpty());
+        assertEquals(valueList.size(), list.size());
     }
 
     /**
@@ -116,12 +116,12 @@ public class ListValueTest {
      */
     @Test
     public void testEmptyListEqualsNilList() {
-    	Value emptylist = toListValue(newList(), false);
-    	Value nil = getNil();
-    	assertTrue(emptylist.equals(nil));
+        Value emptylist = toListValue(newList(), false);
+        Value nil = getNil();
+        assertTrue(emptylist.equals(nil));
 
-    	// TODO: should the equals be implemented in the nil object as well?
-    	assertFalse(nil.equals(emptylist));
+        // TODO: should the equals be implemented in the nil object as well?
+        assertFalse(nil.equals(emptylist));
     }
 
     /**

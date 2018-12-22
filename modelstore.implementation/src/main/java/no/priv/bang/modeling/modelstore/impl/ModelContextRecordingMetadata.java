@@ -43,9 +43,9 @@ public class ModelContextRecordingMetadata implements ModelContext {
             try {
                 lastmodifiedtime.put(UUID.fromString(uuidAsString), dateFormat.parse(dateAsString));
             } catch (IllegalArgumentException e) {
-            	logError("Metadata \"lastmodifiedtime\" Propertyset id not parsable as a UUID", uuidAsString, e);
+                logError("Metadata \"lastmodifiedtime\" Propertyset id not parsable as a UUID", uuidAsString, e);
             } catch (ParseException e) {
-            	logError("Metadata \"lastmodifiedtime\" value not parsable as a Date", dateAsString, e);
+                logError("Metadata \"lastmodifiedtime\" value not parsable as a Date", dateAsString, e);
             }
         }
     }
@@ -84,12 +84,12 @@ public class ModelContextRecordingMetadata implements ModelContext {
     }
 
     public Collection<Propertyset> findObjectsOfAspect(Propertyset aspect) {
-    	if (aspect instanceof PropertysetRecordingSaveTime) {
+        if (aspect instanceof PropertysetRecordingSaveTime) {
             PropertysetRecordingSaveTime outerAspect = (PropertysetRecordingSaveTime) aspect;
             return impl.findObjectsOfAspect(outerAspect.getPropertyset());
-    	}
+        }
 
-    	return impl.findObjectsOfAspect(aspect);
+        return impl.findObjectsOfAspect(aspect);
     }
 
     /**
@@ -118,7 +118,7 @@ public class ModelContextRecordingMetadata implements ModelContext {
     }
 
     public void merge(ModelContext otherContext) {
-    	ModelContexts.merge(this, otherContext);
+        ModelContexts.merge(this, otherContext);
     }
 
     @Override

@@ -39,15 +39,15 @@ class ValueArrayList extends AbstractList<Value> implements ValueList {
 
     @Override
     public Value set(int i, Value value) {
-    	if (null == value) {
+        if (null == value) {
             return arrayList.set(i, getNil());
-    	} else if (value.isComplexProperty()) {
+        } else if (value.isComplexProperty()) {
             return arrayList.set(i, toComplexValue(value.asComplexProperty()));
-    	} else if (value.isList()) {
+        } else if (value.isList()) {
             return arrayList.set(i, toListValue(value.asList()));
-    	} else {
+        } else {
             return arrayList.set(i, value);
-    	}
+        }
     }
 
     public Value set(int i, Boolean value) {
@@ -92,15 +92,15 @@ class ValueArrayList extends AbstractList<Value> implements ValueList {
 
     @Override
     public void add(int i, Value value) {
-    	if (value == null) {
+        if (value == null) {
             arrayList.add(i, getNil());
-    	} else if (value.isComplexProperty()) {
+        } else if (value.isComplexProperty()) {
             arrayList.add(i, toComplexValue(value.asComplexProperty()));
-    	} else if (value.isList()) {
+        } else if (value.isList()) {
             arrayList.add(i, toListValue(value.asList()));
-    	} else {
+        } else {
             arrayList.add(i, value);
-    	}
+        }
     }
 
     public void add(Boolean value) {

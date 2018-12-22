@@ -141,22 +141,22 @@ public final class PropertysetNil implements Propertyset {
 
     @Override
     public boolean equals(Object obj) {
-    	if (this == obj) {
+        if (this == obj) {
             return true;
-    	}
+        }
 
-    	if (obj == null) {
+        if (obj == null) {
             return false;
-    	}
+        }
 
-    	if (obj instanceof Propertyset) {
+        if (obj instanceof Propertyset) {
             Propertyset other = (Propertyset) obj;
             if (other.getPropertynames().isEmpty()) {
                 return true;
             }
-    	}
+        }
 
-    	return false;
+        return false;
     }
 
     @Override

@@ -223,8 +223,8 @@ public class ModelContextTest {
     @Test
     public void testJsonGeneratorWithReference() throws IOException {
         // Create two propertysets with ids, and make a reference to propertyset
-    	// "b" from propertyset "a".
-    	Modelstore modelstore = new ModelstoreProvider().get();
+        // "b" from propertyset "a".
+        Modelstore modelstore = new ModelstoreProvider().get();
         ModelContext context = modelstore.getDefaultContext();
         UUID idA = UUID.randomUUID();
         Propertyset a = context.findPropertyset(idA);
@@ -391,13 +391,13 @@ public class ModelContextTest {
     }
 
     private Propertyset findAspectByTitle(Collection<Propertyset> aspects, String aspectTitle) {
-    	for (Propertyset aspect : aspects) {
+        for (Propertyset aspect : aspects) {
             if (aspectTitle.equals(aspect.getStringProperty("title"))) {
                 return aspect;
             }
         }
 
-    	return getNilPropertyset();
+        return getNilPropertyset();
     }
 
     private Propertyset buildGeneralObjectAspect(ModelContext context) {

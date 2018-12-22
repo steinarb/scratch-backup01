@@ -24,12 +24,12 @@ public class BooleanValueTest {
 
     @Test
     public void testIsId() {
-    	assertFalse(value.isId());
+        assertFalse(value.isId());
     }
 
     @Test
     public void testAsId() {
-    	assertEquals(getNil().asId(), value.asId());
+        assertEquals(getNil().asId(), value.asId());
     }
 
     @Test
@@ -99,8 +99,8 @@ public class BooleanValueTest {
 
     @Test
     public void testAsList() {
-    	ValueList emptyList = value.asList();
-    	assertTrue(emptyList.isEmpty());
+        ValueList emptyList = value.asList();
+        assertTrue(emptyList.isEmpty());
     }
 
     /**
