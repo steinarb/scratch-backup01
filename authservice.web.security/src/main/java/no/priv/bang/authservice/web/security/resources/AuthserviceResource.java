@@ -95,10 +95,10 @@ public class AuthserviceResource {
     public Response checkLogin() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
-            return Response.status(Response.Status.OK).entity("Successfully authenticated!").build();
+            return Response.status(Response.Status.OK).entity("Successfully authenticated!\n").build();
         }
 
-        return Response.status(Response.Status.UNAUTHORIZED).entity("Successfully authenticated!").build();
+        return Response.status(Response.Status.UNAUTHORIZED).entity("Not authenticated!\n").build();
     }
 
 }
