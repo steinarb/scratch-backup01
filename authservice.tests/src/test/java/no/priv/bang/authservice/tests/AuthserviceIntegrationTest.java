@@ -48,9 +48,10 @@ public class AuthserviceIntegrationTest {
             editConfigurationFilePut("etc/org.ops4j.pax.web.cfg", "org.osgi.service.http.port.secure", httpsPort),
             vmOptions("-Dtest-jmx-port=" + jmxPort),
             junitBundles(),
+            mavenBundle("javax.servlet", "javax.servlet-api").versionAsInProject(),
             mavenBundle("org.apache.shiro", "shiro-core").versionAsInProject(),
             features(paxJdbcRepo),
-            features(authserviceFeatureRepo, "authservice"));
+            features(authserviceFeatureRepo, "authservice-derby-dbrealm-and-session"));
     }
 
     @Test
