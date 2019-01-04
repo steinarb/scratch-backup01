@@ -15,11 +15,11 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>no.priv.bang.osgi.service</groupId>
-        <artifactId>osgi.service</artifactId>
+        <groupId>no.priv.bang.osgiservice</groupId>
+        <artifactId>osgiservice</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>osgi.service.database</artifactId>
+    <artifactId>osgiservice.database</artifactId>
 
     <name>Database OSGi service</name>
     <description>Components implementing this service encapsulates database connection/creation and Liquibase schema setup.</description>
@@ -70,7 +70,7 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Export-Package>no.priv.bang.osgi.service.database</Export-Package>
+                        <Export-Package>no.priv.bang.osgiservice.database</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>
