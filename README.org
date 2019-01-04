@@ -26,8 +26,8 @@ The DatabaseService provides access to an actual JDBC database instance.  The DS
 To compile code using this OSGi service, add the following dependency to your maven POM:
 #+BEGIN_SRC xml
   <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.service.component.annotations</artifactId>
+      <groupId>no.priv.bang.osgi.service</groupId>
+      <artifactId>osgi.service.database</artifactId>
       <version>1.0.0</version>
       <scope>provided</scope>
   </dependency>
