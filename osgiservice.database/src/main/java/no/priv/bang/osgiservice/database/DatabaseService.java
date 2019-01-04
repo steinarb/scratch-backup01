@@ -29,9 +29,6 @@ import javax.sql.DataSource;
  * an RDBMS like PostgreSQL or Derby.  Implementations will typically
  * also create and/or update the database schema using
  * <a href="no.priv.bang.osgi.service.database">Liquibase</a>.
- *
- * @author Steinar Bang
- *
  */
 public interface DatabaseService {
 
