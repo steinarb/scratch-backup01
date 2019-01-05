@@ -86,6 +86,10 @@
 	            <enabled>true</enabled>
 	        </snapshots>
 	    </repository>
+            <repository>
+                <id>atlassian-public</id>
+                <url>https://maven.atlassian.com/content/repositories/atlassian-public/</url>
+            </repository>
 	</repositories>
 
     <licenses>
@@ -158,9 +162,10 @@
                 <version>0.6-beta2</version>
             </dependency>
             <dependency>
-                <groupId>nekohtml</groupId>
+                <groupId>com.atlassian.bundles</groupId>
                 <artifactId>nekohtml</artifactId>
-                <version>0.9.5</version>
+                <version>1.9.12-1</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>xerces</groupId>
