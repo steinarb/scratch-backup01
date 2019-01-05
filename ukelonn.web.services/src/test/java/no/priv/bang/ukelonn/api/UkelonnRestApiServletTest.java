@@ -43,6 +43,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockServletOutputStream;
 
@@ -230,7 +231,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
     @Test
     public void testLoginWrongJson() throws Exception {
         // Set up the request
-        HttpServletRequest request = buildRequestFromStringBody("xxxyzzy");
+        HttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/login", "xxxyzzy");
 
         // Create the response that will receive the login result
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -826,9 +827,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         PerformedTransaction job = new PerformedTransaction(account, jobTypes.get(0).getId(), jobTypes.get(0).getTransactionAmount(), new Date());
         account.setBalance(account.getBalance() + jobTypes.get(0).getTransactionAmount());
         String jobAsJson = ServletTestBase.mapper.writeValueAsString(job);
-        HttpServletRequest request = buildRequestFromStringBody(jobAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/job/register"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/job/register");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/job/register", jobAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -878,9 +877,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         List<TransactionType> jobTypes = getJobtypes();
         PerformedTransaction job = new PerformedTransaction(account, jobTypes.get(0).getId(), jobTypes.get(0).getTransactionAmount(), new Date());
         String jobAsJson = ServletTestBase.mapper.writeValueAsString(job);
-        HttpServletRequest request = buildRequestFromStringBody(jobAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/job/register"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/job/register");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/job/register", jobAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -926,9 +923,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         PerformedTransaction job = new PerformedTransaction(account, jobTypes.get(0).getId(), jobTypes.get(0).getTransactionAmount(), new Date());
         account.setBalance(account.getBalance() + jobTypes.get(0).getTransactionAmount());
         String jobAsJson = ServletTestBase.mapper.writeValueAsString(job);
-        HttpServletRequest request = buildRequestFromStringBody(jobAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/job/register"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/job/register");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/job/register", jobAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -973,9 +968,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         List<TransactionType> jobTypes = getJobtypes();
         PerformedTransaction job = new PerformedTransaction(account, jobTypes.get(0).getId(), jobTypes.get(0).getTransactionAmount(), new Date());
         String jobAsJson = ServletTestBase.mapper.writeValueAsString(job);
-        HttpServletRequest request = buildRequestFromStringBody(jobAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/job/register"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/job/register");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/job/register", jobAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1009,9 +1002,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
     @Test
     public void testRegisterJobUnparsablePostData() throws Exception {
         // Create the request
-        HttpServletRequest request = buildRequestFromStringBody("this is not json");
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/job/register"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/job/register");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/job/register", "this is not json");
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1055,9 +1046,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         List<TransactionType> jobTypes = getJobtypes();
         PerformedTransaction job = new PerformedTransaction(account, jobTypes.get(0).getId(), jobTypes.get(0).getTransactionAmount(), new Date());
         String jobAsJson = ServletTestBase.mapper.writeValueAsString(job);
-        HttpServletRequest request = buildRequestFromStringBody(jobAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/job/register"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/job/register");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/job/register", jobAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
@@ -1145,12 +1134,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         List<Integer> jobIds = Arrays.asList(jobs.get(0).getId(), jobs.get(1).getId());
         AccountWithJobIds accountWithJobIds = new AccountWithJobIds(account, jobIds);
         String accountWithJobIdsAsJson = ServletTestBase.mapper.writeValueAsString(accountWithJobIds);
-        HttpServletRequest request = buildRequestFromStringBody(accountWithJobIdsAsJson);
-        when(request.getMethod()).thenReturn("POST");
-        String requestURL = "http://localhost:8181/ukelonn/api/admin/jobs/delete";
-        String requestURI = "/ukelonn/api/admin/jobs/delete";
-        when(request.getRequestURL()).thenReturn(new StringBuffer(requestURL));
-        when(request.getRequestURI()).thenReturn(requestURI);
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/jobs/delete", accountWithJobIdsAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1201,12 +1185,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Build the HTTP request
         String editedJobAsJson = ServletTestBase.mapper.writeValueAsString(editedJob);
-        HttpServletRequest request = buildRequestFromStringBody(editedJobAsJson);
-        when(request.getMethod()).thenReturn("POST");
-        String requestURL = "http://localhost:8181/ukelonn/api/job/update";
-        String requestURI = "/ukelonn/api/job/update";
-        when(request.getRequestURL()).thenReturn(new StringBuffer(requestURL));
-        when(request.getRequestURI()).thenReturn(requestURI);
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/job/update", editedJobAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1346,9 +1325,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         PerformedTransaction payment = new PerformedTransaction(account, paymentTypes.get(0).getId(), account.getBalance(), new Date());
         account.setBalance(0.0);
         String paymentAsJson = ServletTestBase.mapper.writeValueAsString(payment);
-        HttpServletRequest request = buildRequestFromStringBody(paymentAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/registerpayment"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/registerpayment");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/registerpayment", paymentAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1394,9 +1371,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Create the request
         String jobtypeAsJson = ServletTestBase.mapper.writeValueAsString(jobtype);
-        HttpServletRequest request = buildRequestFromStringBody(jobtypeAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/jobtype/modify"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/admin/jobtype/modify");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/jobtype/modify", jobtypeAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1440,9 +1415,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Create the request
         String jobtypeAsJson = ServletTestBase.mapper.writeValueAsString(jobtype);
-        HttpServletRequest request = buildRequestFromStringBody(jobtypeAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/jobtype/create"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/admin/jobtype/create");
+        HttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/jobtype/create", jobtypeAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1489,9 +1462,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Create the request
         String paymenttypeAsJson = ServletTestBase.mapper.writeValueAsString(paymenttype);
-        HttpServletRequest request = buildRequestFromStringBody(paymenttypeAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/jobtype/modify"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/admin/paymenttype/modify");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/paymenttype/modify", paymenttypeAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1535,9 +1506,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Create the request
         String jobtypeAsJson = ServletTestBase.mapper.writeValueAsString(paymenttype);
-        HttpServletRequest request = buildRequestFromStringBody(jobtypeAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/paymenttype/create"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/admin/paymenttype/create");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/paymenttype/create", jobtypeAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1634,9 +1603,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Create the request
         String userAsJson = ServletTestBase.mapper.writeValueAsString(user);
-        HttpServletRequest request = buildRequestFromStringBody(userAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/user/modify"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/admin/user/modify");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/user/modify", userAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1691,9 +1658,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Create the request
         String passwordsAsJson = ServletTestBase.mapper.writeValueAsString(passwords);
-        HttpServletRequest request = buildRequestFromStringBody(passwordsAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/user/create"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/admin/user/create");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/user/create", passwordsAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1750,9 +1715,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
 
         // Create the request
         String passwordsAsJson = ServletTestBase.mapper.writeValueAsString(passwords);
-        HttpServletRequest request = buildRequestFromStringBody(passwordsAsJson);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/admin/user/password"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/admin/user/password");
+        MockHttpServletRequest request = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/admin/user/password", passwordsAsJson);
 
         // Create a response object that will receive and hold the servlet output
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -1818,9 +1781,7 @@ public class UkelonnRestApiServletTest extends ServletTestBase {
         // Send a notification to user "jad" over the REST API
         Notification utbetalt = new Notification("Ukelønn", "150 kroner betalt til konto");
         String utbetaltAsJson = mapper.writeValueAsString(utbetalt);
-        HttpServletRequest sendNotificationRequest = buildRequestFromStringBody(utbetaltAsJson);
-        when(sendNotificationRequest.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/notificationto/jad"));
-        when(sendNotificationRequest.getRequestURI()).thenReturn("/ukelonn/api/notificationto/jad");
+        HttpServletRequest sendNotificationRequest = buildRequestFromStringBody("http://localhost:8181/ukelonn/api/notificationto/jad", utbetaltAsJson);
         MockHttpServletResponse sendNotificationResponse = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
         servlet.service(sendNotificationRequest, sendNotificationResponse);
 

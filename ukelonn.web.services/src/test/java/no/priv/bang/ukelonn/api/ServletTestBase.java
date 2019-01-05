@@ -18,14 +18,10 @@ package no.priv.bang.ukelonn.api;
 import static no.priv.bang.ukelonn.testutils.TestUtils.*;
 import static org.mockito.Mockito.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.net.URI;
 import java.util.Collections;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,6 +33,7 @@ import org.apache.shiro.web.subject.WebSubject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mockrunner.mock.web.MockHttpServletRequest;
 
 import no.priv.bang.ukelonn.api.beans.LoginCredentials;
 
@@ -68,7 +65,7 @@ public class ServletTestBase {
 
     protected HttpServletRequest buildLoginRequest(LoginCredentials credentials) throws JsonProcessingException, IOException {
         String credentialsAsJson = ServletTestBase.mapper.writeValueAsString(credentials);
-        return buildRequestFromStringBody(credentialsAsJson);
+        return buildRequestFromStringBody("http://localhost:8181/ukelonn/api/login", credentialsAsJson);
     }
 
     protected HttpServletRequest buildGetRequest() throws IOException {
@@ -83,31 +80,13 @@ public class ServletTestBase {
         return request;
     }
 
-    protected HttpServletRequest buildRequestFromStringBody(String textToSendAsBody) throws IOException {
-        ServletInputStream postBody = wrap(new ByteArrayInputStream(textToSendAsBody.getBytes(StandardCharsets.UTF_8)));
+    protected MockHttpServletRequest buildRequestFromStringBody(String url, String textToSendAsBody) throws IOException {
         HttpSession session = mock(HttpSession.class);
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getProtocol()).thenReturn("HTTP/1.1");
-        when(request.getMethod()).thenReturn("POST");
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/ukelonn/api/login"));
-        when(request.getRequestURI()).thenReturn("/ukelonn/api/login");
-        when(request.getContextPath()).thenReturn("/ukelonn");
-        when(request.getServletPath()).thenReturn("/api");
-        when(request.getHeaderNames()).thenReturn(Collections.enumeration(Arrays.asList("Content-Type")));
-        when(request.getHeaders(eq("Content-Type"))).thenReturn(Collections.enumeration(Arrays.asList("application/json")));
-        when(request.getInputStream()).thenReturn(postBody);
-        when(request.getSession()).thenReturn(session);
-        return request;
-    }
-
-    private ServletInputStream wrap(InputStream inputStream) {
-        return new ServletInputStream() {
-
-            @Override
-            public int read() throws IOException {
-                return inputStream.read();
-            }
-        };
+        return MockHttpServletRequest.postJsonRequest(URI.create(url))
+            .setBodyContent(textToSendAsBody)
+            .setContextPath("/ukelonn")
+            .setServletPath("/api")
+            .setSession(session);
     }
 
 }
