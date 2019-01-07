@@ -24,7 +24,9 @@
         <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc-features</artifactId>
-            <type>pom</type>
+            <version>${pax.jdbc.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
