@@ -30,6 +30,7 @@ import org.glassfish.jersey.servlet.WebConfig;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.service.log.LogService;
 
@@ -58,6 +59,11 @@ public class AuthserviceServlet extends ServletContainer {
     private LogService logservice;
 
     @Reference
+    public void setServletContextHelper(ServletContextHelper dummy) {
+        // Dummy injection to enforce component construction order
+    }
+
+    @Reference
     public void setLogservice(LogService logService) {
         this.logservice = logService;
     }
@@ -81,60 +87,62 @@ public class AuthserviceServlet extends ServletContainer {
         Set<Class<?>> classes = getConfiguration().getClasses();
         logservice.log(LogService.LOG_INFO, String.format("Ukelonn Jersey servlet initialized with WebConfig, with resources: %s  and config params: %s", classes.toString(), configProperties.toString()));
     }
-    /*
-      private String checkLogin(String username, String password, HttpServletResponse response) {
-      String bannerText = "Login successful";
-      response.setStatus(HttpServletResponse.SC_OK);
-      UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray(), true);
-      try {
-      Subject subject = SecurityUtils.getSubject();
-      subject.login(token);
-      } catch(UnknownSessionException e) {
-      logError("Login error: unknown session", e);
-      bannerText = e.getMessage();
-      } catch(UnknownAccountException e) {
-      logError("Login error: unknown account", e);
-      bannerText = e.getMessage();
-      } catch (IncorrectCredentialsException  e) {
-      logError("Login error: wrong password", e);
-      bannerText = e.getMessage();
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      } catch (LockedAccountException  e) {
-      logError("Login error: locked account", e);
-      } catch (AuthenticationException e) {
-      logError("Login error: unknown error", e);
-      } finally {
-      token.clear();
-      }
 
-      return bannerText;
-      }
+     /*
+    private String checkLogin(String username, String password, HttpServletResponse response) {
+        String bannerText = "Login successful";
+        response.setStatus(HttpServletResponse.SC_OK);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray(), true);
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            subject.login(token);
+        } catch(UnknownSessionException e) {
+            logError("Login error: unknown session", e);
+            bannerText = e.getMessage();
+        } catch(UnknownAccountException e) {
+            logError("Login error: unknown account", e);
+            bannerText = e.getMessage();
+        } catch (IncorrectCredentialsException  e) {
+            logError("Login error: wrong password", e);
+            bannerText = e.getMessage();
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        } catch (LockedAccountException  e) {
+            logError("Login error: locked account", e);
+        } catch (AuthenticationException e) {
+            logError("Login error: unknown error", e);
+        } finally {
+            token.clear();
+        }
 
-      private void renderLoginForm(HtmlServletCanvas html, String loginStatusBannerText, String username, String password) throws IOException {
-      String heading = loginStatusBannerText != null ? "Status: " + loginStatusBannerText : "Login";
-      html
-      .html()
-      .head().title().content(heading)._head()
-      .body(align("center"))
-      .h1().content(heading)
-      .form(action("/login").method("post").id("login-form"))
-      .fieldset()
-      .div(dataRole("fieldcontain")).label(for_("username")).content("Username")
-      .input(type("text").name("username").id("username").value(username))._div()
-      .div(dataRole("fieldcontain")).label(for_("password")).content("Password")
-      .input(type("password").name("password").id("password").value(password))
-      ._div()
-      .input(type("submit").value("Login"))
-      ._fieldset()
-      ._form()
-      ._body()
-      ._html();
-      }
-      private void logError(String message, Exception exception) {
-      if (logservice != null) {
-      logservice.log(LogService.LOG_ERROR, message, exception);
-      }
-      }
+        return bannerText;
+    }
+
+    private void renderLoginForm(HtmlServletCanvas html, String loginStatusBannerText, String username, String password) throws IOException {
+        String heading = loginStatusBannerText != null ? "Status: " + loginStatusBannerText : "Login";
+        html
+            .html()
+            .head().title().content(heading)._head()
+            .body(align("center"))
+            .h1().content(heading)
+            .form(action("/login").method("post").id("login-form"))
+            .fieldset()
+            .div(dataRole("fieldcontain")).label(for_("username")).content("Username")
+            .input(type("text").name("username").id("username").value(username))._div()
+            .div(dataRole("fieldcontain")).label(for_("password")).content("Password")
+            .input(type("password").name("password").id("password").value(password))
+            ._div()
+            .input(type("submit").value("Login"))
+            ._fieldset()
+            ._form()
+            ._body()
+            ._html();
+    }
+
+    private void logError(String message, Exception exception) {
+        if (logservice != null) {
+            logservice.log(LogService.LOG_ERROR, message, exception);
+        }
+    }
     */
 
 }
