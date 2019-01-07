@@ -30,7 +30,6 @@ import org.glassfish.jersey.servlet.WebConfig;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.service.log.LogService;
 
@@ -59,11 +58,6 @@ public class AuthserviceServlet extends ServletContainer {
     private LogService logservice;
 
     @Reference
-    public void setServletContextHelper(ServletContextHelper dummy) {
-        // Dummy injection to enforce component construction order
-    }
-
-    @Reference
     public void setLogservice(LogService logService) {
         this.logservice = logService;
     }
@@ -88,7 +82,7 @@ public class AuthserviceServlet extends ServletContainer {
         logservice.log(LogService.LOG_INFO, String.format("Ukelonn Jersey servlet initialized with WebConfig, with resources: %s  and config params: %s", classes.toString(), configProperties.toString()));
     }
 
-     /*
+    /*
     private String checkLogin(String username, String password, HttpServletResponse response) {
         String bannerText = "Login successful";
         response.setStatus(HttpServletResponse.SC_OK);
