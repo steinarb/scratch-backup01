@@ -27,6 +27,12 @@
             <version>${pax.jdbc.version}</version>
             <type>xml</type>
             <classifier>features</classifier>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.karaf</groupId>
+                    <artifactId>org.apache.karaf.client</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
