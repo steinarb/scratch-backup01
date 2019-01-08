@@ -39,7 +39,6 @@ public class AuthserviceIntegrationTest {
         final MavenArtifactUrlReference karafUrl = maven().groupId("org.apache.karaf").artifactId("apache-karaf-minimal").type("zip").versionAsInProject();
         final MavenArtifactUrlReference paxJdbcRepo = maven().groupId("org.ops4j.pax.jdbc").artifactId("pax-jdbc-features").versionAsInProject().type("xml").classifier("features");
         final MavenArtifactUrlReference authserviceFeatureRepo = maven().groupId("no.priv.bang.authservice").artifactId("authservice").versionAsInProject().type("xml").classifier("features");
-        //final MavenArtifactUrlReference jerseyHk2 = maven().groupId("org.glassfish.jersey.inject").artifactId("jersey-hk2").versionAsInProject();
         return options(
             karafDistributionConfiguration().frameworkUrl(karafUrl).unpackDirectory(new File("target/exam")).useDeployFolder(false).runEmbedded(true),
             configureConsole().ignoreLocalConsole().ignoreRemoteShell(),
@@ -55,7 +54,6 @@ public class AuthserviceIntegrationTest {
             vmOptions("-Dtest-jmx-port=" + jmxPort),
             junitBundles(),
             features(paxJdbcRepo),
-            //mavenBundle(jerseyHk2),
             features(authserviceFeatureRepo, "authservice-with-derby-dbrealm-and-session"));
     }
 
