@@ -25,6 +25,7 @@
 
     <modules>
         <module>osgiservice.database</module>
+        <module>osgiservice.users</module>
     </modules>
 
     <properties>
