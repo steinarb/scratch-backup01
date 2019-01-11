@@ -26,6 +26,8 @@ import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -40,6 +42,9 @@ import org.osgi.service.log.LogService;
 
 @Path("")
 public class AuthserviceResource {
+
+    @Context
+    HttpHeaders httpHeaders;
 
     @Inject
     LogService logservice;
@@ -68,7 +73,7 @@ public class AuthserviceResource {
         try {
             subject.login(token);
 
-            return Response.status(Response.Status.FOUND).location(URI.create("/")).entity("Login successful!").build();
+            return Response.status(Response.Status.FOUND).location(findRedirectLocation()).entity("Login successful!").build();
         } catch(UnknownAccountException e) {
             logservice.log(LogService.LOG_WARNING, "Login error: unknown account", e);
             return Response.status(Response.Status.UNAUTHORIZED).entity(getClass().getClassLoader().getResourceAsStream("web/login_unknown_account.html")).build();
@@ -87,6 +92,18 @@ public class AuthserviceResource {
         } finally {
             token.clear();
         }
+    }
+
+    URI findRedirectLocation() {
+        if (httpHeaders != null) {
+            String originalUriLocation = httpHeaders.getHeaderString("X-Original-URI");
+            if (originalUriLocation != null) {
+                URI originalUri = URI.create(originalUriLocation);
+                return originalUri.resolve("..");
+            }
+        }
+
+        return URI.create("../..");
     }
 
     @GET

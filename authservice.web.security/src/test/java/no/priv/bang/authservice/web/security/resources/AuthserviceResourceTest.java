@@ -17,12 +17,15 @@ package no.priv.bang.authservice.web.security.resources;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.util.stream.Collectors;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 import org.apache.shiro.subject.Subject;
@@ -68,7 +71,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         String password = "admin";
         Response response = resource.postLogin(username, password);
         assertEquals(302, response.getStatus());
-        assertEquals("/", response.getLocation().toString());
+        assertEquals("../..", response.getLocation().toString());
     }
 
     @Test
@@ -106,6 +109,24 @@ class AuthserviceResourceTest extends ShiroTestBase {
 
         Response response = resource.checkLogin();
         assertEquals(401, response.getStatus());
+    }
+
+    @Test
+    void testFindRedirectLocation() {
+        AuthserviceResource resource = new AuthserviceResource();
+        URI locationWithoutOriginalUri = resource.findRedirectLocation();
+        assertEquals(URI.create("../.."), locationWithoutOriginalUri);
+
+        HttpHeaders httpHeadersWithoutOriginalUri = mock(HttpHeaders.class);
+        resource.httpHeaders = httpHeadersWithoutOriginalUri;
+        URI locationAlsoWithoutOriginalUri = resource.findRedirectLocation();
+        assertEquals(URI.create("../.."), locationAlsoWithoutOriginalUri);
+
+        HttpHeaders httpHeadersWithOriginalUri = mock(HttpHeaders.class);
+        when(httpHeadersWithOriginalUri.getHeaderString(anyString())).thenReturn("http://lorenzo.hjemme.lan/authservice/login");
+        resource.httpHeaders = httpHeadersWithOriginalUri;
+        URI locationWithOriginalUri = resource.findRedirectLocation();
+        assertEquals(URI.create("http://lorenzo.hjemme.lan/"), locationWithOriginalUri);
     }
 
 }
