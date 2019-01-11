@@ -123,10 +123,10 @@ class AuthserviceResourceTest extends ShiroTestBase {
         assertEquals(URI.create("../.."), locationAlsoWithoutOriginalUri);
 
         HttpHeaders httpHeadersWithOriginalUri = mock(HttpHeaders.class);
-        when(httpHeadersWithOriginalUri.getHeaderString(anyString())).thenReturn("http://lorenzo.hjemme.lan/authservice/login");
+        when(httpHeadersWithOriginalUri.getHeaderString(anyString())).thenReturn("http://lorenzo.hjemme.lan");
         resource.httpHeaders = httpHeadersWithOriginalUri;
         URI locationWithOriginalUri = resource.findRedirectLocation();
-        assertEquals(URI.create("http://lorenzo.hjemme.lan/"), locationWithOriginalUri);
+        assertEquals(URI.create("http://lorenzo.hjemme.lan"), locationWithOriginalUri);
     }
 
 }

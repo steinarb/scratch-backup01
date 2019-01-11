@@ -96,10 +96,10 @@ public class AuthserviceResource {
 
     URI findRedirectLocation() {
         if (httpHeaders != null) {
-            String originalUriLocation = httpHeaders.getHeaderString("X-Original-URI");
-            if (originalUriLocation != null) {
-                URI originalUri = URI.create(originalUriLocation);
-                return originalUri.resolve("..");
+            String originLocation = httpHeaders.getHeaderString("Origin");
+            if (originLocation != null) {
+                URI originUri = URI.create(originLocation);
+                return originUri;
             }
         }
 
