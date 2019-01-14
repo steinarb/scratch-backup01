@@ -74,6 +74,7 @@ public class AuthserviceShiroFilter extends AbstractShiroFilter { // NOSONAR
         DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) securityManagerFactory.createInstance();
         DefaultWebSessionManager sessionmanager = new DefaultWebSessionManager();
         sessionmanager.setSessionDAO(session);
+        sessionmanager.setSessionIdUrlRewritingEnabled(false);
         securityManager.setSessionManager(sessionmanager);
         setSecurityManager(securityManager);
         securityManager.setRealm(realm);

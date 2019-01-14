@@ -69,9 +69,10 @@ class AuthserviceResourceTest extends ShiroTestBase {
         AuthserviceResource resource = new AuthserviceResource();
         String username = "admin";
         String password = "admin";
-        Response response = resource.postLogin(username, password);
+        String redirectUrl = "https://myserver.com/resource";
+        Response response = resource.postLogin(username, password, redirectUrl);
         assertEquals(302, response.getStatus());
-        assertEquals("../..", response.getLocation().toString());
+        assertEquals(redirectUrl, response.getLocation().toString());
     }
 
     @Test
@@ -84,7 +85,8 @@ class AuthserviceResourceTest extends ShiroTestBase {
         // Log a user in
         String username = "admin";
         String password = "admin";
-        resource.postLogin(username, password);
+        String redirectUrl = "https://myserver.com/resource";
+        resource.postLogin(username, password, redirectUrl);
 
         Response response = resource.checkLogin();
         assertEquals(200, response.getStatus());

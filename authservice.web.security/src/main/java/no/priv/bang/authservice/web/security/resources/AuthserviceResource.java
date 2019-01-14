@@ -20,6 +20,7 @@ import java.net.URI;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
@@ -66,14 +67,14 @@ public class AuthserviceResource {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("text/html")
-    public Response postLogin(@FormParam("username") String username, @FormParam("password") String password) {
+    public Response postLogin(@FormParam("username") String username, @FormParam("password") String password, @CookieParam("NSREDIRECT") String redirectUrl) {
         Subject subject = SecurityUtils.getSubject();
 
         UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray(), true);
         try {
             subject.login(token);
 
-            return Response.status(Response.Status.FOUND).location(findRedirectLocation()).entity("Login successful!").build();
+            return Response.status(Response.Status.FOUND).location(URI.create(redirectUrl)).entity("Login successful!").build();
         } catch(UnknownAccountException e) {
             logservice.log(LogService.LOG_WARNING, "Login error: unknown account", e);
             return Response.status(Response.Status.UNAUTHORIZED).entity(getClass().getClassLoader().getResourceAsStream("web/login_unknown_account.html")).build();

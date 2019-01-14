@@ -25,6 +25,7 @@ import java.util.Collections;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.MediaType;
@@ -68,7 +69,8 @@ public class AuthserviceServletTest extends ShiroTestBase {
     public void testAuthenticate() throws Exception {
         MockLogService logservice = new MockLogService();
 
-        MockHttpServletRequest request = buildPostToLoginUrl();
+        String originalRequestUrl = "https://myserver.com/someresource";
+        MockHttpServletRequest request = buildPostToLoginUrl(originalRequestUrl);
         String body = UriBuilder.fromUri("http://localhost:8181/authservice")
             .queryParam("username", "admin")
             .queryParam("password", "admin")
@@ -89,7 +91,8 @@ public class AuthserviceServletTest extends ShiroTestBase {
     public void testAuthenticateUnknownAccount() throws Exception {
         MockLogService logservice = new MockLogService();
 
-        MockHttpServletRequest request = buildPostToLoginUrl();
+        String originalRequestUrl = "https://myserver.com/someresource";
+        MockHttpServletRequest request = buildPostToLoginUrl(originalRequestUrl);
         String body = UriBuilder.fromUri("http://localhost:8181/authservice")
             .queryParam("username", "jjd")
             .queryParam("password", "admin")
@@ -111,7 +114,8 @@ public class AuthserviceServletTest extends ShiroTestBase {
     public void testAuthenticateWrongPassword() throws Exception {
         MockLogService logservice = new MockLogService();
 
-        MockHttpServletRequest request = buildPostToLoginUrl();
+        String originalRequestUrl = "https://myserver.com/someresource";
+        MockHttpServletRequest request = buildPostToLoginUrl(originalRequestUrl);
         String body = UriBuilder.fromUri("http://localhost:8181/authservice")
             .queryParam("username", "admin")
             .queryParam("password", "wrongpass")
@@ -141,7 +145,7 @@ public class AuthserviceServletTest extends ShiroTestBase {
         return request;
     }
 
-    private MockHttpServletRequest buildPostToLoginUrl() {
+    private MockHttpServletRequest buildPostToLoginUrl(String originalUrl) {
         String contenttype = MediaType.APPLICATION_FORM_URLENCODED;
         MockHttpSession session = new MockHttpSession();
         MockHttpServletRequest request = new MockHttpServletRequest();
@@ -153,6 +157,7 @@ public class AuthserviceServletTest extends ShiroTestBase {
         request.setServletPath("");
         request.setContentType(contenttype);
         request.addHeader("Content-Type", contenttype);
+        request.addCookie(new Cookie("NSREDIRECT", originalUrl));
         request.setSession(session);
         return request;
     }
