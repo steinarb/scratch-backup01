@@ -158,6 +158,7 @@ public class AuthserviceServletTest extends ShiroTestBase {
         request.setContentType(contenttype);
         request.addHeader("Content-Type", contenttype);
         request.addCookie(new Cookie("NSREDIRECT", originalUrl));
+        request.addHeader("Cookie", "NSREDIRECT=" + originalUrl);
         request.setSession(session);
         return request;
     }
