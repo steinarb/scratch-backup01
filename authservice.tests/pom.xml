@@ -8,6 +8,7 @@
     </parent>
 
     <artifactId>authservice.tests</artifactId>
+    <name>Authentication webapp integration tests</name>
 
     <dependencies>
         <dependency>
