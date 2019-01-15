@@ -21,7 +21,11 @@ import org.apache.shiro.realm.Realm;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.web.config.IniFilterChainResolverFactory;
 import org.apache.shiro.web.config.WebIniSecurityManagerFactory;
-import org.apache.shiro.web.filter.mgt.FilterChainResolver;
+import org.apache.shiro.web.filter.authc.AnonymousFilter;
+import org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter;
+import org.apache.shiro.web.filter.authc.UserFilter;
+import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
+import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -41,47 +45,56 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  *
  */
 @Component(
-        property= {
-            HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN+"=/*",
-            HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +"=authservice)",
-            "servletNames=authservice"},
-        service=Filter.class,
-        immediate=true
-    )
-public class AuthserviceShiroFilter extends AbstractShiroFilter { // NOSONAR
+    property= {
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN+"=/*",
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +"=authservice)",
+        "servletNames=authservice"},
+    service=Filter.class,
+    immediate=true
+           )
+           public class AuthserviceShiroFilter extends AbstractShiroFilter { // NOSONAR
 
-    private Realm realm;
-    private SessionDAO session;
-    private static final Ini INI_FILE = new Ini();
-    static {
-        // Can't use the Ini.fromResourcePath(String) method because it can't find "shiro.ini" on the classpath in an OSGi context
-        INI_FILE.load(AuthserviceShiroFilter.class.getClassLoader().getResourceAsStream("shiro.ini"));
-    }
+               private Realm realm;
+               private SessionDAO session;
+               private static final Ini INI_FILE = new Ini();
+               static {
+                   // Can't use the Ini.fromResourcePath(String) method because it can't find "shiro.ini" on the classpath in an OSGi context
+                   INI_FILE.load(AuthserviceShiroFilter.class.getClassLoader().getResourceAsStream("shiro.ini"));
+               }
 
-    @Reference
-    public void setRealm(Realm realm) {
-        this.realm = realm;
-    }
+               @Reference
+               public void setRealm(Realm realm) {
+                   this.realm = realm;
+               }
 
-    @Reference
-    public void setSession(SessionDAO session) {
-        this.session = session;
-    }
+               @Reference
+               public void setSession(SessionDAO session) {
+                   this.session = session;
+               }
 
-    @Activate
-    public void activate() {
-        WebIniSecurityManagerFactory securityManagerFactory = new WebIniSecurityManagerFactory(INI_FILE);
-        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) securityManagerFactory.createInstance();
-        DefaultWebSessionManager sessionmanager = new DefaultWebSessionManager();
-        sessionmanager.setSessionDAO(session);
-        sessionmanager.setSessionIdUrlRewritingEnabled(false);
-        securityManager.setSessionManager(sessionmanager);
-        setSecurityManager(securityManager);
-        securityManager.setRealm(realm);
+               @Activate
+               public void activate() {
+                   WebIniSecurityManagerFactory securityManagerFactory = new WebIniSecurityManagerFactory(INI_FILE);
+                   DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) securityManagerFactory.createInstance();
+                   DefaultWebSessionManager sessionmanager = new DefaultWebSessionManager();
+                   sessionmanager.setSessionDAO(session);
+                   sessionmanager.setSessionIdUrlRewritingEnabled(false);
+                   securityManager.setSessionManager(sessionmanager);
+                   setSecurityManager(securityManager);
+                   securityManager.setRealm(realm);
 
-        IniFilterChainResolverFactory filterChainResolverFactory = new IniFilterChainResolverFactory(INI_FILE, securityManagerFactory.getBeans());
-        FilterChainResolver resolver = filterChainResolverFactory.createInstance();
-        setFilterChainResolver(resolver);
-    }
+                   DefaultFilterChainManager filterchainmanager = new DefaultFilterChainManager();
+                   PassThruAuthenticationFilter authc = new PassThruAuthenticationFilter();
+                   AnonymousFilter anon = new AnonymousFilter();
+                   UserFilter user = new UserFilter();
+                   filterchainmanager.addFilter("authc", authc);
+                   filterchainmanager.addFilter("anon", anon);
+                   filterchainmanager.addFilter("user", user);
 
-}
+                   IniFilterChainResolverFactory filterChainResolverFactory = new IniFilterChainResolverFactory(INI_FILE, securityManagerFactory.getBeans());
+                   PathMatchingFilterChainResolver resolver = (PathMatchingFilterChainResolver) filterChainResolverFactory.createInstance();
+                   resolver.setFilterChainManager(filterchainmanager);
+                   setFilterChainResolver(resolver);
+               }
+
+           }
