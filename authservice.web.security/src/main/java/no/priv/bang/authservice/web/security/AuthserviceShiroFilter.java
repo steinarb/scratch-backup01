@@ -51,50 +51,52 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
         "servletNames=authservice"},
     service=Filter.class,
     immediate=true
-           )
-           public class AuthserviceShiroFilter extends AbstractShiroFilter { // NOSONAR
+)
+public class AuthserviceShiroFilter extends AbstractShiroFilter { // NOSONAR
 
-               private Realm realm;
-               private SessionDAO session;
-               private static final Ini INI_FILE = new Ini();
-               static {
-                   // Can't use the Ini.fromResourcePath(String) method because it can't find "shiro.ini" on the classpath in an OSGi context
-                   INI_FILE.load(AuthserviceShiroFilter.class.getClassLoader().getResourceAsStream("shiro.ini"));
-               }
+    private Realm realm;
+    private SessionDAO session;
+    private static final Ini INI_FILE = new Ini();
+    static {
+        // Can't use the Ini.fromResourcePath(String) method because it can't find "shiro.ini" on the classpath in an OSGi context
+        INI_FILE.load(AuthserviceShiroFilter.class.getClassLoader().getResourceAsStream("shiro.ini"));
+    }
 
-               @Reference
-               public void setRealm(Realm realm) {
-                   this.realm = realm;
-               }
+    @Reference
+    public void setRealm(Realm realm) {
+        this.realm = realm;
+    }
 
-               @Reference
-               public void setSession(SessionDAO session) {
-                   this.session = session;
-               }
+    @Reference
+    public void setSession(SessionDAO session) {
+        this.session = session;
+    }
 
-               @Activate
-               public void activate() {
-                   WebIniSecurityManagerFactory securityManagerFactory = new WebIniSecurityManagerFactory(INI_FILE);
-                   DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) securityManagerFactory.createInstance();
-                   DefaultWebSessionManager sessionmanager = new DefaultWebSessionManager();
-                   sessionmanager.setSessionDAO(session);
-                   sessionmanager.setSessionIdUrlRewritingEnabled(false);
-                   securityManager.setSessionManager(sessionmanager);
-                   setSecurityManager(securityManager);
-                   securityManager.setRealm(realm);
+    @Activate
+    public void activate() {
+        WebIniSecurityManagerFactory securityManagerFactory = new WebIniSecurityManagerFactory(INI_FILE);
+        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) securityManagerFactory.createInstance();
+        DefaultWebSessionManager sessionmanager = new DefaultWebSessionManager();
+        sessionmanager.setSessionDAO(session);
+        sessionmanager.setSessionIdUrlRewritingEnabled(false);
+        securityManager.setSessionManager(sessionmanager);
+        setSecurityManager(securityManager);
+        securityManager.setRealm(realm);
 
-                   DefaultFilterChainManager filterchainmanager = new DefaultFilterChainManager();
-                   PassThruAuthenticationFilter authc = new PassThruAuthenticationFilter();
-                   AnonymousFilter anon = new AnonymousFilter();
-                   UserFilter user = new UserFilter();
-                   filterchainmanager.addFilter("authc", authc);
-                   filterchainmanager.addFilter("anon", anon);
-                   filterchainmanager.addFilter("user", user);
+        DefaultFilterChainManager filterchainmanager = new DefaultFilterChainManager();
+        // Using the PassThruAuthenticationFilter instead of the default authc FormAuthenticationFilter
+        // to be able to do a redirect back "out of" authservice to the originalUrl
+        PassThruAuthenticationFilter authc = new PassThruAuthenticationFilter();
+        AnonymousFilter anon = new AnonymousFilter();
+        UserFilter user = new UserFilter();
+        filterchainmanager.addFilter("authc", authc);
+        filterchainmanager.addFilter("anon", anon);
+        filterchainmanager.addFilter("user", user);
 
-                   IniFilterChainResolverFactory filterChainResolverFactory = new IniFilterChainResolverFactory(INI_FILE, securityManagerFactory.getBeans());
-                   PathMatchingFilterChainResolver resolver = (PathMatchingFilterChainResolver) filterChainResolverFactory.createInstance();
-                   resolver.setFilterChainManager(filterchainmanager);
-                   setFilterChainResolver(resolver);
-               }
+        IniFilterChainResolverFactory filterChainResolverFactory = new IniFilterChainResolverFactory(INI_FILE, securityManagerFactory.getBeans());
+        PathMatchingFilterChainResolver resolver = (PathMatchingFilterChainResolver) filterChainResolverFactory.createInstance();
+        resolver.setFilterChainManager(filterchainmanager);
+        setFilterChainResolver(resolver);
+    }
 
-           }
+}
