@@ -95,6 +95,17 @@ public class AuthserviceResource {
         }
     }
 
+    @GET
+    @Path("/logout")
+    @Produces("text/html")
+    public Response logout() {
+        Subject subject = SecurityUtils.getSubject();
+
+        subject.logout();
+        String redirectUrl = httpHeaders.getHeaderString("Refererer");
+        return Response.status(Response.Status.FOUND).location(URI.create(redirectUrl)).entity("Login successful!").build();
+    }
+
     URI findRedirectLocation() {
         if (httpHeaders != null) {
             String originLocation = httpHeaders.getHeaderString("Origin");

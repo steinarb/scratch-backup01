@@ -114,6 +114,17 @@ class AuthserviceResourceTest extends ShiroTestBase {
     }
 
     @Test
+    public void testLogout() {
+        AuthserviceResource resource = new AuthserviceResource();
+        HttpHeaders httpheaders = mock(HttpHeaders.class);
+        when(httpheaders.getHeaderString(anyString())).thenReturn("http://localhost/localpath");
+        resource.httpHeaders = httpheaders;
+
+        Response response = resource.logout();
+        assertEquals(302, response.getStatus());
+    }
+
+    @Test
     void testFindRedirectLocation() {
         AuthserviceResource resource = new AuthserviceResource();
         URI locationWithoutOriginalUri = resource.findRedirectLocation();
