@@ -16,7 +16,6 @@
 package no.priv.bang.osgiservice.database;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -40,21 +39,14 @@ public interface DatabaseService {
     DataSource getDatasource();
 
     /**
-     * Get a connection to a database
+     * Convenience function to get a connection to a database
+     *
+     * <em>Note!</em> Implementations should not cache this value
+     * because that may cause table lock issues in some implementations.
      *
      * @return a {@link Connection} to a database
+     * @throws SQLException thrown by the underlying {@link DataSource#getConnection()}
      */
-    Connection getConnection();
-
-    /**
-     * Create a {@link PreparedStatement} that can have parameters replaced
-     * and then used to retrieve data with {@link PreparedStatement#executeQuery()}
-     * or modify the database with {@link PreparedStatement#executeUpdate()}.
-     *
-     * @param sql a {@link String} containing an SQL query with '?' where parts of the query should be replaced by parameters
-     * @return a {@link PreparedStatement} that can be used to retrieve data from or update data in the database
-     * @throws SQLException som er kastet av av {@link Connection#prepareStatement(String)}
-     */
-    PreparedStatement prepareStatement(String sql) throws SQLException;
+    Connection getConnection() throws SQLException;
 
 }

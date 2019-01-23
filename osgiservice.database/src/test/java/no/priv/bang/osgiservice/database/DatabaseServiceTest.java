@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
@@ -33,9 +32,6 @@ class DatabaseServiceTest {
         assertNull(datasource);
         Connection connection = database.getConnection();
         assertNull(connection);
-        String sql = "select * from users";
-        PreparedStatement statement = database.prepareStatement(sql);
-        assertNull(statement);
     }
 
 }
