@@ -15,7 +15,7 @@ The service definitions have been deployed to maven central.
 [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgiservice%3Aosgiservice][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgiservice%3Aosgiservice&metric=ncloc#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgiservice%3Aosgiservice][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgiservice%3Aosgiservice&metric=bugs#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgiservice%3Aosgiservice][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgiservice%3Aosgiservice&metric=vulnerabilities#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgiservice%3Aosgiservice][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgiservice%3Aosgiservice&metric=code_smells#.svg]] [[https://sonarcloud.io/dashboard/index/no.priv.bang.osgiservice%3Aosgiservice][file:https://sonarcloud.io/api/project_badges/measure?project=no.priv.bang.osgiservice%3Aosgiservice&metric=coverage#.svg]]
 
 ** Services defined in this project
-*** no.priv.bang.osgi.service.database.DatabaseService
+*** no.priv.bang.osgiservice.database.DatabaseService
 
 The DatabaseService provides access to an actual JDBC database instance.  The DS components implementing this service typically:
  1. Receives a DataSourceFactory service
@@ -26,19 +26,30 @@ The DatabaseService provides access to an actual JDBC database instance.  The DS
 To compile code using this OSGi service, add the following dependency to your maven POM:
 #+BEGIN_SRC xml
   <dependency>
-      <groupId>no.priv.bang.osgi.service</groupId>
-      <artifactId>osgi.service.database</artifactId>
-      <version>1.0.0</version>
+      <groupId>no.priv.bang.osgiservice</groupId>
+      <artifactId>osgiservice.database</artifactId>
+      <version>1.1.0</version>
       <scope>provided</scope>
   </dependency>
 #+END_SRC
 
 To get runtime access to this OSGi service in apache karaf, add the following to the karaf feature definition of the OSGi bundle(s) using the interface:
 #+BEGIN_SRC xml
-  <repository>mvn:no.priv.bang.osgi.service/osgi.service/1.0.0/xml/features</repository>
+  <repository>mvn:no.priv.bang.osgiservice/osgiservice/1.1.0/xml/features</repository>
   <feature name="myfeature">
       <feature>sb-database-osgi-service</feature>
   </feature>
+#+END_SRC
+
+Alternatively, when using the [[https://svn.apache.org/repos/asf/karaf/site/production/manual/latest/karaf-maven-plugin.html][karaf-maven-plugin]] it's possible to add a karaf runtime feature dependency when generating a feature for your own bundle:
+#+BEGIN_SRC xml
+  <dependency>
+      <groupId>no.priv.bang.osgiservice</groupId>
+      <artifactId>osgiservice.database</artifactId>
+      <version>1.1.0</version>
+      <type>xml</type>
+      <classifier>features</classifier>
+  </dependency>
 #+END_SRC
 
 ** License
