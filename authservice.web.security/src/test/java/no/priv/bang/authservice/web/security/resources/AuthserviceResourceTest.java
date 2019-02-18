@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.shiro.authc.AuthenticationException;
@@ -233,6 +234,23 @@ class AuthserviceResourceTest extends ShiroTestBase {
 
         Response response = resource.logout();
         assertEquals(302, response.getStatus());
+    }
+
+    @Test
+    public void testGetBootstrap() {
+        AuthserviceResource resource = new AuthserviceResource();
+
+        Response response = resource.getBootstrap("css/bootstrap.min.css");
+        assertEquals(MediaType.valueOf("text/css"), response.getMediaType());
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void testGetBootstrapResourceNotFound() {
+        AuthserviceResource resource = new AuthserviceResource();
+
+        Response response = resource.getBootstrap("not.a.resource");
+        assertEquals(404, response.getStatus());
     }
 
     @Test

@@ -15,8 +15,10 @@
  */
 package no.priv.bang.authservice.web.security.resources;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URLConnection;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -26,6 +28,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -106,6 +109,23 @@ public class AuthserviceResource {
         return Response.status(Response.Status.FOUND).location(URI.create(redirectUrl)).entity("Login successful!").build();
     }
 
+    @GET
+    @Path("/bootstrap/{resource:.*}")
+    @Produces(MediaType.TEXT_HTML)
+    public Response getBootstrap(@PathParam("resource") String resource) {
+        String resourcePath = "bootstrap/" + resource;
+        try(InputStream stream = getClass().getClassLoader().getResourceAsStream(resourcePath)) {
+            if (stream == null) {
+                return Response.status(404, "Not found").build();
+            }
+
+            String contentType = guessContentTypeFromResourceName(resource);
+            return Response.ok(stream, contentType).build();
+        } catch (IOException e) {
+            return Response.serverError().entity(e).build();
+        }
+    }
+
     String notNullUrl(String redirectUrl) {
         if (redirectUrl == null) {
             return "";
@@ -135,6 +155,28 @@ public class AuthserviceResource {
         }
 
         return Response.status(Response.Status.UNAUTHORIZED).entity("Not authenticated!\n").build();
+    }
+
+    String guessContentTypeFromResourceName(String resource) {
+        String contentType = URLConnection.guessContentTypeFromName(resource);
+        if (contentType != null) {
+            return contentType;
+        }
+
+        String extension = resource.substring(resource.lastIndexOf('.') + 1);
+        if ("xhtml".equals(extension)) {
+            return "text/html";
+        }
+
+        if ("js".equals(extension)) {
+            return "application/javascript";
+        }
+
+        if ("css".equals(extension)) {
+            return "text/css";
+        }
+
+        return null;
     }
 
 }
