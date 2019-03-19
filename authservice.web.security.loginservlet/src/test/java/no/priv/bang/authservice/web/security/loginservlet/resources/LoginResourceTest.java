@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.authservice.web.security.resources;
+package no.priv.bang.authservice.web.security.loginservlet.resources;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -41,22 +41,14 @@ import org.junit.jupiter.api.Test;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
-import no.priv.bang.authservice.web.security.ShiroTestBase;
+import no.priv.bang.authservice.web.security.loginservlet.ShiroTestBase;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
-class AuthserviceResourceTest extends ShiroTestBase {
-
-    @Test
-    void testGetIndex() {
-        AuthserviceResource resource = new AuthserviceResource();
-        InputStream htmlfile = resource.getIndex();
-        String html = new BufferedReader(new InputStreamReader(htmlfile)).lines().collect(Collectors.joining("+n"));
-        assertThat(html).startsWith("<html");
-    }
+class LoginResourceTest extends ShiroTestBase {
 
     @Test
     void testGetLogin() {
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         InputStream htmlfile = resource.getLogin();
         String html = new BufferedReader(new InputStreamReader(htmlfile)).lines().collect(Collectors.joining("+n"));
         assertThat(html).startsWith("<html");
@@ -70,7 +62,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         dummyrequest.setSession(session);
         MockHttpServletResponse dummyresponse = new MockHttpServletResponse();
         createSubjectAndBindItToThread(dummyrequest, dummyresponse);
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         resource.logservice = logservice;
         String username = "admin";
         String password = "admin";
@@ -88,7 +80,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         dummyrequest.setSession(session);
         MockHttpServletResponse dummyresponse = new MockHttpServletResponse();
         createSubjectAndBindItToThread(dummyrequest, dummyresponse);
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         resource.logservice = logservice;
         String username = "admin";
         String password = "admin";
@@ -103,7 +95,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         MockHttpServletRequest dummyrequest = new MockHttpServletRequest();
         MockHttpServletResponse dummyresponse = new MockHttpServletResponse();
         createSubjectAndBindItToThread(dummyrequest, dummyresponse);
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         resource.logservice = logservice;
         String username = "notauser";
         String password = "admin";
@@ -118,7 +110,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         MockHttpServletRequest dummyrequest = new MockHttpServletRequest();
         MockHttpServletResponse dummyresponse = new MockHttpServletResponse();
         createSubjectAndBindItToThread(dummyrequest, dummyresponse);
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         resource.logservice = logservice;
         String username = "admin";
         String password = "wrongpassword";
@@ -136,7 +128,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
             MockHttpServletRequest dummyrequest = new MockHttpServletRequest();
             MockHttpServletResponse dummyresponse = new MockHttpServletResponse();
             createSubjectAndBindItToThread(dummyrequest, dummyresponse);
-            AuthserviceResource resource = new AuthserviceResource();
+            LoginResource resource = new LoginResource();
             resource.logservice = logservice;
             String username = "jad";
             String password = "wrong";
@@ -152,7 +144,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
     public void testPostLoginWithAuthenticationException() {
         createSubjectThrowingExceptionAndBindItToThread(AuthenticationException.class);
         MockLogService logservice = new MockLogService();
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         resource.logservice = logservice;
         String username = "jad";
         String password = "wrong";
@@ -165,7 +157,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
     public void testLoginWithUnexpectedException() {
         createSubjectThrowingExceptionAndBindItToThread(IllegalArgumentException.class);
         MockLogService logservice = new MockLogService();
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         resource.logservice = logservice;
         String username = "jad";
         String password = "wrong";
@@ -177,61 +169,8 @@ class AuthserviceResourceTest extends ShiroTestBase {
     }
 
     @Test
-    void testCheckLogin() {
-        MockLogService logservice = new MockLogService();
-        HttpSession session = mock(HttpSession.class);
-        MockHttpServletRequest dummyrequest = new MockHttpServletRequest();
-        dummyrequest.setSession(session);
-        MockHttpServletResponse dummyresponse = new MockHttpServletResponse();
-        createSubjectAndBindItToThread(dummyrequest, dummyresponse);
-        AuthserviceResource resource = new AuthserviceResource();
-        resource.logservice = logservice;
-
-        // Log a user in
-        String username = "admin";
-        String password = "admin";
-        String redirectUrl = "https://myserver.com/resource";
-        resource.postLogin(username, password, redirectUrl);
-
-        Response response = resource.checkLogin();
-        assertEquals(200, response.getStatus());
-    }
-
-    @Test
-    void testCheckLoginNotLoggedIn() {
-        MockHttpServletRequest dummyrequest = new MockHttpServletRequest();
-        MockHttpServletResponse dummyresponse = new MockHttpServletResponse();
-        createSubjectAndBindItToThread(dummyrequest, dummyresponse);
-        AuthserviceResource resource = new AuthserviceResource();
-
-        Response response = resource.checkLogin();
-        assertEquals(401, response.getStatus());
-    }
-
-    @Test
-    void testCheckLoginNoSubject() {
-        Subject nosubject = null;
-        ThreadContext.bind(nosubject);
-        AuthserviceResource resource = new AuthserviceResource();
-
-        Response response = resource.checkLogin();
-        assertEquals(401, response.getStatus());
-    }
-
-    @Test
-    public void testLogout() {
-        AuthserviceResource resource = new AuthserviceResource();
-        HttpHeaders httpheaders = mock(HttpHeaders.class);
-        when(httpheaders.getHeaderString(anyString())).thenReturn("http://localhost/localpath");
-        resource.httpHeaders = httpheaders;
-
-        Response response = resource.logout();
-        assertEquals(302, response.getStatus());
-    }
-
-    @Test
     void testFindRedirectLocation() {
-        AuthserviceResource resource = new AuthserviceResource();
+        LoginResource resource = new LoginResource();
         URI locationWithoutOriginalUri = resource.findRedirectLocation();
         assertEquals(URI.create("../.."), locationWithoutOriginalUri);
 

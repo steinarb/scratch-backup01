@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.authservice.web.security;
+package no.priv.bang.authservice.web.security.loginservlet;
 
 import static org.mockito.Mockito.mock;
 

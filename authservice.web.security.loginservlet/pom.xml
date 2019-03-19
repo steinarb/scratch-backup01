@@ -7,9 +7,9 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>authservice.web.security</artifactId>
+    <artifactId>authservice.web.security.loginservlet</artifactId>
 
-    <name>Authentication webapp web whiteboard Shiro filter</name>
+    <name>Authentication webapp reusable login servlet</name>
 
     <properties>
         <karaf-feature-name>authservice-web-security</karaf-feature-name>

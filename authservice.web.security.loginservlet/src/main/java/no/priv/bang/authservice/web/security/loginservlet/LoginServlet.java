@@ -13,47 +13,29 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.authservice.web.security;
+package no.priv.bang.authservice.web.security.loginservlet;
 
 
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.servlet.WebConfig;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.service.log.LogService;
 
+import no.priv.bang.authservice.definitions.AuthserviceLoginServlet;
 import no.priv.bang.osgiservice.users.UserManagementService;
 
-/***
- * This class will show ups a {@link Servlet} OSGi service, and will be picked
- * up by the pax web whiteboard.
- *
- * The servlet will respond to several URLs and will provide
- * functionality both for checking the login state, and for
- * logging in a user
- */
-@Component(
-    property= {
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN+"=/*",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +"=authservice)",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME+"=authservice",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX+ServerProperties.PROVIDER_PACKAGES+"=no.priv.bang.authservice.web.security.resources"},
-    service=Servlet.class,
-    immediate=true
-)
-public class AuthserviceServlet extends ServletContainer {
-    private static final long serialVersionUID = 6064420153498760622L;
+@Component(service=AuthserviceLoginServlet.class, immediate=true)
+public class LoginServlet extends ServletContainer implements AuthserviceLoginServlet {
+    private static final long serialVersionUID = 7665105986497262446L;
     private LogService logservice;  // NOSONAR Value set by DS injection
     private UserManagementService useradmin;  // NOSONAR Value set by DS injection
 

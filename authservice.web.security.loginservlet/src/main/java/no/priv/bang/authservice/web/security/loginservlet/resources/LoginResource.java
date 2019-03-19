@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.authservice.web.security.resources;
+package no.priv.bang.authservice.web.security.loginservlet.resources;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -42,7 +42,7 @@ import org.apache.shiro.subject.Subject;
 import org.osgi.service.log.LogService;
 
 @Path("")
-public class AuthserviceResource {
+public class LoginResource {
 
     @Context
     HttpHeaders httpHeaders;

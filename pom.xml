@@ -16,6 +16,7 @@
         <module>authservice.db.derby.test</module>
         <module>authservice.web.security.dbrealm</module>
         <module>authservice.web.security.memorysession</module>
+        <module>authservice.web.security.loginservlet</module>
         <module>authservice.web.security</module>
         <module>authservice.users</module>
         <module>authservice.web.users.api</module>
