@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.authservice.db.derby.test;
+package no.priv.bang.authservice.db.postgresql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,7 +32,7 @@ import no.priv.bang.authservice.definitions.AuthserviceDatabaseService;
 import no.priv.bang.authservice.definitions.AuthserviceException;
 
 @Component(immediate=true)
-public class DerbyTestDatabase implements AuthserviceDatabaseService {
+public class PostgresqlDatabase implements AuthserviceDatabaseService {
 
     private LogService logservice;
     private DataSourceFactory dataSourceFactory;

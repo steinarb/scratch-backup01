@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.authservice.db.derby.test;
+package no.priv.bang.authservice.db.postgresql;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -29,16 +29,17 @@ import org.junit.jupiter.api.Test;
 import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
 import org.osgi.service.jdbc.DataSourceFactory;
 
+import no.priv.bang.authservice.db.postgresql.PostgresqlDatabase;
 import no.priv.bang.authservice.definitions.AuthserviceException;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
-class DerbyTestDatabaseTest {
+class PostgresqlDatabaseTest {
     DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
 
     @Test
     void testCreate() throws Exception {
         MockLogService logservice = new MockLogService();
-        DerbyTestDatabase database = new DerbyTestDatabase();
+        PostgresqlDatabase database = new PostgresqlDatabase();
         database.setLogservice(logservice);
         database.setDataSourceFactory(derbyDataSourceFactory);
         database.activate();
@@ -72,7 +73,7 @@ class DerbyTestDatabaseTest {
     @Test
     void testCreateWhenSQLExceptionIsThrown() throws Exception {
         MockLogService logservice = new MockLogService();
-        DerbyTestDatabase database = new DerbyTestDatabase();
+        PostgresqlDatabase database = new PostgresqlDatabase();
         database.setLogservice(logservice);
         DataSourceFactory factory = mock(DataSourceFactory.class);
         DataSource datasource = mock(DataSource.class);
