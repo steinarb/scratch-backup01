@@ -15,8 +15,11 @@
  */
 package no.priv.bang.authservice.db.postgresql;
 
+import static no.priv.bang.authservice.definitions.AuthserviceConstants.*;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -79,6 +82,18 @@ public class PostgresqlDatabase implements AuthserviceDatabaseService {
         Properties properties = new Properties();
         properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
         return dataSourceFactory.createDataSource(properties);
+    }
+
+    static Properties createDatabaseConnectionProperties(Map<String, Object> config) {
+        String jdbcUrl = (String) config.getOrDefault(AUTHSERVICE_JDBC_URL, "jdbc:postgresql:///authservice");
+        String jdbcUser = (String) config.getOrDefault(AUTHSERVICE_JDBC_USER, "karaf");
+        String jdbcPassword = (String) config.getOrDefault(AUTHSERVICE_JDBC_PASSWORD, "karaf");
+        Properties properties = new Properties();
+        properties.setProperty(DataSourceFactory.JDBC_URL, jdbcUrl);
+        properties.setProperty(DataSourceFactory.JDBC_USER, jdbcUser);
+        properties.setProperty(DataSourceFactory.JDBC_PASSWORD, jdbcPassword);
+
+        return properties;
     }
 
 }

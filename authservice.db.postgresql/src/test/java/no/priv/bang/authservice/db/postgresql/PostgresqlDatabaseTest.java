@@ -22,12 +22,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
 import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
 import org.osgi.service.jdbc.DataSourceFactory;
+
+import static no.priv.bang.authservice.definitions.AuthserviceConstants.*;
 
 import no.priv.bang.authservice.db.postgresql.PostgresqlDatabase;
 import no.priv.bang.authservice.definitions.AuthserviceException;
@@ -84,6 +90,26 @@ class PostgresqlDatabaseTest {
         assertThrows(AuthserviceException.class, () -> {
                 database.activate();
             });
+    }
+
+    @Test
+    public void testCreateDatabaseConnectionProperties() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(AUTHSERVICE_JDBC_URL, "jdbc:postgresql:///ukelonn");
+        config.put(AUTHSERVICE_JDBC_USER, "authservice");
+        config.put(AUTHSERVICE_JDBC_PASSWORD, "secret");
+        Properties properties = PostgresqlDatabase.createDatabaseConnectionProperties(config);
+        assertEquals("jdbc:postgresql:///ukelonn", properties.getProperty(DataSourceFactory.JDBC_URL));
+        assertEquals("authservice", properties.getProperty(DataSourceFactory.JDBC_USER));
+        assertEquals("secret", properties.getProperty(DataSourceFactory.JDBC_PASSWORD));
+    }
+
+    @Test
+    public void testCreateDatabaseConnectionPropertiesDefaultsOnEmptyConfig() {
+        Properties properties = PostgresqlDatabase.createDatabaseConnectionProperties(Collections.emptyMap());
+        assertEquals("jdbc:postgresql:///authservice", properties.getProperty(DataSourceFactory.JDBC_URL));
+        assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_USER));
+        assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_PASSWORD));
     }
 
 }
