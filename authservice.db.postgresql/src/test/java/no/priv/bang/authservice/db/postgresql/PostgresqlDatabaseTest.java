@@ -105,6 +105,19 @@ class PostgresqlDatabaseTest {
     }
 
     @Test
+    public void testCreateDatabaseConnectionPropertiesWithEmptyConfigValues() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(AUTHSERVICE_JDBC_URL, "");
+        config.put(AUTHSERVICE_JDBC_USER, "");
+        config.put(AUTHSERVICE_JDBC_PASSWORD, "");
+        Properties properties = PostgresqlDatabase.createDatabaseConnectionProperties(config);
+        assertEquals("", properties.getProperty(DataSourceFactory.JDBC_URL));
+        // Verify that empty username and password can be used to remove username and password from the properties
+        assertNull(properties.getProperty(DataSourceFactory.JDBC_USER));
+        assertNull(properties.getProperty(DataSourceFactory.JDBC_PASSWORD));
+    }
+
+    @Test
     public void testCreateDatabaseConnectionPropertiesDefaultsOnEmptyConfig() {
         Properties properties = PostgresqlDatabase.createDatabaseConnectionProperties(Collections.emptyMap());
         assertEquals("jdbc:postgresql:///authservice", properties.getProperty(DataSourceFactory.JDBC_URL));
