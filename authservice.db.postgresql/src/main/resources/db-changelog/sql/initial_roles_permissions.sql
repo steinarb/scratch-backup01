@@ -1,3 +1,0 @@
---liquibase formatted sql
---changeset sb:empty_initial_roles_permissions
---rollback delete from roles_permissions; alter table roles_permissions alter role_permission_id restart with 1;

@@ -58,7 +58,7 @@ class PostgresqlDatabaseTest {
                     ++usercount;
                 }
 
-                assertEquals(5, usercount);
+                assertEquals(1, usercount);
             }
         }
 
@@ -70,7 +70,7 @@ class PostgresqlDatabaseTest {
                     ++rolecount;
                 }
 
-                assertEquals(4, rolecount);
+                assertEquals(1, rolecount);
             }
         }
     }

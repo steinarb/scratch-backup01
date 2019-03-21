@@ -1,3 +1,0 @@
---liquibase formatted sql
---changeset sb:empty_initial_permissions
---rollback delete from permissions; alter table permissions alter permission_id restart with 1;
