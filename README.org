@@ -144,6 +144,9 @@ Instructions:
        3. Add users that are to be able to log in to nginx
           /Note/: The nginx config provides only authentication for nginx, no authorization based on the combination of path and role or permission.  Therefore there is no need to add roles to users that only needs to log in
           Users that need to administrate other users, should get the useradmin role
+    4. Add some links to the selfservice URLs from your website's top page (or whereever is convenient):
+       1. Change password: https://myserver.com/authservice/password/
+       2. Modify real namd and email: https://myserver.com/authservice/user
 ** Integrating with other webapps in karaf
 
 There are several ways for a webapp to interact with authservice:
