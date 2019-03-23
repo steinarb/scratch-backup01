@@ -79,7 +79,14 @@ Instructions:
                       proxy_set_header Host $host;
               }
 
-              location / {
+              # Avoid browser attempt at fetching favicon.ico triggering a login and redirecting
+              # a 404 Not Found when there is no favicon.ico on the site (which is perferctly OK
+              # for both the site and the browser)
+              location /favicon.ico {
+                      auth_request off;
+              }
+
+               location / {
                       # First attempt to serve request as file, then
                       # as directory, then fall back to displaying a 404.
                       try_files $uri $uri/ =404;
