@@ -133,7 +133,7 @@ Instructions:
     2. Install authservice from maven central:
        #+BEGIN_EXAMPLE
          feature:repo-add mvn:no.priv.bang.authservice/authservice/LATEST/xml/features
-         feature:install user-admin-with-derby
+         feature:install user-admin-with-postgresql
        #+END_EXAMPLE
  4. Open a the nginx authservice URL in a web browser, e.g. https://myserver.com/authservice/ and:
     1. Log in as user "admin" with password "admin" (without the quotes)
