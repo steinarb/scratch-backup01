@@ -48,7 +48,8 @@ class PostgresqlDatabaseTest {
         PostgresqlDatabase database = new PostgresqlDatabase();
         database.setLogservice(logservice);
         database.setDataSourceFactory(derbyDataSourceFactory);
-        database.activate();
+        Map<String, Object> config = createConfigThatWillWorkWithDerby();
+        database.activate(config);
 
         try(Connection connection = database.getConnection()) {
             try(PreparedStatement statment = connection.prepareStatement("select * from users")) {
@@ -88,7 +89,7 @@ class PostgresqlDatabaseTest {
         database.setDataSourceFactory(factory);
 
         assertThrows(AuthserviceException.class, () -> {
-                database.activate();
+                database.activate(Collections.emptyMap());
             });
     }
 
@@ -123,6 +124,12 @@ class PostgresqlDatabaseTest {
         assertEquals("jdbc:postgresql:///authservice", properties.getProperty(DataSourceFactory.JDBC_URL));
         assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_USER));
         assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_PASSWORD));
+    }
+
+    private Map<String, Object> createConfigThatWillWorkWithDerby() {
+        Map<String, Object> config = new HashMap<>();
+        config.put(AUTHSERVICE_JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
+        return config;
     }
 
 }

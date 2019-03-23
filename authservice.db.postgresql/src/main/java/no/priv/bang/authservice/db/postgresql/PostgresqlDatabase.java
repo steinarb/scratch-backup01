@@ -52,9 +52,9 @@ public class PostgresqlDatabase implements AuthserviceDatabaseService {
     }
 
     @Activate
-    public void activate() {
+    public void activate(Map<String, Object> config) {
         try {
-            datasource = createDatasource();
+            datasource = createDatasource(config);
             try(Connection connection = datasource.getConnection()) {
                 AuthserviceLiquibase liquibase = new AuthserviceLiquibase();
                 liquibase.createInitialSchema(connection);
@@ -78,9 +78,8 @@ public class PostgresqlDatabase implements AuthserviceDatabaseService {
         return datasource.getConnection();
     }
 
-    private DataSource createDatasource() throws SQLException {
-        Properties properties = new Properties();
-        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
+    private DataSource createDatasource(Map<String, Object> config) throws SQLException {
+        Properties properties = createDatabaseConnectionProperties(config);
         return dataSourceFactory.createDataSource(properties);
     }
 
