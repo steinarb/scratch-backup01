@@ -33,6 +33,17 @@ import java.util.Map;
 public interface UserManagementService {
 
     /**
+     * Get a User from a username.
+     *
+     * Typically called after login to get a {@link User} object
+     * for the logged in user
+     *
+     * @param username the username for the user that is to be retrieved
+     * @return a {@link User} object for the user with the username
+     */
+    User getUser(String username);
+
+    /**
      * Get all users in the database.
      *
      * @return a list of {@link User} objects
