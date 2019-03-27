@@ -53,6 +53,15 @@ public interface UserManagementService {
     List<Role> getRolesForUser(String username);
 
     /**
+     * Typically called after login to get the list of all {@link Permission}s for
+     * the logged in user.
+     *
+     * @param username the username for the user whose permissions should be retrieved
+     * @return a list of {@link Permission} objects
+     */
+    List<Permission> getPermissionsForUser(String username);
+
+    /**
      * Get all users in the database.
      *
      * @return a list of {@link User} objects
