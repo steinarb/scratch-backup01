@@ -45,6 +45,8 @@ class UserManagementServiceTest {
         String username = "jad";
         User otherUser = service.getUser(username);
         assertNull(otherUser);
+        List<Role> rolesForOtherUser = service.getRolesForUser(username);
+        assertEquals(0, rolesForOtherUser.size());
 
         List<Role> roles = service.getRoles();
         assertEquals(0, roles.size());

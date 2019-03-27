@@ -44,6 +44,15 @@ public interface UserManagementService {
     User getUser(String username);
 
     /**
+     * Typically called after login to get the list of {@link Role}s for
+     * the logged in user
+     *
+     * @param username the username for the user whose roles should be retrieved
+     * @return a list of {@link Role} objects
+     */
+    List<Role> getRolesForUser(String username);
+
+    /**
      * Get all users in the database.
      *
      * @return a list of {@link User} objects
