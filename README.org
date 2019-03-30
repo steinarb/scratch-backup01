@@ -17,7 +17,7 @@ The service definitions have been deployed to maven central.
 ** Services defined in this project
 *** no.priv.bang.osgiservice.database.DatabaseService
 
-The DatabaseService provides access to an actual JDBC database instance.  The DS components implementing this service typically:
+The [[https://static.javadoc.io/no.priv.bang.osgiservice/osgiservice/1.1.0/no/priv/bang/osgiservice/database/DatabaseService.html][DatabaseService]] provides access to an actual JDBC database instance.  The DS components implementing this service typically:
  1. Receives a DataSourceFactory service
  2. From that DataSourceFactory:
     1. Creates a DataSource (by e.g. connecting to a remote RDBMS like PostgreSQL or e.g. creating an in-memory derby database)
