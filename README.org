@@ -85,6 +85,12 @@ Alternatively, when using the [[https://svn.apache.org/repos/asf/karaf/site/prod
   </dependency>
 #+END_SRC
 
+** Release history
+
+| Version | Date         | Description                                                 |
+|---------+--------------+-------------------------------------------------------------|
+|   1.1.0 | [2019-02-17] | Working javadoc, first version of the UserManagementService |
+|   1.0.0 | [2018-12-19] | First version of the DatabaseService                        |
 ** License
 
 This code is licensed under the Apache license v. 2.  See the LICENSE file for details.
