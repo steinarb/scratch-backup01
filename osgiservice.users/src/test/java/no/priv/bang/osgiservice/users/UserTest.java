@@ -62,7 +62,7 @@ class UserTest {
         // Verify that two users with different usernames are not equal
         User user3 = new User(1, "jdo", "jod123@gmail.com", "Jon", "Dow");
         assertNotEquals(user1, user3);
-        assertNotEquals(user1, null);
+        assertNotEquals(user1, null); // NOSONAR Argument  order is to test all corners of User.equals()
         assertNotEquals(user1, new User());
         assertNotEquals(user1, new Role());
         assertNotEquals(new User(), user1);

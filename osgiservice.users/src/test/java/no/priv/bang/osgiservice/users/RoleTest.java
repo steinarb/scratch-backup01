@@ -58,7 +58,7 @@ class RoleTest {
         Role userRole = new Role(3, "user", "dummy");
         assertNotEquals(adminRole1.hashCode(), userRole.hashCode());
         assertNotEquals(adminRole1, userRole);
-        assertNotEquals(adminRole1, null);
+        assertNotEquals(adminRole1, null); // NOSONAR Argument  order is to test all corners of Role.equals()
         assertNotEquals(adminRole1, new User());
         assertNotEquals(new Role(), adminRole1);
     }
