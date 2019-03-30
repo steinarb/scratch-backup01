@@ -52,6 +52,39 @@ Alternatively, when using the [[https://svn.apache.org/repos/asf/karaf/site/prod
   </dependency>
 #+END_SRC
 
+*** no.priv.bang.osgiservice.users.UserManagementService
+
+The [[https://static.javadoc.io/no.priv.bang.osgiservice/osgiservice/1.1.0/no/priv/bang/osgiservice/users/UserManagementService.html][UserManagementService]] provides access to management of users, roles and permissions.
+
+To compile code using this OSGi service, add the following dependency to your maven POM:
+#+BEGIN_SRC xml
+  <dependency>
+      <groupId>no.priv.bang.osgiservice</groupId>
+      <artifactId>osgiservice.users</artifactId>
+      <version>1.1.0</version>
+      <scope>provided</scope>
+  </dependency>
+#+END_SRC
+
+To get runtime access to this OSGi service in apache karaf, add the following to the karaf feature definition of the OSGi bundle(s) using the interface:
+#+BEGIN_SRC xml
+  <repository>mvn:no.priv.bang.osgiservice/osgiservice/1.1.0/xml/features</repository>
+  <feature name="myfeature">
+      <feature>sb-database-osgi-service</feature>
+  </feature>
+#+END_SRC
+
+Alternatively, when using the [[https://svn.apache.org/repos/asf/karaf/site/production/manual/latest/karaf-maven-plugin.html][karaf-maven-plugin]] it's possible to add a karaf runtime feature dependency when generating a feature for your own bundle:
+#+BEGIN_SRC xml
+  <dependency>
+      <groupId>no.priv.bang.osgiservice</groupId>
+      <artifactId>osgiservice.users</artifactId>
+      <version>1.1.0</version>
+      <type>xml</type>
+      <classifier>features</classifier>
+  </dependency>
+#+END_SRC
+
 ** License
 
 This code is licensed under the Apache license v. 2.  See the LICENSE file for details.
