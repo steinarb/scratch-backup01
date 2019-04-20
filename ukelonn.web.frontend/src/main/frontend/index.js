@@ -14,7 +14,15 @@ import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 
 const history = createBrowserHistory();
-const store = createStore(ukelonnReducer, compose(applyMiddleware(sagaMiddleware, routerMiddleware(history)), window.devToolsExtension ? window.devToolsExtension() : f => f));
+const store = createStore(ukelonnReducer,
+                          compose(
+                              applyMiddleware(
+                                  sagaMiddleware,
+                                  routerMiddleware(history)
+                              ),
+                              window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+                          )
+                         );
 sagaMiddleware.run(rootSaga);
 
 if (typeof Notification !== "undefined") {
