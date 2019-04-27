@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jdbc.DataSourceFactory;
 import org.osgi.service.log.LogService;
+import org.postgresql.Driver;
 
 import no.priv.bang.authservice.db.liquibase.AuthserviceLiquibase;
 import no.priv.bang.authservice.definitions.AuthserviceDatabaseService;
@@ -54,6 +55,8 @@ public class PostgresqlDatabase implements AuthserviceDatabaseService {
     @Activate
     public void activate(Map<String, Object> config) {
         try {
+            Class<Driver> clazz = org.postgresql.Driver.class;
+            logservice.log(LogService.LOG_INFO, String.format("PostgreSQL driver class", clazz));
             datasource = createDatasource(config);
             try(Connection connection = datasource.getConnection()) {
                 AuthserviceLiquibase liquibase = new AuthserviceLiquibase();
