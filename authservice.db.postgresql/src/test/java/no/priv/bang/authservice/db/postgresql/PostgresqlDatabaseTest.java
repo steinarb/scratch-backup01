@@ -121,7 +121,7 @@ class PostgresqlDatabaseTest {
     @Test
     public void testCreateDatabaseConnectionPropertiesDefaultsOnEmptyConfig() {
         Properties properties = PostgresqlDatabase.createDatabaseConnectionProperties(Collections.emptyMap());
-        assertEquals("jdbc:postgresql:///authservice", properties.getProperty(DataSourceFactory.JDBC_URL));
+        assertEquals("jdbc:postgresql://localhost/authservice", properties.getProperty(DataSourceFactory.JDBC_URL));
         assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_USER));
         assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_PASSWORD));
     }

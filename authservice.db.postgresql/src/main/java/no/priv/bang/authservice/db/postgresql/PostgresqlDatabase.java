@@ -62,7 +62,7 @@ public class PostgresqlDatabase implements AuthserviceDatabaseService {
                 liquibase.updateSchema(connection);
             }
         } catch (Exception e) {
-            String message = "Failed to activate authservice Derby test database component";
+            String message = "Failed to activate authservice PostgreSQL< database component";
             logservice.log(LogService.LOG_ERROR, message, e);
             throw new AuthserviceException(message, e);
         }
@@ -84,7 +84,7 @@ public class PostgresqlDatabase implements AuthserviceDatabaseService {
     }
 
     static Properties createDatabaseConnectionProperties(Map<String, Object> config) {
-        String jdbcUrl = ((String) config.getOrDefault(AUTHSERVICE_JDBC_URL, "jdbc:postgresql:///authservice")).trim();
+        String jdbcUrl = ((String) config.getOrDefault(AUTHSERVICE_JDBC_URL, "jdbc:postgresql://localhost/authservice")).trim();
         String jdbcUser = ((String) config.getOrDefault(AUTHSERVICE_JDBC_USER, "karaf")).trim();
         String jdbcPassword = ((String) config.getOrDefault(AUTHSERVICE_JDBC_PASSWORD, "karaf")).trim();
         Properties properties = new Properties();
