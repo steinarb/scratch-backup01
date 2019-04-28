@@ -41,6 +41,7 @@ public class AuthserviceDbRealm extends JdbcRealm {
     @Activate
     public void activate() {
         dataSource = database.getDatasource();
+        logservice.log(LogService.LOG_WARNING, String.format("AuthserviceDbRealm.dataSource: %s", dataSource));
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
         credentialsMatcher.setHashAlgorithmName("SHA-256");
         credentialsMatcher.setStoredCredentialsHexEncoded(false); // base64 encoding, not hex

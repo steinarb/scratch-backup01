@@ -85,7 +85,7 @@ public class AuthserviceDbRealmTest {
                 AuthenticationInfo authInfo = realm.getAuthenticationInfo(token);
                 assertEquals(1, authInfo.getPrincipals().asList().size());
             });
-        assertEquals(1, logservice.getLogmessages().size());
+        assertEquals(2, logservice.getLogmessages().size());
     }
 
     /***
