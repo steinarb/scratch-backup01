@@ -22,6 +22,14 @@
 
     <name>Handleregistrering</name>
 
+    <modules>
+        <module>handlereg.db.liquibase</module>
+        <module>handlereg.services</module>
+        <module>handlereg.db.derby.test</module>
+        <module>handlereg.backend</module>
+        <module>handlereg.web.security</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.bundle.plugin.version>3.5.1</maven.bundle.plugin.version>
@@ -44,14 +52,6 @@
         <jackson.version>2.8.11</jackson.version>
         <jersey.version>2.27</jersey.version>
     </properties>
-
-    <modules>
-        <module>handlereg.db.liquibase</module>
-        <module>handlereg.services</module>
-        <module>handlereg.db.derby.test</module>
-        <module>handlereg.backend</module>
-        <module>handlereg.web.security</module>
-    </modules>
 
     <dependencyManagement>
         <dependencies>
