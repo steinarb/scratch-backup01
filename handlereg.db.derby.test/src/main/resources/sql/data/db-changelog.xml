@@ -14,6 +14,7 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
+    <include file="sql/data/accounts.sql"/>
     <include file="sql/data/stores.sql"/>
     <include file="sql/data/transactions.sql"/>
 

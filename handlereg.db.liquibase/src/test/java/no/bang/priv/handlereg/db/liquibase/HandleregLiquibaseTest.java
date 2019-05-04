@@ -42,6 +42,8 @@ class HandleregLiquibaseTest {
         Connection connection = createConnection();
         HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
         handleregLiquibase.createInitialSchema(connection);
+        addAccounts(connection);
+        assertAccounts(connection);
         addStores(connection);
         assertStores(connection);
         addTransactions(connection);
@@ -66,6 +68,8 @@ class HandleregLiquibaseTest {
         OldData oldData = new OldData();
         assertEquals(135, oldData.butikker.size());
         assertEquals(4354, oldData.handlinger.size());
+        Integer jdAccountid = addAccount(connection, "jd");
+        Integer jadAccountid = addAccount(connection, "jad");
         int nærbutikkRekkefølge = 0;
         int annenbutikkRekkefølge = 0;
         int gruppe = 1;
@@ -81,6 +85,9 @@ class HandleregLiquibaseTest {
             addStore(connection, store, gruppe, rekkefølge);
         }
 
+        Map<String, Integer> accountids = new HashMap<>();
+        accountids.put("jd", jdAccountid);
+        accountids.put("jad", jadAccountid);
         Map<String, Integer> storeids = findStoreIds(connection);
         assertEquals(135, storeids.size());
 
@@ -89,13 +96,54 @@ class HandleregLiquibaseTest {
             transactionWriter.println("--liquibase formatted sql");
             transactionWriter.println("--changeset sb:example_users");
             for (Handling handling : oldData.handlinger) {
+                int accountid = accountids.get(handling.username);
                 System.out.println("handling: " + handling);
                 int storeid = storeids.get(handling.butikk);
                 double belop = handling.belop;
                 String timestamp = format.format(handling.timestamp);
-                transactionWriter.println(String.format("insert into transactions (store_id, transaction_time, transaction_amount) values (%d, '%s', %f);", storeid, timestamp, belop));
+                transactionWriter.println(String.format("insert into transactions (store_id, transaction_time, transaction_amount) values (%d, %d, '%s', %f);", accountid, storeid, timestamp, belop));
             }
         }
+    }
+
+    private void addAccounts(Connection connection) throws Exception {
+        addAccount(connection, "admin");
+    }
+
+    private void assertAccounts(Connection connection) throws Exception {
+        String sql = "select count(*) from accounts";
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+            try(ResultSet results = statement.executeQuery()) {
+                if (results.next()) {
+                    int count = results.getInt(1);
+                    assertEquals(1, count);
+                }
+            }
+        }
+    }
+
+    private int addAccount(Connection connection, String username) throws Exception {
+        String sql = "insert into accounts (username) values (?)";
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            statement.executeUpdate();
+        }
+
+        return findAccountId(connection, username);
+    }
+
+    private int findAccountId(Connection connection, String username) throws Exception {
+        String sql = "select account_id from accounts where username=?";
+        try(PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, username);
+            try(ResultSet results = statement.executeQuery()) {
+                if (results.next()) {
+                    return results.getInt(1);
+                }
+            }
+        }
+
+        return -1;
     }
 
     private Map<String, Integer> findStoreIds(Connection connection) throws Exception {
@@ -131,16 +179,16 @@ class HandleregLiquibaseTest {
     }
 
     private void assertTransactions(Connection connection) throws Exception {
-        try(PreparedStatement statement = connection.prepareStatement("select * from transactions join stores on transactions.store_id=stores.store_id join users on transactions.user_id=users.user_id")) {
+        try(PreparedStatement statement = connection.prepareStatement("select * from transactions join stores on transactions.store_id=stores.store_id join accounts on transactions.account_id=accounts.account_id")) {
             ResultSet results = statement.executeQuery();
             assertTransaction(results, 210.0, "Joker Folldal", "admin");
         }
     }
 
     private void addTransactions(Connection connection) throws Exception {
-        int userid = 1;
+        int accountid = 1;
         int storeid = 1;
-        addTransaction(connection, userid, storeid, 210.0);
+        addTransaction(connection, accountid, storeid, 210.0);
     }
 
     private void addStore(Connection connection, String storename, int gruppe, int rekkefølge) throws Exception {
@@ -157,9 +205,9 @@ class HandleregLiquibaseTest {
         assertEquals(storename, resultset.getString(2));
     }
 
-    private void addTransaction(Connection connection, int userid, int storeid, double amount) throws Exception {
-        try(PreparedStatement statement = connection.prepareStatement("insert into transactions (user_id, store_id, transaction_amount) values (?, ?, ?)")) {
-            statement.setInt(1, userid);
+    private void addTransaction(Connection connection, int accountid, int storeid, double amount) throws Exception {
+        try(PreparedStatement statement = connection.prepareStatement("insert into transactions (account_id, store_id, transaction_amount) values (?, ?, ?)")) {
+            statement.setInt(1, accountid);
             statement.setInt(2, storeid);
             statement.setDouble(3, amount);
             statement.executeUpdate();

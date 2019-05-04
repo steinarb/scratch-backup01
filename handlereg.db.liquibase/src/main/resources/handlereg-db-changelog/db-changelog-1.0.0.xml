@@ -13,6 +13,32 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
+    <changeSet author="sb" id="handlereg-1.0.0-accounts">
+        <preConditions onFail="CONTINUE" >
+            <not>
+                <tableExists tableName="accounts" />
+            </not>
+        </preConditions>
+
+        <createTable tableName="accounts">
+            <column autoIncrement="true" name="account_id" type="INTEGER">
+                <constraints primaryKey="true" primaryKeyName="account_primary_key"/>
+            </column>
+            <column name="username" type="VARCHAR(64)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="accounts_id_index" tableName="accounts">
+            <column name="account_id"/>
+        </createIndex>
+
+        <createIndex indexName="ix_accounts_username" tableName="accounts">
+            <column name="username" type="VARCHAR(64)" />
+        </createIndex>
+
+    </changeSet>
+
 
     <changeSet author="sb" id="handlereg-1.0.0-stores">
         <preConditions onFail="CONTINUE" >
@@ -47,7 +73,7 @@
             <column autoIncrement="true" name="transaction_id" type="INTEGER">
                 <constraints primaryKey="true" primaryKeyName="transactions_primary_key"/>
             </column>
-            <column name="user_id" type="INTEGER">
+            <column name="account_id" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
             <column name="store_id" type="INTEGER">
@@ -61,15 +87,17 @@
             </column>
         </createTable>
 
-        <createIndex indexName="transactions_user_id_index" tableName="transactions">
-            <column name="user_id"/>
+        <createIndex indexName="transactions_account_id_index" tableName="transactions">
+            <column name="account_id"/>
         </createIndex>
 
         <createIndex indexName="transactions_store_id_index" tableName="transactions">
             <column name="store_id"/>
         </createIndex>
 
-        <addForeignKeyConstraint baseColumnNames="store_id" baseTableName="transactions" constraintName="SQL170518210719091" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="store_id" referencedTableName="stores"/>
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="transactions" constraintName="transactions_accountid_constraint" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="account_id" referencedTableName="accounts"/>
+
+        <addForeignKeyConstraint baseColumnNames="store_id" baseTableName="transactions" constraintName="transactions_storeid_constraint" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="store_id" referencedTableName="stores"/>
 
     </changeSet>
 
