@@ -41,7 +41,7 @@ class HandleregDerbyTestDatabaseTest {
         database.setLogService(logservice);
         database.setDataSourceFactory(dataSourceFactory);
         database.activate();
-        assertUsers(database);
+        assertAccounts(database);
         int originalNumberOfTransactions = findNumberOfTransactions(database);
         addTransaction(database, 138);
         int updatedNumberOfTransactions = findNumberOfTransactions(database);
@@ -90,48 +90,53 @@ class HandleregDerbyTestDatabaseTest {
         database.setDataSourceFactory(dataSourceFactory);
         database.activate();
 
-        // Replace the connection with a connection that will fail when
+        // Replace the mock datasource returning a connection that will fail when
         // releasing the lock
         Connection connection = mock(Connection.class);
-        database.connect = connection;
+        DataSource datasource = mock(DataSource.class);
+        when(datasource.getConnection()).thenReturn(connection);
+        database.dataSource = datasource;
 
         boolean result = database.forceReleaseLiquibaseLock();
         assertFalse(result);
     }
 
-    private void assertUsers(HandleregDerbyTestDatabase database) throws Exception {
-        try(PreparedStatement statement = database.prepareStatement("select * from users join password on users.user_id=password.user_id")) {
-            ResultSet results = database.query(statement);
-            assertUser(results, "jd", "johndoe21@gmail.com", "John", "Doe", "secret", "salt");
+    private void assertAccounts(HandleregDerbyTestDatabase database) throws Exception {
+        try (Connection connection = database.getConnection()) {
+            try(PreparedStatement statement = connection.prepareStatement("select * from accounts")) {
+                try (ResultSet results = statement.executeQuery()) {
+                    assertAccount(results, "jd");
+                }
+            }
         }
     }
 
-    private void assertUser(ResultSet results, String username, String email, String firstname, String lastname, String password, String salt) throws Exception {
+    private void assertAccount(ResultSet results, String username) throws Exception {
         assertTrue(results.next());
         assertEquals(username, results.getString(2)); // column 1 is the id
-        assertEquals(email, results.getString(3));
-        assertEquals(firstname, results.getString(4));
-        assertEquals(lastname, results.getString(5));
-        assertEquals(password, results.getString(8));
-        assertEquals(salt, results.getString(9));
     }
 
     private void addTransaction(HandleregDerbyTestDatabase database, double amount) throws SQLException {
-        try(PreparedStatement statement = database.prepareStatement("insert into transactions (user_id, store_id, transaction_amount) values (1, 1, ?)")) {
-            statement.setDouble(1, amount);
-            database.update(statement);
+        try (Connection connection = database.getConnection()) {
+            try(PreparedStatement statement = connection.prepareStatement("insert into transactions (account_id, store_id, transaction_amount) values (1, 1, ?)")) {
+                statement.setDouble(1, amount);
+                statement.executeUpdate();
+            }
         }
     }
 
     private int findNumberOfTransactions(HandleregDerbyTestDatabase database) throws SQLException {
-        try(PreparedStatement statement = database.prepareStatement("select * from transactions")) {
-            ResultSet results = database.query(statement);
-            int count = 0;
-            while(results.next()) {
-                ++count;
-            }
+        try (Connection connection = database.getConnection()) {
+            try(PreparedStatement statement = connection.prepareStatement("select * from transactions")) {
+                try (ResultSet results = statement.executeQuery()) {
+                    int count = 0;
+                    while(results.next()) {
+                        ++count;
+                    }
 
-            return count;
+                    return count;
+                }
+            }
         }
     }
 

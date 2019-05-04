@@ -61,6 +61,17 @@
             <artifactId>org.osgi.service.jdbc</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>no.priv.bang.osgiservice</groupId>
+            <artifactId>osgiservice.database</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.priv.bang.osgiservice</groupId>
+            <artifactId>osgiservice.database</artifactId>
+            <version>${osgi-service.version}</version>
+            <type>xml</type>
+            <classifier>features</classifier>
+        </dependency>
     </dependencies>
 
     <build>

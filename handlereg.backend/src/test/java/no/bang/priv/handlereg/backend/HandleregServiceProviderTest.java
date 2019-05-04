@@ -17,6 +17,7 @@ package no.bang.priv.handlereg.backend;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,8 +63,8 @@ class HandleregServiceProviderTest {
         Oversikt jd = handlereg.finnOversikt("jd");
         assertEquals(1, jd.getUserId());
         assertEquals("jd", jd.getBrukernavn());
-        assertEquals("John", jd.getFornavn());
-        assertEquals("Doe", jd.getEtternavn());
+        assertEquals("", jd.getFornavn());
+        assertEquals("", jd.getEtternavn());
         assertThat(jd.getBalanse()).isGreaterThan(0.0);
     }
 
@@ -286,9 +287,11 @@ class HandleregServiceProviderTest {
         PreparedStatement statement = mock(PreparedStatement.class);
         ResultSet results = mock(ResultSet.class);
         when(results.next()).thenReturn(false);
+        when(statement.executeQuery()).thenReturn(results);
         HandleregDatabase mockdb = mock(HandleregDatabase.class);
-        when(mockdb.prepareStatement(anyString())).thenReturn(statement);
-        when(mockdb.query(statement)).thenReturn(results);
+        Connection connection = mock(Connection.class);
+        when(connection.prepareStatement(anyString())).thenReturn(statement);
+        when(mockdb.getConnection()).thenReturn(connection);
         return mockdb;
     }
 
@@ -297,25 +300,32 @@ class HandleregServiceProviderTest {
         PreparedStatement statement = mock(PreparedStatement.class);
         ResultSet results = mock(ResultSet.class);
         when(results.next()).thenThrow(SQLException.class);
+        when(statement.executeQuery()).thenReturn(results);
         HandleregDatabase mockdb = mock(HandleregDatabase.class);
-        when(mockdb.prepareStatement(anyString())).thenReturn(statement);
-        when(mockdb.query(statement)).thenReturn(results);
+        Connection connection = mock(Connection.class);
+        when(connection.prepareStatement(anyString())).thenReturn(statement);
+        when(mockdb.getConnection()).thenReturn(connection);
         return mockdb;
     }
 
     @SuppressWarnings("unchecked")
     private HandleregDatabase createMockDbThrowingException() throws SQLException {
         HandleregDatabase mockdb = mock(HandleregDatabase.class);
-        when(mockdb.prepareStatement(anyString())).thenThrow(SQLException.class);
+        Connection connection = mock(Connection.class);
+        when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
+        when(mockdb.getConnection()).thenReturn(connection);
         return mockdb;
     }
 
     private int finnSisteRekkefolgeForgruppe(int gruppe) throws Exception {
-        try (PreparedStatement statement = database.prepareStatement("select rekkefolge from stores where gruppe=? order by rekkefolge desc fetch next 1 rows only")) {
-            statement.setInt(1, gruppe);
-            ResultSet results = database.query(statement);
-            if (results.next()) {
-                return results.getInt(1);
+        try (Connection connection = database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement("select rekkefolge from stores where gruppe=? order by rekkefolge desc fetch next 1 rows only")) {
+                statement.setInt(1, gruppe);
+                try (ResultSet results = statement.executeQuery()) {
+                    if (results.next()) {
+                        return results.getInt(1);
+                    }
+                }
             }
         }
 

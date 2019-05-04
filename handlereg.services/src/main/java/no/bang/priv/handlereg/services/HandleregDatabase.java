@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2018-2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,11 @@
  */
 package no.bang.priv.handlereg.services;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
+import no.priv.bang.osgiservice.database.DatabaseService;
 
 
-public interface HandleregDatabase {
-
-    PreparedStatement prepareStatement(String string) throws SQLException;
-
-    ResultSet query(PreparedStatement statement) throws SQLException;
-
-    int update(PreparedStatement statement) throws SQLException;
+public interface HandleregDatabase extends DatabaseService {
 
     boolean forceReleaseLiquibaseLock();
-
-    DataSource getDatasource();
 
 }

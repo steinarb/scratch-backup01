@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2018-2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 package no.bang.priv.handlereg.db.derby.test;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -43,10 +41,9 @@ import no.bang.priv.handlereg.services.HandleregException;
 public class HandleregDerbyTestDatabase implements HandleregDatabase {
 
     PooledConnection pooledConnect;
-    Connection connect;
     private LogService logservice;
     private DataSourceFactory dataSourceFactory;
-    private DataSource dataSource;
+    DataSource dataSource;
 
     @Reference
     public void setLogService(LogService logservice) {
@@ -61,11 +58,13 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
     @Activate
     public void activate() {
         try {
-            connect = createConnection();
-            HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
-            handleregLiquibase.createInitialSchema(connect);
-            insertMockData(connect);
-            handleregLiquibase.updateSchema(connect);
+            createDatasource();
+            try (Connection connect = getConnection()) {
+                HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
+                handleregLiquibase.createInitialSchema(connect);
+                insertMockData(connect);
+                handleregLiquibase.updateSchema(connect);
+            }
         } catch (Exception e) {
             String message = "Failed to create handlereg derby test database";
             logError(message, e);
@@ -74,25 +73,15 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
     }
 
     @Override
-    public PreparedStatement prepareStatement(String sql) throws SQLException {
-        return connect.prepareStatement(sql);
-    }
-
-    @Override
-    public ResultSet query(PreparedStatement statement) throws SQLException {
-        return statement.executeQuery();
-    }
-
-    @Override
-    public int update(PreparedStatement statement) throws SQLException {
-        return statement.executeUpdate();
+    public Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
 
     @Override
     public boolean forceReleaseLiquibaseLock() {
-        try {
+        try (Connection connection = getConnection()) {
             HandleregLiquibase liquibase = new HandleregLiquibase();
-            liquibase.forceReleaseLocks(connect);
+            liquibase.forceReleaseLocks(connection);
             return true;
         } catch (Exception e) {
             logError("Failed to force release Liquibase changelog lock on database", e);
@@ -116,11 +105,10 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
         logservice.log(LogService.LOG_ERROR, message, exception);
     }
 
-    private Connection createConnection() throws SQLException {
+    private void createDatasource() throws SQLException {
         Properties properties = new Properties();
         properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
         dataSource = dataSourceFactory.createDataSource(properties);
-        return dataSource.getConnection();
     }
 
 }
