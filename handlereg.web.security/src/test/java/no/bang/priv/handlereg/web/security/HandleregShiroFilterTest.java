@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2018-2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,41 +17,49 @@ package no.bang.priv.handlereg.web.security;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collection;
+
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.config.Ini;
+import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.realm.SimpleAccountRealm;
+import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.web.config.WebIniSecurityManagerFactory;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
-import org.osgi.service.jdbc.DataSourceFactory;
-
-import no.bang.priv.handlereg.db.derby.test.HandleregDerbyTestDatabase;
-import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class HandleregShiroFilterTest {
 
-    private static MockLogService logservice;
-    private static HandleregDerbyTestDatabase database;
+    private static Realm realm;
+    private static SessionDAO session;
 
     @BeforeAll
     static void beforeAll() {
-        DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
-        logservice = new MockLogService();
-        database = new HandleregDerbyTestDatabase();
-        database.setLogService(logservice);
-        database.setDataSourceFactory(derbyDataSourceFactory);
-        database.activate();
+        realm = getRealmFromIniFile();
+        session = new MemorySessionDAO();
     }
 
     @Test
     void testAuthenticate() {
         HandleregShiroFilter filter = new HandleregShiroFilter();
-        filter.setDatabase(database);
+        filter.setRealm(realm);
+        filter.setSession(session);
         filter.activate();
         WebSecurityManager securitymanager = filter.getSecurityManager();
         AuthenticationToken token = new UsernamePasswordToken("jad", "1ad".toCharArray());
         AuthenticationInfo info = securitymanager.authenticate(token);
         assertEquals(1, info.getPrincipals().asList().size());
+    }
+
+    private static Realm getRealmFromIniFile() {
+        WebIniSecurityManagerFactory securityManagerFactory = new WebIniSecurityManagerFactory(Ini.fromResourcePath("classpath:test.shiro.ini"));
+        RealmSecurityManager securitymanager = (RealmSecurityManager) securityManagerFactory.getInstance();
+        Collection<Realm> realms = securitymanager.getRealms();
+        return (SimpleAccountRealm) realms.iterator().next();
     }
 }

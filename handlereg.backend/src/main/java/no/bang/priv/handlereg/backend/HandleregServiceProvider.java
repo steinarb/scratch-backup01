@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -36,12 +37,16 @@ import no.bang.priv.handlereg.services.HandleregService;
 import no.bang.priv.handlereg.services.NyHandling;
 import no.bang.priv.handlereg.services.Oversikt;
 import no.bang.priv.handlereg.services.Transaction;
+import no.priv.bang.osgiservice.users.Role;
+import no.priv.bang.osgiservice.users.User;
+import no.priv.bang.osgiservice.users.UserManagementService;
 
 @Component(service=HandleregService.class, immediate=true)
 public class HandleregServiceProvider implements HandleregService {
 
     private LogService logservice;
     private HandleregDatabase database;
+    private UserManagementService useradmin;
 
     @Reference
     public void setLogservice(LogService logservice) {
@@ -53,9 +58,14 @@ public class HandleregServiceProvider implements HandleregService {
         this.database = database;
     }
 
+    @Reference
+    public void setUseradmin(UserManagementService useradmin) {
+        this.useradmin = useradmin;
+    }
+
     @Activate
     public void activate() {
-        // Ensures that the component isn't activated until all dependencies are injected
+        addRolesIfNotpresent();
     }
 
     @Override
@@ -69,7 +79,8 @@ public class HandleregServiceProvider implements HandleregService {
                         int userid = results.getInt(1);
                         String username = results.getString(2);
                         double balanse = results.getDouble(3);
-                        return new Oversikt(userid, username, "", "", "", balanse);
+                        User user = useradmin.getUser(username);
+                        return new Oversikt(userid, username, user.getEmail(), user.getFirstname(), user.getLastname(), balanse);
                     }
 
                     return null;
@@ -110,7 +121,7 @@ public class HandleregServiceProvider implements HandleregService {
 
     @Override
     public Oversikt registrerHandling(NyHandling handling) {
-        Date transactionTime = handling.getTransactionTime() == null ? new Date() : handling.getTransactionTime();
+        Date transactionTime = handling.getHandletidspunkt() == null ? new Date() : handling.getHandletidspunkt();
         String sql = "insert into transactions (account_id, store_id, transaction_amount, transaction_time) values ((select account_id from accounts where username=?), ?, ?, ?)";
         try(Connection connection = database.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -194,8 +205,18 @@ public class HandleregServiceProvider implements HandleregService {
         return 0;
     }
 
+    private void addRolesIfNotpresent() {
+        String handleregbruker = "handleregbruker";
+        List<Role> roles = useradmin.getRoles();
+        Optional<Role> existingRole = roles.stream().filter(r -> handleregbruker.equals(r.getRolename())).findFirst();
+        if (!existingRole.isPresent()) {
+            useradmin.addRole(new Role(-1, handleregbruker, "Bruker av applikasjonen handlereg"));
+        }
+    }
+
     private void logError(String message, SQLException e) {
         logservice.log(LogService.LOG_ERROR, message, e);
     }
+
 
 }

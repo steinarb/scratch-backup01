@@ -25,7 +25,7 @@ class OversiktTest {
     @Test
     void testAllValues() {
         Oversikt bean = new Oversikt(1, "jad", "janedoe21@gmail.com", "Jane", "Doe", 1041);
-        assertEquals(1, bean.getUserId());
+        assertEquals(1, bean.getAccountid());
         assertEquals("jad", bean.getBrukernavn());
         assertEquals("janedoe21@gmail.com", bean.getEmail());
         assertEquals("Jane", bean.getFornavn());
@@ -37,7 +37,7 @@ class OversiktTest {
     @Test
     void testAllValuesNoargsConstructor() {
         Oversikt bean = new Oversikt();
-        assertEquals(-1, bean.getUserId());
+        assertEquals(-1, bean.getAccountid());
         assertNull(bean.getBrukernavn());
         assertNull(bean.getFornavn());
         assertNull(bean.getEtternavn());

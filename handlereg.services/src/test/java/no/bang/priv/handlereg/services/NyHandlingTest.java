@@ -26,26 +26,26 @@ class NyHandlingTest {
     @Test
     void testAllValues() {
         String username = "jad";
-        int userId = 2;
+        int accountid = 2;
         int storeId = 2;
         double beløp = 42.0;
         Date now = new Date();
-        NyHandling bean = new NyHandling(username, userId, storeId, beløp, now);
+        NyHandling bean = new NyHandling(username, accountid, storeId, beløp, now);
         assertEquals(username, bean.getUsername());
-        assertEquals(userId, bean.getUserId());
+        assertEquals(accountid, bean.getAccountid());
         assertEquals(storeId, bean.getStoreId());
         assertEquals(beløp, bean.getBelop(), 1.0);
-        assertEquals(now, bean.getTransactionTime());
+        assertEquals(now, bean.getHandletidspunkt());
     }
 
     @Test
     void testNoArgsConstructor() {
         NyHandling bean = new NyHandling();
         assertNull(bean.getUsername());
-        assertEquals(-1, bean.getUserId());
+        assertEquals(-1, bean.getAccountid());
         assertEquals(-1, bean.getStoreId());
         assertEquals(0.0, bean.getBelop(), 1.0);
-        assertNull(bean.getTransactionTime());
+        assertNull(bean.getHandletidspunkt());
     }
 
 }

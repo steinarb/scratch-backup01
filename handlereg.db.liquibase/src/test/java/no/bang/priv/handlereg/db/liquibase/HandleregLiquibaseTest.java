@@ -68,7 +68,7 @@ class HandleregLiquibaseTest {
         OldData oldData = new OldData();
         assertEquals(135, oldData.butikker.size());
         assertEquals(4354, oldData.handlinger.size());
-        Integer jdAccountid = addAccount(connection, "jd");
+        Integer jodAccountid = addAccount(connection, "jod");
         Integer jadAccountid = addAccount(connection, "jad");
         int nærbutikkRekkefølge = 0;
         int annenbutikkRekkefølge = 0;
@@ -86,7 +86,7 @@ class HandleregLiquibaseTest {
         }
 
         Map<String, Integer> accountids = new HashMap<>();
-        accountids.put("jd", jdAccountid);
+        accountids.put("jod", jodAccountid);
         accountids.put("jad", jadAccountid);
         Map<String, Integer> storeids = findStoreIds(connection);
         assertEquals(135, storeids.size());

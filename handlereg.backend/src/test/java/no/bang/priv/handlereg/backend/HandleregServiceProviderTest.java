@@ -40,6 +40,8 @@ import no.bang.priv.handlereg.services.NyHandling;
 import no.bang.priv.handlereg.services.Oversikt;
 import no.bang.priv.handlereg.services.Transaction;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
+import no.priv.bang.osgiservice.users.User;
+import no.priv.bang.osgiservice.users.UserManagementService;
 
 class HandleregServiceProviderTest {
     static DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
@@ -55,26 +57,31 @@ class HandleregServiceProviderTest {
     @Test
     void testHentOversikt() {
         MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        when(useradmin.getUser(anyString())).thenReturn(new User(1, "jod", "jd@gmail.com", "John", "Doe"));
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
-        Oversikt jd = handlereg.finnOversikt("jd");
-        assertEquals(1, jd.getUserId());
-        assertEquals("jd", jd.getBrukernavn());
-        assertEquals("", jd.getFornavn());
-        assertEquals("", jd.getEtternavn());
-        assertThat(jd.getBalanse()).isGreaterThan(0.0);
+        Oversikt jod = handlereg.finnOversikt("jod");
+        assertEquals(1, jod.getAccountid());
+        assertEquals("jod", jod.getBrukernavn());
+        assertEquals("John", jod.getFornavn());
+        assertEquals("Doe", jod.getEtternavn());
+        assertThat(jod.getBalanse()).isGreaterThan(0.0);
     }
 
     @Test
     void testHentOversiktMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         assertEquals(0, logservice.getLogmessages().size());
@@ -89,9 +96,11 @@ class HandleregServiceProviderTest {
     void testHentOversiktMedTomtResultat() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbWithEmptyResultset();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         assertEquals(0, logservice.getLogmessages().size());
@@ -104,21 +113,32 @@ class HandleregServiceProviderTest {
     void testHentHandlinger() {
         MockLogService logservice = new MockLogService();
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        when(useradmin.getUser(eq("jod"))).thenReturn(new User(1, "jod", "jod@gmail.com", "John", "Doe"));
+        when(useradmin.getUser(eq("jad"))).thenReturn(new User(2, "jad", "jad@gmail.com", "Jane", "Doe"));
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
-        List<Transaction> handlinger = handlereg.findLastTransactions(1);
-        assertEquals(10, handlinger.size());
+        Oversikt jod = handlereg.finnOversikt("jod");
+        List<Transaction> handlingerJod = handlereg.findLastTransactions(jod.getAccountid());
+        assertEquals(10, handlingerJod.size());
+
+        Oversikt jad = handlereg.finnOversikt("jad");
+        List<Transaction> handlingerJad = handlereg.findLastTransactions(jad.getAccountid());
+        assertEquals(10, handlingerJad.size());
     }
 
     @Test
     void testHentHandlingerMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         assertEquals(0, logservice.getLogmessages().size());
@@ -133,15 +153,18 @@ class HandleregServiceProviderTest {
     void testRegistrerHandling() {
         MockLogService logservice = new MockLogService();
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        when(useradmin.getUser(anyString())).thenReturn(new User(1, "jod", "jd@gmail.com", "John", "Doe"));
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
-        Oversikt originalOversikt = handlereg.finnOversikt("jd");
+        Oversikt originalOversikt = handlereg.finnOversikt("jod");
         double originalBalanse = originalOversikt.getBalanse();
         double nyttBelop = 510;
         Date now = new Date();
-        NyHandling nyHandling = new NyHandling("jd", 1, 1, nyttBelop, now);
+        NyHandling nyHandling = new NyHandling("jod", 1, 1, nyttBelop, now);
         Oversikt nyOversikt = handlereg.registrerHandling(nyHandling);
         assertThat(nyOversikt.getBalanse()).isEqualTo(originalBalanse + nyttBelop);
     }
@@ -150,14 +173,17 @@ class HandleregServiceProviderTest {
     void testRegistrerHandlingNoDate() {
         MockLogService logservice = new MockLogService();
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        when(useradmin.getUser(anyString())).thenReturn(new User(1, "jod", "jd@gmail.com", "John", "Doe"));
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
-        Oversikt originalOversikt = handlereg.finnOversikt("jd");
+        Oversikt originalOversikt = handlereg.finnOversikt("jod");
         double originalBalanse = originalOversikt.getBalanse();
         double nyttBelop = 510;
-        NyHandling nyHandling = new NyHandling("jd", 1, 1, nyttBelop, null);
+        NyHandling nyHandling = new NyHandling("jod", 1, 1, nyttBelop, null);
         Oversikt nyOversikt = handlereg.registrerHandling(nyHandling);
         assertThat(nyOversikt.getBalanse()).isEqualTo(originalBalanse + nyttBelop);
     }
@@ -166,9 +192,11 @@ class HandleregServiceProviderTest {
     void testRegistrerHandlingMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbThrowingException();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         double nyttBelop = 510;
@@ -183,9 +211,11 @@ class HandleregServiceProviderTest {
     @Test
     void testFinnButikker() {
         MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         List<Butikk> butikker = handlereg.finnButikker();
@@ -196,9 +226,11 @@ class HandleregServiceProviderTest {
     void testFinnButikkerMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         assertEquals(0, logservice.getLogmessages().size());
@@ -212,9 +244,11 @@ class HandleregServiceProviderTest {
     @Test
     void testLeggTilButikk() {
         MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         List<Butikk> butikkerFoerOppdatering = handlereg.finnButikker();
@@ -227,9 +261,11 @@ class HandleregServiceProviderTest {
     void testLeggTilButikkMedDbFeilVedLagring() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbThrowingException();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         Butikk nybutikk = new Butikk("Spar fjellheimen", 2, 1500);
@@ -243,8 +279,10 @@ class HandleregServiceProviderTest {
     void testFinnNesteLedigeRekkefolgeForGruppe() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        UserManagementService useradmin = mock(UserManagementService.class);
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         int sisteLedigeForGruppe1 = finnSisteRekkefolgeForgruppe(1);
@@ -259,9 +297,11 @@ class HandleregServiceProviderTest {
     void testFinnNesteLedigeRekkefolgeNaarDetIkkeErNoenTreff() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbWithEmptyResultset();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         int nesteLedigeRekkefolge = handlereg.finnNesteLedigeRekkefolgeForGruppe(1);
@@ -272,9 +312,11 @@ class HandleregServiceProviderTest {
     void testFinnNesteLedigeRekkefolgeNaarDetBlirKastetException() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregDatabase mockdb = createMockDbThrowingException();
+        UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
         handlereg.setDatabase(mockdb);
+        handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
         assertThrows(HandleregException.class, () -> {

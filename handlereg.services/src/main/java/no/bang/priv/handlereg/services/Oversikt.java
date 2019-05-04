@@ -16,7 +16,7 @@
 package no.bang.priv.handlereg.services;
 
 public class Oversikt {
-    int userId = -1;
+    int accountid = -1;
     String brukernavn;
     private String email;
     String fornavn;
@@ -27,9 +27,9 @@ public class Oversikt {
         // jackson trenger no-args constructor
     }
 
-    public Oversikt(int userId, String brukernavn, String email, String fornavn, String etternavn, double balanse) {
+    public Oversikt(int accountid, String brukernavn, String email, String fornavn, String etternavn, double balanse) {
         super();
-        this.userId = userId;
+        this.accountid = accountid;
         this.brukernavn = brukernavn;
         this.email = email;
         this.fornavn = fornavn;
@@ -37,8 +37,8 @@ public class Oversikt {
         this.balanse = balanse;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getAccountid() {
+        return accountid;
     }
 
     public String getBrukernavn() {
@@ -63,7 +63,7 @@ public class Oversikt {
 
     @Override
     public String toString() {
-        return "Oversikt [user_id=" + userId + ", brukernavn=" + brukernavn + ", fornavn=" + fornavn + ", etternavn=" + etternavn + ", balanse=" + balanse + "]";
+        return "Oversikt [user_id=" + accountid + ", brukernavn=" + brukernavn + ", fornavn=" + fornavn + ", etternavn=" + etternavn + ", balanse=" + balanse + "]";
     }
 
 }

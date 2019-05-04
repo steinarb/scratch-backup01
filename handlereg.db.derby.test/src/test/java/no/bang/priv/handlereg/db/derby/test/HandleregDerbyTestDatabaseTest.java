@@ -105,7 +105,7 @@ class HandleregDerbyTestDatabaseTest {
         try (Connection connection = database.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement("select * from accounts")) {
                 try (ResultSet results = statement.executeQuery()) {
-                    assertAccount(results, "jd");
+                    assertAccount(results, "jod");
                 }
             }
         }

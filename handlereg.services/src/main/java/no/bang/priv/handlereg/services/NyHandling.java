@@ -20,10 +20,10 @@ import java.util.Date;
 public class NyHandling {
 
     private String username;
-    private int userId = -1;
+    private int accountid = -1;
     private int storeId = -1;
     private double belop;
-    private Date transactionTime;
+    private Date handletidspunkt;
 
     public NyHandling() {
         // No-args constructor required by jackson
@@ -31,18 +31,18 @@ public class NyHandling {
 
     public NyHandling(String username, int userId, int storeId, double belop, Date transactionTime) {
         this.username = username;
-        this.userId = userId;
+        this.accountid = userId;
         this.storeId = storeId;
         this.belop = belop;
-        this.transactionTime = transactionTime;
+        this.handletidspunkt = transactionTime;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getAccountid() {
+        return accountid;
     }
 
     public int getStoreId() {
@@ -53,8 +53,8 @@ public class NyHandling {
         return belop;
     }
 
-    public Date getTransactionTime() {
-        return transactionTime;
+    public Date getHandletidspunkt() {
+        return handletidspunkt;
     }
 
 }

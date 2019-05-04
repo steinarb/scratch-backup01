@@ -27,6 +27,7 @@
         <module>handlereg.services</module>
         <module>handlereg.db.derby.test</module>
         <module>handlereg.backend</module>
+        <module>handlereg.backend.testdata</module>
         <module>handlereg.web.security</module>
     </modules>
 
@@ -131,6 +132,12 @@
             <dependency>
                 <groupId>no.priv.bang.osgiservice</groupId>
                 <artifactId>osgiservice.database</artifactId>
+                <version>${osgi-service.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>no.priv.bang.osgiservice</groupId>
+                <artifactId>osgiservice.users</artifactId>
                 <version>${osgi-service.version}</version>
                 <scope>provided</scope>
             </dependency>
