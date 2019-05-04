@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2018-2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,15 +26,15 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 public class HandleregLiquibase {
 
     public void createInitialSchema(Connection connection) throws SQLException, LiquibaseException {
-        applyLiquibaseChangelist(connection, "db-changelog/db-changelog-1.0.0.xml");
+        applyLiquibaseChangelist(connection, "handlereg-db-changelog/db-changelog-1.0.0.xml");
     }
 
     public void updateSchema(Connection connection) throws SQLException, LiquibaseException {
-        applyLiquibaseChangelist(connection, "db-changelog/db-changelog-1.0.1.xml");
+        applyLiquibaseChangelist(connection, "handlereg-db-changelog/db-changelog-1.0.1.xml");
     }
 
     public void forceReleaseLocks(Connection connection) throws SQLException, LiquibaseException {
-        Liquibase liquibase = createLiquibaseInstance(connection, "db-changelog/db-changelog-1.0.0.xml");
+        Liquibase liquibase = createLiquibaseInstance(connection, "handlereg-db-changelog/db-changelog-1.0.0.xml");
         liquibase.forceReleaseLocks();
     }
 
