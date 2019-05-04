@@ -42,8 +42,6 @@ class HandleregLiquibaseTest {
         Connection connection = createConnection();
         HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
         handleregLiquibase.createInitialSchema(connection);
-        addUsers(connection);
-        assertUsers(connection);
         addStores(connection);
         assertStores(connection);
         addTransactions(connection);
@@ -68,8 +66,6 @@ class HandleregLiquibaseTest {
         OldData oldData = new OldData();
         assertEquals(135, oldData.butikker.size());
         assertEquals(4354, oldData.handlinger.size());
-        addUser(connection, "jd", "johndoe21@gmail.com", "John", "Doe", "secret", "salt");
-        addUser(connection, "jad", "janedoe21@gmail.com", "Jane", "Doe", "secret", "salt");
         int nærbutikkRekkefølge = 0;
         int annenbutikkRekkefølge = 0;
         int gruppe = 1;
@@ -85,8 +81,6 @@ class HandleregLiquibaseTest {
             addStore(connection, store, gruppe, rekkefølge);
         }
 
-        Map<String, Integer> userids = findUserids(connection);
-        assertEquals(2, userids.size());
         Map<String, Integer> storeids = findStoreIds(connection);
         assertEquals(135, storeids.size());
 
@@ -95,12 +89,11 @@ class HandleregLiquibaseTest {
             transactionWriter.println("--liquibase formatted sql");
             transactionWriter.println("--changeset sb:example_users");
             for (Handling handling : oldData.handlinger) {
-                int userid = userids.get(handling.username);
                 System.out.println("handling: " + handling);
                 int storeid = storeids.get(handling.butikk);
                 double belop = handling.belop;
                 String timestamp = format.format(handling.timestamp);
-                transactionWriter.println(String.format("insert into transactions (user_id, store_id, transaction_time, transaction_amount) values (%d, %d, '%s', %f);", userid, storeid, timestamp, belop));
+                transactionWriter.println(String.format("insert into transactions (store_id, transaction_time, transaction_amount) values (%d, '%s', %f);", storeid, timestamp, belop));
             }
         }
     }
@@ -126,46 +119,6 @@ class HandleregLiquibaseTest {
         return storeids;
     }
 
-    private Map<String, Integer> findUserids(Connection connection) throws Exception {
-        Map<String, Integer> userids = new HashMap<>();
-        try(PrintWriter usersWriter = new PrintWriter("users.sql")) {
-            usersWriter.println("--liquibase formatted sql");
-            usersWriter.println("--changeset sb:example_users");
-            try(PrintWriter passwordsWriter = new PrintWriter("passwords.sql")) {
-                passwordsWriter.println("--liquibase formatted sql");
-                passwordsWriter.println("--changeset sb:example_passwords");
-                try(PreparedStatement statement = connection.prepareStatement("select * from users join password on users.user_id=password.user_id")) {
-                    ResultSet results = statement.executeQuery();
-                    while(results.next()) {
-                        String username = results.getString(2);
-                        Integer userid = results.getInt(1);
-                        userids.put(username, userid);
-                        String email = results.getString(3);
-                        String firstname = results.getString(4);
-                        String lastname = results.getString(5);
-                        String password = results.getString(8);
-                        String salt = results.getString(9);
-                        usersWriter.println(String.format("insert into users (username, email, firstname, lastname) values ('%s', '%s', '%s', '%s');", username, email, firstname, lastname));
-                        passwordsWriter.println(String.format("insert into password (user_id, username, password, salt) values (%d, '%s', '%s', '%s');", userid, username, password, salt));
-                    }
-                }
-            }
-        }
-
-        return userids;
-    }
-
-    private void addUsers(Connection connection) throws Exception {
-        addUser(connection, "admin", "admin@gmail.com", "Admin", "Istrator", "pepper", "salt");
-    }
-
-    private void assertUsers(Connection connection) throws Exception {
-        try(PreparedStatement statement = connection.prepareStatement("select * from users join password on users.user_id=password.user_id")) {
-            ResultSet results = statement.executeQuery();
-            assertUser(results, "admin", "admin@gmail.com", "Admin", "Istrator", "pepper", "salt");
-        }
-    }
-
     private void addStores(Connection connection) throws Exception {
         addStore(connection, "Joker Folldal", 2, 10);
     }
@@ -188,45 +141,6 @@ class HandleregLiquibaseTest {
         int userid = 1;
         int storeid = 1;
         addTransaction(connection, userid, storeid, 210.0);
-    }
-
-    private void addUser(Connection connection, String username, String email, String firstname, String lastname, String password, String salt) throws Exception {
-        String userSql = "insert into users (username, email, firstname, lastname) values (?, ?, ?, ?)";
-        try(PreparedStatement statement = connection.prepareStatement(userSql)) {
-            statement.setString(1, username);
-            statement.setString(2, email);
-            statement.setString(3, firstname);
-            statement.setString(4, lastname);
-            System.out.println("sql: " + statement.toString());
-            statement.executeUpdate();
-        }
-
-        int userid = -1;
-        try(PreparedStatement queryForUserid = connection.prepareStatement("select user_id from users where username=?")) {
-            queryForUserid.setString(1, username);
-            ResultSet results = queryForUserid.executeQuery();
-            results.next();
-            userid = results.getInt(1);
-        }
-
-        String passwordSql = "insert into password (user_id, username, password, salt) values (?, ?, ?, ?)";
-        try(PreparedStatement statement = connection.prepareStatement(passwordSql)) {
-            statement.setInt(1, userid);
-            statement.setString(2, username);
-            statement.setString(3, password);
-            statement.setString(4, salt);
-            statement.executeUpdate();
-        }
-    }
-
-    private void assertUser(ResultSet results, String username, String email, String firstname, String lastname, String password, String salt) throws Exception {
-        assertTrue(results.next());
-        assertEquals(username, results.getString(2)); // column 1 is the id
-        assertEquals(email, results.getString(3));
-        assertEquals(firstname, results.getString(4));
-        assertEquals(lastname, results.getString(5));
-        assertEquals(password, results.getString(8));
-        assertEquals(salt, results.getString(9));
     }
 
     private void addStore(Connection connection, String storename, int gruppe, int rekkefølge) throws Exception {
