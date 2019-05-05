@@ -16,14 +16,89 @@
 package no.bang.priv.handlereg.web.api;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.BeforeAll;
+import java.util.Arrays;
+import java.util.Collections;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.ws.rs.core.MediaType;
+
+import org.glassfish.jersey.server.ServerProperties;
 import org.junit.jupiter.api.Test;
+import org.osgi.service.log.LogService;
 
-class HandleregWebApiTest {
+import com.mockrunner.mock.web.MockHttpServletRequest;
+import com.mockrunner.mock.web.MockHttpServletResponse;
+import com.mockrunner.mock.web.MockHttpSession;
+
+import no.bang.priv.handlereg.services.HandleregService;
+import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
+
+class HandleregWebApiTest extends ShiroTestBase {
 
     @Test
-    void testGetOversikt() {
+    void testGetOversikt() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/oversikt");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+    }
+
+    private MockHttpServletRequest createGetRequest(String string) {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        return request;
+    }
+
+    private MockHttpServletRequest buildGetUrl(String resource) {
+        MockHttpServletRequest request = buildRequest(resource);
+        request.setMethod("GET");
+        return request;
+    }
+
+    private MockHttpServletRequest buildPostUrl(String resource) {
+        String contenttype = MediaType.APPLICATION_JSON;
+        MockHttpServletRequest request = buildRequest(resource);
+        request.setMethod("POST");
+        request.setContentType(contenttype);
+        request.addHeader("Content-Type", contenttype);
+        return request;
+    }
+
+    private MockHttpServletRequest buildRequest(String resource) {
+        MockHttpSession session = new MockHttpSession();
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setProtocol("HTTP/1.1");
+        request.setRequestURL("http://localhost:8181/handlereg/api" + resource);
+        request.setRequestURI("/handlereg/api" + resource);
+        request.setContextPath("/handlereg");
+        request.setServletPath("/api");
+        request.setSession(session);
+        return request;
+    }
+
+    private HandleregWebApi simulateDSComponentActivationAndWebWhiteboardConfiguration(HandleregService handlereg, LogService logservice) throws Exception {
         HandleregWebApi servlet = new HandleregWebApi();
+        servlet.setLogservice(logservice);
+        servlet.setHandleregService(handlereg);
+        servlet.activate();
+        ServletConfig config = createServletConfigWithApplicationAndPackagenameForJerseyResources();
+        servlet.init(config);
+        return servlet;
+    }
+
+    private ServletConfig createServletConfigWithApplicationAndPackagenameForJerseyResources() {
+        ServletConfig config = mock(ServletConfig.class);
+        when(config.getInitParameterNames()).thenReturn(Collections.enumeration(Arrays.asList(ServerProperties.PROVIDER_PACKAGES)));
+        when(config.getInitParameter(eq(ServerProperties.PROVIDER_PACKAGES))).thenReturn("no.priv.bang.handlereg.web.api.resources");
+        ServletContext servletContext = mock(ServletContext.class);
+        when(servletContext.getContextPath()).thenReturn("/handlereg");
+        when(config.getServletContext()).thenReturn(servletContext);
+        when(servletContext.getAttributeNames()).thenReturn(Collections.emptyEnumeration());
+        return config;
     }
 }
