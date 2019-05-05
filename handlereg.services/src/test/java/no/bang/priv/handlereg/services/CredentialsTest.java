@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,26 @@
  */
 package no.bang.priv.handlereg.services;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
-public interface HandleregService {
+import org.junit.jupiter.api.Test;
 
-    Oversikt finnOversikt(String brukernavn);
+class CredentialsTest {
 
-    List<Transaction> findLastTransactions(int accountId);
+    @Test
+    void testCreate() {
+        String username = "jd";
+        String password = "johnniboi";
+        Credentials bean = new Credentials(username, password);
+        assertEquals(username, bean.getUsername());
+        assertEquals(password, bean.getPassword());
+    }
 
-    Oversikt registrerHandling(NyHandling handling);
-
-    List<Butikk> finnButikker();
-
-    List<Butikk> leggTilButikk(Butikk nybutikk);
+    @Test
+    void testNoArgsConstructor() {
+        Credentials bean = new Credentials();
+        assertNull(bean.getUsername());
+        assertNull(bean.getPassword());
+    }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,26 @@
  */
 package no.bang.priv.handlereg.services;
 
-import java.util.List;
+public class Loginresultat {
 
-public interface HandleregService {
+    private boolean suksess;
+    private String feilmelding;
 
-    Oversikt finnOversikt(String brukernavn);
+    public Loginresultat(boolean suksess, String feilmelding) {
+        this.suksess = suksess;
+        this.feilmelding = feilmelding;
+    }
 
-    List<Transaction> findLastTransactions(int accountId);
+    public Loginresultat() {
+        // Jackson krever no-args-konstruktør
+    }
 
-    Oversikt registrerHandling(NyHandling handling);
+    public boolean getSuksess() {
+        return suksess;
+    }
 
-    List<Butikk> finnButikker();
-
-    List<Butikk> leggTilButikk(Butikk nybutikk);
+    public String getFeilmelding() {
+        return feilmelding;
+    }
 
 }

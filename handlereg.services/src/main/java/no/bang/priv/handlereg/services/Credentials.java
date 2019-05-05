@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,26 @@
  */
 package no.bang.priv.handlereg.services;
 
-import java.util.List;
+public class Credentials {
 
-public interface HandleregService {
+    private String username;
+    private String password;
 
-    Oversikt finnOversikt(String brukernavn);
+    public Credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-    List<Transaction> findLastTransactions(int accountId);
+    public Credentials() {
+        // Jackson krever en noargs-konstruktør
+    }
 
-    Oversikt registrerHandling(NyHandling handling);
+    public String getUsername() {
+        return username;
+    }
 
-    List<Butikk> finnButikker();
-
-    List<Butikk> leggTilButikk(Butikk nybutikk);
+    public String getPassword() {
+        return password;
+    }
 
 }
