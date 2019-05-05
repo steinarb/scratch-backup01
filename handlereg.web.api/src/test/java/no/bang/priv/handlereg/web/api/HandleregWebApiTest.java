@@ -34,6 +34,7 @@ import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockHttpSession;
 
 import no.bang.priv.handlereg.services.HandleregService;
+import no.bang.priv.handlereg.services.Oversikt;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class HandleregWebApiTest extends ShiroTestBase {
@@ -41,17 +42,16 @@ class HandleregWebApiTest extends ShiroTestBase {
     @Test
     void testGetOversikt() throws Exception {
         HandleregService handlereg = mock(HandleregService.class);
+        Oversikt jdOversikt = new Oversikt(1, "jd", "johndoe@gmail.com", "John", "Doe", 1500);
+        when(handlereg.finnOversikt("jd")).thenReturn(jdOversikt);
         MockLogService logservice = new MockLogService();
         HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
         MockHttpServletRequest request = buildGetUrl("/oversikt");
         MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
         servlet.service(request, response);
         assertEquals(200, response.getStatus());
-    }
-
-    private MockHttpServletRequest createGetRequest(String string) {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        return request;
     }
 
     private MockHttpServletRequest buildGetUrl(String resource) {
@@ -94,7 +94,7 @@ class HandleregWebApiTest extends ShiroTestBase {
     private ServletConfig createServletConfigWithApplicationAndPackagenameForJerseyResources() {
         ServletConfig config = mock(ServletConfig.class);
         when(config.getInitParameterNames()).thenReturn(Collections.enumeration(Arrays.asList(ServerProperties.PROVIDER_PACKAGES)));
-        when(config.getInitParameter(eq(ServerProperties.PROVIDER_PACKAGES))).thenReturn("no.priv.bang.handlereg.web.api.resources");
+        when(config.getInitParameter(eq(ServerProperties.PROVIDER_PACKAGES))).thenReturn("no.bang.priv.handlereg.web.api.resources");
         ServletContext servletContext = mock(ServletContext.class);
         when(servletContext.getContextPath()).thenReturn("/handlereg");
         when(config.getServletContext()).thenReturn(servletContext);

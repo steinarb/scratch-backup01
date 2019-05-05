@@ -61,7 +61,7 @@ public class ShiroTestBase {
         subject.login(token);
     }
 
-    protected void createNullWebSubjectAndBindItToThread() {
+    protected void removeWebSubjectFromThread() {
         ThreadContext.remove(ThreadContext.SUBJECT_KEY);
     }
 

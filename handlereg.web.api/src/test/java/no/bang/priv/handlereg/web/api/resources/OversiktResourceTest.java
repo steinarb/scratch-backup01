@@ -35,6 +35,7 @@ class OversiktResourceTest extends ShiroTestBase {
         OversiktResource resource = new OversiktResource();
         resource.logservice = logservice;
         resource.handlereg = handlereg;
+        removeWebSubjectFromThread();
 
         assertThrows(InternalServerErrorException.class, () -> {
                 Oversikt oversikt = resource.get();
