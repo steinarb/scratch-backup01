@@ -34,15 +34,11 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  * This is an OSGi DS component that provides a {@link Filter} service.  This filter service will
  * be put in front of the servlets in the "/handlereg" webcontext, and
  * will handle authentication and verify authorization to the servlet paths.
- *
- * @author Steinar Bang
- *
  */
 @Component(
     property= {
         HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN+"=/*",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +"=ukelonn)",
-        "servletNames=ukelonn"},
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +"=ukelonn)"},
     service=Filter.class,
     immediate=true)
 public class HandleregShiroFilter extends AbstractShiroFilter { // NOSONAR

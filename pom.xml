@@ -29,6 +29,7 @@
         <module>handlereg.backend</module>
         <module>handlereg.backend.testdata</module>
         <module>handlereg.web.security</module>
+        <module>handlereg.web.api</module>
     </modules>
 
     <properties>
@@ -37,6 +38,7 @@
         <karaf.version>4.1.5</karaf.version>
         <junit.jupiter.version>5.1.0</junit.jupiter.version>
         <junit.platform.version>1.1.0</junit.platform.version>
+        <mockrunner.version>2.0.1</mockrunner.version>
         <liquibase.version>3.5.3</liquibase.version>
         <liquibase-slf4j.version>2.0.0</liquibase-slf4j.version>
         <snakeyaml.version>1.17</snakeyaml.version>
@@ -97,6 +99,12 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>1.10.19</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.mockrunner</groupId>
+                <artifactId>mockrunner-servlet</artifactId>
+                <version>${mockrunner.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -267,6 +275,12 @@
                 <groupId>org.glassfish.jersey.containers</groupId>
                 <artifactId>jersey-container-servlet</artifactId>
                 <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.servicemix.bundles</groupId>
+                <artifactId>org.apache.servicemix.bundles.javax-inject</artifactId>
+                <version>1_3</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.glassfish.jersey.inject</groupId>
