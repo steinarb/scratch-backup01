@@ -21,7 +21,7 @@ public interface HandleregService {
 
     Oversikt finnOversikt(String brukernavn);
 
-    List<Transaction> findLastTransactions(int userId);
+    List<Transaction> findLastTransactions(int accountId);
 
     Oversikt registrerHandling(NyHandling handling);
 

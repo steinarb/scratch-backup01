@@ -35,6 +35,7 @@ import com.mockrunner.mock.web.MockHttpSession;
 
 import no.bang.priv.handlereg.services.HandleregService;
 import no.bang.priv.handlereg.services.Oversikt;
+import no.bang.priv.handlereg.services.Transaction;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class HandleregWebApiTest extends ShiroTestBase {
@@ -47,6 +48,20 @@ class HandleregWebApiTest extends ShiroTestBase {
         MockLogService logservice = new MockLogService();
         HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
         MockHttpServletRequest request = buildGetUrl("/oversikt");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void testGetHandlinger() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.findLastTransactions(eq(1))).thenReturn(Arrays.asList(new Transaction()));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/handlinger/1");
         MockHttpServletResponse response = new MockHttpServletResponse();
 
         loginUser(request, response, "jd", "johnnyBoi");
