@@ -1,4 +1,3 @@
-package no.bang.priv.handlereg.web.api.resources;
 /*
  * Copyright 2019 Steinar Bang
  *
@@ -14,6 +13,7 @@ package no.bang.priv.handlereg.web.api.resources;
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
+package no.bang.priv.handlereg.web.api.resources;
 
 import java.util.List;
 
