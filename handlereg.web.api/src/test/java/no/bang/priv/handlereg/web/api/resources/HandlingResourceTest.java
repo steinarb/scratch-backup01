@@ -16,16 +16,21 @@
 package no.bang.priv.handlereg.web.api.resources;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+
+import javax.ws.rs.InternalServerErrorException;
 
 import org.junit.jupiter.api.Test;
 
+import no.bang.priv.handlereg.services.HandleregException;
 import no.bang.priv.handlereg.services.HandleregService;
+import no.bang.priv.handlereg.services.NyHandling;
+import no.bang.priv.handlereg.services.Oversikt;
 import no.bang.priv.handlereg.services.Transaction;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
@@ -52,6 +57,52 @@ class HandlingResourceTest {
         resource.handlereg = handlereg;
         List<Transaction> handlinger = resource.getHandlinger(1);
         assertEquals(0, handlinger.size());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testGetHandlingerWhenExceptionIsThrown() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.findLastTransactions(anyInt())).thenThrow(HandleregException.class);
+        HandlingResource resource = new HandlingResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+
+        assertThrows(InternalServerErrorException.class, () -> {
+                List<Transaction> handlinger = resource.getHandlinger(1);
+                assertEquals(0, handlinger.size());
+            });
+    }
+
+    @Test
+    void testNyhandling() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        Oversikt oversikt = new Oversikt(1, "jd", "johndoe@gmail.com", "John", "Doe", 500);
+        when(handlereg.registrerHandling(any())).thenReturn(oversikt);
+        HandlingResource resource = new HandlingResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+        NyHandling handling = new NyHandling("jd", 1, 1, 510, new Date());
+        Oversikt oppdatertOversikt = resource.nyhandling(handling);
+        assertEquals(oversikt.getBalanse(), oppdatertOversikt.getBalanse());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testNyhandlingWhenExceptionIsThrown() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.registrerHandling(any())).thenThrow(HandleregException.class);
+        HandlingResource resource = new HandlingResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+        NyHandling handling = new NyHandling("jd", 1, 1, 510, new Date());
+        assertThrows(InternalServerErrorException.class, () -> {
+                Oversikt oppdatertOversikt = resource.nyhandling(handling);
+                assertEquals(0, oppdatertOversikt.getBalanse());
+            });
     }
 
 }

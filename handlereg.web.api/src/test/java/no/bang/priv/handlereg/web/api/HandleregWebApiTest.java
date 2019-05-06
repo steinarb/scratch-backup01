@@ -16,10 +16,12 @@
 package no.bang.priv.handlereg.web.api;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -29,16 +31,21 @@ import org.glassfish.jersey.server.ServerProperties;
 import org.junit.jupiter.api.Test;
 import org.osgi.service.log.LogService;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockHttpSession;
 
 import no.bang.priv.handlereg.services.HandleregService;
+import no.bang.priv.handlereg.services.NyHandling;
 import no.bang.priv.handlereg.services.Oversikt;
 import no.bang.priv.handlereg.services.Transaction;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class HandleregWebApiTest extends ShiroTestBase {
+    public static final ObjectMapper mapper = new ObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     @Test
     void testGetOversikt() throws Exception {
@@ -62,6 +69,25 @@ class HandleregWebApiTest extends ShiroTestBase {
         MockLogService logservice = new MockLogService();
         HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
         MockHttpServletRequest request = buildGetUrl("/handlinger/1");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void testPostNyhandlinger() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        Oversikt oversikt = new Oversikt(1, "jd", "johndoe@gmail.com", "John", "Doe", 500);
+        when(handlereg.registrerHandling(any())).thenReturn(oversikt);
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildPostUrl("/nyhandling");
+        NyHandling handling = new NyHandling("jd", 1, 1, 510, new Date());
+        String postBody = mapper.writeValueAsString(handling);
+        request.setBodyContent(postBody);
+
         MockHttpServletResponse response = new MockHttpServletResponse();
 
         loginUser(request, response, "jd", "johnnyBoi");

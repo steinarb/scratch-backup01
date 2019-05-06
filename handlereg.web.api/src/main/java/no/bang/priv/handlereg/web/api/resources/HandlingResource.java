@@ -18,7 +18,10 @@ package no.bang.priv.handlereg.web.api.resources;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.InternalServerErrorException;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -27,6 +30,8 @@ import javax.ws.rs.core.MediaType;
 import org.osgi.service.log.LogService;
 
 import no.bang.priv.handlereg.services.HandleregService;
+import no.bang.priv.handlereg.services.NyHandling;
+import no.bang.priv.handlereg.services.Oversikt;
 import no.bang.priv.handlereg.services.Transaction;
 
 @Path("")
@@ -42,7 +47,25 @@ public class HandlingResource {
     @GET
     @Path("/handlinger/{accountid}")
     public List<Transaction> getHandlinger(@PathParam("accountId") int accountId) {
-        return handlereg.findLastTransactions(accountId);
+        try {
+            return handlereg.findLastTransactions(accountId);
+        } catch (Exception e) {
+            String message = String.format("Failed to get transactions for account %d", accountId);
+            logservice.log(LogService.LOG_ERROR, message, e);
+            throw new InternalServerErrorException("Failed to get the list of transactions, see the log for details");
+        }
     }
 
+    @POST
+    @Path("/nyhandling")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Oversikt nyhandling(NyHandling handling) {
+        try {
+            return handlereg.registrerHandling(handling);
+        } catch (Exception e) {
+            String message = "Failed to add transaction";
+            logservice.log(LogService.LOG_ERROR, message, e);
+            throw new InternalServerErrorException("Failed to add a new transaction, see the log for details");
+        }
+    }
 }
