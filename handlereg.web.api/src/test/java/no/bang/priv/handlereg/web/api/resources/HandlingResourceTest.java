@@ -43,4 +43,15 @@ class HandlingResourceTest {
         assertThat(handlinger.size()).isGreaterThan(0);
     }
 
+    @Test
+    void testGetHandlingerEmpty() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        HandlingResource resource = new HandlingResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+        List<Transaction> handlinger = resource.getHandlinger(1);
+        assertEquals(0, handlinger.size());
+    }
+
 }
