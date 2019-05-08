@@ -18,8 +18,6 @@ package no.bang.priv.handlereg.web.api.resources;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,6 +57,36 @@ class ButikkResourceTest {
 
         assertThrows(InternalServerErrorException.class, () -> {
                 List<Butikk> butikker = resource.getButikker();
+                assertThat(butikker.size()).isGreaterThan(0);
+            });
+    }
+
+    @Test
+    void testLeggTilButikk() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        Butikk nybutikk = new Butikk("Spar Høydalsmo");
+        when(handlereg.leggTilButikk(any())).thenReturn(Arrays.asList(nybutikk));
+        ButikkResource resource = new ButikkResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+
+        List<Butikk> butikker = resource.leggTilButikk(nybutikk);
+        assertEquals(nybutikk, butikker.get(0));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testLeggTilButikkWhenExceptionIsThrown() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.leggTilButikk(any())).thenThrow(HandleregException.class);
+        ButikkResource resource = new ButikkResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+
+        assertThrows(InternalServerErrorException.class, () -> {
+                List<Butikk> butikker = resource.leggTilButikk(new Butikk());
                 assertThat(butikker.size()).isGreaterThan(0);
             });
     }

@@ -46,8 +46,9 @@ public class OversiktResource {
             String brukernavn = (String) subject.getPrincipal();
             return handlereg.finnOversikt(brukernavn);
         } catch (Exception e) {
-            logservice.log(LogService.LOG_ERROR, "Failed to get Oversikt in handlereg");
-            throw new InternalServerErrorException("Failed to get Oversikt, see the log for details");
+            String message = "Failed to get Oversikt in handlereg";
+            logservice.log(LogService.LOG_ERROR, message);
+            throw new InternalServerErrorException(message + ", see the log for details");
         }
     }
 

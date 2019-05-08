@@ -52,7 +52,7 @@ public class HandlingResource {
         } catch (Exception e) {
             String message = String.format("Failed to get transactions for account %d", accountId);
             logservice.log(LogService.LOG_ERROR, message, e);
-            throw new InternalServerErrorException("Failed to get the list of transactions, see the log for details");
+            throw new InternalServerErrorException(message + ", see the log for details");
         }
     }
 
@@ -65,7 +65,7 @@ public class HandlingResource {
         } catch (Exception e) {
             String message = "Failed to add transaction";
             logservice.log(LogService.LOG_ERROR, message, e);
-            throw new InternalServerErrorException("Failed to add a new transaction, see the log for details");
+            throw new InternalServerErrorException(message + ", see the log for details");
         }
     }
 }
