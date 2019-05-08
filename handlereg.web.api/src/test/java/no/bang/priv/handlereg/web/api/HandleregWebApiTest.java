@@ -37,6 +37,7 @@ import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockHttpSession;
 
+import no.bang.priv.handlereg.services.Butikk;
 import no.bang.priv.handlereg.services.HandleregService;
 import no.bang.priv.handlereg.services.NyHandling;
 import no.bang.priv.handlereg.services.Oversikt;
@@ -86,6 +87,39 @@ class HandleregWebApiTest extends ShiroTestBase {
         MockHttpServletRequest request = buildPostUrl("/nyhandling");
         NyHandling handling = new NyHandling("jd", 1, 1, 510, new Date());
         String postBody = mapper.writeValueAsString(handling);
+        request.setBodyContent(postBody);
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void testGetButikker() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.finnButikker()).thenReturn(Arrays.asList(new Butikk()));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/butikker");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void testLeggTilButikk() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.finnButikker()).thenReturn(Arrays.asList(new Butikk()));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildPostUrl("/nybutikk");
+        Butikk butikk = new Butikk("Ny butikk");
+        String postBody = mapper.writeValueAsString(butikk);
         request.setBodyContent(postBody);
 
         MockHttpServletResponse response = new MockHttpServletResponse();
