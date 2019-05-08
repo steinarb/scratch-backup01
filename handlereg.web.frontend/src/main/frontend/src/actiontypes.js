@@ -1,0 +1,26 @@
+import { createAction } from 'redux-starter-kit';
+
+export const USERNAME_ENDRE = createAction('USERNAME_ENDRE');
+export const PASSWORD_ENDRE = createAction('PASSWORD_ENDRE');
+export const LOGIN_HENT = createAction('LOGIN_HENT');
+export const LOGIN_MOTTA = createAction('LOGIN_MOTTA');
+export const LOGIN_ERROR = createAction('LOGIN_ERROR');
+export const OVERSIKT_HENT = createAction('OVERSIKT_HENT');
+export const OVERSIKT_MOTTA = createAction('OVERSIKT_MOTTA');
+export const OVERSIKT_ERROR = createAction('OVERSIKT_ERROR');
+export const HANDLINGER_HENT = createAction('HANDLINGER_HENT');
+export const HANDLINGER_MOTTA = createAction('HANDLINGER_MOTTA');
+export const HANDLINGER_ERROR = createAction('HANDLINGER_ERROR');
+export const BUTIKKER_HENT = createAction('BUTIKKER_HENT');
+export const BUTIKKER_MOTTA = createAction('BUTIKKER_MOTTA');
+export const BUTIKKER_ERROR = createAction('BUTIKKER_ERROR');
+export const BELOP_ENDRE = createAction('BELOP_ENDRE');
+export const BUTIKK_ENDRE = createAction('BUTIKK_ENDRE');
+export const DATO_ENDRE = createAction('DATO_ENDRE');
+export const NYHANDLING_REGISTRER = createAction('NYHANDLING_REGISTRER');
+export const NYHANDLING_LAGRET = createAction('NYHANDLING_LAGRET');
+export const NYHANDLING_ERROR = createAction('NYHANDLING_ERROR');
+export const BUTIKKNAVN_ENDRE = createAction('BUTIKKNAVN_ENDRE');
+export const NYBUTIKK_REGISTRER = createAction('NYBUTIKK_REGISTRER');
+export const NYBUTIKK_LAGRET = createAction('NYBUTIKK_LAGRET');
+export const NYBUTIKK_ERROR = createAction('NYBUTIKK_ERROR');

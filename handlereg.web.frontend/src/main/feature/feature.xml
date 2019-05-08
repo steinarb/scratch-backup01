@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="handlereg">
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="ukelonn.db.liquibase">
 
-    <!-- Copyright 2018-2019 Steinar Bang                                                -->
+    <!-- Copyright 2019 Steinar Bang                                                     -->
     <!--                                                                                 -->
     <!-- Licensed under the Apache License, Version 2.0 (the "License");                 -->
     <!-- you may not use this file except in compliance with the License.                -->
@@ -13,11 +13,7 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.services/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.derby.test/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.backend/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.web.security/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.web.api/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.web.frontend/${project.version}/xml/features</repository>
+    <feature name="handlereg-web-frontend">
+        <feature>scr</feature>
+    </feature>
 </features>
