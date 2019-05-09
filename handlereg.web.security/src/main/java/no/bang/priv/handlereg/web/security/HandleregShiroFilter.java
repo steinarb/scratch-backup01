@@ -38,7 +38,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 @Component(
     property= {
         HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN+"=/*",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +"=ukelonn)"},
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(" + HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +"=handlereg)"},
     service=Filter.class,
     immediate=true)
 public class HandleregShiroFilter extends AbstractShiroFilter { // NOSONAR

@@ -15,5 +15,6 @@
 
     <feature name="handlereg-web-security">
         <feature>scr</feature>
+        <feature>pax-http-whiteboard</feature>
     </feature>
 </features>
