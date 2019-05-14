@@ -123,11 +123,11 @@ class HandleregServiceProviderTest {
 
         Oversikt jod = handlereg.finnOversikt("jod");
         List<Transaction> handlingerJod = handlereg.findLastTransactions(jod.getAccountid());
-        assertEquals(10, handlingerJod.size());
+        assertEquals(5, handlingerJod.size());
 
         Oversikt jad = handlereg.finnOversikt("jad");
         List<Transaction> handlingerJad = handlereg.findLastTransactions(jad.getAccountid());
-        assertEquals(10, handlingerJad.size());
+        assertEquals(5, handlingerJad.size());
     }
 
     @Test

@@ -35,7 +35,7 @@ class Home extends Component {
                 <Container>
                     <a href="../..">Gå hjem!</a>
                     <p>Hei {oversikt.fornavn}! Totalsummen er for øyeblikket {Math.abs(oversikt.balanse)} i din {favordisfavor}.</p>
-                    <p>Dine 10 siste innkjøp, er:</p>
+                    <p>Dine 5 siste innkjøp, er:</p>
                     <div className="table-responsive table-sm table-striped">
                         <table className="table">
                             <thead>
