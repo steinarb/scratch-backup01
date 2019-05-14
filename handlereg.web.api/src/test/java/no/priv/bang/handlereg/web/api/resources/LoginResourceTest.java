@@ -66,4 +66,22 @@ class LoginResourceTest extends ShiroTestBase {
         assertThat(resultat.getFeilmelding()).startsWith("Ukjent konto");
     }
 
+    @Test
+    void testLoginStatusWhenLoggedIn() {
+        LoginResource resource = new LoginResource();
+        String username = "jd";
+        String password = "johnnyBoi";
+        loginUser(username, password);
+        Loginresultat resultat = resource.loginStatus();
+        assertTrue(resultat.getSuksess());
+    }
+
+    @Test
+    void testLoginStatusWhenNotLoggedIn() {
+        LoginResource resource = new LoginResource();
+        createSubjectAndBindItToThread();
+        Loginresultat resultat = resource.loginStatus();
+        assertFalse(resultat.getSuksess());
+    }
+
 }

@@ -75,6 +75,17 @@ public class LoginResource {
     }
 
     @GET
+    @Path("/login")
+    public Loginresultat loginStatus() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated() || subject.isRemembered()) {
+            return new Loginresultat(true, "");
+        }
+
+        return new Loginresultat(false, "Ikke logget inn");
+    }
+
+    @GET
     @Path("/logout")
     public Loginresultat logout(Credentials credentials) {
         Subject subject = SecurityUtils.getSubject();

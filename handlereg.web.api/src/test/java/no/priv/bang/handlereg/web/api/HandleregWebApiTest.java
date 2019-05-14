@@ -70,6 +70,22 @@ class HandleregWebApiTest extends ShiroTestBase {
     }
 
     @Test
+    void testGetLoginStatus() throws Exception {
+        String username = "jd";
+        String password = "johnnyBoi";
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg , logservice);
+        loginUser(username, password);
+        MockHttpServletRequest request = buildGetUrl("/login");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+
+    }
+
+    @Test
     void testLoginWrongPassword() throws Exception {
         String username = "jd";
         String password = "johnniBoi";
