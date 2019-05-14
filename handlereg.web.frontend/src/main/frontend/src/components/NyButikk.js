@@ -11,7 +11,7 @@ import {
 
 class NyButikk extends Component {
     render() {
-        const { nybutikk, endreNavn, onRegistrerNyButikk } = this.props;
+        const { loginresultat, nybutikk, endreNavn, onRegistrerNyButikk } = this.props;
 
         return (
             <div>
@@ -41,8 +41,9 @@ class NyButikk extends Component {
 }
 
 const mapStateToProps = state => {
-    const { nybutikk } = state;
+    const { loginresultat, nybutikk } = state;
     return {
+        loginresultat,
         nybutikk,
     };
 };

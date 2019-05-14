@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import {
@@ -24,8 +25,11 @@ class Home extends Component {
     }
 
     render () {
-        const { oversikt, handlinger, butikker, nyhandling, endreBelop, endreButikk, endreDato, onRegistrerHandling } = this.props;
+        const { loginresultat, oversikt, handlinger, butikker, nyhandling, endreBelop, endreButikk, endreDato, onRegistrerHandling } = this.props;
         const favordisfavor = oversikt.balanse >= 0 ? 'favør' : 'disfavør';
+        if (!loginresultat.suksess) {
+            return (<Redirect to="/handlereg/login" />);
+        }
 
         return (
             <div>
@@ -94,8 +98,9 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
-    const { oversikt, handlinger, butikker, nyhandling } = state;
+    const { loginresultat, oversikt, handlinger, butikker, nyhandling } = state;
     return {
+        loginresultat,
         oversikt,
         handlinger,
         butikker,
