@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import {
-    LOGIN_STATUS,
     OVERSIKT_HENT,
     BUTIKKER_HENT,
     BELOP_ENDRE,
@@ -19,8 +18,7 @@ import { StyledLinkRight } from './bootstrap/StyledLinkRight';
 
 class Home extends Component {
     componentDidMount() {
-        const { sjekkLoginStatus, hentOversikt, hentButikker } = this.props;
-        sjekkLoginStatus();
+        const { hentOversikt, hentButikker } = this.props;
         hentOversikt();
         hentButikker();
     }
@@ -107,7 +105,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        sjekkLoginStatus: () => dispatch(LOGIN_STATUS()),
         hentOversikt: () => dispatch(OVERSIKT_HENT()),
         hentButikker: () => dispatch(BUTIKKER_HENT()),
         endreBelop: (belop) => dispatch(BELOP_ENDRE(belop)),
