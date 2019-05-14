@@ -47,12 +47,12 @@ class Home extends Component {
                             </thead>
                             <tbody>
                                 {handlinger.map((handling) =>
-                                          <tr key={handling.transactionId}>
-                                              <td className="transaction-table-col">{moment(handling.handletidspunkt).format("YYYY-MM-DD")}</td>
-                                              <td className="transaction-table-col">{handling.belop}</td>
-                                              <td className="transaction-table-col transaction-table-col-hide-overflow">{handling.butikk}</td>
-                                          </tr>
-                                         )}
+                                                <tr key={handling.transactionId}>
+                                                    <td className="transaction-table-col">{moment(handling.handletidspunkt).format("YYYY-MM-DD")}</td>
+                                                    <td className="transaction-table-col">{handling.belop}</td>
+                                                    <td className="transaction-table-col transaction-table-col-hide-overflow">{handling.butikk}</td>
+                                                </tr>
+                                               )}
                             </tbody>
                         </table>
                     </div>
