@@ -5,6 +5,7 @@ export const PASSWORD_ENDRE = createAction('PASSWORD_ENDRE');
 export const LOGIN_HENT = createAction('LOGIN_HENT');
 export const LOGIN_MOTTA = createAction('LOGIN_MOTTA');
 export const LOGIN_ERROR = createAction('LOGIN_ERROR');
+export const LOGIN_STATUS = createAction('LOGIN_STATUS');
 export const OVERSIKT_HENT = createAction('OVERSIKT_HENT');
 export const OVERSIKT_MOTTA = createAction('OVERSIKT_MOTTA');
 export const OVERSIKT_ERROR = createAction('OVERSIKT_ERROR');
