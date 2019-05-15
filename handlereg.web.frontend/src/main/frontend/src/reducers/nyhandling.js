@@ -18,6 +18,11 @@ const nyhandling = createSlice({
             const storeId = action.payload;
             return { ...state, storeId };
         },
+        HANDLINGER_MOTTA: (state, action) => {
+            const sistebutikk = [...action.payload].pop();
+            const storeId = sistebutikk.storeId;
+            return { ...state, storeId };
+        },
         DATO_ENDRE: (state, action) => {
             const handletidspunkt = action.payload;
             return { ...state, handletidspunkt };

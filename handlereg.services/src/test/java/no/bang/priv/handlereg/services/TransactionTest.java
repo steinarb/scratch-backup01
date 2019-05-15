@@ -26,10 +26,11 @@ class TransactionTest {
     @Test
     void testCreate() {
         Date now = new Date();
-        Transaction bean = new Transaction(1, now, "Spar fjellheimen", 107.0);
+        Transaction bean = new Transaction(1, now, "Spar fjellheimen", 101, 107.0);
         assertEquals(1, bean.getTransactionId());
         assertEquals(now, bean.getHandletidspunkt());
         assertEquals("Spar fjellheimen", bean.getButikk());
+        assertEquals(101, bean.getStoreId());
         assertEquals(107.0, bean.getBelop(), 1.0);
     }
 
@@ -39,6 +40,7 @@ class TransactionTest {
         assertEquals(-1, bean.getTransactionId());
         assertNull(bean.getHandletidspunkt());
         assertNull(bean.getButikk());
+        assertEquals(-1, bean.getStoreId());
         assertEquals(0.0, bean.getBelop(), 1.0);
     }
 

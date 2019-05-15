@@ -21,17 +21,19 @@ public class Transaction {
     int transactionId = -1;
     Date handletidspunkt;
     String butikk;
+    private int storeId = -1;
     double belop;
 
     public Transaction() {
         // No-args constructor required by jackson
     }
 
-    public Transaction(int transactionId, Date handletidspunkt, String butikk, double belop) {
+    public Transaction(int transactionId, Date handletidspunkt, String butikk, int storeId, double belop) {
         super();
         this.transactionId = transactionId;
         this.handletidspunkt = handletidspunkt;
         this.butikk = butikk;
+        this.storeId = storeId;
         this.belop = belop;
     }
 
@@ -45,6 +47,14 @@ public class Transaction {
 
     public String getButikk() {
         return butikk;
+    }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public double getBelop() {

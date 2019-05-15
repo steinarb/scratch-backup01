@@ -96,7 +96,7 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public List<Transaction> findLastTransactions(int userId) {
         List<Transaction> handlinger = new ArrayList<>();
-        String sql = "select t.transaction_id, t.transaction_time, s.store_name, t.transaction_amount from transactions t join stores s on s.store_id=t.store_id where t.transaction_id in (select transaction_id from transactions where account_id=? order by transaction_time desc fetch next 5 rows only) order by t.transaction_time asc";
+        String sql = "select t.transaction_id, t.transaction_time, s.store_name, s.store_id, t.transaction_amount from transactions t join stores s on s.store_id=t.store_id where t.transaction_id in (select transaction_id from transactions where account_id=? order by transaction_time desc fetch next 5 rows only) order by t.transaction_time asc";
         try(Connection connection = database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, userId);
@@ -105,8 +105,9 @@ public class HandleregServiceProvider implements HandleregService {
                         int transactionId = results.getInt(1);
                         Date transactionTime = new Date(results.getTimestamp(2).getTime());
                         String butikk = results.getString(3);
-                        double belop = results.getDouble(4);
-                        Transaction transaction = new Transaction(transactionId, transactionTime, butikk, belop);
+                        int storeId = results.getInt(4);
+                        double belop = results.getDouble(5);
+                        Transaction transaction = new Transaction(transactionId, transactionTime, butikk, storeId, belop);
                         handlinger.add(transaction);
                     }
                 }
