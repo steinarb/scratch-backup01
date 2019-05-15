@@ -1,21 +1,21 @@
 import { combineReducers } from 'redux';
 import { emptyUser, emptyUserAndPasswords, emptyRole, emptyPermission } from '../constants';
-import loginReducer from './loginReducer';
-import oversiktReducer from './oversiktReducer';
-import butikkerReducer from './butikkerReducer';
-import nybutikkReducer from './nybutikkReducer';
-import handlingerReducer from './handlingerReducer';
-import nyhandlingReducer from './nyhandlingReducer';
-import errorsReducer from './errorsReducer';
+import login from './login';
+import oversikt from './oversikt';
+import butikker from './butikker';
+import nybutikk from './nybutikk';
+import handlinger from './handlinger';
+import nyhandling from './nyhandling';
+import errors from './errors';
 
 const rootsReducer = combineReducers({
-    login: loginReducer,
-    oversikt: oversiktReducer,
-    butikker: butikkerReducer,
-    nybutikk: nybutikkReducer,
-    handlinger: handlingerReducer,
-    nyhandling: nyhandlingReducer,
-    errors: errorsReducer,
+    login: login.reducer,
+    oversikt: oversikt.reducer,
+    butikker: butikker.reducer,
+    nybutikk: nybutikk.reducer,
+    handlinger: handlinger.reducer,
+    nyhandling: nyhandling.reducer,
+    errors: errors.reducer,
 });
 
 export default rootsReducer;

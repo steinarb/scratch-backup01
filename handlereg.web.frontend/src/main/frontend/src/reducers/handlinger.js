@@ -1,12 +1,12 @@
-import { createReducer } from 'redux-starter-kit';
-import {
-    HANDLINGER_MOTTA,
-} from '../actiontypes';
+import { createSlice } from 'redux-starter-kit';
 
 const defaultState = [];
 
-const handlingerReducer = createReducer(defaultState, {
-    [HANDLINGER_MOTTA]: (state, action) => action.payload,
+const handlinger = createSlice({
+    initialState: defaultState,
+    reducers: {
+        HANDLINGER_MOTTA: (state, action) => action.payload,
+    },
 });
 
-export default handlingerReducer;
+export default handlinger;

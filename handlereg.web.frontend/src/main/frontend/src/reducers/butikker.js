@@ -1,7 +1,4 @@
-import { createReducer } from 'redux-starter-kit';
-import {
-    BUTIKKER_MOTTA,
-} from '../actiontypes';
+import { createSlice } from 'redux-starter-kit';
 
 const tomButikk = {
     storeId: -1,
@@ -12,12 +9,15 @@ const tomButikk = {
 
 const defaultState = [];
 
-const butikkerReducer = createReducer(defaultState, {
-    [BUTIKKER_MOTTA]: (state, action) => {
-        const butikker = action.payload;
-        butikker.unshift(tomButikk);
-        return butikker;
+const butikker = createSlice({
+    initialState: [],
+    reducers: {
+        BUTIKKER_MOTTA: (state, action) => {
+            const butikker = action.payload;
+            butikker.unshift(tomButikk);
+            return butikker;
+        }
     },
 });
 
-export default butikkerReducer;
+export default butikker;

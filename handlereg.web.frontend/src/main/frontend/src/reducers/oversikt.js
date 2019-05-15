@@ -1,16 +1,15 @@
-import { createReducer } from 'redux-starter-kit';
-import {
-    OVERSIKT_MOTTA,
-    NYHANDLING_LAGRET,
-} from '../actiontypes';
+import { createSlice } from 'redux-starter-kit';
 
 const defaultState = {
     oversiktresultat: {},
 };
 
-const oversiktReducer = createReducer(defaultState, {
-    [OVERSIKT_MOTTA]: (state, action) => action.payload,
-    [NYHANDLING_LAGRET]: (state, action) => action.payload,
+const oversikt = createSlice({
+    initialState: defaultState,
+    reducers: {
+        OVERSIKT_MOTTA: (state, action) => action.payload,
+        NYHANDLING_LAGRET: (state, action) => action.payload,
+    },
 });
 
-export default oversiktReducer;
+export default oversikt;
