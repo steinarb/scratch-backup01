@@ -3,6 +3,10 @@ import { createSlice } from 'redux-starter-kit';
 const errors = createSlice({
     initialState: {},
     reducers: {
+        LOGIN_ERROR: (state, action) => {
+            const login = action.payload;
+            return { ...state, login };
+        },
         OVERSIKT_ERROR: (state, action) => {
             const oversikt = action.payload;
             return { ...state, oversikt };
