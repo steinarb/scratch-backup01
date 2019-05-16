@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.backend.testdata;
+package no.priv.bang.handlereg.backend.testdata;
 
 import java.util.Arrays;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import no.bang.priv.handlereg.services.HandleregService;
+
+import no.priv.bang.handlereg.services.HandleregService;
 import no.priv.bang.osgiservice.users.Role;
 import no.priv.bang.osgiservice.users.User;
 import no.priv.bang.osgiservice.users.UserManagementService;

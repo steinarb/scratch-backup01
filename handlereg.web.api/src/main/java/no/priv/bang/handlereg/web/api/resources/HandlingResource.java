@@ -29,10 +29,11 @@ import javax.ws.rs.core.MediaType;
 
 import org.osgi.service.log.LogService;
 
-import no.bang.priv.handlereg.services.HandleregService;
-import no.bang.priv.handlereg.services.NyHandling;
-import no.bang.priv.handlereg.services.Oversikt;
-import no.bang.priv.handlereg.services.Transaction;
+import no.priv.bang.handlereg.services.HandleregService;
+import no.priv.bang.handlereg.services.NyHandling;
+import no.priv.bang.handlereg.services.Oversikt;
+import no.priv.bang.handlereg.services.Transaction;
+
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)

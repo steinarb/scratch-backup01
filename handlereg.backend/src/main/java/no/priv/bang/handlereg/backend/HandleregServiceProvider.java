@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.backend;
+package no.priv.bang.handlereg.backend;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.log.LogService;
 
-import no.bang.priv.handlereg.services.Butikk;
-import no.bang.priv.handlereg.services.HandleregDatabase;
-import no.bang.priv.handlereg.services.HandleregException;
-import no.bang.priv.handlereg.services.HandleregService;
-import no.bang.priv.handlereg.services.NyHandling;
-import no.bang.priv.handlereg.services.Oversikt;
-import no.bang.priv.handlereg.services.Transaction;
+import no.priv.bang.handlereg.services.Butikk;
+import no.priv.bang.handlereg.services.HandleregDatabase;
+import no.priv.bang.handlereg.services.HandleregException;
+import no.priv.bang.handlereg.services.HandleregService;
+import no.priv.bang.handlereg.services.NyHandling;
+import no.priv.bang.handlereg.services.Oversikt;
+import no.priv.bang.handlereg.services.Transaction;
 import no.priv.bang.osgiservice.users.Role;
 import no.priv.bang.osgiservice.users.User;
 import no.priv.bang.osgiservice.users.UserManagementService;

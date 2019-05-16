@@ -33,8 +33,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.osgi.service.log.LogService;
 
-import no.bang.priv.handlereg.services.Credentials;
-import no.bang.priv.handlereg.services.Loginresultat;
+import no.priv.bang.handlereg.services.Credentials;
+import no.priv.bang.handlereg.services.Loginresultat;
+
 
 @Path("")
 @Consumes(MediaType.APPLICATION_JSON)

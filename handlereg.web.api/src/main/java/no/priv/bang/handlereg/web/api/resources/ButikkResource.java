@@ -28,8 +28,9 @@ import javax.ws.rs.core.MediaType;
 
 import org.osgi.service.log.LogService;
 
-import no.bang.priv.handlereg.services.Butikk;
-import no.bang.priv.handlereg.services.HandleregService;
+import no.priv.bang.handlereg.services.Butikk;
+import no.priv.bang.handlereg.services.HandleregService;
+
 
 @Path("")
 @Produces(MediaType.APPLICATION_JSON)

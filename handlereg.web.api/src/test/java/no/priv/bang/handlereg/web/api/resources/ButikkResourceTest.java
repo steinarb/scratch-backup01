@@ -25,9 +25,10 @@ import java.util.List;
 import javax.ws.rs.InternalServerErrorException;
 
 import org.junit.jupiter.api.Test;
-import no.bang.priv.handlereg.services.Butikk;
-import no.bang.priv.handlereg.services.HandleregException;
-import no.bang.priv.handlereg.services.HandleregService;
+
+import no.priv.bang.handlereg.services.Butikk;
+import no.priv.bang.handlereg.services.HandleregException;
+import no.priv.bang.handlereg.services.HandleregService;
 import no.priv.bang.handlereg.web.api.resources.ButikkResource;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 

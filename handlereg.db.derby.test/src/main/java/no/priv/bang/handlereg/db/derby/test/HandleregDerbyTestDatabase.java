@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.db.derby.test;
+package no.priv.bang.handlereg.db.derby.test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,9 +33,9 @@ import liquibase.database.DatabaseConnection;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
-import no.bang.priv.handlereg.db.liquibase.HandleregLiquibase;
-import no.bang.priv.handlereg.services.HandleregDatabase;
-import no.bang.priv.handlereg.services.HandleregException;
+import no.priv.bang.handlereg.db.liquibase.HandleregLiquibase;
+import no.priv.bang.handlereg.services.HandleregDatabase;
+import no.priv.bang.handlereg.services.HandleregException;
 
 @Component(service=HandleregDatabase.class, immediate=true)
 public class HandleregDerbyTestDatabase implements HandleregDatabase {

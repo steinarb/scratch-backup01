@@ -20,8 +20,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import no.bang.priv.handlereg.services.Credentials;
-import no.bang.priv.handlereg.services.Loginresultat;
+import no.priv.bang.handlereg.services.Credentials;
+import no.priv.bang.handlereg.services.Loginresultat;
 import no.priv.bang.handlereg.web.api.ShiroTestBase;
 import no.priv.bang.handlereg.web.api.resources.LoginResource;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;

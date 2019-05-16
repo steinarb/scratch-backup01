@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.db.liquibase;
+package no.priv.bang.handlereg.db.liquibase;
 
 import java.sql.Connection;
 import java.sql.SQLException;

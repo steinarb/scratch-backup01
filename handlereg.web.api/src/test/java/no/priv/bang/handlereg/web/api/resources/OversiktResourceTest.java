@@ -21,8 +21,9 @@ import static org.mockito.Mockito.*;
 import javax.ws.rs.InternalServerErrorException;
 
 import org.junit.jupiter.api.Test;
-import no.bang.priv.handlereg.services.HandleregService;
-import no.bang.priv.handlereg.services.Oversikt;
+
+import no.priv.bang.handlereg.services.HandleregService;
+import no.priv.bang.handlereg.services.Oversikt;
 import no.priv.bang.handlereg.web.api.ShiroTestBase;
 import no.priv.bang.handlereg.web.api.resources.OversiktResource;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.db.derby.test;
+package no.priv.bang.handlereg.db.derby.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
 import org.osgi.service.jdbc.DataSourceFactory;
 
-import no.bang.priv.handlereg.services.HandleregException;
+import no.priv.bang.handlereg.services.HandleregException;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class HandleregDerbyTestDatabaseTest {

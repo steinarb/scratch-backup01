@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.backend;
+package no.priv.bang.handlereg.backend;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,13 +32,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
 import org.osgi.service.jdbc.DataSourceFactory;
-import no.bang.priv.handlereg.db.derby.test.HandleregDerbyTestDatabase;
-import no.bang.priv.handlereg.services.Butikk;
-import no.bang.priv.handlereg.services.HandleregDatabase;
-import no.bang.priv.handlereg.services.HandleregException;
-import no.bang.priv.handlereg.services.NyHandling;
-import no.bang.priv.handlereg.services.Oversikt;
-import no.bang.priv.handlereg.services.Transaction;
+
+import no.priv.bang.handlereg.db.derby.test.HandleregDerbyTestDatabase;
+import no.priv.bang.handlereg.services.Butikk;
+import no.priv.bang.handlereg.services.HandleregDatabase;
+import no.priv.bang.handlereg.services.HandleregException;
+import no.priv.bang.handlereg.services.NyHandling;
+import no.priv.bang.handlereg.services.Oversikt;
+import no.priv.bang.handlereg.services.Transaction;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 import no.priv.bang.osgiservice.users.User;
 import no.priv.bang.osgiservice.users.UserManagementService;

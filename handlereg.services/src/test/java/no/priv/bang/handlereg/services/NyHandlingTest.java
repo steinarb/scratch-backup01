@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.services;
+package no.priv.bang.handlereg.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 

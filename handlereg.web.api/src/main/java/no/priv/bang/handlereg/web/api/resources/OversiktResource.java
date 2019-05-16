@@ -26,8 +26,9 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.osgi.service.log.LogService;
 
-import no.bang.priv.handlereg.services.HandleregService;
-import no.bang.priv.handlereg.services.Oversikt;
+import no.priv.bang.handlereg.services.HandleregService;
+import no.priv.bang.handlereg.services.Oversikt;
+
 
 @Path("/oversikt")
 @Produces(MediaType.APPLICATION_JSON)

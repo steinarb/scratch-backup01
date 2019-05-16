@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.bang.priv.handlereg.web.security;
+package no.priv.bang.handlereg.web.security;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.http.context.ServletContextHelper;

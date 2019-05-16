@@ -32,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.service.log.LogService;
 
-import no.bang.priv.handlereg.services.HandleregService;
+import no.priv.bang.handlereg.services.HandleregService;
+
 
 @Component(
     property= {
