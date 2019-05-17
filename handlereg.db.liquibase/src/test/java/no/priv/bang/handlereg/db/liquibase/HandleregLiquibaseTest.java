@@ -66,10 +66,10 @@ class HandleregLiquibaseTest {
         HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
         handleregLiquibase.createInitialSchema(connection);
         OldData oldData = new OldData();
-        assertEquals(135, oldData.butikker.size());
-        assertEquals(4354, oldData.handlinger.size());
-        Integer jodAccountid = addAccount(connection, "jod");
-        Integer jadAccountid = addAccount(connection, "jad");
+        assertEquals(136, oldData.butikker.size());
+        assertEquals(4501, oldData.handlinger.size());
+        Integer jdAccountid = addAccount(connection, "sb");
+        Integer jadAccountid = addAccount(connection, "tlf");
         int nærbutikkRekkefølge = 0;
         int annenbutikkRekkefølge = 0;
         int gruppe = 1;
@@ -86,22 +86,34 @@ class HandleregLiquibaseTest {
         }
 
         Map<String, Integer> accountids = new HashMap<>();
-        accountids.put("jod", jodAccountid);
+        accountids.put("jd", jdAccountid);
         accountids.put("jad", jadAccountid);
+        try(PrintWriter storeWriter = new PrintWriter("accounts.sql")) {
+            storeWriter.println("--liquibase formatted sql");
+            storeWriter.println("--changeset sb:example_accounts");
+            try(PreparedStatement statement = connection.prepareStatement("select username from accounts order by account_id")) {
+                ResultSet results = statement.executeQuery();
+                while(results.next()) {
+                    String username = results.getString(1);
+                    storeWriter.println(String.format("insert into accounts (username) values ('%s');", username));
+                }
+            }
+        }
+
         Map<String, Integer> storeids = findStoreIds(connection);
-        assertEquals(135, storeids.size());
+        assertEquals(136, storeids.size());
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try(PrintWriter transactionWriter = new PrintWriter("transactions.sql")) {
             transactionWriter.println("--liquibase formatted sql");
-            transactionWriter.println("--changeset sb:example_users");
+            transactionWriter.println("--changeset sb:example_transactions");
             for (Handling handling : oldData.handlinger) {
                 int accountid = accountids.get(handling.username);
                 System.out.println("handling: " + handling);
                 int storeid = storeids.get(handling.butikk);
                 double belop = handling.belop;
                 String timestamp = format.format(handling.timestamp);
-                transactionWriter.println(String.format("insert into transactions (store_id, transaction_time, transaction_amount) values (%d, %d, '%s', %f);", accountid, storeid, timestamp, belop));
+                transactionWriter.println(String.format("insert into transactions (account_id, store_id, transaction_time, transaction_amount) values (%d, %d, '%s', %f);", accountid, storeid, timestamp, belop));
             }
         }
     }
