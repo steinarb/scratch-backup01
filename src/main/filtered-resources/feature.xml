@@ -17,6 +17,7 @@
     <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.services/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.db.derby.test/${project.version}/xml/features</repository>
+    <repository>mvn:no.priv.bang.handlereg/handlereg.db.postgresql/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.backend/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.backend.testdata/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.web.security/${project.version}/xml/features</repository>
