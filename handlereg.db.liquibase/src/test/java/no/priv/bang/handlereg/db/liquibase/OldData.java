@@ -37,6 +37,9 @@ public class OldData {
             "Kiwi Lørenskog",
             "Bunnpris Holumporten",
             "Kiwi Stovner");
+    final List<String> deaktivert = Arrays.asList(
+            "Ultra Stovner Senter",
+            "Annet");
     List<String> butikker = new ArrayList<>();
     List<Handling> handlinger = new ArrayList<>();
 

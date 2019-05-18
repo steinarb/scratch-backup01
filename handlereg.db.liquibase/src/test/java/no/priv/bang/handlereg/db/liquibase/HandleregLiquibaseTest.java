@@ -66,7 +66,7 @@ class HandleregLiquibaseTest {
         HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
         handleregLiquibase.createInitialSchema(connection);
         OldData oldData = new OldData();
-        assertEquals(136, oldData.butikker.size());
+        assertEquals(137, oldData.butikker.size());
         assertEquals(4501, oldData.handlinger.size());
         Integer jdAccountid = addAccount(connection, "sb");
         Integer jadAccountid = addAccount(connection, "tlf");
@@ -75,6 +75,7 @@ class HandleregLiquibaseTest {
         int gruppe = 1;
         int rekkefølge = 0;
         for (String store : oldData.butikker) {
+            boolean deaktivert = oldData.deaktivert.contains(store);
             if (oldData.nærbutikker.contains(store)) {
                 gruppe = 1;
                 rekkefølge = (nærbutikkRekkefølge += 10);
@@ -82,7 +83,7 @@ class HandleregLiquibaseTest {
                 gruppe = 2;
                 rekkefølge = (annenbutikkRekkefølge += 10);
             }
-            addStore(connection, store, gruppe, rekkefølge);
+            addStore(connection, store, gruppe, rekkefølge, deaktivert);
         }
 
         Map<String, Integer> accountids = new HashMap<>();
@@ -101,7 +102,7 @@ class HandleregLiquibaseTest {
         }
 
         Map<String, Integer> storeids = findStoreIds(connection);
-        assertEquals(136, storeids.size());
+        assertEquals(137, storeids.size());
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try(PrintWriter transactionWriter = new PrintWriter("transactions.sql")) {
@@ -170,8 +171,9 @@ class HandleregLiquibaseTest {
                     Integer storeid = results.getInt(1);
                     Integer gruppe = results.getInt(3);
                     Integer rekkefølge = results.getInt(4);
+                    boolean deaktivert = results.getBoolean(5);
                     storeids.put(storename, storeid);
-                    storeWriter.println(String.format("insert into stores (store_name, gruppe, rekkefolge) values ('%s', %d, %d);", storename, gruppe, rekkefølge));
+                    storeWriter.println(String.format("insert into stores (store_name, gruppe, rekkefolge, deaktivert) values ('%s', %d, %d, %b);", storename, gruppe, rekkefølge, deaktivert));
                 }
             }
         }
@@ -180,7 +182,7 @@ class HandleregLiquibaseTest {
     }
 
     private void addStores(Connection connection) throws Exception {
-        addStore(connection, "Joker Folldal", 2, 10);
+        addStore(connection, "Joker Folldal", 2, 10, false);
     }
 
     private void assertStores(Connection connection) throws Exception {
@@ -203,11 +205,12 @@ class HandleregLiquibaseTest {
         addTransaction(connection, accountid, storeid, 210.0);
     }
 
-    private void addStore(Connection connection, String storename, int gruppe, int rekkefølge) throws Exception {
-        try(PreparedStatement statement = connection.prepareStatement("insert into stores (store_name, gruppe, rekkefolge) values (?, ?, ?)")) {
+    private void addStore(Connection connection, String storename, int gruppe, int rekkefølge, boolean deaktivert) throws Exception {
+        try(PreparedStatement statement = connection.prepareStatement("insert into stores (store_name, gruppe, rekkefolge, deaktivert) values (?, ?, ?, ?)")) {
             statement.setString(1, storename);
             statement.setInt(2, gruppe);
             statement.setInt(3, rekkefølge);
+            statement.setBoolean(4, deaktivert);
             statement.executeUpdate();
         }
     }
@@ -230,7 +233,7 @@ class HandleregLiquibaseTest {
         assertTrue(results.next());
         assertEquals(amount, results.getDouble(5), 0.1);
         assertEquals(storename, results.getString(7));
-        assertEquals(username, results.getString(11));
+        assertEquals(username, results.getString(12));
     }
 
     private Connection createConnection() throws Exception {

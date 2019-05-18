@@ -143,7 +143,7 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public List<Butikk> finnButikker() {
         List<Butikk> butikker = new ArrayList<>();
-        String sql = "select * from stores order by gruppe, rekkefolge";
+        String sql = "select * from stores where not deaktivert order by gruppe, rekkefolge";
         try (Connection connection = database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet results = statement.executeQuery()) {

@@ -220,7 +220,7 @@ class HandleregServiceProviderTest {
         handlereg.activate();
 
         List<Butikk> butikker = handlereg.finnButikker();
-        assertEquals(135, butikker.size());
+        assertEquals(133, butikker.size());
     }
 
     @Test

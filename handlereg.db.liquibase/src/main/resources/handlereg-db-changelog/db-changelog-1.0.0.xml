@@ -58,6 +58,9 @@
             </column>
             <column name="rekkefolge" type="INTEGER">
             </column>
+            <column defaultValueBoolean="false" name="deaktivert" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
     </changeSet>
