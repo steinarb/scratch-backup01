@@ -24,7 +24,7 @@
     <name>Handleregistrering PostgreSQL database</name>
 
     <properties>
-        <karaf-feature-name>handlereg-postgesql</karaf-feature-name>
+        <karaf-feature-name>handlereg-db-postgresql</karaf-feature-name>
     </properties>
 
     <dependencies>
