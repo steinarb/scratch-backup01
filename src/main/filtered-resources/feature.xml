@@ -39,4 +39,8 @@
         <feature>handlereg-web-frontend</feature>
         <feature>user-admin-with-postgresql</feature>
     </feature>
+    <feature name="handlereg-with-postgresql-and-provided-authservice" description="handlereg webapp with postgresql database and expecting authservice to be pre-installed" version="${project.version}">
+        <feature>handlereg-db-postgresql</feature>
+        <feature>handlereg-web-frontend</feature>
+    </feature>
 </features>
