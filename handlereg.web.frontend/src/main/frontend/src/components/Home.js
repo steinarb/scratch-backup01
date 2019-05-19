@@ -81,7 +81,7 @@ class Home extends Component {
                         <div className="form-group row">
                             <div className="col-5"/>
                             <div className="col-7">
-                                <button className="btn btn-primary" onClick={() => onRegistrerHandling(nyhandling, oversikt.brukernavn)}>Registrer handling</button>
+                                <button className="btn btn-primary" disabled={nyhandling.belop <= 0} onClick={() => onRegistrerHandling(nyhandling, oversikt.brukernavn)}>Registrer handling</button>
                             </div>
                         </div>
                     </form>
