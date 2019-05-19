@@ -29,6 +29,11 @@
         <feature>user-admin-with-derby</feature>
         <feature>handlereg-backend-testdata</feature>
     </feature>
+    <feature name="handlereg-with-derby-and-provided-authservice" description="handlereg webapp with derby database and expecting authservice to be pre-installed" version="${project.version}">
+        <feature>handlereg-db-derby-test</feature>
+        <feature>handlereg-web-frontend</feature>
+        <feature>handlereg-backend-testdata</feature>
+    </feature>
     <feature name="handlereg-with-postgresql" description="handlereg webapp with postgresql database" version="${project.version}">
         <feature>handlereg-db-postgresql</feature>
         <feature>handlereg-web-frontend</feature>
