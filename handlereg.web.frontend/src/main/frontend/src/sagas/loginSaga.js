@@ -1,10 +1,9 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import axios from 'axios';
-import {
-    LOGIN_HENT,
-    LOGIN_MOTTA,
-    LOGIN_ERROR,
-} from '../actiontypes';
+import login, { LOGIN_HENT } from '../reducers/login';
+const { LOGIN_MOTTA } = login.actions;
+import errors from '../reducers/errors';
+const { LOGIN_ERROR } = errors.actions;
 
 function sendLogin(credentials) {
     return axios.post('/handlereg/api/login', credentials);

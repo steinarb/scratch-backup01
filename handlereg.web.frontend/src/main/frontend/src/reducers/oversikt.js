@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice, createAction } from 'redux-starter-kit';
 
 const defaultState = {
     oversiktresultat: {},
@@ -11,5 +11,7 @@ const oversikt = createSlice({
         NYHANDLING_LAGRET: (state, action) => action.payload,
     },
 });
+
+export const OVERSIKT_HENT = createAction('OVERSIKT_HENT');
 
 export default oversikt;

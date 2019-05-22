@@ -4,14 +4,10 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import {
-    OVERSIKT_HENT,
-    BUTIKKER_HENT,
-    BELOP_ENDRE,
-    BUTIKK_ENDRE,
-    DATO_ENDRE,
-    NYHANDLING_REGISTRER,
-} from '../actiontypes';
+import { OVERSIKT_HENT } from '../reducers/oversikt';
+import { BUTIKKER_HENT } from '../reducers/butikker';
+import nyhandling, { NYHANDLING_REGISTRER } from '../reducers/nyhandling';
+const { BELOP_ENDRE, BUTIKK_ENDRE, DATO_ENDRE } = nyhandling.actions;
 import { Header } from './bootstrap/Header';
 import { Container } from './bootstrap/Container';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';

@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice, createAction } from 'redux-starter-kit';
 
 const defaultState = {
     loginresultat: {},
@@ -21,5 +21,7 @@ const login = createSlice({
         },
     },
 });
+
+export const LOGIN_HENT = createAction('LOGIN_HENT');
 
 export default login;

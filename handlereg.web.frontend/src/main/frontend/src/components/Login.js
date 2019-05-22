@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import {
-    USERNAME_ENDRE,
-    PASSWORD_ENDRE,
-    LOGIN_HENT,
-} from '../actiontypes';
+import login, { LOGIN_HENT } from '../reducers/login';
+const { USERNAME_ENDRE, PASSWORD_ENDRE } = login.actions;
 
 class Login extends Component {
     render() {

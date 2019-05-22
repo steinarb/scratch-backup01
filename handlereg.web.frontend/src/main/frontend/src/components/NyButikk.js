@@ -4,10 +4,8 @@ import { Link } from 'react-router-dom';
 import { Header } from './bootstrap/Header';
 import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
-import {
-    BUTIKKNAVN_ENDRE,
-    NYBUTIKK_REGISTRER,
-} from '../actiontypes';
+import nybutikk, { NYBUTIKK_REGISTRER } from '../reducers/nybutikk';
+const { BUTIKKNAVN_ENDRE } = nybutikk.actions;
 
 class NyButikk extends Component {
     render() {

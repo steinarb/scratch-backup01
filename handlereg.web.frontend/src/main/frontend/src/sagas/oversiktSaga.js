@@ -1,11 +1,10 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import axios from 'axios';
-import {
-    OVERSIKT_HENT,
-    OVERSIKT_MOTTA,
-    OVERSIKT_ERROR,
-    HANDLINGER_HENT,
-} from '../actiontypes';
+import oversikt, { OVERSIKT_HENT } from '../reducers/oversikt';
+import { HANDLINGER_HENT } from '../reducers/handlinger';
+const { OVERSIKT_MOTTA } = oversikt.actions;
+import errors from '../reducers/errors';
+const { OVERSIKT_ERROR } = errors.actions;
 
 function hentOversikt() {
     return axios.get('/handlereg/api/oversikt');

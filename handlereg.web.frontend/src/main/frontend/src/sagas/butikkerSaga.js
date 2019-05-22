@@ -1,10 +1,9 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import axios from 'axios';
-import {
-    BUTIKKER_HENT,
-    BUTIKKER_MOTTA,
-    BUTIKKER_ERROR,
-} from '../actiontypes';
+import butikker, { BUTIKKER_HENT } from '../reducers/butikker';
+const { BUTIKKER_MOTTA } = butikker.actions;
+import errors from '../reducers/errors';
+const { BUTIKKER_ERROR } = errors.actions;
 
 function hentButikker() {
     return axios.get('/handlereg/api/butikker');

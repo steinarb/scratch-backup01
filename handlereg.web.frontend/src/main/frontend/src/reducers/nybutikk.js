@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice, createAction } from 'redux-starter-kit';
 import moment from 'moment';
 
 const defaultState = {
@@ -16,5 +16,7 @@ const nybutikk = createSlice({
         NYBUTIKK_LAGRET: (state, action) => ({ ...defaultState }),
     }
 });
+
+export const NYBUTIKK_REGISTRER = createAction('NYBUTIKK_REGISTRER');
 
 export default nybutikk;

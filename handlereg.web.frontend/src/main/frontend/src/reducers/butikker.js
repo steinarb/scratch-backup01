@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice, createAction } from 'redux-starter-kit';
 
 const tomButikk = {
     storeId: -1,
@@ -19,5 +19,7 @@ const butikker = createSlice({
         }
     },
 });
+
+export const BUTIKKER_HENT = createAction('BUTIKKER_HENT');
 
 export default butikker;
