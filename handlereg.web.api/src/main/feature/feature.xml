@@ -13,11 +13,8 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
-    <repository>mvn:org.code-house.jackson/features/${jackson.version}/xml/features</repository>
     <feature name="handlereg-web-api">
         <feature>scr</feature>
         <feature>pax-http-whiteboard</feature>
-        <feature>jackson-core</feature>
-        <feature>jackson-databind</feature>
     </feature>
 </features>
