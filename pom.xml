@@ -56,7 +56,7 @@
         <pax.exam.version>4.10.0</pax.exam.version>
         <pax.jdbc.version>1.0.1</pax.jdbc.version>
         <shiro.version>1.3.2</shiro.version>
-        <jackson.version>2.8.11</jackson.version>
+        <jackson.version>2.9.9</jackson.version>
         <jersey.version>2.27</jersey.version>
         <open-iconic.version>1.1.1</open-iconic.version>
         <authservice.version>1.1.0</authservice.version>
