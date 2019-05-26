@@ -59,7 +59,7 @@
         <jackson.version>2.9.9</jackson.version>
         <jersey.version>2.27</jersey.version>
         <open-iconic.version>1.1.1</open-iconic.version>
-        <authservice.version>1.1.0</authservice.version>
+        <authservice.version>1.2.0</authservice.version>
     </properties>
 
     <dependencyManagement>
