@@ -36,13 +36,14 @@ public class AuthserviceIntegrationTest {
         final String jmxPort = freePortAsString();
         final String httpPort = freePortAsString();
         final String httpsPort = freePortAsString();
-        final MavenArtifactUrlReference karafUrl = maven().groupId("org.apache.karaf").artifactId("apache-karaf-minimal").type("zip").versionAsInProject();
+        final MavenArtifactUrlReference karafUrl = maven().groupId("org.apache.karaf").artifactId("apache-karaf").type("zip").versionAsInProject();
         final MavenArtifactUrlReference paxJdbcRepo = maven().groupId("org.ops4j.pax.jdbc").artifactId("pax-jdbc-features").versionAsInProject().type("xml").classifier("features");
         final MavenArtifactUrlReference authserviceFeatureRepo = maven().groupId("no.priv.bang.authservice").artifactId("authservice").version("LATEST").type("xml").classifier("features");
         return options(
-            karafDistributionConfiguration().frameworkUrl(karafUrl).unpackDirectory(new File("target/exam")).useDeployFolder(false).runEmbedded(true),
+            karafDistributionConfiguration().frameworkUrl(karafUrl).unpackDirectory(new File("target/exam")).useDeployFolder(false),
             configureConsole().ignoreLocalConsole().ignoreRemoteShell(),
-            systemTimeout(720000),
+            cleanCaches(),
+            systemTimeout(120000),
             keepRuntimeFolder(),
             logLevel(LogLevel.DEBUG),
             editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", RMI_REG_PORT),

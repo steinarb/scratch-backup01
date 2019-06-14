@@ -26,15 +26,30 @@
                     <groupId>org.apache.karaf</groupId>
                     <artifactId>org.apache.karaf.client</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.framework</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.framework</artifactId>
+            <version>6.0.3</version>
+         </dependency>
+         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-container-karaf</artifactId>
+            <exclusions>
+                <exclusion>
+                   <groupId>org.apache.felix</groupId>
+                   <artifactId>org.apache.felix.configadmin</artifactId>
+               </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf</groupId>
-            <artifactId>apache-karaf-minimal</artifactId>
+            <artifactId>apache-karaf</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>

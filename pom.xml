@@ -27,7 +27,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.bundle.plugin.version>3.5.1</maven.bundle.plugin.version>
+        <maven.bundle.plugin.version>4.1.0</maven.bundle.plugin.version>
         <karaf.version>4.2.5</karaf.version>
         <junit.jupiter.version>5.4.2</junit.jupiter.version>
         <junit.platform.version>1.4.2</junit.platform.version>
@@ -60,6 +60,7 @@
             **/UserAdminWebApiServlet.java,
             **/UsersResource.java
         </sonar.cpd.exclusions>
+        <surefire.argLine />
     </properties>
 
     <dependencyManagement>
@@ -192,7 +193,7 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.karaf</groupId>
-                <artifactId>apache-karaf-minimal</artifactId>
+                <artifactId>apache-karaf</artifactId>
                 <version>${karaf.version}</version>
                 <type>zip</type>
                 <scope>test</scope>
@@ -359,7 +360,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.4</version>
+                    <version>3.1.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -393,6 +394,9 @@
                             <_dsannotations-options>inherit</_dsannotations-options>
                             <!-- Enable processing of OSGI metatype annotations -->
                             <_metatypeannotations>*</_metatypeannotations>
+                            <_removeheaders>
+                                Require-Capability
+                            </_removeheaders>
                         </instructions>
                     </configuration>
                     <executions>
@@ -426,6 +430,8 @@
                     <version>2.22.2</version>
                     <configuration>
                         <useSystemClassLoader>false</useSystemClassLoader>
+                        <forkMode>once</forkMode>
+                        <argLine>${surefire.argLine}</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -689,6 +695,16 @@
             <activation>
                 <jdk>11</jdk>
             </activation>
+            <properties>
+                <surefire.argLine>
+                                  --add-opens java.base/java.security=ALL-UNNAMED
+                                  --add-opens java.base/java.net=ALL-UNNAMED
+                                  --add-opens java.base/java.lang=ALL-UNNAMED
+                                  --add-opens java.base/java.util=ALL-UNNAMED
+                                  --add-opens java.naming/javax.naming.spi=ALL-UNNAMED
+                                  --add-opens java.rmi/sun.rmi.transport.tcp=ALL-UNNAMED
+                </surefire.argLine>
+            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
