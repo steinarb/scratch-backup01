@@ -27,6 +27,10 @@
                     <artifactId>org.apache.karaf.client</artifactId>
                 </exclusion>
                 <exclusion>
+                    <groupId>org.apache.karaf.features</groupId>
+                    <artifactId>framework</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.eclipse.tycho</groupId>
                     <artifactId>org.eclipse.osgi</artifactId>
                 </exclusion>
