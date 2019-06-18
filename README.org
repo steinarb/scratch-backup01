@@ -1,0 +1,53 @@
+* Authclient sample client
+
+This project contains boilerplate code necessary for using the authservice pluggable user administration service.
+
+** Try this code
+
+To verify that this code will run in you karaf instance:
+ 1. Clone and build this project:
+    #+BEGIN_EXAMPLE
+      git clone https://github.com/steinarb/authservice-sampleclient
+      cd authservice-sampleclient
+      mvn clean install
+    #+END_EXAMPLE
+ 2. from the karaf console, install the authservice prerequisite
+    #+BEGIN_EXAMPLE
+      feature:repo-add mvn:no.priv.bang.authservice/authservice/LATEST/xml/features
+      feature:install authservice-with-derby-dbrealm-and-session
+    #+END_EXAMPLE
+ 3. From the karaf console install the authservice sample client project
+    #+BEGIN_EXAMPLE
+      feature:repo-add mvn:no.priv.bang.authservice/authservice.sampleclient/LATEST/xml/features
+      feature:install authservice-sampleclient
+    #+END_EXAMPLE
+ 4. Open the URL http://localhost:8181/sampleauthserviceclient in a web browser
+ 5. In the login page that opens, log in with username admin and password
+ 6. Try visiting the "Admin page (requires the useradmin role)" link and verify that it allowed
+ 7. Click on the "Back to the top" link
+ 8. Click on the "Log out (will redirect to the login page)" link (which will redirect to the login page)
+ 9. Log in with username jad and password 1ad
+ 10. Verify that this user does not have access to the admin page
+
+** Adapt this project to your project
+
+This procedure assumes that your webapp project is a multimodule maven build.
+
+ 1. Clone this project, remove the .git directory from the clone
+ 2. Move the cloned project to the level of the modules in your multimodule build
+ 3. Change the POM to fit in:
+    1. Change the groupId to match your project
+    2. Change the artifactId to match the groupId (maven-bundle-plugin is happiest when the last segment of the groupId matches the first part of the artifactId.  The bundle name and the default package will become groupId+artifactId but with only a single copy of the last part of groupId and first part of the artifactId)
+    3. (Not strictly necessary) Make your parent POM be the parent of the project
+    4. (If you set a parent) Remove the <version>
+ 4. Add the new module to <modules> in your top POM
+ 5. Change the HTTP_WHITEBOARD_CONTEXT_PATH in AuthserviceSampleClientServletContextHelper to what your webapp's context path to be
+ 6. change the src/main/resource/shiro.ini to limit access to sub-paths of your webapp (e.g. by using pairs of roles and paths like the configuration for the /admin path)
+ 7. (Not strictly necessary but more aesthetically pleasing) change the HTTP_WHITEBOARD_CONTEXT_NAME to something more appropriate to the path, and change all other usages (in this project AuthserviceSampleClientShiroFilter and AuthserviceSampleClientServlet)
+
+You can change the name of the classes to be more appropriate, but that doesn't have any other effect than aesthetics.  No classes are exported from the bundle.
+
+** License
+The license of this karaf feature, is Apache Public License v 2.0
+
+See the LICENSE file for details.
