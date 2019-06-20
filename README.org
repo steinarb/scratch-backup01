@@ -1,0 +1,9 @@
+* Authclient sample client
+
+This project contains boilerplate code necessary for using the authservice pluggable user administration service.
+
+** Try this code
+
+To verify that this code will run in you karaf instance:
+ 1. from the karaf console, give the following commands:
+ 2. Open the URL http://localhost:8181/admin in a web browser
