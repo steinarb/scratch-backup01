@@ -35,4 +35,12 @@ class LoggedInResourceTest extends ShiroTestBase {
         assertThat(html).startsWith("<html");
     }
 
+    @Test
+    void testGetAdmin() {
+        LoggedInResource resource = new LoggedInResource();
+        InputStream htmlfile = resource.getAdmin();
+        String html = new BufferedReader(new InputStreamReader(htmlfile)).lines().collect(Collectors.joining("+n"));
+        assertThat(html).startsWith("<html");
+    }
+
 }

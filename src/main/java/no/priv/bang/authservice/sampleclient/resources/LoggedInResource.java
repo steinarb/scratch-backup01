@@ -39,4 +39,11 @@ public class LoggedInResource extends HtmlTemplateResource {
         return getClass().getClassLoader().getResourceAsStream("web/index.html");
     }
 
+    @GET
+    @Path("admin")
+    @Produces(MediaType.TEXT_HTML)
+    public InputStream getAdmin() {
+        return getClass().getClassLoader().getResourceAsStream("web/admin.html");
+    }
+
 }
