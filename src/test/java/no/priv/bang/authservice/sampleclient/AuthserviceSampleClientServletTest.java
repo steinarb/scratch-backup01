@@ -55,7 +55,7 @@ public class AuthserviceSampleClientServletTest extends ShiroTestBase {
 
         servlet.service(request, response);
         assertEquals(HttpServletResponse.SC_OK, response.getStatus());
-        assertThat(response.getOutputStreamContent()).contains("Authentication service home");
+        assertThat(response.getOutputStreamContent()).contains("Sample client successful login");
     }
 
     @Test
