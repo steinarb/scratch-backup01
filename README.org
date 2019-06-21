@@ -46,3 +46,8 @@ This procedure assumes that your webapp project is a multimodule maven build.
  7. (Not strictly necessary but more aesthetically pleasing) change the HTTP_WHITEBOARD_CONTEXT_NAME to something more appropriate to the path, and change all other usages (in this project AuthserviceSampleClientShiroFilter and AuthserviceSampleClientServlet)
 
 You can change the name of the classes to be more appropriate, but that doesn't have any other effect than aesthetics.  No classes are exported from the bundle.
+
+** License
+The license of this karaf feature, is Apache Public License v 2.0
+
+See the LICENSE file for details.
