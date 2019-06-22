@@ -1,6 +1,6 @@
 * Authclient sample client
 
-This project contains boilerplate code necessary for using the authservice pluggable user administration service.
+This project contains boilerplate code necessary for using the [[https://github.com/steinarb/authservice][authservice pluggable user administration service]].
 
 ** Try this code
 
