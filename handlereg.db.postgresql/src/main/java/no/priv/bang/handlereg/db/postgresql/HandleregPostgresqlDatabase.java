@@ -38,7 +38,7 @@ import no.priv.bang.handlereg.services.HandleregException;
 import static no.priv.bang.handlereg.services.HandleregConstants.*;
 
 @Component(service=HandleregDatabase.class, immediate=true)
-public class HandleregPosgresqlDatabase implements HandleregDatabase {
+public class HandleregPostgresqlDatabase implements HandleregDatabase {
 
     private LogService logservice;
     private DataSourceFactory dataSourceFactory;

@@ -40,7 +40,7 @@ class HandleregPostgresqlDatabaseTest {
     void testCreateAndVerifySomeDataInSomeTables() throws Exception {
         DataSourceFactory dataSourceFactory = new DerbyDataSourceFactory();
         MockLogService logservice = new MockLogService();
-        HandleregPosgresqlDatabase database = new HandleregPosgresqlDatabase();
+        HandleregPostgresqlDatabase database = new HandleregPostgresqlDatabase();
         database.setLogService(logservice);
         database.setDataSourceFactory(dataSourceFactory);
         Map<String, Object> config = new HashMap<>();
@@ -66,7 +66,7 @@ class HandleregPostgresqlDatabaseTest {
                 DataSourceFactory dataSourceFactory = mock(DataSourceFactory.class);
                 when(dataSourceFactory.createConnectionPoolDataSource(any())).thenThrow(SQLException.class);
                 MockLogService logservice = new MockLogService();
-                HandleregPosgresqlDatabase database = new HandleregPosgresqlDatabase();
+                HandleregPostgresqlDatabase database = new HandleregPostgresqlDatabase();
                 database.setLogService(logservice);
                 database.setDataSourceFactory(dataSourceFactory);
                 Map<String, Object> config = null;
@@ -79,7 +79,7 @@ class HandleregPostgresqlDatabaseTest {
     public void testForceReleaseLocks() {
         DataSourceFactory dataSourceFactory = new DerbyDataSourceFactory();
         MockLogService logservice = new MockLogService();
-        HandleregPosgresqlDatabase database = new HandleregPosgresqlDatabase();
+        HandleregPostgresqlDatabase database = new HandleregPostgresqlDatabase();
         database.setLogService(logservice);
         database.setDataSourceFactory(dataSourceFactory);
         Map<String, Object> config = new HashMap<>();
@@ -95,7 +95,7 @@ class HandleregPostgresqlDatabaseTest {
         // Need a real database to create the object
         DataSourceFactory dataSourceFactory = new DerbyDataSourceFactory();
         MockLogService logservice = new MockLogService();
-        HandleregPosgresqlDatabase database = new HandleregPosgresqlDatabase();
+        HandleregPostgresqlDatabase database = new HandleregPostgresqlDatabase();
         database.setLogService(logservice);
         database.setDataSourceFactory(dataSourceFactory);
         Map<String, Object> config = new HashMap<>();
@@ -113,7 +113,7 @@ class HandleregPostgresqlDatabaseTest {
         assertFalse(result);
     }
 
-    private void assertAccounts(HandleregPosgresqlDatabase database) throws Exception {
+    private void assertAccounts(HandleregPostgresqlDatabase database) throws Exception {
         try (Connection connection = database.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement("select * from accounts")) {
                 try (ResultSet results = statement.executeQuery()) {
@@ -128,7 +128,7 @@ class HandleregPostgresqlDatabaseTest {
         assertEquals(username, results.getString(2)); // column 1 is the id
     }
 
-    private int addAccount(HandleregPosgresqlDatabase database, String username) throws Exception {
+    private int addAccount(HandleregPostgresqlDatabase database, String username) throws Exception {
         try (Connection connection = database.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement("insert into accounts (username) values (?)")) {
                 statement.setString(1, username);
@@ -148,7 +148,7 @@ class HandleregPostgresqlDatabaseTest {
         return accountId;
     }
 
-    private int addStore(HandleregPosgresqlDatabase database, String storename) throws Exception {
+    private int addStore(HandleregPostgresqlDatabase database, String storename) throws Exception {
         try (Connection connection = database.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement("insert into stores (store_name) values (?)")) {
                 statement.setString(1, storename);
@@ -168,7 +168,7 @@ class HandleregPostgresqlDatabaseTest {
         return storeid;
     }
 
-    private void addTransaction(HandleregPosgresqlDatabase database, int accountid, int storeid, double amount) throws SQLException {
+    private void addTransaction(HandleregPostgresqlDatabase database, int accountid, int storeid, double amount) throws SQLException {
         try (Connection connection = database.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement("insert into transactions (account_id, store_id, transaction_amount) values (?, ?, ?)")) {
                 statement.setInt(1, accountid);
@@ -179,7 +179,7 @@ class HandleregPostgresqlDatabaseTest {
         }
     }
 
-    private int findNumberOfTransactions(HandleregPosgresqlDatabase database) throws SQLException {
+    private int findNumberOfTransactions(HandleregPostgresqlDatabase database) throws SQLException {
         try (Connection connection = database.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement("select * from transactions")) {
                 try (ResultSet results = statement.executeQuery()) {
