@@ -16,7 +16,6 @@
 package no.priv.bang.handlereg.db.liquibase;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import liquibase.Liquibase;
 import liquibase.database.DatabaseConnection;
 import liquibase.database.jvm.JdbcConnection;
@@ -25,25 +24,25 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 
 public class HandleregLiquibase {
 
-    public void createInitialSchema(Connection connection) throws SQLException, LiquibaseException {
+    public void createInitialSchema(Connection connection) throws LiquibaseException {
         applyLiquibaseChangelist(connection, "handlereg-db-changelog/db-changelog-1.0.0.xml");
     }
 
-    public void updateSchema(Connection connection) throws SQLException, LiquibaseException {
+    public void updateSchema(Connection connection) throws LiquibaseException {
         applyLiquibaseChangelist(connection, "handlereg-db-changelog/db-changelog-1.0.1.xml");
     }
 
-    public void forceReleaseLocks(Connection connection) throws SQLException, LiquibaseException {
+    public void forceReleaseLocks(Connection connection) throws LiquibaseException {
         Liquibase liquibase = createLiquibaseInstance(connection, "handlereg-db-changelog/db-changelog-1.0.0.xml");
         liquibase.forceReleaseLocks();
     }
 
-    private void applyLiquibaseChangelist(Connection connection, String changelistClasspathResource) throws SQLException, LiquibaseException {
+    private void applyLiquibaseChangelist(Connection connection, String changelistClasspathResource) throws LiquibaseException {
         Liquibase liquibase = createLiquibaseInstance(connection, changelistClasspathResource);
         liquibase.update("");
     }
 
-    private Liquibase createLiquibaseInstance(Connection connection, String changelistClasspathResource) throws SQLException, LiquibaseException {
+    private Liquibase createLiquibaseInstance(Connection connection, String changelistClasspathResource) throws LiquibaseException {
         DatabaseConnection databaseConnection = new JdbcConnection(connection);
         ClassLoaderResourceAccessor classLoaderResourceAccessor = new ClassLoaderResourceAccessor(getClass().getClassLoader());
         return new Liquibase(changelistClasspathResource, classLoaderResourceAccessor, databaseConnection);

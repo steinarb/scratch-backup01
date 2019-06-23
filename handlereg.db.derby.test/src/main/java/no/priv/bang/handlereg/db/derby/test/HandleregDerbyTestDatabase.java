@@ -94,7 +94,7 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
         return dataSource;
     }
 
-    public void insertMockData(Connection connect) throws LiquibaseException, SQLException {
+    public void insertMockData(Connection connect) throws LiquibaseException {
         DatabaseConnection databaseConnection = new JdbcConnection(connect);
         ClassLoaderResourceAccessor classLoaderResourceAccessor = new ClassLoaderResourceAccessor(getClass().getClassLoader());
         Liquibase liquibase = new Liquibase("sql/data/db-changelog.xml", classLoaderResourceAccessor, databaseConnection);
