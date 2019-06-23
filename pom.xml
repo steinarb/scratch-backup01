@@ -60,6 +60,10 @@
         <jersey.version>2.27</jersey.version>
         <open-iconic.version>1.1.1</open-iconic.version>
         <authservice.version>1.2.0</authservice.version>
+        <sonar.cpd.exclusions>
+            **/HandleregDerbyTestDatabase.java,
+            **/HandleregPostgresqlDatabase.java,
+        </sonar.cpd.exclusions>
     </properties>
 
     <dependencyManagement>
