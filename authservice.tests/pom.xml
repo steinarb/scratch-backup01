@@ -23,6 +23,10 @@
             <classifier>features</classifier>
             <exclusions>
                 <exclusion>
+                    <groupId>org.apache.karaf.features</groupId>
+                    <artifactId>framework</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.apache.karaf</groupId>
                     <artifactId>org.apache.karaf.client</artifactId>
                 </exclusion>
