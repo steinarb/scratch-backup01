@@ -49,6 +49,7 @@ public class HandleregServlet extends HttpServlet {
     private final List<String> routes = Arrays.asList(
         "/",
         "/nybutikk",
+        "/endrebutikk",
         "/login");
 
     @Reference

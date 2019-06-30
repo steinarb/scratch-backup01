@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ class HandleregServiceTest {
         Butikk nybutikk = new Butikk();
         List<Butikk> oppdaterteButikker = service.leggTilButikk(nybutikk);
         assertEquals(0, oppdaterteButikker.size());
+        List<Butikk> endredeButikker = service.endreButikk(nybutikk);
+        assertEquals(0, endredeButikker.size());
     }
 
 }

@@ -6,6 +6,7 @@ import handlingerSaga from './handlingerSaga';
 import nyhandlingSaga from './nyhandlingSaga';
 import butikkerSaga from './butikkerSaga';
 import nybutikkSaga from './nybutikkSaga';
+import lagrebutikkSaga from './lagrebutikkSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -15,5 +16,6 @@ export default function* rootSaga() {
         fork(nyhandlingSaga),
         fork(butikkerSaga),
         fork(nybutikkSaga),
+        fork(lagrebutikkSaga),
     ]);
 };

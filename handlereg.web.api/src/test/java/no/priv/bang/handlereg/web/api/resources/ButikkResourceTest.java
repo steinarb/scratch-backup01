@@ -93,4 +93,34 @@ class ButikkResourceTest {
             });
     }
 
+    @Test
+    void testEndreButikk() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        Butikk endretbutikk = new Butikk("Spar Høydalsmo");
+        when(handlereg.endreButikk(any())).thenReturn(Arrays.asList(endretbutikk));
+        ButikkResource resource = new ButikkResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+
+        List<Butikk> butikker = resource.endreButikk(endretbutikk);
+        assertEquals(endretbutikk, butikker.get(0));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testEndreButikkWhenExceptionIsThrown() {
+        MockLogService logservice = new MockLogService();
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.endreButikk(any())).thenThrow(HandleregException.class);
+        ButikkResource resource = new ButikkResource();
+        resource.logservice = logservice;
+        resource.handlereg = handlereg;
+
+        assertThrows(InternalServerErrorException.class, () -> {
+                List<Butikk> butikker = resource.endreButikk(new Butikk());
+                assertThat(butikker.size()).isGreaterThan(0);
+            });
+    }
+
 }

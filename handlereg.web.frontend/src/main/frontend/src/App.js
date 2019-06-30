@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './components/Home';
 import NyButikk from './components/NyButikk';
+import EndreButikk from './components/EndreButikk';
 import Login from './components/Login';
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/handlereg/" component={Home} />
                     <Route exact path="/handlereg/nybutikk" component={NyButikk} />
+                    <Route exact path="/handlereg/endrebutikk" component={EndreButikk} />
                     <Route exact path="/handlereg/login" component={Login} />
                 </Switch>
             </Router>

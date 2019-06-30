@@ -169,6 +169,24 @@ class HandleregWebApiTest extends ShiroTestBase {
         assertEquals(200, response.getStatus());
     }
 
+    @Test
+    void testEndreButikk() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.endreButikk(any())).thenReturn(Arrays.asList(new Butikk()));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildPostUrl("/endrebutikk");
+        Butikk butikk = new Butikk("Ny butikk");
+        String postBody = mapper.writeValueAsString(butikk);
+        request.setBodyContent(postBody);
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+    }
+
     private MockHttpServletRequest buildGetUrl(String resource) {
         MockHttpServletRequest request = buildRequest(resource);
         request.setMethod("GET");

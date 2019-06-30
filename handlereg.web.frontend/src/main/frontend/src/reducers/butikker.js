@@ -1,4 +1,7 @@
 import { createSlice, createAction } from 'redux-starter-kit';
+import butikk from './butikk';
+
+const { BUTIKK_LAGRET } = butikk.actions;
 
 const tomButikk = {
     storeId: -1,
@@ -9,14 +12,19 @@ const tomButikk = {
 
 const defaultState = [];
 
+function leggPaaTomButikkIStarten(action) {
+    const butikker = action.payload;
+    butikker.unshift(tomButikk);
+    return butikker;
+ }
+
 const butikker = createSlice({
     initialState: [],
     reducers: {
-        BUTIKKER_MOTTA: (state, action) => {
-            const butikker = action.payload;
-            butikker.unshift(tomButikk);
-            return butikker;
-        }
+        BUTIKKER_MOTTA: (state, action) => leggPaaTomButikkIStarten(action),
+    },
+    extraReducers: {
+        BUTIKK_LAGRET: (state, action) => leggPaaTomButikkIStarten(action),
     },
 });
 

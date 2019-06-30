@@ -6,7 +6,7 @@ const defaultState = {
     gruppe: 2,
 };
 
-const nybutikk = createSlice({
+const butikk = createSlice({
     initialState: defaultState,
     reducers: {
         BUTIKKNAVN_ENDRE: (state, action) => {
@@ -14,9 +14,16 @@ const nybutikk = createSlice({
             return { ...state, butikknavn };
         },
         NYBUTIKK_LAGRET: (state, action) => ({ ...defaultState }),
+        BUTIKK_LAGRET: (state, action) => ({ ...defaultState }),
+        VELG_BUTIKK: (state, action) => {
+            const { indeks, butikker } = action.payload;
+            const valgtButikk = butikker[indeks];
+            return { ...valgtButikk };
+        },
     }
 });
 
 export const NYBUTIKK_REGISTRER = createAction('NYBUTIKK_REGISTRER');
+export const BUTIKK_LAGRE = createAction('BUTIKK_LAGRE');
 
-export default nybutikk;
+export default butikk;

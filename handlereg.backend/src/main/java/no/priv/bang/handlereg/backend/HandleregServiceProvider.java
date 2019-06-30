@@ -166,6 +166,29 @@ public class HandleregServiceProvider implements HandleregService {
     }
 
     @Override
+    public List<Butikk> endreButikk(Butikk butikkSomSkalEndres) {
+        int butikkId = butikkSomSkalEndres.getStoreId();
+        String butikknavn = butikkSomSkalEndres.getButikknavn();
+        int gruppe = butikkSomSkalEndres.getGruppe();
+        int rekkefolge = butikkSomSkalEndres.getRekkefolge();
+        String sql = "update stores set store_name=?, gruppe=?, rekkefolge=? where store_id=?";
+        try (Connection connection = database.getConnection()) {
+            try(PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, butikknavn);
+                statement.setInt(2, gruppe);
+                statement.setInt(3, rekkefolge);
+                statement.setInt(4, butikkId);
+                statement.executeUpdate();
+                return finnButikker();
+            }
+        } catch (SQLException e) {
+            String message = String.format("Failed to insert store \"%s\" in group %d, sort order %s", butikkSomSkalEndres.getButikknavn(), gruppe, rekkefolge);
+            logError(message, e);
+            throw new HandleregException(message, e);
+        }
+    }
+
+    @Override
     public List<Butikk> leggTilButikk(Butikk nybutikk) {
         int gruppe = nybutikk.getGruppe() < 1 ? 2 : nybutikk.getGruppe();
         int rekkefolge = nybutikk.getRekkefolge() < 1 ? finnNesteLedigeRekkefolgeForGruppe(gruppe) : nybutikk.getRekkefolge();
@@ -179,7 +202,7 @@ public class HandleregServiceProvider implements HandleregService {
                 return finnButikker();
             }
         } catch (SQLException e) {
-            String message = String.format("Failed to insert store \"%s\" in group %d, sort order %s", nybutikk.getButikknavn(), gruppe, rekkefolge);
+            String message = String.format("Failed to modify store \"%s\" in group %d, sort order %s", nybutikk.getButikknavn(), gruppe, rekkefolge);
             logError(message, e);
             throw new HandleregException(message, e);
         }

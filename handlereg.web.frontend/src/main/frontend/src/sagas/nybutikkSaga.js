@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import axios from 'axios';
-import nybutikk, { NYBUTIKK_REGISTRER } from '../reducers/nybutikk';
-const { NYBUTIKK_LAGRET } = nybutikk.actions;
+import butikk, { NYBUTIKK_REGISTRER } from '../reducers/butikk';
+const { NYBUTIKK_LAGRET } = butikk.actions;
 import { BUTIKKER_HENT } from '../reducers/butikker';
 import errors from '../reducers/errors';
 const { NYBUTIKK_ERROR } = errors.actions;
@@ -12,8 +12,8 @@ function registrerNybutikk(butikk) {
 
 function* mottaNybutikk(action) {
     try {
-        const nybutikk = action.payload;
-        const response = yield call(registrerNybutikk, nybutikk);
+        const butikk = action.payload;
+        const response = yield call(registrerNybutikk, butikk);
         const oversikt = (response.headers['content-type'] === 'application/json') ? response.data : [];
         yield put(NYBUTIKK_LAGRET(oversikt));
         const accountid = oversikt.accountid;

@@ -67,4 +67,18 @@ public class ButikkResource {
         }
     }
 
+
+    @POST
+    @Path("/endrebutikk")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Butikk> endreButikk(Butikk endretbutikk) {
+        try {
+            return handlereg.endreButikk(endretbutikk);
+        } catch (Exception e) {
+            String message = "Failed to change a store";
+            logservice.log(LogService.LOG_ERROR, message, e);
+            throw new InternalServerErrorException(message + ", see the log for details");
+        }
+    }
+
 }

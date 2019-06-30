@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.anyString;
@@ -277,6 +278,46 @@ class HandleregServiceProviderTest {
     }
 
     @Test
+    void testEndreButikk() {
+        MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        handlereg.setLogservice(logservice);
+        handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
+        handlereg.activate();
+
+        List<Butikk> butikkerFoerEndring = handlereg.finnButikker();
+        Butikk butikk = butikkerFoerEndring.get(10);
+        int butikkId = butikk.getStoreId();
+        String nyttButikkNavn = "Joker Særbøåsen";
+        Butikk butikkMedEndretTittel = endreTittel(butikk, nyttButikkNavn);
+        List<Butikk> butikker = handlereg.endreButikk(butikkMedEndretTittel);
+        Butikk oppdatertButikk = butikker.stream().filter(b -> b.getStoreId() == butikkId).findFirst().get();
+        assertEquals(nyttButikkNavn, oppdatertButikk.getButikknavn());
+    }
+
+    @Test
+    void testEndreButikkMedIdSomIkkeFinnes() {
+        MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        handlereg.setLogservice(logservice);
+        handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
+        handlereg.activate();
+
+        List<Butikk> butikkerFoerEndring = handlereg.finnButikker();
+        int idPaaButikkSomIkkeFinnes = 500;
+        Butikk butikkMedEndretTittel = new Butikk(idPaaButikkSomIkkeFinnes, "Tullebutikk", 300, 400);
+        List<Butikk> butikker = handlereg.endreButikk(butikkMedEndretTittel);
+        assertEquals(butikkerFoerEndring.size(), butikker.size());
+        assertEquals(0, logservice.getLogmessages().size()); // Blir tydeligvis ikke noen SQLExceptin av update på en rad som ikke finnes?
+        Optional<Butikk> oppdatertButikk = butikker.stream().filter(b -> b.getStoreId() == idPaaButikkSomIkkeFinnes).findFirst();
+        assertFalse(oppdatertButikk.isPresent()); // Men butikken med ikke-eksisterende id blir heller ikke inserted
+    }
+
+    @Test
     void testFinnNesteLedigeRekkefolgeForGruppe() throws Exception {
         MockLogService logservice = new MockLogService();
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
@@ -373,6 +414,13 @@ class HandleregServiceProviderTest {
         }
 
         return -1;
+    }
+
+    private Butikk endreTittel(Butikk butikk, String butikknavn) {
+        int id = butikk.getStoreId();
+        int gruppe = butikk.getRekkefolge();
+        int rekkefolge = butikk.getRekkefolge();
+        return new Butikk(id, butikknavn, gruppe, rekkefolge);
     }
 
 }
