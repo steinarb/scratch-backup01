@@ -61,7 +61,7 @@ public class ButikkResource {
         try {
             return handlereg.leggTilButikk(nybutikk);
         } catch (Exception e) {
-            String message = "Failed to find add a new store";
+            String message = "Failed to add a new store";
             logservice.log(LogService.LOG_ERROR, message, e);
             throw new InternalServerErrorException(message + ", see the log for details");
         }
