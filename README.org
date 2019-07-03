@@ -14,7 +14,7 @@ To verify that this code will run in you karaf instance:
  2. from the karaf console, install the authservice prerequisite
     #+BEGIN_EXAMPLE
       feature:repo-add mvn:no.priv.bang.authservice/authservice/LATEST/xml/features
-      feature:install authservice-with-derby-dbrealm-and-session
+      feature:install user-admin-with-derby
     #+END_EXAMPLE
  3. From the karaf console install the authservice sample client project
     #+BEGIN_EXAMPLE
