@@ -9,6 +9,17 @@ Kjør følgende i karaf console:
   feature:repo-add mvn:no.priv.bang.handlereg/handlereg/LATEST/xml/features
   feature:install handlereg-with-derby
 #+END_EXAMPLE
+** Konfigurering av PostgreSQL-database
+
+Kjør følgende i karaf console:
+#+BEGIN_EXAMPLE
+  config:edit no.priv.bang.handlereg.db.postgresql.HandleregPostgresqlDatabase
+  config:property-set handlereg.db.jdbc.url "jdbc:postgresql:///handlereg"
+  config:property-set handlereg.db.jdbc.user "karaf"
+  config:property-set handlereg.db.jdbc.password "karaf"
+  config:update
+#+END_EXAMPLE
+
 ** Lisens
 
 Denne software'n er lisensiert under Apache License v2.  Se fila LICENSE for detaljer
