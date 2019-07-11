@@ -26,11 +26,11 @@ class Home extends Component {
 
         return (
             <div>
+                <a className="btn btn-block btn-primary left-align-cell" href="../.."><span className="oi oi-chevron-left" title="chevron left" aria-hidden="true"></span>&nbsp;Gå hjem!</a>
                 <Header>
                     <h1>Matregnskap</h1>
                 </Header>
                 <Container>
-                    <a href="../..">Gå hjem!</a>
                     <p>Hei {oversikt.fornavn}! Totalsummen er for øyeblikket {Math.abs(oversikt.balanse)} i din {favordisfavor}.</p>
                     <p>Dine 5 siste innkjøp, er:</p>
                     <div className="table-responsive table-sm table-striped">
