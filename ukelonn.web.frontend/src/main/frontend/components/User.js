@@ -124,26 +124,17 @@ User = connect(mapStateToProps, mapDispatchToProps)(User);
 export default User;
 
 function createEarningsStatisticsMessage(earningsSumOverYear, earningsSumOverMonth) {
-    console.log('createEarningsStatisticsMessage(1)');
-    console.log(earningsSumOverYear);
-    console.log(earningsSumOverMonth);
     if (!(earningsSumOverYear.length || earningsSumOverMonth.length)) {
         return '';
     }
 
-    console.log('createEarningsStatisticsMessage(2)');
-    console.log(earningsSumOverYear);
     let message = '';
     if (earningsSumOverYear.length) {
-        console.log('createEarningsStatisticsMessage(3)');
         const totalEarningsThisYear = earningsSumOverYear[earningsSumOverYear.length - 1].sum;
         message = 'Totalt beløp tjent i år: ' + totalEarningsThisYear;
-        console.log('createEarningsStatisticsMessage(4)');
-        console.log(totalEarningsThisYear);
-        console.log(message);
         if (earningsSumOverYear.length > 1) {
             const previousYear = earningsSumOverYear[earningsSumOverYear.length - 2];
-            message = message.concat(' mot ', previousYear.sum, ' tjent i hele ', previousYear.year);
+            message = message.concat(' (mot ', previousYear.sum, ' tjent i hele ', previousYear.year, ')');
         }
     }
     return message;
