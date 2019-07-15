@@ -128,8 +128,9 @@ function createEarningsStatisticsMessage(earningsSumOverYear, earningsSumOverMon
         return '';
     }
 
-    let message = messageForEarningsCurrentAndPreviousYear(earningsSumOverYear);
-    return (<div>{message}</div>);
+    const yearMessage = messageForEarningsCurrentAndPreviousYear(earningsSumOverYear);
+    const monthMessage = messageForEarningsCurrentMonthAndPreviousMonth(earningsSumOverMonth);
+    return (<div>{yearMessage}{monthMessage}</div>);
 }
 
 function messageForEarningsCurrentAndPreviousYear(earningsSumOverYear) {
@@ -141,6 +142,20 @@ function messageForEarningsCurrentAndPreviousYear(earningsSumOverYear) {
             const previousYear = earningsSumOverYear[earningsSumOverYear.length - 2];
             message = message.concat(' (mot ', previousYear.sum, ' tjent i hele ', previousYear.year, ')');
         }
+    }
+
+    return (<div>{message}</div>);
+}
+
+function messageForEarningsCurrentMonthAndPreviousMonth(earningsSumOverMonth) {
+    let message = '';
+    const totalEarningsThisMonth = earningsSumOverMonth[earningsSumOverMonth.length - 1].sum;
+    message = message.concat('Totalt beløp tjent denne måneden: ', totalEarningsThisMonth);
+    if (earningsSumOverMonth.length > 1) {
+        // The previous month may not actually be the previous month if the kids have been lazy
+        // but we do care about that level of detail here (or at least: I don't...)
+        const previousMonth = earningsSumOverMonth[earningsSumOverMonth.length - 2];
+        message = message.concat(' (mot ', previousMonth.sum, ' tjent i hele forrige måned)');
     }
 
     return (<div>{message}</div>);
