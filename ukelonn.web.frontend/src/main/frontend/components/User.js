@@ -128,6 +128,11 @@ function createEarningsStatisticsMessage(earningsSumOverYear, earningsSumOverMon
         return '';
     }
 
+    let message = messageForEarningsCurrentAndPreviousYear(earningsSumOverYear);
+    return (<div>{message}</div>);
+}
+
+function messageForEarningsCurrentAndPreviousYear(earningsSumOverYear) {
     let message = '';
     if (earningsSumOverYear.length) {
         const totalEarningsThisYear = earningsSumOverYear[earningsSumOverYear.length - 1].sum;
@@ -137,5 +142,6 @@ function createEarningsStatisticsMessage(earningsSumOverYear, earningsSumOverMon
             message = message.concat(' (mot ', previousYear.sum, ' tjent i hele ', previousYear.year, ')');
         }
     }
-    return message;
+
+    return (<div>{message}</div>);
 }
