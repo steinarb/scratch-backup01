@@ -1,9 +1,10 @@
-import { takeLatest, call, put, fork } from "redux-saga/effects";
+import { all, takeLatest, call, put, fork } from "redux-saga/effects";
 import axios from "axios";
 import {
     EARNINGS_SUM_OVER_YEAR_REQUEST,
     EARNINGS_SUM_OVER_YEAR_RECEIVE,
     EARNINGS_SUM_OVER_YEAR_FAILURE,
+    REGISTERJOB_RECEIVE,
 } from '../actiontypes';
 
 function doEarningsSumOverYear(username) {
@@ -24,5 +25,7 @@ function* receiveEarningsSumOverYearSaga(action) {
 
 // watcher saga
 export default function* earningsSumOverYearSaga() {
-    yield takeLatest(EARNINGS_SUM_OVER_YEAR_REQUEST, receiveEarningsSumOverYearSaga);
+    yield all([
+        takeLatest(EARNINGS_SUM_OVER_YEAR_REQUEST, receiveEarningsSumOverYearSaga),
+    ]);
 }
