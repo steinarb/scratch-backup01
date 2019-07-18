@@ -31,8 +31,10 @@ class User extends Component {
         }
 
         const title = 'Ukelønn for ' + account.firstName;
-        const performedjobs = "/ukelonn/performedjobs?" + stringify({ accountId: account.accountId, username: account.username, parentTitle: title });
-        const performedpayments = "/ukelonn/performedpayments?" + stringify({ accountId: account.accountId, username: account.username, parentTitle: title });
+        const username = account.username;
+        const performedjobs = '/ukelonn/performedjobs?' + stringify({ accountId: account.accountId, username, parentTitle: title });
+        const performedpayments = '/ukelonn/performedpayments?' + stringify({ accountId: account.accountId, username, parentTitle: title });
+        const statistics = '/ukelonn/statistics?' + stringify({ username });
         const earningsStatisticsMessage = createEarningsStatisticsMessage(earningsSumOverYear, earningsSumOverMonth);
 
         return (
@@ -57,7 +59,7 @@ class User extends Component {
                 <br/>
                 <Link to={performedjobs}>Utforte jobber</Link><br/>
                 <Link to={performedpayments}>Siste utbetalinger til bruker</Link><br/>
-                <Link to="/ukelonn/statistics">Statistikker</Link><br/>
+                <Link to={statistics}>Statistikker</Link><br/>
                 <br/>
                 <button onClick={() => onLogout()}>Logout</button>
                 <br/>

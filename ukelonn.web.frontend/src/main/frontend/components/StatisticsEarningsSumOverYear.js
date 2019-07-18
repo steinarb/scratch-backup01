@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import { findUsernameFromAccountOrQueryParameter } from '../common/account';
 import {
     ACCOUNT_REQUEST,
     LOGOUT_REQUEST,
@@ -9,8 +10,7 @@ import {
 
 class StatisticsEarningsSumOverYear extends Component {
     componentDidMount() {
-        const loginResponse = this.props.loginResponse || {};
-        const username = loginResponse.username;
+        const username = findUsernameFromAccountOrQueryParameter(this.props);
         this.props.onAccount(username);
     }
 
