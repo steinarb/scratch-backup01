@@ -11,6 +11,7 @@ import PerformedJobs from "./PerformedJobs";
 import PerformedPayments from "./PerformedPayments";
 import Statistics from './Statistics';
 import StatisticsEarningsSumOverYear from './StatisticsEarningsSumOverYear';
+import StatisticsEarningsSumOverMonth from './StatisticsEarningsSumOverMonth';
 import Admin from "./Admin";
 import AdminJobtypes from "./AdminJobtypes";
 import AdminJobtypesModify from "./AdminJobtypesModify";
@@ -41,6 +42,7 @@ class App extends Component {
                     <Route path="/ukelonn/performedjobs" component={PerformedJobs} />
                     <Route path="/ukelonn/performedpayments" component={PerformedPayments} />
                     <Route path="/ukelonn/statistics/earnings/sumoveryear" component={StatisticsEarningsSumOverYear} />
+                    <Route path="/ukelonn/statistics/earnings/sumovermonth" component={StatisticsEarningsSumOverMonth} />
                     <Route path="/ukelonn/statistics" component={Statistics} />
                     <Route path="/ukelonn/admin/jobtypes/modify" component={AdminJobtypesModify} />
                     <Route path="/ukelonn/admin/jobtypes/create" component={AdminJobtypesCreate} />
