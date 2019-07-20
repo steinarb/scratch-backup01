@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
+import { stringify } from 'qs';
 import { findUsernameFromAccountOrQueryParameter } from '../common/account';
 import { userIsLoggedIn } from '../common/login';
 import {
@@ -22,11 +23,14 @@ class StatisticsEarningsSumOverMonth extends Component {
             return <Redirect to="/ukelonn/login" />;
         }
 
+        const username = findUsernameFromAccountOrQueryParameter(this.props);
+        const statistics = '/ukelonn/statistics?' + stringify({ username });
+
         return (
             <div>
                 <h1>Sum av lønn pr måned og år</h1>
                 <br/>
-                <Link to="/ukelonn/statistics">Tilbake til statistikk</Link><br/>
+                <Link to={statistics}>Tilbake til statistikk</Link><br/>
                 <table className="table table-bordered">
                     <thead>
                         <tr>
