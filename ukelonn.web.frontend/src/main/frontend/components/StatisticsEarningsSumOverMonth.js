@@ -16,7 +16,7 @@ class StatisticsEarningsSumOverMonth extends Component {
     }
 
     render() {
-        let { onLogout } = this.props;
+        let { earningsSumOverMonth, onLogout } = this.props;
 
         if (userIsLoggedIn(this.props)) {
             return <Redirect to="/ukelonn/login" />;
@@ -27,6 +27,24 @@ class StatisticsEarningsSumOverMonth extends Component {
                 <h1>Sum av lønn pr måned og år</h1>
                 <br/>
                 <Link to="/ukelonn/statistics">Tilbake til statistikk</Link><br/>
+                <table className="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>År</td>
+                            <td>Måned</td>
+                            <td>Totalt tjent</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {earningsSumOverMonth.map((sumOverMonth) =>
+                            <tr key={''.concat(sumOverMonth.year, sumOverMonth.month)}>
+                                <td>{sumOverMonth.year}</td>
+                                <td>{sumOverMonth.month}</td>
+                                <td>{sumOverMonth.sum}</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
                 <br/>
                 <button onClick={() => onLogout()}>Logout</button>
                 <br/>
@@ -41,7 +59,7 @@ const mapStateToProps = state => {
         haveReceivedResponseFromLogin: state.haveReceivedResponseFromLogin,
         loginResponse: state.loginResponse,
         account: state.account,
-        earningsSumOverYear: state.earningsSumOverYear,
+        earningsSumOverMonth: state.earningsSumOverMonth,
     };
 };
 
