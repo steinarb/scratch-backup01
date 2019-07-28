@@ -20,6 +20,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,11 +33,16 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.log.LogService;
 
 import no.priv.bang.handlereg.services.Butikk;
+import no.priv.bang.handlereg.services.ButikkCount;
+import no.priv.bang.handlereg.services.ButikkDate;
+import no.priv.bang.handlereg.services.ButikkSum;
 import no.priv.bang.handlereg.services.HandleregDatabase;
 import no.priv.bang.handlereg.services.HandleregException;
 import no.priv.bang.handlereg.services.HandleregService;
 import no.priv.bang.handlereg.services.NyHandling;
 import no.priv.bang.handlereg.services.Oversikt;
+import no.priv.bang.handlereg.services.SumYear;
+import no.priv.bang.handlereg.services.SumYearMonth;
 import no.priv.bang.handlereg.services.Transaction;
 import no.priv.bang.osgiservice.users.Role;
 import no.priv.bang.osgiservice.users.User;
@@ -208,6 +215,129 @@ public class HandleregServiceProvider implements HandleregService {
         }
     }
 
+    @Override
+    public List<ButikkSum> sumOverButikk() {
+        List<ButikkSum> sumOverButikk = new ArrayList<>();
+        String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, sum(t.transaction_amount) as totalbelop from transactions t join stores s on s.store_id=t.store_id group by s.store_id, s.store_name, s.gruppe, s.rekkefolge order by totalbelop desc";
+        try (Connection connection = database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet results = statement.executeQuery()) {
+                    while(results.next()) {
+                        int storeId = results.getInt(1);
+                        String storeName = results.getString(2);
+                        int gruppe = results.getInt(3);
+                        int rekkefolge = results.getInt(4);
+                        Butikk butikk = new Butikk(storeId, storeName, gruppe, rekkefolge);
+                        double sum = results.getDouble(5);
+                        ButikkSum butikkSum = new ButikkSum(butikk, sum);
+                        sumOverButikk.add(butikkSum);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            String message = "Got error when retrieving sum over stores";
+            logWarning(message, e);
+        }
+        return sumOverButikk;
+    }
+
+    @Override
+    public List<ButikkCount> antallHandlingerIButikk() {
+        List<ButikkCount> antallHandlerIButikk = new ArrayList<>();
+        String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, count(t.transaction_amount) as antallbesok from transactions t join stores s on s.store_id=t.store_id group by s.store_id, s.store_name, s.gruppe, s.rekkefolge order by antallbesok desc";
+        try (Connection connection = database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet results = statement.executeQuery()) {
+                    while(results.next()) {
+                        int storeId = results.getInt(1);
+                        String storeName = results.getString(2);
+                        int gruppe = results.getInt(3);
+                        int rekkefolge = results.getInt(4);
+                        Butikk butikk = new Butikk(storeId, storeName, gruppe, rekkefolge);
+                        long count = results.getLong(5);
+                        ButikkCount butikkSum = new ButikkCount(butikk, count);
+                        antallHandlerIButikk.add(butikkSum);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            String message = "Got error when retrieving count of the number of times store have been visited";
+            logWarning(message, e);
+        }
+        return antallHandlerIButikk;
+    }
+
+    @Override
+    public List<ButikkDate> sisteHandelIButikk() {
+        List<ButikkDate> sisteHandelIButikk = new ArrayList<>();
+        String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, MAX(t.transaction_time) as handletid from transactions t join stores s on s.store_id=t.store_id group by s.store_id, s.store_name, s.gruppe, s.rekkefolge order by handletid desc";
+        try (Connection connection = database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet results = statement.executeQuery()) {
+                    while(results.next()) {
+                        int storeId = results.getInt(1);
+                        String storeName = results.getString(2);
+                        int gruppe = results.getInt(3);
+                        int rekkefolge = results.getInt(4);
+                        Butikk butikk = new Butikk(storeId, storeName, gruppe, rekkefolge);
+                        Date date = new Date(results.getTimestamp(5).getTime());
+                        ButikkDate butikkSum = new ButikkDate(butikk, date);
+                        sisteHandelIButikk.add(butikkSum);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            String message = "Got error when retrieving last visit times for stores";
+            logWarning(message, e);
+        }
+        return sisteHandelIButikk;
+    }
+
+    @Override
+    public List<SumYear> totaltHandlebelopPrAar() {
+        List<SumYear> totaltHandlebelopPrAar = new ArrayList<>();
+        String sql = database.sumOverYearQuery();
+        try (Connection connection = database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet results = statement.executeQuery()) {
+                    while(results.next()) {
+                        double sum = results.getDouble(1);
+                        Year year = Year.of(results.getInt(2));
+                        SumYear sumMonth = new SumYear(sum, year);
+                        totaltHandlebelopPrAar.add(sumMonth);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            String message = "Got error when retrieving total amount used per year";
+            logWarning(message, e);
+        }
+        return totaltHandlebelopPrAar;
+    }
+
+    @Override
+    public List<SumYearMonth> totaltHandlebelopPrAarOgMaaned() {
+        List<SumYearMonth> totaltHandlebelopPrAarOgMaaned = new ArrayList<>();
+        String sql = database.sumOverMonthQuery();
+        try (Connection connection = database.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                try (ResultSet results = statement.executeQuery()) {
+                    while(results.next()) {
+                        double sum = results.getDouble(1);
+                        Year year = Year.of(results.getInt(2));
+                        Month month = Month.of(results.getInt(3));
+                        SumYearMonth sumMonth = new SumYearMonth(sum, year, month);
+                        totaltHandlebelopPrAarOgMaaned.add(sumMonth);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            String message = "Got error when retrieving total amount used per year";
+            logWarning(message, e);
+        }
+        return totaltHandlebelopPrAarOgMaaned;
+    }
+
     int finnNesteLedigeRekkefolgeForGruppe(int gruppe) {
         String sql = "select rekkefolge from stores where gruppe=? order by rekkefolge desc fetch next 1 rows only";
         try (Connection connection = database.getConnection()) {
@@ -240,6 +370,10 @@ public class HandleregServiceProvider implements HandleregService {
 
     private void logError(String message, SQLException e) {
         logservice.log(LogService.LOG_ERROR, message, e);
+    }
+
+    private void logWarning(String message, SQLException e) {
+        logservice.log(LogService.LOG_WARNING, message, e);
     }
 
 

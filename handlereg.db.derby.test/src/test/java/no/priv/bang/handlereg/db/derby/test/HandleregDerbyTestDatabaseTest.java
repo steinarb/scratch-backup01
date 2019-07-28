@@ -15,6 +15,7 @@
  */
 package no.priv.bang.handlereg.db.derby.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -99,6 +100,20 @@ class HandleregDerbyTestDatabaseTest {
 
         boolean result = database.forceReleaseLiquibaseLock();
         assertFalse(result);
+    }
+
+    @Test
+    public void testSumOverYearQuery() {
+        HandleregDerbyTestDatabase database = new HandleregDerbyTestDatabase();
+        String sumOverYearQuery = database.sumOverYearQuery();
+        assertThat(sumOverYearQuery).isNotEmpty();
+    }
+
+    @Test
+    public void testSumOverMonthQuery() {
+        HandleregDerbyTestDatabase database = new HandleregDerbyTestDatabase();
+        String sumOverMonthQuery = database.sumOverMonthQuery();
+        assertThat(sumOverMonthQuery).isNotEmpty();
     }
 
     private void assertAccounts(HandleregDerbyTestDatabase database) throws Exception {

@@ -36,10 +36,15 @@ import org.osgi.service.jdbc.DataSourceFactory;
 
 import no.priv.bang.handlereg.db.derby.test.HandleregDerbyTestDatabase;
 import no.priv.bang.handlereg.services.Butikk;
+import no.priv.bang.handlereg.services.ButikkCount;
+import no.priv.bang.handlereg.services.ButikkDate;
+import no.priv.bang.handlereg.services.ButikkSum;
 import no.priv.bang.handlereg.services.HandleregDatabase;
 import no.priv.bang.handlereg.services.HandleregException;
 import no.priv.bang.handlereg.services.NyHandling;
 import no.priv.bang.handlereg.services.Oversikt;
+import no.priv.bang.handlereg.services.SumYear;
+import no.priv.bang.handlereg.services.SumYearMonth;
 import no.priv.bang.handlereg.services.Transaction;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 import no.priv.bang.osgiservice.users.User;
@@ -365,6 +370,76 @@ class HandleregServiceProviderTest {
                 int nesteLedigeRekkefolge = handlereg.finnNesteLedigeRekkefolgeForGruppe(1);
                 assertEquals(0, nesteLedigeRekkefolge, "Should never get here");
             });
+    }
+
+    @Test
+    void testSumOverButikk() {
+        MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        handlereg.setLogservice(logservice);
+        handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
+        handlereg.activate();
+
+        List<ButikkSum> sumOverButikk = handlereg.sumOverButikk();
+        assertThat(sumOverButikk.size()).isGreaterThan(0);
+    }
+
+    @Test
+    void testAntallHandlerIButikk() {
+        MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        handlereg.setLogservice(logservice);
+        handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
+        handlereg.activate();
+
+        List<ButikkCount> antallHandlerIButikk = handlereg.antallHandlingerIButikk();
+        assertThat(antallHandlerIButikk.size()).isGreaterThan(0);
+    }
+
+    @Test
+    void testSisteHandelIButikk() {
+        MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        handlereg.setLogservice(logservice);
+        handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
+        handlereg.activate();
+
+        List<ButikkDate> sisteHandelIButikk = handlereg.sisteHandelIButikk();
+        assertThat(sisteHandelIButikk.size()).isGreaterThan(0);
+    }
+
+    @Test
+    void testTotaltHandlebelopPrAar() {
+        MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        handlereg.setLogservice(logservice);
+        handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
+        handlereg.activate();
+
+        List<SumYear> totaltHandlebelopPrAar = handlereg.totaltHandlebelopPrAar();
+        assertThat(totaltHandlebelopPrAar.size()).isGreaterThan(0);
+    }
+
+    @Test
+    void testTotaltHandlebelopPrAarOgMaaned() {
+        MockLogService logservice = new MockLogService();
+        UserManagementService useradmin = mock(UserManagementService.class);
+        HandleregServiceProvider handlereg = new HandleregServiceProvider();
+        handlereg.setLogservice(logservice);
+        handlereg.setDatabase(database);
+        handlereg.setUseradmin(useradmin);
+        handlereg.activate();
+
+        List<SumYearMonth> totaltHandlebelopPrAarOgMaaned = handlereg.totaltHandlebelopPrAarOgMaaned();
+        assertThat(totaltHandlebelopPrAarOgMaaned.size()).isGreaterThan(0);
     }
 
     private HandleregDatabase createMockDbWithEmptyResultset() throws SQLException {

@@ -7,6 +7,11 @@ import butikk from './butikk';
 import valgtButikk from './valgtButikk';
 import handlinger from './handlinger';
 import nyhandling from './nyhandling';
+import sumbutikk from './sumbutikk';
+import handlingerbutikk from './handlingerbutikk';
+import sistehandel from './sistehandel';
+import sumyear from './sumyear';
+import sumyearmonth from './sumyearmonth';
 import errors from './errors';
 
 const rootsReducer = combineReducers({
@@ -16,6 +21,11 @@ const rootsReducer = combineReducers({
     butikk: butikk.reducer,
     handlinger: handlinger.reducer,
     nyhandling: nyhandling.reducer,
+    sumbutikk: sumbutikk.reducer,
+    handlingerbutikk: handlingerbutikk.reducer,
+    sistehandel: sistehandel.reducer,
+    sumyear: sumyear.reducer,
+    sumyearmonth: sumyearmonth.reducer,
     errors: errors.reducer,
 });
 

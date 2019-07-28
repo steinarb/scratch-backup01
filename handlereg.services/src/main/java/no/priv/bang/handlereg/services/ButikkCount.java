@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,26 @@
  */
 package no.priv.bang.handlereg.services;
 
-import no.priv.bang.osgiservice.database.DatabaseService;
+public class ButikkCount {
 
+    private Butikk butikk;
+    private long count;
 
-public interface HandleregDatabase extends DatabaseService {
+    public ButikkCount(Butikk butikk, long count) {
+        this.butikk = butikk;
+        this.count = count;
+    }
 
-    boolean forceReleaseLiquibaseLock();
+    public ButikkCount() {
+        // No-args constructor required by jackson
+    }
 
-    String sumOverYearQuery();
+    public Butikk getButikk() {
+        return butikk;
+    }
 
-    String sumOverMonthQuery();
+    public long getCount() {
+        return count;
+    }
 
 }

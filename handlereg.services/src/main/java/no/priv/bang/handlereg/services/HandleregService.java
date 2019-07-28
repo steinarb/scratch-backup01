@@ -31,4 +31,14 @@ public interface HandleregService {
 
     List<Butikk> endreButikk(Butikk nybutikk);
 
+    List<ButikkSum> sumOverButikk();
+
+    List<ButikkCount> antallHandlingerIButikk();
+
+    List<ButikkDate> sisteHandelIButikk();
+
+    List<SumYear> totaltHandlebelopPrAar();
+
+    List<SumYearMonth> totaltHandlebelopPrAarOgMaaned();
+
 }

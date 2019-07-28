@@ -93,6 +93,16 @@ public class HandleregPostgresqlDatabase implements HandleregDatabase {
         return dataSource;
     }
 
+    @Override
+    public String sumOverYearQuery() {
+        return "select sum(t.transaction_amount), extract(year from t.transaction_time) as year from transactions t group by extract(year from t.transaction_time) order by extract(year from t.transaction_time)";
+    }
+
+    @Override
+    public String sumOverMonthQuery() {
+        return "select sum(t.transaction_amount), extract(year from t.transaction_time) as year, extract(month from t.transaction_time) as month from transactions t group by extract(year from t.transaction_time), extract(month from t.transaction_time) order by extract(year from t.transaction_time), extract(month from t.transaction_time)";
+    }
+
     public void insertMockData(Connection connect) throws LiquibaseException {
         DatabaseConnection databaseConnection = new JdbcConnection(connect);
         ClassLoaderResourceAccessor classLoaderResourceAccessor = new ClassLoaderResourceAccessor(getClass().getClassLoader());
