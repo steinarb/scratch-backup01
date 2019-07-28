@@ -17,6 +17,7 @@ package no.priv.bang.handlereg.db.postgresql;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,6 +112,20 @@ class HandleregPostgresqlDatabaseTest {
 
         boolean result = database.forceReleaseLiquibaseLock();
         assertFalse(result);
+    }
+
+    @Test
+    public void testSumOverYearQuery() {
+        HandleregPostgresqlDatabase database = new HandleregPostgresqlDatabase();
+        String sumOverYearQuery = database.sumOverYearQuery();
+        assertThat(sumOverYearQuery).isNotEmpty();
+    }
+
+    @Test
+    public void testSumOverMonthQuery() {
+        HandleregPostgresqlDatabase database = new HandleregPostgresqlDatabase();
+        String sumOverMonthQuery = database.sumOverMonthQuery();
+        assertThat(sumOverMonthQuery).isNotEmpty();
     }
 
     private void assertAccounts(HandleregPostgresqlDatabase database) throws Exception {

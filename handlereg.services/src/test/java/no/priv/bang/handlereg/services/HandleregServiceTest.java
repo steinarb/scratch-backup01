@@ -44,6 +44,16 @@ class HandleregServiceTest {
         assertEquals(0, oppdaterteButikker.size());
         List<Butikk> endredeButikker = service.endreButikk(nybutikk);
         assertEquals(0, endredeButikker.size());
+        List<ButikkSum> sumPrButikk = service.sumOverButikk();
+        assertEquals(0, sumPrButikk.size());
+        List<ButikkCount> antallHandlerIButikk = service.antallHandlingerIButikk();
+        assertEquals(0, antallHandlerIButikk.size());
+        List<ButikkDate> sisteHandelIButikk = service.sisteHandelIButikk();
+        assertEquals(0, sisteHandelIButikk.size());
+        List<SumYear> totaltHandlebelopPrAar = service.totaltHandlebelopPrAar();
+        assertEquals(0, totaltHandlebelopPrAar.size());
+        List<SumYearMonth> totaltHandlebelopPrAarOgMaaned = service.totaltHandlebelopPrAarOgMaaned();
+        assertEquals(0, totaltHandlebelopPrAarOgMaaned.size());
     }
 
 }

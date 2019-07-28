@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,24 @@
  */
 package no.priv.bang.handlereg.services;
 
-import no.priv.bang.osgiservice.database.DatabaseService;
+import java.time.Month;
+import java.time.Year;
 
+public class SumYearMonth extends SumYear {
 
-public interface HandleregDatabase extends DatabaseService {
+    private Month month;
 
-    boolean forceReleaseLiquibaseLock();
+    public SumYearMonth(double sum, Year year, Month month) {
+        super(sum, year);
+        this.month = month;
+    }
 
-    String sumOverYearQuery();
+    public SumYearMonth() {
+        // No-args constructor requied by jackson
+    }
 
-    String sumOverMonthQuery();
+    public Month getMonth() {
+        return month;
+    }
 
 }

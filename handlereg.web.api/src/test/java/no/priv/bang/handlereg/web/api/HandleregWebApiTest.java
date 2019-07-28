@@ -15,13 +15,18 @@
  */
 package no.priv.bang.handlereg.web.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+import java.time.Month;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -31,24 +36,32 @@ import org.glassfish.jersey.server.ServerProperties;
 import org.junit.jupiter.api.Test;
 import org.osgi.service.log.LogService;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 import com.mockrunner.mock.web.MockHttpSession;
+import com.mockrunner.mock.web.MockServletOutputStream;
 
 import no.priv.bang.handlereg.services.Butikk;
+import no.priv.bang.handlereg.services.ButikkCount;
+import no.priv.bang.handlereg.services.ButikkDate;
+import no.priv.bang.handlereg.services.ButikkSum;
 import no.priv.bang.handlereg.services.Credentials;
 import no.priv.bang.handlereg.services.HandleregService;
 import no.priv.bang.handlereg.services.NyHandling;
 import no.priv.bang.handlereg.services.Oversikt;
+import no.priv.bang.handlereg.services.SumYear;
+import no.priv.bang.handlereg.services.SumYearMonth;
 import no.priv.bang.handlereg.services.Transaction;
 import no.priv.bang.handlereg.web.api.HandleregWebApi;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class HandleregWebApiTest extends ShiroTestBase {
     public static final ObjectMapper mapper = new ObjectMapper()
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        .findAndRegisterModules();
 
     @Test
     void testLogin() throws Exception {
@@ -185,6 +198,101 @@ class HandleregWebApiTest extends ShiroTestBase {
         loginUser(request, response, "jd", "johnnyBoi");
         servlet.service(request, response);
         assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    void testGetSumOverButikk() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.sumOverButikk()).thenReturn(Arrays.asList(new ButikkSum(new Butikk("Spar Fjellheimen"), 3345), new ButikkSum(new Butikk("Joker Nord"), 1234)));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/statistikk/sumbutikk");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+        List<ButikkSum> sumOverButikk = mapper.readValue(getBinaryContent(response), new TypeReference<List<ButikkSum>>() {});
+        assertThat(sumOverButikk).isNotEmpty();
+        assertEquals("Spar Fjellheimen", sumOverButikk.get(0).getButikk().getButikknavn());
+    }
+
+    @Test
+    void testAntallHandlingerIButikk() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.antallHandlingerIButikk()).thenReturn(Arrays.asList(new ButikkCount(new Butikk("Spar Fjellheimen"), 3345), new ButikkCount(new Butikk("Joker Nord"), 1234)));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/statistikk/handlingerbutikk");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+        List<ButikkCount> sumOverButikk = mapper.readValue(getBinaryContent(response), new TypeReference<List<ButikkCount>>() {});
+        assertThat(sumOverButikk).isNotEmpty();
+        assertEquals("Spar Fjellheimen", sumOverButikk.get(0).getButikk().getButikknavn());
+    }
+
+    @Test
+    void testSisteHandelIButikk() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.sisteHandelIButikk()).thenReturn(Arrays.asList(new ButikkDate(new Butikk("Spar Fjellheimen"), new Date()), new ButikkDate(new Butikk("Joker Nord"), new Date())));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/statistikk/sistehandel");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+        List<ButikkDate> sumOverButikk = mapper.readValue(getBinaryContent(response), new TypeReference<List<ButikkDate>>() {});
+        assertThat(sumOverButikk).isNotEmpty();
+        assertEquals("Spar Fjellheimen", sumOverButikk.get(0).getButikk().getButikknavn());
+    }
+
+    @Test
+    void testTotaltHandlebelopPrAar() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.totaltHandlebelopPrAar()).thenReturn(Arrays.asList(new SumYear(2345, Year.of(2001)), new SumYear(3241, Year.of(2002)), new SumYear(3241, Year.of(2003)), new SumYear(3241, Year.of(2004)), new SumYear(3241, Year.of(2005)), new SumYear(3241, Year.of(2006)), new SumYear(3241, Year.of(2007)), new SumYear(3241, Year.of(2008)), new SumYear(3241, Year.of(2009)), new SumYear(3241, Year.of(2010)), new SumYear(3241, Year.of(2011)), new SumYear(3241, Year.of(2012)), new SumYear(3241, Year.of(2013)), new SumYear(3241, Year.of(2014)), new SumYear(3241, Year.of(2015)), new SumYear(3241, Year.of(2016)), new SumYear(3241, Year.of(2017)), new SumYear(3241, Year.of(2018)), new SumYear(3241, Year.of(2019))));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/statistikk/sumyear");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+        List<SumYear> sumyear = mapper.readValue(getBinaryContent(response), new TypeReference<List<SumYear>>() {});
+        assertThat(sumyear).isNotEmpty();
+        assertEquals(Year.of(2001), sumyear.get(0).getYear());
+    }
+
+    @Test
+    void testTotaltHandlebelopPrAarOgMaaned() throws Exception {
+        HandleregService handlereg = mock(HandleregService.class);
+        when(handlereg.totaltHandlebelopPrAarOgMaaned()).thenReturn(Arrays.asList(new SumYearMonth(234, Year.of(2001), Month.JANUARY),new SumYearMonth(234, Year.of(2001), Month.FEBRUARY),new SumYearMonth(234, Year.of(2001), Month.MARCH),new SumYearMonth(234, Year.of(2001), Month.APRIL),new SumYearMonth(234, Year.of(2001), Month.MAY),new SumYearMonth(234, Year.of(2001), Month.JUNE),new SumYearMonth(234, Year.of(2001), Month.JULY),new SumYearMonth(234, Year.of(2001), Month.AUGUST), new SumYearMonth(324, Year.of(2002), Month.SEPTEMBER), new SumYearMonth(324, Year.of(2003), Month.OCTOBER), new SumYearMonth(324, Year.of(2004), Month.NOVEMBER), new SumYearMonth(324, Year.of(2005), Month.DECEMBER), new SumYearMonth(324, Year.of(2006), Month.JANUARY), new SumYearMonth(324, Year.of(2007), Month.JANUARY), new SumYearMonth(324, Year.of(2008), Month.JANUARY), new SumYearMonth(324, Year.of(2009), Month.JANUARY), new SumYearMonth(324, Year.of(2010), Month.JANUARY), new SumYearMonth(324, Year.of(2011), Month.JANUARY), new SumYearMonth(324, Year.of(2012), Month.JANUARY), new SumYearMonth(324, Year.of(2013), Month.JANUARY), new SumYearMonth(324, Year.of(2014), Month.JANUARY), new SumYearMonth(324, Year.of(2015), Month.JANUARY), new SumYearMonth(324, Year.of(2016), Month.JANUARY), new SumYearMonth(324, Year.of(2017), Month.JANUARY), new SumYearMonth(324, Year.of(2018), Month.JANUARY), new SumYearMonth(324, Year.of(2019), Month.JANUARY)));
+        MockLogService logservice = new MockLogService();
+        HandleregWebApi servlet = simulateDSComponentActivationAndWebWhiteboardConfiguration(handlereg, logservice);
+        MockHttpServletRequest request = buildGetUrl("/statistikk/sumyearmonth");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        loginUser(request, response, "jd", "johnnyBoi");
+        servlet.service(request, response);
+        assertEquals(200, response.getStatus());
+        List<SumYearMonth> sumyearmonth = mapper.readValue(getBinaryContent(response), new TypeReference<List<SumYearMonth>>() {});
+        assertThat(sumyearmonth).isNotEmpty();
+        assertEquals(Year.of(2001), sumyearmonth.get(0).getYear());
+    }
+
+    private byte[] getBinaryContent(MockHttpServletResponse response) throws IOException {
+        MockServletOutputStream outputstream = (MockServletOutputStream) response.getOutputStream();
+        return outputstream.getBinaryContent();
     }
 
     private MockHttpServletRequest buildGetUrl(String resource) {

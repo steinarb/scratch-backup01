@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 Steinar Bang
+ * Copyright 2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,26 @@
  */
 package no.priv.bang.handlereg.services;
 
-import no.priv.bang.osgiservice.database.DatabaseService;
+import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Test;
 
-public interface HandleregDatabase extends DatabaseService {
+class ButikkCountTest {
 
-    boolean forceReleaseLiquibaseLock();
+    @Test
+    void test() {
+        Butikk butikk = new Butikk("Spar Fjellheimen");
+        long count = 2345;
+        ButikkCount bean = new ButikkCount(butikk, count);
+        assertEquals(butikk, bean.getButikk());
+        assertEquals(count, bean.getCount());
+    }
 
-    String sumOverYearQuery();
-
-    String sumOverMonthQuery();
+    @Test
+    void testNoargsConstructor() {
+        ButikkCount bean = new ButikkCount();
+        assertNull(bean.getButikk());
+        assertEquals(0, bean.getCount());
+    }
 
 }

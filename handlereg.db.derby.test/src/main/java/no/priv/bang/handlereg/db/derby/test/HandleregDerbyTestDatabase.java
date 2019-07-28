@@ -111,4 +111,14 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
         dataSource = dataSourceFactory.createDataSource(properties);
     }
 
+    @Override
+    public String sumOverYearQuery() {
+        return "select sum(t.transaction_amount), YEAR(t.transaction_time) from transactions t group by YEAR(t.transaction_time) order by YEAR(t.transaction_time)";
+    }
+
+    @Override
+    public String sumOverMonthQuery() {
+        return "select sum(t.transaction_amount), YEAR(t.transaction_time), MONTH(t.transaction_time) from transactions t group by YEAR(t.transaction_time), MONTH(t.transaction_time) order by YEAR(t.transaction_time), MONTH(t.transaction_time)";
+    }
+
 }
