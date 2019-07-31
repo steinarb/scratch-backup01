@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import Home from './components/Home';
 import Statistikk from './components/Statistikk';
-import StatistikkSumButikk from './components/StatistikkSumButikk';
+import StatistikkSumButikk from './components/StatistikkSumbutikk';
 import NyButikk from './components/NyButikk';
 import EndreButikk from './components/EndreButikk';
 import Login from './components/Login';
