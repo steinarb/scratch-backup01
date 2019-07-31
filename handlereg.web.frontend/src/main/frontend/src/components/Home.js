@@ -83,6 +83,7 @@ class Home extends Component {
                     </form>
                 </Container>
                 <Container>
+                    <StyledLinkRight to="/handlereg/statistikk">Statistikk</StyledLinkRight>
                     <StyledLinkRight to="/handlereg/nybutikk">Ny butikk</StyledLinkRight>
                     <StyledLinkRight to="/handlereg/endrebutikk">Endre butikk</StyledLinkRight>
                 </Container>

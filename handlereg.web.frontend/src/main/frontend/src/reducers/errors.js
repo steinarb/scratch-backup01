@@ -27,6 +27,10 @@ const errors = createSlice({
             const nybutikk = action.payload;
             return { ...state, nybutikk };
         },
+        SUMBUTIKK_ERROR: (state, action) => {
+            const sumbutikk = action.payload;
+            return { ...state, sumbutikk };
+        },
     },
 });
 

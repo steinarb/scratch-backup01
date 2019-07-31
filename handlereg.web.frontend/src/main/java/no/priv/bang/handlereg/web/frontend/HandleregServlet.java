@@ -48,6 +48,12 @@ public class HandleregServlet extends HttpServlet {
     // The paths used by the react router all needs to return the HTML wrapping the bundle.js
     private final List<String> routes = Arrays.asList(
         "/",
+        "/statistikk",
+        "/statistikk/sumbutikk",
+        "/statistikk/handlingerbutikk",
+        "/statistikk/sistehandel",
+        "/statistikk/sumyear",
+        "/statistikk/sumyearmonth",
         "/nybutikk",
         "/endrebutikk",
         "/login");
