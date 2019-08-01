@@ -31,6 +31,18 @@ const errors = createSlice({
             const sumbutikk = action.payload;
             return { ...state, sumbutikk };
         },
+        HANDLINGERBUTIKK_ERROR: (state, action) => {
+            const handlingerbutikk = action.payload;
+            return { ...state, handlingerbutikk };
+        },
+        SISTEHANDEL_ERROR: (state, action) => {
+            const sistehandel = action.payload;
+            return { ...state, sistehandel };
+        },
+        SUMYEAR_ERROR: (state, action) => {
+            const sumyear = action.payload;
+            return { ...state, sumyear };
+        },
     },
 });
 
