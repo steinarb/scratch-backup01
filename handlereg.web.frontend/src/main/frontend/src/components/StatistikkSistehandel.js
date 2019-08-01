@@ -33,10 +33,10 @@ class StatistikkSistehandel extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {sistehandel.map((sb) =>
-                                <tr key={'butikk' + sb.butikk.storeId}>
-                                    <td>{sb.butikk.butikknavn}</td>
-                                    <td>{moment(sb.date).format("YYYY-MM-DD")}</td>
+                            {sistehandel.map((sh) =>
+                                <tr key={'butikk' + sh.butikk.storeId}>
+                                    <td>{sh.butikk.butikknavn}</td>
+                                    <td>{moment(sh.date).format("YYYY-MM-DD")}</td>
                                 </tr>
                             )}
                         </tbody>

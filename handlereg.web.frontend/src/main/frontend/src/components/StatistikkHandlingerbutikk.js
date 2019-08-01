@@ -32,10 +32,10 @@ class StatistikkHandlingerbutikk extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {handlingerbutikk.map((sb) =>
-                                <tr key={'butikk' + sb.butikk.storeId}>
-                                    <td>{sb.butikk.butikknavn}</td>
-                                    <td>{sb.count}</td>
+                            {handlingerbutikk.map((hb) =>
+                                <tr key={'butikk' + hb.butikk.storeId}>
+                                    <td>{hb.butikk.butikknavn}</td>
+                                    <td>{hb.count}</td>
                                 </tr>
                             )}
                         </tbody>
