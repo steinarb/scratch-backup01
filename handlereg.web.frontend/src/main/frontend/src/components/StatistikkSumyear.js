@@ -21,7 +21,7 @@ class StatistikkSumyear extends Component {
             <div>
                 <StyledLinkLeft to="/handlereg/statistikk">Tilbake</StyledLinkLeft>
                 <Header>
-                    <h1>Antall handlinger gjort i butikk</h1>
+                    <h1>Handlesum pr år</h1>
                 </Header>
                 <Container>
                 <div className="table-responsive table-sm table-striped">

@@ -11,6 +11,7 @@ import sumbutikkSaga from './sumbutikkSaga';
 import handlingerbutikkSaga from './handlingerbutikkSaga';
 import sistehandelSaga from './sistehandelSaga';
 import sumyearSaga from './sumyearSaga';
+import sumyearmonthSaga from './sumyearmonthSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -25,5 +26,6 @@ export default function* rootSaga() {
         fork(handlingerbutikkSaga),
         fork(sistehandelSaga),
         fork(sumyearSaga),
+        fork(sumyearmonthSaga),
     ]);
 };

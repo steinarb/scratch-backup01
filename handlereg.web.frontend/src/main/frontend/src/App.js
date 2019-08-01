@@ -8,6 +8,7 @@ import StatistikkSumbutikk from './components/StatistikkSumbutikk';
 import StatistikkHandlingerbutikk from './components/StatistikkHandlingerbutikk';
 import StatistikkSistehandel from './components/StatistikkSistehandel';
 import StatistikkSumyear from './components/StatistikkSumyear';
+import StatistikkSumyearmonth from './components/StatistikkSumyearmonth';
 import NyButikk from './components/NyButikk';
 import EndreButikk from './components/EndreButikk';
 import Login from './components/Login';
@@ -21,6 +22,7 @@ class App extends Component {
                     <Route exact path="/handlereg/statistikk/sumbutikk" component={StatistikkSumbutikk} />
                     <Route exact path="/handlereg/statistikk/handlingerbutikk" component={StatistikkHandlingerbutikk} />
                     <Route exact path="/handlereg/statistikk/sistehandel" component={StatistikkSistehandel} />
+                    <Route exact path="/handlereg/statistikk/sumyearmonth" component={StatistikkSumyearmonth} />
                     <Route exact path="/handlereg/statistikk/sumyear" component={StatistikkSumyear} />
                     <Route exact path="/handlereg/statistikk" component={Statistikk} />
                     <Route exact path="/handlereg/nybutikk" component={NyButikk} />

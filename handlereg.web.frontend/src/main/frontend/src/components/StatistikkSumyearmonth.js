@@ -6,37 +6,39 @@ import { Header } from './bootstrap/Header';
 import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';
-import { SISTEHANDEL_HENT } from '../reducers/sistehandel';
+import { SUMYEARMONTH_HENT } from '../reducers/sumyearmonth';
 
-class StatistikkSistehandel extends Component {
+class StatistikkSumyearmonth extends Component {
     componentDidMount() {
-        const { hentSistehandel } = this.props;
-        hentSistehandel();
+        const { hentSumyearmonth } = this.props;
+        hentSumyearmonth();
     }
 
     render() {
-        const { sistehandel } = this.props;
+        const { sumyearmonth } = this.props;
 
         return (
             <div>
                 <StyledLinkLeft to="/handlereg/statistikk">Tilbake</StyledLinkLeft>
                 <Header>
-                    <h1>Siste handel gjort i butikk</h1>
+                    <h1>Handlesum for år og måned</h1>
                 </Header>
                 <Container>
                 <div className="table-responsive table-sm table-striped">
                     <table className="table">
                         <thead>
                             <tr>
-                                <td>Butikk</td>
-                                <td>Sist handlet i</td>
+                                <td>År</td>
+                                <td>Måned</td>
+                                <td>Handlebeløp</td>
                             </tr>
                         </thead>
                         <tbody>
-                            {sistehandel.map((sb) =>
-                                <tr key={'butikk' + sb.butikk.storeId}>
-                                    <td>{sb.butikk.butikknavn}</td>
-                                    <td>{moment(sb.date).format("YYYY-MM-DD")}</td>
+                            {sumyearmonth.map((sym) =>
+                                <tr key={'year' + sym.year.value}>
+                                    <td>{sym.year.value}</td>
+                                    <td>{sym.month}</td>
+                                    <td>{sym.sum}</td>
                                 </tr>
                             )}
                         </tbody>
@@ -49,17 +51,17 @@ class StatistikkSistehandel extends Component {
 }
 
 const mapStateToProps = state => {
-    const sistehandel = state.sistehandel;
+    const sumyearmonth = state.sumyearmonth;
     return {
-        sistehandel,
+        sumyearmonth,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        hentSistehandel: () => dispatch(SISTEHANDEL_HENT()),
+        hentSumyearmonth: () => dispatch(SUMYEARMONTH_HENT()),
     };
 };
 
-StatistikkSistehandel = connect(mapStateToProps, mapDispatchToProps)(StatistikkSistehandel);
-export default StatistikkSistehandel;
+StatistikkSumyearmonth = connect(mapStateToProps, mapDispatchToProps)(StatistikkSumyearmonth);
+export default StatistikkSumyearmonth;

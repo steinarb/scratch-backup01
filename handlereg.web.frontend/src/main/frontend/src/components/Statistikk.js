@@ -18,7 +18,7 @@ class Statistikk extends Component {
                     <StyledLinkRight to="/handlereg/statistikk/handlingerbutikk">Antall handlinger i butikk</StyledLinkRight>
                     <StyledLinkRight to="/handlereg/statistikk/sistehandel">Siste handel i butikk</StyledLinkRight>
                     <StyledLinkRight to="/handlereg/statistikk/sumyear">Total handlesum fordelt på år</StyledLinkRight>
-                    <StyledLinkRight to="/handlereg/statistikk/sumyear">Total handlesum fordelt på år og måned</StyledLinkRight>
+                    <StyledLinkRight to="/handlereg/statistikk/sumyearmonth">Total handlesum fordelt på år og måned</StyledLinkRight>
                 </Container>
             </div>
         );

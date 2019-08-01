@@ -43,6 +43,10 @@ const errors = createSlice({
             const sumyear = action.payload;
             return { ...state, sumyear };
         },
+        SUMYEARMONTH_ERROR: (state, action) => {
+            const sumyearmonth = action.payload;
+            return { ...state, sumyearmonth };
+        },
     },
 });
 
