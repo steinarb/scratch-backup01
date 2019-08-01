@@ -270,7 +270,7 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public List<ButikkDate> sisteHandelIButikk() {
         List<ButikkDate> sisteHandelIButikk = new ArrayList<>();
-        String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, t.transaction_time from transactions t join stores s on s.store_id=t.store_id order by t.transaction_time desc";
+        String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, MAX(t.transaction_time) as handletid from transactions t join stores s on s.store_id=t.store_id group by s.store_id, s.store_name, s.gruppe, s.rekkefolge order by handletid desc";
         try (Connection connection = database.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet results = statement.executeQuery()) {
