@@ -51,7 +51,7 @@
         <postgresql.feature.version>1.1.0-SNAPSHOT</postgresql.feature.version>
         <jackson.version>2.9.9</jackson.version>
         <jackson.databind.version>2.9.9.2</jackson.databind.version>
-        <jersey-feature.version>1.2.0-SNAPSHOT</jersey-feature.version>
+        <jersey-feature.version>1.2.0</jersey-feature.version>
         <jersey.version>2.28</jersey.version>
         <open-iconic.version>1.1.1</open-iconic.version>
         <sonar.cpd.exclusions>
