@@ -26,6 +26,90 @@
                     <groupId>org.apache.karaf</groupId>
                     <artifactId>org.apache.karaf.client</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.karaf.features</groupId>
+                    <artifactId>framework</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-config</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-db2</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-derbyclient</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-derby</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-hsqldb</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-jtds</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-mariadb</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-mssql</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-oracle</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-pool-aries</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-c3po</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-sqlite</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-teradata</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-pool-c3p0</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-pool-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-pool-dbcp2</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-pool-hikaricp</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-pool-narayana</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.ops4j.pax.jdbc</groupId>
+                    <artifactId>pax-jdbc-pool-transx</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -42,6 +126,16 @@
             <artifactId>standard</artifactId>
             <type>xml</type>
             <classifier>features</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.karaf.specs</groupId>
+            <artifactId>org.apache.karaf.specs.locator</artifactId>
+            <version>${karaf.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
