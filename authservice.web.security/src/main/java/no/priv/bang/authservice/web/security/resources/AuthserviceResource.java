@@ -27,6 +27,7 @@ import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -40,6 +41,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.FormElement;
+import org.jsoup.select.Elements;
 import org.osgi.service.log.LogService;
 
 @Path("")
@@ -75,8 +78,11 @@ public class AuthserviceResource extends HtmlTemplateResource {
     @GET
     @Path("/login")
     @Produces(MediaType.TEXT_HTML)
-    public InputStream getLogin() {
-        return getClass().getClassLoader().getResourceAsStream(LOGIN_HTML);
+    public Response getLogin(@QueryParam("originalUri") String originalUri) {
+        Document html = loadHtmlFile(LOGIN_HTML, logservice);
+        fillFormValues(html, originalUri);
+
+        return Response.status(Response.Status.OK).entity(html.html()).build();
     }
 
     @POST
@@ -159,6 +165,14 @@ public class AuthserviceResource extends HtmlTemplateResource {
         }
 
         return Response.status(Response.Status.UNAUTHORIZED).entity("Not authenticated!\n").build();
+    }
+
+    private FormElement fillFormValues(Document html, String originalUri) {
+        FormElement form = (FormElement) html.getElementsByTag("form").get(0);
+        Elements originalUriHidden = form.select("input[id=originalUri]");
+        originalUriHidden.val(originalUri);
+
+        return form;
     }
 
 }
