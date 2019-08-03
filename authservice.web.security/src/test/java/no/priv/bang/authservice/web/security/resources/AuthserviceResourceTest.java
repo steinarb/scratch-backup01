@@ -94,7 +94,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         String username = "admin";
         String password = "admin";
         String redirectUrl = "https://myserver.com/resource";
-        Response response = resource.postLogin(username, password, redirectUrl);
+        Response response = resource.postLogin(username, password, redirectUrl, redirectUrl);
         assertEquals(302, response.getStatus());
         assertEquals(redirectUrl, response.getLocation().toString());
     }
@@ -111,7 +111,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         resource.logservice = logservice;
         String username = "admin";
         String password = "admin";
-        Response response = resource.postLogin(username, password, null);
+        Response response = resource.postLogin(username, password, null, null);
         assertEquals(302, response.getStatus());
         assertEquals("", response.getLocation().toString());
     }
@@ -127,7 +127,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         String username = "notauser";
         String password = "admin";
         String redirectUrl = "https://myserver.com/resource";
-        Response response = resource.postLogin(username, password, redirectUrl);
+        Response response = resource.postLogin(username, password, redirectUrl, redirectUrl);
         assertEquals(401, response.getStatus());
     }
 
@@ -142,7 +142,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         String username = "admin";
         String password = "wrongpassword";
         String redirectUrl = "https://myserver.com/resource";
-        Response response = resource.postLogin(username, password, redirectUrl);
+        Response response = resource.postLogin(username, password, redirectUrl, redirectUrl);
         assertEquals(401, response.getStatus());
     }
 
@@ -160,7 +160,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
             String username = "jad";
             String password = "wrong";
             String redirectUrl = "https://myserver.com/resource";
-            Response response = resource.postLogin(username, password, redirectUrl);
+            Response response = resource.postLogin(username, password, redirectUrl, redirectUrl);
             assertEquals(401, response.getStatus());
         } finally {
             unlockAccount("jad");
@@ -176,7 +176,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         String username = "jad";
         String password = "wrong";
         String redirectUrl = "https://myserver.com/resource";
-        Response response = resource.postLogin(username, password, redirectUrl);
+        Response response = resource.postLogin(username, password, redirectUrl, redirectUrl);
         assertEquals(401, response.getStatus());
     }
 
@@ -190,7 +190,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         String password = "wrong";
         String redirectUrl = "https://myserver.com/resource";
         assertThrows(InternalServerErrorException.class, () -> {
-                Response response = resource.postLogin(username, password, redirectUrl);
+                Response response = resource.postLogin(username, password, redirectUrl, redirectUrl);
                 assertEquals(401, response.getStatus());
             });
     }
@@ -210,7 +210,7 @@ class AuthserviceResourceTest extends ShiroTestBase {
         String username = "admin";
         String password = "admin";
         String redirectUrl = "https://myserver.com/resource";
-        resource.postLogin(username, password, redirectUrl);
+        resource.postLogin(username, password, redirectUrl, redirectUrl);
 
         Response response = resource.checkLogin();
         assertEquals(200, response.getStatus());

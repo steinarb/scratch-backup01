@@ -89,7 +89,7 @@ public class AuthserviceResource extends HtmlTemplateResource {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces("text/html")
-    public Response postLogin(@FormParam("username") String username, @FormParam("password") String password, @CookieParam("NSREDIRECT") String redirectUrl) {
+    public Response postLogin(@FormParam("username") String username, @FormParam("password") String password, @FormParam("originalUri") String originalUri, @CookieParam("NSREDIRECT") String redirectUrl) {
         Subject subject = SecurityUtils.getSubject();
 
         UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray(), true);
@@ -101,21 +101,25 @@ public class AuthserviceResource extends HtmlTemplateResource {
             String message = "unknown user";
             logservice.log(LogService.LOG_WARNING, LOGIN_ERROR + message, e);
             Document html = loadHtmlFileAndSetMessage(LOGIN_HTML, message, logservice);
+            fillFormValues(html, originalUri, username, password);
             return Response.status(Response.Status.UNAUTHORIZED).entity(html.html()).build();
         } catch (IncorrectCredentialsException  e) {
             String message = "wrong password";
             logservice.log(LogService.LOG_WARNING, LOGIN_ERROR + message, e);
             Document html = loadHtmlFileAndSetMessage(LOGIN_HTML, message, logservice);
+            fillFormValues(html, originalUri, username, password);
             return Response.status(Response.Status.UNAUTHORIZED).entity(html.html()).build();
         } catch (LockedAccountException  e) {
             String message = "locked account";
             logservice.log(LogService.LOG_WARNING, LOGIN_ERROR + message, e);
             Document html = loadHtmlFileAndSetMessage(LOGIN_HTML, message, logservice);
+            fillFormValues(html, originalUri, username, password);
             return Response.status(Response.Status.UNAUTHORIZED).entity(html.html()).build();
         } catch (AuthenticationException e) {
             String message = "general authentication error";
             logservice.log(LogService.LOG_WARNING, LOGIN_ERROR + message, e);
             Document html = loadHtmlFileAndSetMessage(LOGIN_HTML, message, logservice);
+            fillFormValues(html, originalUri, username, password);
             return Response.status(Response.Status.UNAUTHORIZED).entity(html.html()).build();
         } catch (Exception e) {
             logservice.log(LogService.LOG_ERROR, "Login error: internal server error", e);
@@ -171,6 +175,18 @@ public class AuthserviceResource extends HtmlTemplateResource {
         FormElement form = (FormElement) html.getElementsByTag("form").get(0);
         Elements originalUriHidden = form.select("input[id=originalUri]");
         originalUriHidden.val(originalUri);
+
+        return form;
+    }
+
+    private FormElement fillFormValues(Document html, String originalUri, String username, String password) {
+        FormElement form = (FormElement) html.getElementsByTag("form").get(0);
+        Elements originalUriHidden = form.select("input[id=originalUri]");
+        originalUriHidden.val(originalUri);
+        Elements usernameInput = form.select("input[id=username]");
+        usernameInput.val(username);
+        Elements passwordInput = form.select("input[id=password]");
+        passwordInput.val(password);
 
         return form;
     }
