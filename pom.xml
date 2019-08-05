@@ -111,7 +111,6 @@
     <modules>
         <module>modelstore.implementation</module>
         <module>modelstore.tests</module>
-        <module>modelstore.gogoshell</module>
     </modules>
 
 </project>
