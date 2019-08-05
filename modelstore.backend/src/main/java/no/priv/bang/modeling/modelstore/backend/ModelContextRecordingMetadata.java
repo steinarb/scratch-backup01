@@ -1,4 +1,4 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -11,11 +11,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.ValueList;
-import static no.priv.bang.modeling.modelstore.impl.Aspects.*;
-import static no.priv.bang.modeling.modelstore.impl.ModelContexts.*;
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.ValueList;
+
+import static no.priv.bang.modeling.modelstore.backend.Aspects.*;
+import static no.priv.bang.modeling.modelstore.backend.ModelContexts.*;
 
 public class ModelContextRecordingMetadata implements ModelContext {
 

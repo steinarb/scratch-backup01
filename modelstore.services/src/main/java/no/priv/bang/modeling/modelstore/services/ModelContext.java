@@ -1,10 +1,8 @@
-package no.priv.bang.modeling.modelstore;
+package no.priv.bang.modeling.modelstore.services;
 
 import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
-
-import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
 
 /**
  * A ModelContext is a reference to a set of interconnected

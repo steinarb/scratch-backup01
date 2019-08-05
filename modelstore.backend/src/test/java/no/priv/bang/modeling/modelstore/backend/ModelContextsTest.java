@@ -1,10 +1,11 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
-import no.priv.bang.modeling.modelstore.ModelContext;
-import static no.priv.bang.modeling.modelstore.impl.ModelContexts.*;
+import static no.priv.bang.modeling.modelstore.backend.ModelContexts.*;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import no.priv.bang.modeling.modelstore.services.ModelContext;
 
 /**
  * Unit tests for {@link ModelContexts}

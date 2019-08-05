@@ -1,4 +1,4 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,15 +7,8 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Values.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Modelstore;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
-import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
-import no.priv.bang.modeling.modelstore.impl.PropertysetImpl;
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
+import static no.priv.bang.modeling.modelstore.backend.Propertysets.*;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
@@ -23,6 +16,11 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
 
 /**
  * This persist and restore the contents of a {@link Modelstore} to/from a

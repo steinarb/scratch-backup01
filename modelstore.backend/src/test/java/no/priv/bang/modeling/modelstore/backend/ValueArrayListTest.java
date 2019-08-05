@@ -1,16 +1,16 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import static org.junit.Assert.*;
-import static no.priv.bang.modeling.modelstore.impl.Values.*;
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
 
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
-
 import org.junit.Test;
+
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
 
 /**
  * Unit tests for {@link ValueArrayList}.

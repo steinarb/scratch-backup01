@@ -1,13 +1,13 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
-import no.priv.bang.modeling.modelstore.impl.Values;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
+
 
 /**
  * Singleton implementation of {@link Propertyset} intended to be used

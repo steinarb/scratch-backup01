@@ -1,10 +1,8 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.BuiltinAspects;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Modelstore;
+import no.priv.bang.modeling.modelstore.services.BuiltinAspects;
 
 /**
  * Return the IDs of the aspects that are always present in the

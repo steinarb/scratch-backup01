@@ -1,4 +1,4 @@
-package no.priv.bang.modeling.modelstore;
+package no.priv.bang.modeling.modelstore.services;
 
 import java.util.UUID;
 

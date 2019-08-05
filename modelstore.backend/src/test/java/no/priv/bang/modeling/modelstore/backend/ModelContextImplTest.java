@@ -1,8 +1,7 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
-import static no.priv.bang.modeling.modelstore.impl.Aspects.generalObjectAspectId;
-import static no.priv.bang.modeling.modelstore.impl.Aspects.modelAspectId;
-import static no.priv.bang.modeling.modelstore.impl.Propertysets.findWrappedPropertyset;
+import static no.priv.bang.modeling.modelstore.backend.Aspects.*;
+import static no.priv.bang.modeling.modelstore.backend.Propertysets.*;
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.compareAllPropertysets;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -14,14 +13,14 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Propertyset;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import com.fasterxml.jackson.core.JsonFactory;
+
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
 
 /**
  * Unit tests for class {@link ModelContextImpl}.

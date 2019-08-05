@@ -1,15 +1,16 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Values.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
+
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
+import static no.priv.bang.modeling.modelstore.backend.Propertysets.*;
 
 /**
  * Implementation of {@link Propertyset} backed by a {@link Map}.

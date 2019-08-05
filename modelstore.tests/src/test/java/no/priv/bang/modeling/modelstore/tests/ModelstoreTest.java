@@ -16,12 +16,6 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import no.priv.bang.modeling.modelstore.Modelstore;
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
@@ -29,6 +23,12 @@ import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
+
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Modelstore;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)

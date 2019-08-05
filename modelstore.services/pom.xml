@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>modelstore</artifactId>
-        <groupId>no.priv.bang.modeling</groupId>
+        <groupId>no.priv.bang.modeling.modelstore</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>modelstore.implementation</artifactId>
+    <artifactId>modelstore.services</artifactId>
     <packaging>bundle</packaging>
 
     <name>modelstore OSGi Bundle</name>

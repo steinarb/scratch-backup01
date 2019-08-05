@@ -11,12 +11,9 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Values.*;
-import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
-import static no.priv.bang.modeling.modelstore.impl.Aspects.*;
-import no.priv.bang.modeling.modelstore.impl.JsonGeneratorWithReferences;
-import no.priv.bang.modeling.modelstore.impl.JsonPropertysetPersister;
-import no.priv.bang.modeling.modelstore.impl.ModelstoreProvider;
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
+import static no.priv.bang.modeling.modelstore.backend.Propertysets.*;
+import static no.priv.bang.modeling.modelstore.backend.Aspects.*;
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
 
 import org.junit.Rule;
@@ -26,6 +23,14 @@ import org.junit.rules.TemporaryFolder;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+
+import no.priv.bang.modeling.modelstore.backend.JsonGeneratorWithReferences;
+import no.priv.bang.modeling.modelstore.backend.JsonPropertysetPersister;
+import no.priv.bang.modeling.modelstore.backend.ModelstoreProvider;
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Modelstore;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.ValueList;
 
 /**
  * Unit test for the {@link ModelContext} interface and its

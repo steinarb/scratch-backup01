@@ -1,4 +1,4 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
 
 /**
  * Common code and constants for {@link ModelContext} implementations.

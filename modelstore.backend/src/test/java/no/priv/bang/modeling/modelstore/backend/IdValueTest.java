@@ -1,14 +1,15 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import static org.junit.Assert.*;
 
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Values.*;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
 
 /**
  * Unit tests for {@link IdValue}.

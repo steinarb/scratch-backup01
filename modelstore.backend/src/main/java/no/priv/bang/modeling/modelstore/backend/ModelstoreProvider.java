@@ -1,9 +1,8 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import javax.inject.Provider;
 
-import no.priv.bang.modeling.modelstore.Modelstore;
-import no.steria.osgi.jsr330activator.Jsr330Activator;
+import no.priv.bang.modeling.modelstore.services.Modelstore;
 
 /**
  * A thin wrapper around {@link ModelstoreBase} that will

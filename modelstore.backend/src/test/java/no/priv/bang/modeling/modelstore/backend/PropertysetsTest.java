@@ -1,14 +1,15 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.util.UUID;
 
-import static no.priv.bang.modeling.modelstore.impl.Propertysets.*;
+import static no.priv.bang.modeling.modelstore.backend.Propertysets.*;
 import static org.junit.Assert.*;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Modelstore;
-import no.priv.bang.modeling.modelstore.Propertyset;
 
 import org.junit.Test;
+
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Modelstore;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
 
 /**
  * Unit tests for class {@link Propertysets}.

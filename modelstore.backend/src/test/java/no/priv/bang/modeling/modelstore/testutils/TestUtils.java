@@ -5,10 +5,9 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Modelstore;
-import no.priv.bang.modeling.modelstore.Value;
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
 
 /**
  * Contains static methods used in more than one unit test.

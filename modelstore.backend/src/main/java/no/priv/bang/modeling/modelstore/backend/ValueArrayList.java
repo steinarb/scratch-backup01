@@ -1,13 +1,14 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
-import static no.priv.bang.modeling.modelstore.impl.Values.*;
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
+
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
 
 class ValueArrayList extends AbstractList<Value> implements ValueList {
 

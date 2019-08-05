@@ -13,7 +13,10 @@ import java.nio.file.Files;
 import java.util.List;
 
 import static no.priv.bang.modeling.modelstore.testutils.TestUtils.*;
-import no.priv.bang.modeling.modelstore.impl.ModelstoreProvider;
+import no.priv.bang.modeling.modelstore.backend.ModelstoreProvider;
+import no.priv.bang.modeling.modelstore.services.ErrorBean;
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Modelstore;
 
 import org.junit.Rule;
 import org.junit.Test;

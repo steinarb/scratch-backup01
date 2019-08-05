@@ -1,6 +1,6 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
-import no.priv.bang.modeling.modelstore.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
 
 /**
  * Static methods for manipulating {@link Propertyset} instances.

@@ -1,7 +1,9 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
-import static no.priv.bang.modeling.modelstore.impl.Values.*;
-import no.priv.bang.modeling.modelstore.Propertyset;
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
+
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+
 
 class ComplexValue extends PropertysetValueBase {
 

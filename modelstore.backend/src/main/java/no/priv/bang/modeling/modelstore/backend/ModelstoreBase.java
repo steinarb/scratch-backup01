@@ -1,4 +1,4 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,9 +11,9 @@ import javax.inject.Provider;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
-import no.priv.bang.modeling.modelstore.ErrorBean;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Modelstore;
+import no.priv.bang.modeling.modelstore.services.ErrorBean;
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Modelstore;
 
 /**
  * Class implementing {@link Modelstore} for use as a base

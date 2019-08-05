@@ -1,7 +1,6 @@
-package no.priv.bang.modeling.modelstore.impl;
+package no.priv.bang.modeling.modelstore.backend;
 
-import static no.priv.bang.modeling.modelstore.impl.Values.getNilPropertyset;
-import static no.priv.bang.modeling.modelstore.impl.Values.newList;
+import static no.priv.bang.modeling.modelstore.backend.Values.*;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -17,11 +16,12 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.core.JsonFactory;
 
-import no.priv.bang.modeling.modelstore.Modelstore;
-import no.priv.bang.modeling.modelstore.Propertyset;
-import no.priv.bang.modeling.modelstore.ModelContext;
-import no.priv.bang.modeling.modelstore.Value;
-import no.priv.bang.modeling.modelstore.ValueList;
+import no.priv.bang.modeling.modelstore.services.ModelContext;
+import no.priv.bang.modeling.modelstore.services.Modelstore;
+import no.priv.bang.modeling.modelstore.services.Propertyset;
+import no.priv.bang.modeling.modelstore.services.Value;
+import no.priv.bang.modeling.modelstore.services.ValueList;
+
 
 public class ModelContextImpl implements ModelContext {
 
