@@ -10,6 +10,11 @@
 
     <name>modelstore parent project</name>
 
+    <modules>
+        <module>modelstore.implementation</module>
+        <module>modelstore.tests</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.bundle.plugin.version>2.3.7</maven.bundle.plugin.version>
@@ -107,10 +112,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <modules>
-        <module>modelstore.implementation</module>
-        <module>modelstore.tests</module>
-    </modules>
 
 </project>
