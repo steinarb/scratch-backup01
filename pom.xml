@@ -19,6 +19,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.bundle.plugin.version>2.3.7</maven.bundle.plugin.version>
+        <osgi.version>6.0.0</osgi.version>
         <pax.exam.version>4.2.0</pax.exam.version>
         <pax.url.version>2.1.0</pax.url.version>
         <logback.version>1.0.4</logback.version>
@@ -30,19 +31,7 @@
             <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.core</artifactId>
-                <version>4.3.0</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.osgi</groupId>
-                <artifactId>org.osgi.core</artifactId>
-                <version>4.3.1</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.osgi</groupId>
-                <artifactId>org.osgi.compendium</artifactId>
-                <version>4.3.1</version>
+                <version>${osgi.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>

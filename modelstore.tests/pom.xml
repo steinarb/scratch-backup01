@@ -42,10 +42,6 @@
             <artifactId>org.osgi.core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
-        </dependency>
-        <dependency>
             <groupId>no.priv.bang.modeling.modelstore</groupId>
             <artifactId>modelstore.backend</artifactId>
             <version>${project.version}</version>
