@@ -45,7 +45,7 @@ public class ModelContextTest {
 
     @Test
     public void testCreatePropertyset() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
 
         // Get a propertyset instance and verify that it is a non-nil instance
@@ -64,7 +64,7 @@ public class ModelContextTest {
 
     @Test
     public void testList() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
 
         ValueList list = context.createList();
@@ -102,7 +102,7 @@ public class ModelContextTest {
 
     @Test
     public void testEmbeddedAspects() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         int numberOfEmbeddedAspects = 6; // Adjust when adding embedded aspects
 
@@ -112,7 +112,7 @@ public class ModelContextTest {
 
     @Test
     public void testFindPropertysetById() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
 
         // Get a propertyset by id and verify that it is empty initially
@@ -154,7 +154,7 @@ public class ModelContextTest {
 
     @Test
     public void testFindPropertysetOfAspect() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
 
         buildModelWithAspects(context);
@@ -177,7 +177,7 @@ public class ModelContextTest {
      */
     @Test
     public void testPropertysetWithMultipleAspects() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
 
         // Create two aspects
@@ -206,7 +206,7 @@ public class ModelContextTest {
 
     @Test
     public void experimentalJacksonPersist() throws IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         buildModelWithAspects(context);
 
@@ -229,7 +229,7 @@ public class ModelContextTest {
     public void testJsonGeneratorWithReference() throws IOException {
         // Create two propertysets with ids, and make a reference to propertyset
         // "b" from propertyset "a".
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         UUID idA = UUID.randomUUID();
         Propertyset a = context.findPropertyset(idA);
@@ -272,7 +272,7 @@ public class ModelContextTest {
      */
     @Test
     public void testMergeNoOverlapBetweenContexts() throws IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         buildPropertysetA(context, UUID.randomUUID());
         assertEquals("Expected context to contain metadata+1 propertyset", 2, context.listAllPropertysets().size());
@@ -309,7 +309,7 @@ public class ModelContextTest {
      */
     @Test
     public void testMergeWithOverlapBetweenContexts() throws IOException, InterruptedException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         UUID aId = UUID.randomUUID();
         buildPropertysetA(context, aId);
@@ -369,7 +369,7 @@ public class ModelContextTest {
      */
     @Test
     public void testMergeWithNull() throws IOException, InterruptedException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         UUID aId = UUID.randomUUID();
         buildPropertysetA(context, aId);

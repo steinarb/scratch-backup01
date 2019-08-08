@@ -186,7 +186,7 @@ public class ModelContextRecordingMetadataTest {
      */
     @Test
     public void testSetLastmodfiedtimes() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContextRecordingMetadata context = (ModelContextRecordingMetadata) modelstore.createContext();
         Propertyset metadataWithErrors = createMetadataWithErrors(context);
         context.setLastmodifiedtimes(metadataWithErrors);

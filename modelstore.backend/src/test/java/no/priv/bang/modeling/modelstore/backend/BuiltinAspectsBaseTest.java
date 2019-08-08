@@ -28,7 +28,7 @@ public class BuiltinAspectsBaseTest {
      */
     @Before
     public void setUp() {
-        modelstore = new ModelstoreProvider().get();
+        modelstore = new ModelstoreProvider();
         context = modelstore.createContext();
     }
 

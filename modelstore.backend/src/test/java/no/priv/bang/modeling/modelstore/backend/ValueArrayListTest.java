@@ -24,7 +24,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddGetPutRemove() {
-        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().getDefaultContext();
         ValueList list = newList();
         assertEquals(0, list.size());
         list.add(toStringValue("a"));
@@ -147,7 +147,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testAddSetGetPropertyset() {
-        ModelContext modelContext = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext modelContext = new ModelstoreProvider().getDefaultContext();
         Propertyset objectWithoutId = modelContext.createPropertyset();
         objectWithoutId.setDoubleProperty("c", 3.14);
         UUID id = UUID.randomUUID();
@@ -236,7 +236,7 @@ public class ValueArrayListTest {
      */
     @Test
     public void testCopyConstructor() {
-        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().getDefaultContext();
         UUID id = UUID.randomUUID();
         ValueList original = newList();
         populateList(original, context, id);

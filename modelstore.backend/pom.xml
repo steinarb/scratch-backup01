@@ -27,12 +27,8 @@
             <artifactId>org.osgi.core</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.steria.osgi.jsr330activator</groupId>
-            <artifactId>jsr330activator.implementation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -49,14 +45,9 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>${maven.bundle.plugin.version}</version>
-                <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>no.priv.bang.modeling.modelstore</Bundle-SymbolicName>
-                        <Bundle-Activator>no.steria.osgi.jsr330activator.Jsr330Activator</Bundle-Activator>
-                        <Export-Package>no.priv.bang.modeling.modelstore</Export-Package>
-                        <Embed-Dependency>jsr330activator.implementation;inline=true,javax.inject;inline=true</Embed-Dependency>
+                        <Export-Package>!*</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>

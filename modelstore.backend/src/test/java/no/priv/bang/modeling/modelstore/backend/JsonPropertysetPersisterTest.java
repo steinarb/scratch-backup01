@@ -214,7 +214,7 @@ public class JsonPropertysetPersisterTest {
     @Test
     public void testPersistNullFile() throws IOException {
         thrown.expect(NullPointerException.class);
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -231,7 +231,7 @@ public class JsonPropertysetPersisterTest {
     @Test
     public void testPersistFileInNonexistingDirectory() throws IOException {
         thrown.expect(FileNotFoundException.class);
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -249,7 +249,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testPersistNullStream() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -277,7 +277,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testPersistIntoStreamThrowingExceptions() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -307,7 +307,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testRestoreNullFile() throws JsonParseException, IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -335,7 +335,7 @@ public class JsonPropertysetPersisterTest {
     @Test
     public void testRestoreFileNotJson() throws URISyntaxException, JsonParseException, IOException {
         thrown.expect(JsonParseException.class);
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -353,7 +353,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testRestoreNullStream() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -380,7 +380,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testRestoreStreamNotJson() throws URISyntaxException, IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -409,7 +409,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testRestoreFromStream() throws URISyntaxException, IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -439,7 +439,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testRestoreEmptyArrayFromStream() throws URISyntaxException, IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);
@@ -469,7 +469,7 @@ public class JsonPropertysetPersisterTest {
      */
     @Test
     public void testRestoreObjectOnTopLevelFromStream() throws URISyntaxException, IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
         JsonFactory jsonFactory = new JsonFactory();
         JsonPropertysetPersister persister = new JsonPropertysetPersister(jsonFactory);

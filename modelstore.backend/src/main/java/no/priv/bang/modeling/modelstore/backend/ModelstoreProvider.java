@@ -1,21 +1,14 @@
 package no.priv.bang.modeling.modelstore.backend;
 
-import javax.inject.Provider;
+import org.osgi.service.component.annotations.Component;
 
 import no.priv.bang.modeling.modelstore.services.Modelstore;
 
 /**
- * A thin wrapper around {@link ModelstoreBase} that will
- * be picked up by the {@link Jsr330Activator} and be presented
- * in OSGi as a {@link Modelstore} service.
- *
- * @author Steinar Bang
+ * An OSGi Declarative Services component providing an implementation of
+ * the {@link Modelstore} service.
  *
  */
-public class ModelstoreProvider extends ModelstoreBase implements Provider<Modelstore> {
-
-    public Modelstore get() {
-        return this;
-    }
-
+@Component(service=Modelstore.class, immediate = true)
+public class ModelstoreProvider extends ModelstoreBase  {
 }

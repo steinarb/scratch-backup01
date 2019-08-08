@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Provider;
-
 import com.fasterxml.jackson.core.JsonFactory;
 
 import no.priv.bang.modeling.modelstore.services.ErrorBean;

@@ -287,7 +287,7 @@ public class PropertysetImplTest {
      */
     @Test
     public void testGetComplexProperty() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         Propertyset propertyset = context.createPropertyset();
 
@@ -392,7 +392,7 @@ public class PropertysetImplTest {
      */
     @Test
     public void testGetListProperty() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         Propertyset propertyset = context.createPropertyset();
 
@@ -448,7 +448,7 @@ public class PropertysetImplTest {
 
     @Test
     public void testGetProperty() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         Propertyset emptypropertyset = context.createPropertyset();
         Value nosuchproperty = emptypropertyset.getProperty("nosuchproperty");
@@ -479,7 +479,7 @@ public class PropertysetImplTest {
      */
     @Test
     public void testSetProperty() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
 
         // Verify that id can't be set
@@ -506,7 +506,7 @@ public class PropertysetImplTest {
     public void testHashCode() {
         Propertyset emptypropertyset = new PropertysetImpl();
         assertEquals(31, emptypropertyset.hashCode());
-        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().getDefaultContext();
         UUID id = UUID.fromString("8ce20479-8876-4d84-98a3-c14b53715c5d");
         Propertyset propertyset = new PropertysetImpl();
         populatePropertyset(propertyset, context, id);
@@ -521,7 +521,7 @@ public class PropertysetImplTest {
         assertTrue(emptypropertyset.equals(getNilPropertyset()));
 
         // Compare two identical but propertysets that aren't the same object
-        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().getDefaultContext();
         UUID id = UUID.randomUUID();
         Propertyset propertyset1 = new PropertysetImpl();
         populatePropertyset(propertyset1, context, id);
@@ -540,7 +540,7 @@ public class PropertysetImplTest {
 
     @Test
     public void testCopyConstructor() {
-        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().getDefaultContext();
         UUID id = UUID.randomUUID();
         Propertyset propertyset = new PropertysetImpl();
         populatePropertyset(propertyset, context, id);
@@ -551,7 +551,7 @@ public class PropertysetImplTest {
 
     @Test
     public void testCopyConstructorOnPropertysetWithIdAndAspect() {
-        ModelContext context = new ModelstoreProvider().get().getDefaultContext();
+        ModelContext context = new ModelstoreProvider().getDefaultContext();
         UUID id = UUID.randomUUID();
         UUID propsetId = UUID.randomUUID();
         Propertyset propertyset = context.findPropertyset(propsetId);

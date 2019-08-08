@@ -39,7 +39,7 @@ public class ModelstoreTest {
      */
     @Test
     public void testGetModelContext() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.getDefaultContext();
         assertNotNull(context);
         assertEquals("Expected the built-in aspects", 6, context.listAllAspects().size());
@@ -51,7 +51,7 @@ public class ModelstoreTest {
      */
     @Test
     public void testRestoreModelContext() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
         ModelContext context = modelstore.restoreContext(carsAndBicylesStream);
 
@@ -66,7 +66,7 @@ public class ModelstoreTest {
      */
     @Test
     public void testPersistRestoreModelContext() throws IOException {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
         ModelContext context1 = modelstore.restoreContext(carsAndBicylesStream);
 
@@ -91,7 +91,7 @@ public class ModelstoreTest {
      */
     @Test
     public void testPersistRestoreModelContextUsingPipedStreams() throws IOException {
-        final Modelstore modelstore = new ModelstoreProvider().get();
+        final Modelstore modelstore = new ModelstoreProvider();
         InputStream carsAndBicylesStream = getClass().getResourceAsStream("/json/cars_and_bicycles.json");
         final ModelContext context1 = modelstore.restoreContext(carsAndBicylesStream);
 
@@ -124,7 +124,7 @@ public class ModelstoreTest {
      */
     @Test
     public void testLogMultithreading() throws IOException, InterruptedException {
-        final Modelstore modelstore = new ModelstoreProvider().get();
+        final Modelstore modelstore = new ModelstoreProvider();
 
         Thread other = new Thread(new Runnable() {
                 public void run() {

@@ -23,7 +23,7 @@ public class PropertysetsTest {
      */
     @Test
     public void testFindWrappedPropertyset() {
-        Modelstore modelstore = new ModelstoreProvider().get();
+        Modelstore modelstore = new ModelstoreProvider();
         ModelContext context = modelstore.createContext();
 
         // Test unwrapping of a wrapped propertyset
