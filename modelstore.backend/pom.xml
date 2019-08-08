@@ -21,6 +21,14 @@
             <groupId>no.priv.bang.modeling.modelstore</groupId>
             <artifactId>modelstore.services</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>no.priv.bang.modeling.modelstore</groupId>
+            <artifactId>modelstore.services</artifactId>
+            <version>${project.version}</version>
+            <classifier>features</classifier>
+            <type>xml</type>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
@@ -50,6 +58,10 @@
                         <Export-Package>!*</Export-Package>
                     </instructions>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.karaf.tooling</groupId>
+                <artifactId>karaf-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

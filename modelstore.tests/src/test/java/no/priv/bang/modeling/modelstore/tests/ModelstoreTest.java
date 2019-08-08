@@ -1,10 +1,8 @@
 package no.priv.bang.modeling.modelstore.tests;
 
 import static org.junit.Assert.*;
-import static org.ops4j.pax.exam.CoreOptions.junitBundles;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
-import static org.ops4j.pax.exam.CoreOptions.options;
-import static org.ops4j.pax.exam.CoreOptions.systemProperty;
+import static org.ops4j.pax.exam.CoreOptions.*;
+import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
+import org.ops4j.pax.exam.options.MavenArtifactUrlReference;
 import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 
@@ -39,13 +38,13 @@ public class ModelstoreTest extends ModelstoreIntegrationtestBase {
 
     @Configuration
     public Option[] config() {
+        final MavenArtifactUrlReference authserviceFeatureRepo = maven().groupId("no.priv.bang.modeling.modelstore").artifactId("modelstore.backend").version("LATEST").type("xml").classifier("features");
         return options(
             systemProperty("logback.configurationFile").value("file:src/test/resources/logback.xml"),
             mavenBundle("org.slf4j", "slf4j-api", "1.7.2"),
             mavenBundle("ch.qos.logback", "logback-core", "1.0.4"),
             mavenBundle("ch.qos.logback", "logback-classic", "1.0.4"),
-            mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.5.3"),
-            mavenBundle("no.priv.bang.modeling", "modelstore.implementation", getMavenProjectVersion()),
+            features(authserviceFeatureRepo, "modelstore.backend"),
             junitBundles());
     }
 
