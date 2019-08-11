@@ -56,6 +56,11 @@
             <artifactId>org.osgi.core</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.framework</artifactId>
+            <version>5.6.2</version>
+        </dependency>
+        <dependency>
             <groupId>no.priv.bang.modeling.modelstore</groupId>
             <artifactId>modelstore.services</artifactId>
             <version>${project.version}</version>
