@@ -25,6 +25,14 @@
                     <groupId>org.ops4j.pax.logging</groupId>
                     <artifactId>pax-logging-api</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.framework</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.eclipse.platform</groupId>
+                    <artifactId>org.eclipse.osgi</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -46,11 +54,6 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.framework</artifactId>
-            <version>5.6.2</version>
         </dependency>
         <dependency>
             <groupId>no.priv.bang.modeling.modelstore</groupId>
