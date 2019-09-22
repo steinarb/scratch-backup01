@@ -13,7 +13,7 @@ const nyhandling = createSlice({
     initialState: defaultState,
     reducers: {
         BELOP_ENDRE: (state, action) => {
-            const belop = action.payload;
+            const belop = !isNaN(action.payload) && (action.payload.endsWith('.') ? action.payload : parseFloat(action.payload));
             return { ...state, belop };
         },
         BUTIKK_ENDRE: (state, action) => {
