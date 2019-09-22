@@ -2,6 +2,9 @@
 
 Dette er en webapp som brukes til å registrere handling i butikker.
 
+** Utviklingsstatus
+[[https://travis-ci.org/steinarb/handlereg][file:https://travis-ci.org/steinarb/handlereg.svg?branch=master]]
+
 ** Installasjon
 
 Kjør følgende i karaf console:
