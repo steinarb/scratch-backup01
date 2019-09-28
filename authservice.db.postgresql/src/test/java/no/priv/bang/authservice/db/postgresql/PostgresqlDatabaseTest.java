@@ -33,6 +33,8 @@ import org.junit.jupiter.api.Test;
 import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
 import org.osgi.service.jdbc.DataSourceFactory;
 
+import liquibase.exception.DatabaseException;
+
 import static no.priv.bang.authservice.definitions.AuthserviceConstants.*;
 
 import no.priv.bang.authservice.db.postgresql.PostgresqlDatabase;
@@ -84,7 +86,45 @@ class PostgresqlDatabaseTest {
         database.setLogservice(logservice);
         DataSourceFactory factory = mock(DataSourceFactory.class);
         DataSource datasource = mock(DataSource.class);
-        when(datasource.getConnection()).thenThrow(SQLException.class);
+        Connection connection = mock(Connection.class);
+        when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
+        when(datasource.getConnection()).thenReturn(connection);
+        when(factory.createDataSource(any())).thenReturn(datasource);
+        database.setDataSourceFactory(factory);
+
+        assertThrows(AuthserviceException.class, () -> {
+                database.activate(Collections.emptyMap());
+            });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testCreateWhenLockExceptionIsThrown() throws Exception {
+        MockLogService logservice = new MockLogService();
+        PostgresqlDatabase database = new PostgresqlDatabase();
+        database.setLogservice(logservice);
+        DataSourceFactory factory = mock(DataSourceFactory.class);
+        DataSource datasource = mock(DataSource.class);
+        Connection connection = mock(Connection.class);
+        when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
+        when(datasource.getConnection()).thenReturn(connection);
+        when(factory.createDataSource(any())).thenReturn(datasource);
+        database.setDataSourceFactory(factory);
+
+        assertThrows(AuthserviceException.class, () -> {
+                database.activate(Collections.emptyMap());
+            });
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    void testCreateWhenSQLExceptionIsThrownBeforeLiquibaseStarts() throws Exception {
+        MockLogService logservice = new MockLogService();
+        PostgresqlDatabase database = new PostgresqlDatabase();
+        database.setLogservice(logservice);
+        DataSourceFactory factory = mock(DataSourceFactory.class);
+        DataSource datasource = mock(DataSource.class);
+        when(datasource.getConnection()).thenThrow(DatabaseException.class);
         when(factory.createDataSource(any())).thenReturn(datasource);
         database.setDataSourceFactory(factory);
 
