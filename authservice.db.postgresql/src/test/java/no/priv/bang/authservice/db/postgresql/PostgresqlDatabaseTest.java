@@ -35,6 +35,8 @@ import org.junit.jupiter.api.Test;
 import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
 import org.osgi.service.jdbc.DataSourceFactory;
 
+import com.mockrunner.mock.jdbc.MockConnection;
+
 import liquibase.exception.DatabaseException;
 
 import static no.priv.bang.authservice.definitions.AuthserviceConstants.*;
@@ -107,8 +109,8 @@ class PostgresqlDatabaseTest {
         database.setLogservice(logservice);
         DataSourceFactory factory = mock(DataSourceFactory.class);
         DataSource datasource = mock(DataSource.class);
-        Connection connection = createMockConnection();
-        when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
+        MockConnection connection = new MockConnection();
+        //when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
         when(datasource.getConnection()).thenReturn(connection);
         when(factory.createDataSource(any())).thenReturn(datasource);
         database.setDataSourceFactory(factory);
