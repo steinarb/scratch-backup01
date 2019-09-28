@@ -37,6 +37,8 @@ import org.osgi.service.jdbc.DataSourceFactory;
 
 import com.mockrunner.mock.jdbc.MockConnection;
 
+import liquibase.Liquibase;
+import liquibase.configuration.GlobalConfiguration;
 import liquibase.exception.DatabaseException;
 
 import static no.priv.bang.authservice.definitions.AuthserviceConstants.*;
@@ -46,10 +48,10 @@ import no.priv.bang.authservice.definitions.AuthserviceException;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
 
 class PostgresqlDatabaseTest {
-    DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
-
     @Test
     void testCreate() throws Exception {
+        DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
+
         MockLogService logservice = new MockLogService();
         PostgresqlDatabase database = new PostgresqlDatabase();
         database.setLogservice(logservice);
@@ -101,24 +103,22 @@ class PostgresqlDatabaseTest {
         //    });
     }
 
-	@SuppressWarnings("unchecked")
     @Test
     void testCreateWhenLockExceptionIsThrown() throws Exception {
+    	System.setProperty("changeLogLockWaitTimeInMinutes", "1");
+        DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
+        createDatatbaseAndSetLiquibaseLock(derbyDataSourceFactory);
+
         MockLogService logservice = new MockLogService();
         PostgresqlDatabase database = new PostgresqlDatabase();
         database.setLogservice(logservice);
-        DataSourceFactory factory = mock(DataSourceFactory.class);
-        DataSource datasource = mock(DataSource.class);
-        MockConnection connection = new MockConnection();
-        //when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
-        when(datasource.getConnection()).thenReturn(connection);
-        when(factory.createDataSource(any())).thenReturn(datasource);
-        database.setDataSourceFactory(factory);
-
-        database.activate(Collections.emptyMap());
+        database.setDataSourceFactory(derbyDataSourceFactory);
+        Map<String, Object> config = createConfigThatWillWorkWithDerby();
+        database.activate(config);
+        assertEquals(2, logservice.getLogmessages().size());
     }
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
     @Test
     void testCreateWhenSQLExceptionIsThrownBeforeLiquibaseStarts() throws Exception {
         MockLogService logservice = new MockLogService();
@@ -167,6 +167,21 @@ class PostgresqlDatabaseTest {
         assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_USER));
         assertEquals("karaf", properties.getProperty(DataSourceFactory.JDBC_PASSWORD));
     }
+
+    private void createDatatbaseAndSetLiquibaseLock(DataSourceFactory derbyDataSourceFactory) throws Exception {
+        MockLogService logservice = new MockLogService();
+        PostgresqlDatabase database = new PostgresqlDatabase();
+        database.setLogservice(logservice);
+        database.setDataSourceFactory(derbyDataSourceFactory);
+        Map<String, Object> config = createConfigThatWillWorkWithDerby();
+        database.activate(config);
+
+        try(Connection connection = database.getConnection()) {
+            try(PreparedStatement statment = connection.prepareStatement("update databasechangeloglock set locked=true")) {
+                statment.executeUpdate();
+            }
+        }
+	}
 
     Connection createMockConnection() throws Exception {
 		Connection connection = mock(Connection.class);
