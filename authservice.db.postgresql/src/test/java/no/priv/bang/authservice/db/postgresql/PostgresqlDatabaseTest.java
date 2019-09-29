@@ -95,11 +95,10 @@ class PostgresqlDatabaseTest {
         database.setDataSourceFactory(factory);
 
         database.activate(Collections.emptyMap());
-        //assertThrows(AuthserviceException.class, () -> {
-        //    });
+        assertEquals(2, logservice.getLogmessages().size());
     }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @Test
     void testCreateWhenLockExceptionIsThrown() throws Exception {
         MockLogService logservice = new MockLogService();
@@ -167,22 +166,22 @@ class PostgresqlDatabaseTest {
     }
 
     Connection createMockConnection() throws Exception {
-		Connection connection = mock(Connection.class);
-		DatabaseMetaData metadata = mock(DatabaseMetaData.class);
-		when(metadata.getDatabaseProductName()).thenReturn("mockdb");
-		when(metadata.getSQLKeywords()).thenReturn("insert, select, delete");
-		ResultSet tables = mock(ResultSet.class);
-		when(metadata.getTables(anyString(), anyString(), anyString(), any(String[].class))).thenReturn(tables);
-		Statement stmnt = mock(Statement.class);
-		ResultSet results = mock(ResultSet.class);
-		when(results.next()).thenReturn(true).thenReturn(false);
-		when(stmnt.executeQuery(anyString())).thenReturn(results);
-		when(connection.createStatement()).thenReturn(stmnt);
-		when(connection.getMetaData()).thenReturn(metadata);
-		return connection;
-	}
+        Connection connection = mock(Connection.class);
+        DatabaseMetaData metadata = mock(DatabaseMetaData.class);
+        when(metadata.getDatabaseProductName()).thenReturn("mockdb");
+        when(metadata.getSQLKeywords()).thenReturn("insert, select, delete");
+        ResultSet tables = mock(ResultSet.class);
+        when(metadata.getTables(anyString(), anyString(), anyString(), any(String[].class))).thenReturn(tables);
+        Statement stmnt = mock(Statement.class);
+        ResultSet results = mock(ResultSet.class);
+        when(results.next()).thenReturn(true).thenReturn(false);
+        when(stmnt.executeQuery(anyString())).thenReturn(results);
+        when(connection.createStatement()).thenReturn(stmnt);
+        when(connection.getMetaData()).thenReturn(metadata);
+        return connection;
+    }
 
-	private Map<String, Object> createConfigThatWillWorkWithDerby() {
+    private Map<String, Object> createConfigThatWillWorkWithDerby() {
         Map<String, Object> config = new HashMap<>();
         config.put(AUTHSERVICE_JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
         return config;

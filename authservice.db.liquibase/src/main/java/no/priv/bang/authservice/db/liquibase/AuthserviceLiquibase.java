@@ -44,9 +44,10 @@ public class AuthserviceLiquibase {
         try {
             Liquibase liquibase = createLiquibaseInstance(connection, "authservice-db-changelog/db-changelog-1.0.0.xml");
             liquibase.forceReleaseLocks();
+            logservice.log(LogService.LOG_INFO, "Liquibase lock successfully forced, continuing without modifying the schema");
             return true;
         } catch (Exception e) {
-        	logservice.log(LogService.LOG_WARNING, "Authservice failed to force lock", e);
+            logservice.log(LogService.LOG_WARNING, "Authservice failed to force lock", e);
             return false;
         }
     }

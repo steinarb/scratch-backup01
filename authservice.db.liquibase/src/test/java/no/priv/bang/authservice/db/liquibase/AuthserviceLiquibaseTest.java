@@ -74,7 +74,7 @@ class AuthserviceLiquibaseTest {
 
     @Test
     void testForceReleaseLocks() throws Exception {
-    	LogService logservice = new MockLogService();
+        LogService logservice = new MockLogService();
         Connection connection = createConnection();
         AuthserviceLiquibase handleregLiquibase = new AuthserviceLiquibase();
         boolean success = handleregLiquibase.forceReleaseLocks(connection, logservice);
@@ -83,7 +83,7 @@ class AuthserviceLiquibaseTest {
 
     @Test
     void testForceReleaseLocksWithFailure() throws Exception {
-    	LogService logservice = new MockLogService();
+        LogService logservice = new MockLogService();
         Connection connection = mock(Connection.class);
         AuthserviceLiquibase handleregLiquibase = new AuthserviceLiquibase();
         boolean success = handleregLiquibase.forceReleaseLocks(connection, logservice);

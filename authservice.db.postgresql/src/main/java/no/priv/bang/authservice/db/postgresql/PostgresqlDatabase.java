@@ -66,7 +66,6 @@ public class PostgresqlDatabase implements AuthserviceDatabaseService {
                 } catch (LockException e) {
                     logservice.log(LogService.LOG_WARNING, "Authservice PostgreSQL component failed to aquire liquibase lock, trying to force liquibase lock", e);
                     liquibase.forceReleaseLocks(connection, logservice);
-                    logservice.log(LogService.LOG_WARNING, "Liquibase lock successfully forced, continuing without modifying the schema");
                 }
             }
         } catch (DatabaseException e) {
