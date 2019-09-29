@@ -86,14 +86,14 @@ class PostgresqlDatabaseTest {
         database.setLogservice(logservice);
         DataSourceFactory factory = mock(DataSourceFactory.class);
         DataSource datasource = mock(DataSource.class);
-        Connection connection = createMockConnection();
-        when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
+        Connection connection = mock(Connection.class);
+        when(connection.getMetaData()).thenThrow(SQLException.class);
         when(datasource.getConnection()).thenReturn(connection);
         when(factory.createDataSource(any())).thenReturn(datasource);
         database.setDataSourceFactory(factory);
 
         database.activate(Collections.emptyMap());
-        assertEquals(2, logservice.getLogmessages().size());
+        assertEquals(1, logservice.getLogmessages().size());
     }
 
     @SuppressWarnings("unchecked")
