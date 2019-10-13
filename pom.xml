@@ -197,16 +197,10 @@
                             <supportedProjectType>war</supportedProjectType>
                         </supportedProjectTypes>
                         <instructions>
-                            <Import-Package>*</Import-Package>
-                            <Export-Package>*</Export-Package>
-                            <_removeheaders>
-                                Private-Package,
-                                Include-Resource,
-                                Embed-Dependency,
-                                Embed-Transitive
-                            </_removeheaders>
                             <!-- Enable processing of OSGI DS component annotations -->
                             <_dsannotations>*</_dsannotations>
+                            <!-- Inherit service injections from base class -->
+                            <_dsannotations-options>inherit</_dsannotations-options>
                             <!-- Enable processing of OSGI metatype annotations -->
                             <_metatypeannotations>*</_metatypeannotations>
                         </instructions>
