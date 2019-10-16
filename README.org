@@ -89,6 +89,8 @@ Alternatively, when using the [[https://svn.apache.org/repos/asf/karaf/site/prod
 
 | Version | Date         | Description                                                 |
 |---------+--------------+-------------------------------------------------------------|
+|   1.3.0 | [2019-10-14] | Update plugins and dependencies and fix [[https://github.com/steinarb/osgi-service/issues/1][issue #1]]            |
+|   1.2.0 | [2019-03-30] | Add methods to UserManagementService                        |
 |   1.1.0 | [2019-02-17] | Working javadoc, first version of the UserManagementService |
 |   1.0.0 | [2018-12-19] | First version of the DatabaseService                        |
 ** License
