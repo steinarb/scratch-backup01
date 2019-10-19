@@ -50,7 +50,7 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
         this.logservice = logservice;
     }
 
-    @Reference
+    @Reference(target="(osgi.jdbc.driver.name=derby)")
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
         this.dataSourceFactory = dataSourceFactory;
     }
