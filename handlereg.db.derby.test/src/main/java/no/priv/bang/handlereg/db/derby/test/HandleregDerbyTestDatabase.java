@@ -36,9 +36,10 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import no.priv.bang.handlereg.db.liquibase.HandleregLiquibase;
 import no.priv.bang.handlereg.services.HandleregDatabase;
 import no.priv.bang.handlereg.services.HandleregException;
+import no.priv.bang.osgiservice.database.DatabaseServiceBase;
 
 @Component(service=HandleregDatabase.class, immediate=true)
-public class HandleregDerbyTestDatabase implements HandleregDatabase {
+public class HandleregDerbyTestDatabase extends DatabaseServiceBase implements HandleregDatabase {
 
     PooledConnection pooledConnect;
     private LogService logservice;
@@ -70,11 +71,6 @@ public class HandleregDerbyTestDatabase implements HandleregDatabase {
             logError(message, e);
             throw new HandleregException(message, e);
         }
-    }
-
-    @Override
-    public Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
     }
 
     @Override

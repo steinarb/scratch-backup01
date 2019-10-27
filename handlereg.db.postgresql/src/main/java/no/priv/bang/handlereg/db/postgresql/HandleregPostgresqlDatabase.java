@@ -35,10 +35,12 @@ import liquibase.resource.ClassLoaderResourceAccessor;
 import no.priv.bang.handlereg.db.liquibase.HandleregLiquibase;
 import no.priv.bang.handlereg.services.HandleregDatabase;
 import no.priv.bang.handlereg.services.HandleregException;
+import no.priv.bang.osgiservice.database.DatabaseServiceBase;
+
 import static no.priv.bang.handlereg.services.HandleregConstants.*;
 
 @Component(service=HandleregDatabase.class, immediate=true)
-public class HandleregPostgresqlDatabase implements HandleregDatabase {
+public class HandleregPostgresqlDatabase extends DatabaseServiceBase implements HandleregDatabase {
 
     private LogService logservice;
     private DataSourceFactory dataSourceFactory;
@@ -69,11 +71,6 @@ public class HandleregPostgresqlDatabase implements HandleregDatabase {
             logError(message, e);
             throw new HandleregException(message, e);
         }
-    }
-
-    @Override
-    public Connection getConnection() throws SQLException {
-        return dataSource.getConnection();
     }
 
     @Override
