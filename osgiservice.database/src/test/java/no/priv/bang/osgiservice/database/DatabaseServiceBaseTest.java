@@ -19,9 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.sql.Connection;
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
+import org.osgi.service.jdbc.DataSourceFactory;
 
 class DatabaseServiceBaseTest {
 
@@ -54,6 +57,18 @@ class DatabaseServiceBaseTest {
                 Connection connection = service.getConnection();
                 assertNull(connection);
             });
+    }
+
+    @Test
+    void testCreateDatabaseConnectionProperties() {
+        Properties connectionProperties1 = DatabaseServiceBase.createDatabaseConnectionProperties("jdbc:postgresql:///ukelonn", "karaf", "karaf");
+        assertEquals("jdbc:postgresql:///ukelonn", connectionProperties1.get(DataSourceFactory.JDBC_URL));
+        assertEquals("karaf", connectionProperties1.get(DataSourceFactory.JDBC_USER));
+        assertEquals("karaf", connectionProperties1.get(DataSourceFactory.JDBC_PASSWORD));
+        Properties connectionProperties2 = DatabaseServiceBase.createDatabaseConnectionProperties("jdbc:postgresql:///ukelonn", "", "");
+        assertEquals("jdbc:postgresql:///ukelonn", connectionProperties2.get(DataSourceFactory.JDBC_URL));
+        assertNull(connectionProperties2.get(DataSourceFactory.JDBC_USER));
+        assertNull(connectionProperties2.get(DataSourceFactory.JDBC_PASSWORD));
     }
 
 }
