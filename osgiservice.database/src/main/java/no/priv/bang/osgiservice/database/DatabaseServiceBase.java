@@ -32,7 +32,7 @@ public abstract class DatabaseServiceBase implements DatabaseService {
         return getDatasource().getConnection();
     }
 
-    protected static Properties createDatabaseConnectionProperties(String jdbcUrl, String jdbcUser, String jdbcPassword) {
+    public static Properties createDatabaseConnectionProperties(String jdbcUrl, String jdbcUser, String jdbcPassword) {
         Properties properties = new Properties();
         properties.setProperty(DataSourceFactory.JDBC_URL, jdbcUrl);
         if (!"".equals(jdbcUser)) {
