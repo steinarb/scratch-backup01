@@ -10,6 +10,9 @@
             user=karaf
             password=karaf
         </config>
+        <capability>
+            osgi.service;objectClass=javax.sql.DataSource;effective:=active;osgi.jndi.service.name=jdbc/sonar-collector
+        </capability>
         <feature>jdbc</feature>
         <feature>postgresql</feature>
     </feature>
