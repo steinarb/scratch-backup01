@@ -76,6 +76,6 @@ public class SonarCollectorConfiguration {
             return metricKeys.split(",");
         }
 
-        return null;
+        return new String[0];
     }
 }

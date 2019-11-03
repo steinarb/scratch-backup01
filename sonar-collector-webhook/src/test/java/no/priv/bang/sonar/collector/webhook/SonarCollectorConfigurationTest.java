@@ -150,7 +150,7 @@ public class SonarCollectorConfigurationTest {
 
         // All properties will be null
         String[] metrickeys = configuration.getMetricKeys();
-        assertNull(metrickeys);
+        assertEquals(0, metrickeys.length);
     }
 
 }
