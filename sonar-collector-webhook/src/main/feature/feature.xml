@@ -14,7 +14,6 @@
             osgi.service;objectClass=javax.sql.DataSource;effective:=active;osgi.jndi.service.name=jdbc/sonar-collector
         </capability>
         <feature>jdbc</feature>
-        <feature>postgresql</feature>
     </feature>
     <feature name="${karaf-feature-name}">
         <capability>osgi.service;effective:=active;objectClass=org.osgi.service.jdbc.DataSourceFactory</capability>
@@ -24,8 +23,13 @@
         <feature>liquibase-core</feature>
     </feature>
 
-    <feature name="${karaf-feature-name}-with-postgresql">
+    <feature name="${karaf-feature-name}-with-jdbc">
         <feature>sonar-collector-postgresql-jdbc-provider</feature>
         <feature>${karaf-feature-name}</feature>
+    </feature>
+
+    <feature name="${karaf-feature-name}-with-postgresql">
+        <feature>postgresql</feature>
+        <feature>${karaf-feature-name}-with-jdbc</feature>
     </feature>
 </features>
