@@ -527,4 +527,15 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>ssh-maven-travis</id>
+            <url>sftp://maven.bang.priv.no/repository</url>
+        </repository>
+        <snapshotRepository>
+            <id>local</id>
+            <url>file:///var/www-maven/repository</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
