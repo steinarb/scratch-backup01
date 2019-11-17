@@ -42,8 +42,8 @@
         <pax.url.version>2.5.4</pax.url.version>
         <pax.jdbc.version>1.3.1</pax.jdbc.version>
         <shiro.version>1.4.1</shiro.version>
-        <liquibase.version>3.7.0</liquibase.version>
-        <liquibase.feature.version>3.7.0-SNAPSHOT</liquibase.feature.version>
+        <liquibase.version>3.8.1</liquibase.version>
+        <liquibase.feature.version>3.8.1-SNAPSHOT</liquibase.feature.version>
         <snakeyaml.version>1.23</snakeyaml.version>
         <derby.version>10.11.1.1</derby.version>
         <postgresql.version>42.2.8</postgresql.version>
