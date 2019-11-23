@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2018 Steinar Bang
+ * Copyright 2016-2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.ukelonn.db.postgresql;
+package no.priv.bang.ukelonn.db.liquibase.production;
 
 import java.sql.Connection;
 import java.util.Map;
@@ -38,7 +38,7 @@ import static no.priv.bang.ukelonn.UkelonnDatabaseConstants.*;
 import no.priv.bang.ukelonn.db.liquibase.UkelonnLiquibase;
 
 @Component(service=UkelonnDatabase.class, immediate=true)
-public class PGUkelonnDatabaseProvider extends DatabaseServiceBase implements UkelonnDatabase {
+public class ProductionLiquibaseRunner extends DatabaseServiceBase implements UkelonnDatabase {
     private LogService logService;
     private DataSourceFactory dataSourceFactory;
     private UkelonnLiquibaseFactory ukelonnLiquibaseFactory;
