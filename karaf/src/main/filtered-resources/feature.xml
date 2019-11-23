@@ -26,13 +26,28 @@
     <feature name="ukelonn" description="Ukelonn webapp" version="${project.version}">
         <feature>ukelonn-web-frontend</feature>
     </feature>
+    <feature name="ukelonn-authservice-db-test" version="${project.version}">
+        <config name="org.ops4j.datasource-authservice-test">
+            osgi.jdbc.driver.name=derby
+            dataSourceName=jdbc/authservice
+            url=jdbc:derby:memory:ukelonn;create=true
+            ops4j.preHook=authservicedb
+        </config>
+        <capability>
+            osgi.service;objectClass=javax.sql.DataSource;effective:=active;osgi.jndi.service.name=jdbc/authservice
+        </capability>
+        <feature>ukelonn-db-derby-test</feature>
+        <feature>authservice-db-liquibase-test</feature>
+        <feature>pax-jdbc-config</feature>
+    </feature>
     <feature name="ukelonn-with-derby" description="Ukelonn webapp" version="${project.version}">
         <feature>ukelonn-backend</feature>
-        <feature>authservice-with-testdb-dbrealm-and-session</feature>
-        <feature>ukelonn-db-derby-test</feature>
-        <feature>authservice-web-security-memorysession</feature>
-        <feature>authservice-web-security-dbrealm</feature>
         <feature>ukelonn</feature>
+        <feature>ukelonn-authservice-db-test</feature>
+        <feature>authservice-web-security-dbrealm</feature>
+        <feature>authservice-web-security-memorysession</feature>
+        <feature>authservice-users</feature>
+        <feature>authservice-web-security</feature>
     </feature>
     <feature name="ukelonn-with-postgresql" description="Ukelonn webapp" version="${project.version}">
         <feature>ukelonn-backend</feature>
