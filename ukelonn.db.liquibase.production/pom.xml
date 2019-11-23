@@ -20,13 +20,13 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ukelonn.db.postgresql</artifactId>
+    <artifactId>ukelonn.db.liquibase.production</artifactId>
 
-    <name>Ukelonn webapp PostgreSQL database connection</name>
+    <name>Ukelonn webapp production database setup</name>
 
     <properties>
-        <Bundle-SymbolicName>no.priv.bang.ukelonn.db.postgresql</Bundle-SymbolicName>
-        <karaf-feature-name>ukelonn-db-postgresql</karaf-feature-name>
+        <Bundle-SymbolicName>no.priv.bang.ukelonn.db.liquibase.production</Bundle-SymbolicName>
+        <karaf-feature-name>ukelonn-db-liquibase-production</karaf-feature-name>
     </properties>
 
     <dependencies>
