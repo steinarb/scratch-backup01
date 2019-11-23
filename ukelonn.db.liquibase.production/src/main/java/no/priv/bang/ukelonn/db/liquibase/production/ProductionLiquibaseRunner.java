@@ -16,10 +16,13 @@
 package no.priv.bang.ukelonn.db.liquibase.production;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.sql.DataSource;
+
+import org.ops4j.pax.jdbc.hook.PreHook;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,7 +41,7 @@ import static no.priv.bang.ukelonn.UkelonnDatabaseConstants.*;
 import no.priv.bang.ukelonn.db.liquibase.UkelonnLiquibase;
 
 @Component(service=UkelonnDatabase.class, immediate=true)
-public class ProductionLiquibaseRunner extends DatabaseServiceBase implements UkelonnDatabase {
+public class ProductionLiquibaseRunner implements PreHook {
     private LogService logService;
     private DataSourceFactory dataSourceFactory;
     private UkelonnLiquibaseFactory ukelonnLiquibaseFactory;
@@ -182,5 +185,11 @@ public class ProductionLiquibaseRunner extends DatabaseServiceBase implements Uk
     public String sumOverMonthQuery() {
         return "select sum(t.transaction_amount), extract(year from t.transaction_time) as year, extract(month from t.transaction_time) as month from transactions t join transaction_types tt on tt.transaction_type_id=t.transaction_type_id join accounts a on a.account_id=t.account_id where tt.transaction_is_work and a.username=? group by extract(year from t.transaction_time), extract(month from t.transaction_time) order by extract(year from t.transaction_time), extract(month from t.transaction_time)";
     }
+
+	@Override
+	public void prepare(DataSource ds) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
