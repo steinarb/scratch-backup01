@@ -296,9 +296,8 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public List<SumYear> totaltHandlebelopPrAar() {
         List<SumYear> totaltHandlebelopPrAar = new ArrayList<>();
-        String sql = database.sumOverYearQuery();
         try (Connection connection = database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            try (PreparedStatement statement = connection.prepareStatement("select * from sum_over_year_view")) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
                         double sum = results.getDouble(1);
@@ -318,9 +317,8 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public List<SumYearMonth> totaltHandlebelopPrAarOgMaaned() {
         List<SumYearMonth> totaltHandlebelopPrAarOgMaaned = new ArrayList<>();
-        String sql = database.sumOverMonthQuery();
         try (Connection connection = database.getConnection()) {
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            try (PreparedStatement statement = connection.prepareStatement("select * from sum_over_month_view")) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
                         double sum = results.getDouble(1);

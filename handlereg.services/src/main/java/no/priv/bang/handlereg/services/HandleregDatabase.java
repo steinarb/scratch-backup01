@@ -22,8 +22,4 @@ public interface HandleregDatabase extends DatabaseService {
 
     boolean forceReleaseLiquibaseLock();
 
-    String sumOverYearQuery();
-
-    String sumOverMonthQuery();
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Steinar Bang
+ * Copyright 2018-2019 Steinar Bang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package no.priv.bang.handlereg.db.derby.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -100,20 +99,6 @@ class HandleregDerbyTestDatabaseTest {
 
         boolean result = database.forceReleaseLiquibaseLock();
         assertFalse(result);
-    }
-
-    @Test
-    public void testSumOverYearQuery() {
-        HandleregDerbyTestDatabase database = new HandleregDerbyTestDatabase();
-        String sumOverYearQuery = database.sumOverYearQuery();
-        assertThat(sumOverYearQuery).isNotEmpty();
-    }
-
-    @Test
-    public void testSumOverMonthQuery() {
-        HandleregDerbyTestDatabase database = new HandleregDerbyTestDatabase();
-        String sumOverMonthQuery = database.sumOverMonthQuery();
-        assertThat(sumOverMonthQuery).isNotEmpty();
     }
 
     private void assertAccounts(HandleregDerbyTestDatabase database) throws Exception {
