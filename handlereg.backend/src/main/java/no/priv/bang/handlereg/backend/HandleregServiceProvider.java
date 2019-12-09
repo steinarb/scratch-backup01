@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.sql.DataSource;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,7 +38,6 @@ import no.priv.bang.handlereg.services.Butikk;
 import no.priv.bang.handlereg.services.ButikkCount;
 import no.priv.bang.handlereg.services.ButikkDate;
 import no.priv.bang.handlereg.services.ButikkSum;
-import no.priv.bang.handlereg.services.HandleregDatabase;
 import no.priv.bang.handlereg.services.HandleregException;
 import no.priv.bang.handlereg.services.HandleregService;
 import no.priv.bang.handlereg.services.NyHandling;
@@ -52,7 +53,7 @@ import no.priv.bang.osgiservice.users.UserManagementService;
 public class HandleregServiceProvider implements HandleregService {
 
     private LogService logservice;
-    private HandleregDatabase database;
+    private DataSource datasource;
     private UserManagementService useradmin;
 
     @Reference
@@ -60,9 +61,9 @@ public class HandleregServiceProvider implements HandleregService {
         this.logservice = logservice;
     }
 
-    @Reference
-    public void setDatabase(HandleregDatabase database) {
-        this.database = database;
+    @Reference(target = "(osgi.jndi.service.name=jdbc/handlereg)")
+    public void setDatasource(DataSource datasource) {
+        this.datasource = datasource;
     }
 
     @Reference
@@ -78,7 +79,7 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public Oversikt finnOversikt(String brukernavn) {
         String sql = "select a.account_id, a.username, (select sum(t1.transaction_amount) from transactions t1 where t1.account_id=a.account_id) - (select sum(t1.transaction_amount) from transactions t1 where t1.account_id!=a.account_id) as balance from accounts a where a.username=?";
-        try(Connection connection = database.getConnection()) {
+        try(Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, brukernavn);
                 try(ResultSet results = statement.executeQuery()) {
@@ -104,7 +105,7 @@ public class HandleregServiceProvider implements HandleregService {
     public List<Transaction> findLastTransactions(int userId) {
         List<Transaction> handlinger = new ArrayList<>();
         String sql = "select t.transaction_id, t.transaction_time, s.store_name, s.store_id, t.transaction_amount from transactions t join stores s on s.store_id=t.store_id where t.transaction_id in (select transaction_id from transactions where account_id=? order by transaction_time desc fetch next 5 rows only) order by t.transaction_time asc";
-        try(Connection connection = database.getConnection()) {
+        try(Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, userId);
                 try (ResultSet results = statement.executeQuery()) {
@@ -131,7 +132,7 @@ public class HandleregServiceProvider implements HandleregService {
     public Oversikt registrerHandling(NyHandling handling) {
         Date transactionTime = handling.getHandletidspunkt() == null ? new Date() : handling.getHandletidspunkt();
         String sql = "insert into transactions (account_id, store_id, transaction_amount, transaction_time) values ((select account_id from accounts where username=?), ?, ?, ?)";
-        try(Connection connection = database.getConnection()) {
+        try(Connection connection = datasource.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, handling.getUsername());
                 statement.setInt(2, handling.getStoreId());
@@ -151,7 +152,7 @@ public class HandleregServiceProvider implements HandleregService {
     public List<Butikk> finnButikker() {
         List<Butikk> butikker = new ArrayList<>();
         String sql = "select * from stores where not deaktivert order by gruppe, rekkefolge";
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
@@ -179,7 +180,7 @@ public class HandleregServiceProvider implements HandleregService {
         int gruppe = butikkSomSkalEndres.getGruppe();
         int rekkefolge = butikkSomSkalEndres.getRekkefolge();
         String sql = "update stores set store_name=?, gruppe=?, rekkefolge=? where store_id=?";
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, butikknavn);
                 statement.setInt(2, gruppe);
@@ -200,7 +201,7 @@ public class HandleregServiceProvider implements HandleregService {
         int gruppe = nybutikk.getGruppe() < 1 ? 2 : nybutikk.getGruppe();
         int rekkefolge = nybutikk.getRekkefolge() < 1 ? finnNesteLedigeRekkefolgeForGruppe(gruppe) : nybutikk.getRekkefolge();
         String sql = "insert into stores (store_name, gruppe, rekkefolge) values (?, ?, ?)";
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, nybutikk.getButikknavn());
                 statement.setInt(2, gruppe);
@@ -219,7 +220,7 @@ public class HandleregServiceProvider implements HandleregService {
     public List<ButikkSum> sumOverButikk() {
         List<ButikkSum> sumOverButikk = new ArrayList<>();
         String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, sum(t.transaction_amount) as totalbelop from transactions t join stores s on s.store_id=t.store_id group by s.store_id, s.store_name, s.gruppe, s.rekkefolge order by totalbelop desc";
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
@@ -245,7 +246,7 @@ public class HandleregServiceProvider implements HandleregService {
     public List<ButikkCount> antallHandlingerIButikk() {
         List<ButikkCount> antallHandlerIButikk = new ArrayList<>();
         String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, count(t.transaction_amount) as antallbesok from transactions t join stores s on s.store_id=t.store_id group by s.store_id, s.store_name, s.gruppe, s.rekkefolge order by antallbesok desc";
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
@@ -271,7 +272,7 @@ public class HandleregServiceProvider implements HandleregService {
     public List<ButikkDate> sisteHandelIButikk() {
         List<ButikkDate> sisteHandelIButikk = new ArrayList<>();
         String sql = "select s.store_id, s.store_name, s.gruppe, s.rekkefolge, MAX(t.transaction_time) as handletid from transactions t join stores s on s.store_id=t.store_id group by s.store_id, s.store_name, s.gruppe, s.rekkefolge order by handletid desc";
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
@@ -296,7 +297,7 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public List<SumYear> totaltHandlebelopPrAar() {
         List<SumYear> totaltHandlebelopPrAar = new ArrayList<>();
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("select * from sum_over_year_view")) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
@@ -317,7 +318,7 @@ public class HandleregServiceProvider implements HandleregService {
     @Override
     public List<SumYearMonth> totaltHandlebelopPrAarOgMaaned() {
         List<SumYearMonth> totaltHandlebelopPrAarOgMaaned = new ArrayList<>();
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("select * from sum_over_month_view")) {
                 try (ResultSet results = statement.executeQuery()) {
                     while(results.next()) {
@@ -338,7 +339,7 @@ public class HandleregServiceProvider implements HandleregService {
 
     int finnNesteLedigeRekkefolgeForGruppe(int gruppe) {
         String sql = "select rekkefolge from stores where gruppe=? order by rekkefolge desc fetch next 1 rows only";
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, gruppe);
                 try (ResultSet results = statement.executeQuery()) {

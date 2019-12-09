@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.handlereg.db.derby.test;
+package no.priv.bang.handlereg.db.liquibase.test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
-
 import javax.sql.DataSource;
 import javax.sql.PooledConnection;
 
+import org.ops4j.pax.jdbc.hook.PreHook;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.jdbc.DataSourceFactory;
 import org.osgi.service.log.LogService;
 
 import liquibase.Liquibase;
@@ -34,60 +32,33 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import no.priv.bang.handlereg.db.liquibase.HandleregLiquibase;
-import no.priv.bang.handlereg.services.HandleregDatabase;
-import no.priv.bang.handlereg.services.HandleregException;
-import no.priv.bang.osgiservice.database.DatabaseServiceBase;
 
-@Component(service=HandleregDatabase.class, immediate=true)
-public class HandleregDerbyTestDatabase extends DatabaseServiceBase implements HandleregDatabase {
+@Component(immediate=true, property = "name=handleregdb")
+public class HandleregTestDbLiquibaseRunner implements PreHook {
 
     PooledConnection pooledConnect;
     private LogService logservice;
-    private DataSourceFactory dataSourceFactory;
-    DataSource dataSource;
 
     @Reference
     public void setLogService(LogService logservice) {
         this.logservice = logservice;
     }
 
-    @Reference(target="(osgi.jdbc.driver.name=derby)")
-    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
-        this.dataSourceFactory = dataSourceFactory;
-    }
-
     @Activate
     public void activate() {
-        try {
-            createDatasource();
-            try (Connection connect = getConnection()) {
-                HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
-                handleregLiquibase.createInitialSchema(connect);
-                insertMockData(connect);
-                handleregLiquibase.updateSchema(connect);
-            }
-        } catch (Exception e) {
-            String message = "Failed to create handlereg derby test database";
-            logError(message, e);
-            throw new HandleregException(message, e);
-        }
+        // Called after all injections have been satisfied and before the PreHook service is exposed
     }
 
     @Override
-    public boolean forceReleaseLiquibaseLock() {
-        try (Connection connection = getConnection()) {
-            HandleregLiquibase liquibase = new HandleregLiquibase();
-            liquibase.forceReleaseLocks(connection);
-            return true;
-        } catch (Exception e) {
-            logError("Failed to force release Liquibase changelog lock on database", e);
-            return false;
+    public void prepare(DataSource datasource) throws SQLException {
+        try (Connection connect = datasource.getConnection()) {
+            HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
+            handleregLiquibase.createInitialSchema(connect);
+            insertMockData(connect);
+            handleregLiquibase.updateSchema(connect);
+        } catch (LiquibaseException e) {
+            logservice.log(LogService.LOG_ERROR, "Error creating handlreg test database schema", e);
         }
-    }
-
-    @Override
-    public DataSource getDatasource() {
-        return dataSource;
     }
 
     public void insertMockData(Connection connect) throws LiquibaseException {
@@ -95,16 +66,6 @@ public class HandleregDerbyTestDatabase extends DatabaseServiceBase implements H
         ClassLoaderResourceAccessor classLoaderResourceAccessor = new ClassLoaderResourceAccessor(getClass().getClassLoader());
         Liquibase liquibase = new Liquibase("sql/data/db-changelog.xml", classLoaderResourceAccessor, databaseConnection);
         liquibase.update("");
-    }
-
-    private void logError(String message, Exception exception) {
-        logservice.log(LogService.LOG_ERROR, message, exception);
-    }
-
-    private void createDatasource() throws SQLException {
-        Properties properties = new Properties();
-        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
-        dataSource = dataSourceFactory.createDataSource(properties);
     }
 
 }

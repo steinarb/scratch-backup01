@@ -24,6 +24,9 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Matchers.anyString;
@@ -34,12 +37,11 @@ import org.junit.jupiter.api.Test;
 import org.ops4j.pax.jdbc.derby.impl.DerbyDataSourceFactory;
 import org.osgi.service.jdbc.DataSourceFactory;
 
-import no.priv.bang.handlereg.db.derby.test.HandleregDerbyTestDatabase;
+import no.priv.bang.handlereg.db.liquibase.test.HandleregTestDbLiquibaseRunner;
 import no.priv.bang.handlereg.services.Butikk;
 import no.priv.bang.handlereg.services.ButikkCount;
 import no.priv.bang.handlereg.services.ButikkDate;
 import no.priv.bang.handlereg.services.ButikkSum;
-import no.priv.bang.handlereg.services.HandleregDatabase;
 import no.priv.bang.handlereg.services.HandleregException;
 import no.priv.bang.handlereg.services.NyHandling;
 import no.priv.bang.handlereg.services.Oversikt;
@@ -51,14 +53,19 @@ import no.priv.bang.osgiservice.users.User;
 import no.priv.bang.osgiservice.users.UserManagementService;
 
 class HandleregServiceProviderTest {
-    static DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
-    private static HandleregDerbyTestDatabase database;
+    private static DataSource datasource;
 
     @BeforeAll
-    static void commonSetupForAllTests() {
-        database = new HandleregDerbyTestDatabase();
-        database.setDataSourceFactory(derbyDataSourceFactory);
-        database.activate();
+    static void commonSetupForAllTests() throws Exception {
+        DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
+        Properties properties = new Properties();
+        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
+        datasource = derbyDataSourceFactory.createDataSource(properties);
+        MockLogService logservice = new MockLogService();
+        HandleregTestDbLiquibaseRunner runner = new HandleregTestDbLiquibaseRunner();
+        runner.setLogService(logservice);
+        runner.activate();
+        runner.prepare(datasource);
     }
 
     @Test
@@ -68,7 +75,7 @@ class HandleregServiceProviderTest {
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         when(useradmin.getUser(anyString())).thenReturn(new User(1, "jod", "jd@gmail.com", "John", "Doe"));
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -83,11 +90,11 @@ class HandleregServiceProviderTest {
     @Test
     void testHentOversiktMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
+        DataSource mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -102,11 +109,11 @@ class HandleregServiceProviderTest {
     @Test
     void testHentOversiktMedTomtResultat() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbWithEmptyResultset();
+        DataSource mockdb = createMockDbWithEmptyResultset();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -124,7 +131,7 @@ class HandleregServiceProviderTest {
         when(useradmin.getUser(eq("jod"))).thenReturn(new User(1, "jod", "jod@gmail.com", "John", "Doe"));
         when(useradmin.getUser(eq("jad"))).thenReturn(new User(2, "jad", "jad@gmail.com", "Jane", "Doe"));
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -140,11 +147,11 @@ class HandleregServiceProviderTest {
     @Test
     void testHentHandlingerMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
+        DataSource mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -163,7 +170,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         when(useradmin.getUser(anyString())).thenReturn(new User(1, "jod", "jd@gmail.com", "John", "Doe"));
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -183,7 +190,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         when(useradmin.getUser(anyString())).thenReturn(new User(1, "jod", "jd@gmail.com", "John", "Doe"));
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -198,11 +205,11 @@ class HandleregServiceProviderTest {
     @Test
     void testRegistrerHandlingMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbThrowingException();
+        DataSource mockdb = createMockDbThrowingException();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -221,7 +228,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -232,11 +239,11 @@ class HandleregServiceProviderTest {
     @Test
     void testFinnButikkerMedDbFeil() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
+        DataSource mockdb = createMockDbWithResultSetThatThrowsExceptionWhenIterated();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -254,7 +261,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -267,11 +274,11 @@ class HandleregServiceProviderTest {
     @Test
     void testLeggTilButikkMedDbFeilVedLagring() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbThrowingException();
+        DataSource mockdb = createMockDbThrowingException();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -288,7 +295,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -308,7 +315,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -328,7 +335,7 @@ class HandleregServiceProviderTest {
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         UserManagementService useradmin = mock(UserManagementService.class);
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -343,11 +350,11 @@ class HandleregServiceProviderTest {
     @Test
     void testFinnNesteLedigeRekkefolgeNaarDetIkkeErNoenTreff() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbWithEmptyResultset();
+        DataSource mockdb = createMockDbWithEmptyResultset();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -358,11 +365,11 @@ class HandleregServiceProviderTest {
     @Test
     void testFinnNesteLedigeRekkefolgeNaarDetBlirKastetException() throws Exception {
         MockLogService logservice = new MockLogService();
-        HandleregDatabase mockdb = createMockDbThrowingException();
+        DataSource mockdb = createMockDbThrowingException();
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(mockdb);
+        handlereg.setDatasource(mockdb);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -378,7 +385,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -392,7 +399,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -406,7 +413,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -420,7 +427,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -434,7 +441,7 @@ class HandleregServiceProviderTest {
         UserManagementService useradmin = mock(UserManagementService.class);
         HandleregServiceProvider handlereg = new HandleregServiceProvider();
         handlereg.setLogservice(logservice);
-        handlereg.setDatabase(database);
+        handlereg.setDatasource(datasource);
         handlereg.setUseradmin(useradmin);
         handlereg.activate();
 
@@ -442,12 +449,12 @@ class HandleregServiceProviderTest {
         assertThat(totaltHandlebelopPrAarOgMaaned.size()).isGreaterThan(0);
     }
 
-    private HandleregDatabase createMockDbWithEmptyResultset() throws SQLException {
+    private DataSource createMockDbWithEmptyResultset() throws SQLException {
         PreparedStatement statement = mock(PreparedStatement.class);
         ResultSet results = mock(ResultSet.class);
         when(results.next()).thenReturn(false);
         when(statement.executeQuery()).thenReturn(results);
-        HandleregDatabase mockdb = mock(HandleregDatabase.class);
+        DataSource mockdb = mock(DataSource.class);
         Connection connection = mock(Connection.class);
         when(connection.prepareStatement(anyString())).thenReturn(statement);
         when(mockdb.getConnection()).thenReturn(connection);
@@ -455,12 +462,12 @@ class HandleregServiceProviderTest {
     }
 
     @SuppressWarnings("unchecked")
-    private HandleregDatabase createMockDbWithResultSetThatThrowsExceptionWhenIterated() throws SQLException {
+    private DataSource createMockDbWithResultSetThatThrowsExceptionWhenIterated() throws SQLException {
         PreparedStatement statement = mock(PreparedStatement.class);
         ResultSet results = mock(ResultSet.class);
         when(results.next()).thenThrow(SQLException.class);
         when(statement.executeQuery()).thenReturn(results);
-        HandleregDatabase mockdb = mock(HandleregDatabase.class);
+        DataSource mockdb = mock(DataSource.class);
         Connection connection = mock(Connection.class);
         when(connection.prepareStatement(anyString())).thenReturn(statement);
         when(mockdb.getConnection()).thenReturn(connection);
@@ -468,8 +475,8 @@ class HandleregServiceProviderTest {
     }
 
     @SuppressWarnings("unchecked")
-    private HandleregDatabase createMockDbThrowingException() throws SQLException {
-        HandleregDatabase mockdb = mock(HandleregDatabase.class);
+    private DataSource createMockDbThrowingException() throws SQLException {
+        DataSource mockdb = mock(DataSource.class);
         Connection connection = mock(Connection.class);
         when(connection.prepareStatement(anyString())).thenThrow(SQLException.class);
         when(mockdb.getConnection()).thenReturn(connection);
@@ -477,7 +484,7 @@ class HandleregServiceProviderTest {
     }
 
     private int finnSisteRekkefolgeForgruppe(int gruppe) throws Exception {
-        try (Connection connection = database.getConnection()) {
+        try (Connection connection = datasource.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("select rekkefolge from stores where gruppe=? order by rekkefolge desc fetch next 1 rows only")) {
                 statement.setInt(1, gruppe);
                 try (ResultSet results = statement.executeQuery()) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xml:space="preserve">
 
-    <!-- Copyright 2018 Steinar Bang                                                     -->
+    <!-- Copyright 2018-2019 Steinar Bang                                                -->
     <!--                                                                                 -->
     <!-- Licensed under the Apache License, Version 2.0 (the "License");                 -->
     <!-- you may not use this file except in compliance with the License.                -->
@@ -19,33 +19,20 @@
         <artifactId>handlereg</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <artifactId>handlereg.db.derby.test</artifactId>
+    <artifactId>handlereg.db.liquibase.test</artifactId>
 
-    <name>Handleregistrering derby database for use during test and development</name>
+    <name>Handleregistrering webapp test database setup</name>
 
     <properties>
-        <karaf-feature-name>handlereg-db-derby-test</karaf-feature-name>
+        <karaf-feature-name>handlereg-db-liquibase-test</karaf-feature-name>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>no.priv.bang.handlereg</groupId>
-            <artifactId>handlereg.services</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>no.priv.bang.handlereg</groupId>
             <artifactId>handlereg.db.liquibase</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>no.priv.bang.handlereg</groupId>
-            <artifactId>handlereg.services</artifactId>
-            <version>${project.version}</version>
-            <type>xml</type>
-            <classifier>features</classifier>
         </dependency>
         <dependency>
             <groupId>no.priv.bang.handlereg</groupId>
@@ -91,16 +78,20 @@
             <artifactId>org.osgi.service.jdbc</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.priv.bang.osgiservice</groupId>
-            <artifactId>osgiservice.database</artifactId>
-        </dependency>
-        <dependency>
             <groupId>no.priv.bang.osgi.service.adapters</groupId>
             <artifactId>service-mocks</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-pool-common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>

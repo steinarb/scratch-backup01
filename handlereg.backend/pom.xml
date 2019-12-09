@@ -36,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>no.priv.bang.handlereg</groupId>
-            <artifactId>handlereg.db.derby.test</artifactId>
+            <artifactId>handlereg.db.liquibase.test</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
@@ -91,10 +91,6 @@
         </dependency>
         <dependency>
             <groupId>no.priv.bang.osgiservice</groupId>
-            <artifactId>osgiservice.database</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.priv.bang.osgiservice</groupId>
             <artifactId>osgiservice.users</artifactId>
         </dependency>
         <dependency>
@@ -111,6 +107,16 @@
         <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>
             <artifactId>pax-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-config</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.jdbc</groupId>
+            <artifactId>pax-jdbc-pool-common</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.jdbc</groupId>

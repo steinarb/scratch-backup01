@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and limitations
  * under the License.
  */
-package no.priv.bang.handlereg.db.postgresql;
+package no.priv.bang.handlereg.db.liquibase.production;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.Properties;
-
 import javax.sql.DataSource;
+
+import org.ops4j.pax.jdbc.hook.PreHook;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.jdbc.DataSourceFactory;
 import org.osgi.service.log.LogService;
 
 import liquibase.Liquibase;
@@ -33,61 +31,32 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import no.priv.bang.handlereg.db.liquibase.HandleregLiquibase;
-import no.priv.bang.handlereg.services.HandleregDatabase;
-import no.priv.bang.handlereg.services.HandleregException;
-import no.priv.bang.osgiservice.database.DatabaseServiceBase;
 
-import static no.priv.bang.handlereg.services.HandleregConstants.*;
-
-@Component(service=HandleregDatabase.class, immediate=true)
-public class HandleregPostgresqlDatabase extends DatabaseServiceBase implements HandleregDatabase {
+@Component(immediate=true, property = "name=handleregdb")
+public class HandleregProductionDbLiquibaseRunner implements PreHook {
 
     private LogService logservice;
-    private DataSourceFactory dataSourceFactory;
-    DataSource dataSource;
 
     @Reference
     public void setLogService(LogService logservice) {
         this.logservice = logservice;
     }
 
-    @Reference(target="(osgi.jdbc.driver.name=PostgreSQL JDBC Driver)")
-    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
-        this.dataSourceFactory = dataSourceFactory;
-    }
-
     @Activate
-    public void activate(Map<String, Object> config) {
-        try {
-            dataSource = createDatasource(config);
-            try (Connection connect = getConnection()) {
-                HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
-                handleregLiquibase.createInitialSchema(connect);
-                insertMockData(connect);
-                handleregLiquibase.updateSchema(connect);
-            }
-        } catch (Exception e) {
-            String message = "Failed to create handlereg derby test database";
-            logError(message, e);
-            throw new HandleregException(message, e);
-        }
+    public void activate() {
+        // Called after all injections have been satisfied and before the PreHook service is exposed
     }
 
     @Override
-    public boolean forceReleaseLiquibaseLock() {
-        try (Connection connection = getConnection()) {
-            HandleregLiquibase liquibase = new HandleregLiquibase();
-            liquibase.forceReleaseLocks(connection);
-            return true;
+    public void prepare(DataSource datasource) throws SQLException {
+        try (Connection connect = datasource.getConnection()) {
+            HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
+            handleregLiquibase.createInitialSchema(connect);
+            insertMockData(connect);
+            handleregLiquibase.updateSchema(connect);
         } catch (Exception e) {
-            logError("Failed to force release Liquibase changelog lock on database", e);
-            return false;
+            logError("Failed to create handlereg derby test database", e);
         }
-    }
-
-    @Override
-    public DataSource getDatasource() {
-        return dataSource;
     }
 
     public void insertMockData(Connection connect) throws LiquibaseException {
@@ -99,19 +68,6 @@ public class HandleregPostgresqlDatabase extends DatabaseServiceBase implements 
 
     private void logError(String message, Exception exception) {
         logservice.log(LogService.LOG_ERROR, message, exception);
-    }
-
-
-    private DataSource createDatasource(Map<String, Object> config) throws SQLException {
-        Properties properties = createDatabaseConnectionPropertiesFromOsgiConfig(config);
-        return dataSourceFactory.createDataSource(properties);
-    }
-
-    static Properties createDatabaseConnectionPropertiesFromOsgiConfig(Map<String, Object> config) {
-        String jdbcUrl = ((String) config.getOrDefault(HANDLEREG_JDBC_URL, "jdbc:postgresql:///handlereg")).trim();
-        String jdbcUser = ((String) config.getOrDefault(HANDLEREG_JDBC_USER, "karaf")).trim();
-        String jdbcPassword = ((String) config.getOrDefault(HANDLEREG_JDBC_PASSWORD, "karaf")).trim();
-        return createDatabaseConnectionProperties(jdbcUrl, jdbcUser, jdbcPassword);
     }
 
 }

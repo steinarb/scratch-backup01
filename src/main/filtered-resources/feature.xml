@@ -16,31 +16,31 @@
     <repository>mvn:no.priv.bang.authservice/authservice/${authservice.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.services/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.derby.test/${project.version}/xml/features</repository>
-    <repository>mvn:no.priv.bang.handlereg/handlereg.db.postgresql/${project.version}/xml/features</repository>
+    <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase.test/${project.version}/xml/features</repository>
+    <repository>mvn:no.priv.bang.handlereg/handlereg.db.liquibase.production/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.backend/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.backend.testdata/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.web.security/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.web.api/${project.version}/xml/features</repository>
     <repository>mvn:no.priv.bang.handlereg/handlereg.web.frontend/${project.version}/xml/features</repository>
     <feature name="handlereg-with-derby" description="handlereg webapp with derby database" version="${project.version}">
-        <feature>handlereg-db-derby-test</feature>
+        <feature>handlereg-db-test</feature>
         <feature>handlereg-web-frontend</feature>
         <feature>user-admin-with-testdb</feature>
         <feature>handlereg-backend-testdata</feature>
     </feature>
     <feature name="handlereg-with-derby-and-provided-authservice" description="handlereg webapp with derby database and expecting authservice to be pre-installed" version="${project.version}">
-        <feature>handlereg-db-derby-test</feature>
+        <feature>handlereg-db-test</feature>
         <feature>handlereg-web-frontend</feature>
         <feature>handlereg-backend-testdata</feature>
     </feature>
     <feature name="handlereg-with-postgresql" description="handlereg webapp with postgresql database" version="${project.version}">
-        <feature>handlereg-db-postgresql</feature>
+        <feature>handlereg-db-production</feature>
         <feature>handlereg-web-frontend</feature>
         <feature>user-admin-with-productiondb</feature>
     </feature>
     <feature name="handlereg-with-postgresql-and-provided-authservice" description="handlereg webapp with postgresql database and expecting authservice to be pre-installed" version="${project.version}">
-        <feature>handlereg-db-postgresql</feature>
+        <feature>handlereg-db-production</feature>
         <feature>handlereg-web-frontend</feature>
     </feature>
 </features>

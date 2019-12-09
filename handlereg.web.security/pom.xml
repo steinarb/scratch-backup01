@@ -36,12 +36,6 @@
         </dependency>
         <dependency>
             <groupId>no.priv.bang.handlereg</groupId>
-            <artifactId>handlereg.db.derby.test</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>no.priv.bang.handlereg</groupId>
             <artifactId>handlereg.db.liquibase</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
@@ -112,10 +106,6 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.service.jdbc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.priv.bang.osgiservice</groupId>
-            <artifactId>osgiservice.database</artifactId>
         </dependency>
         <dependency>
             <groupId>no.priv.bang.osgi.service.adapters</groupId>

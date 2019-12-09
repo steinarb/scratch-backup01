@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.4.0" name="ukelonn.db.liquibase">
 
-    <!-- Copyright 2018 Steinar Bang                                                     -->
+    <!-- Copyright 2018-2019 Steinar Bang                                                -->
     <!--                                                                                 -->
     <!-- Licensed under the Apache License, Version 2.0 (the "License");                 -->
     <!-- you may not use this file except in compliance with the License.                -->
@@ -13,8 +13,21 @@
     <!-- See the License for the specific language governing permissions and limitations -->
     <!-- under the License.                                                              -->
 
-    <feature name="handlereg-db-derby-test">
+    <feature name="${karaf-feature-name}">
         <feature>scr</feature>
         <feature>pax-jdbc-derby</feature>
+    </feature>
+    <feature name="handlereg-db-test" description="handlereg test DataSource" version="${project.version}">
+        <config name="org.ops4j.datasource-handlereg-test">
+            osgi.jdbc.driver.name=derby
+            dataSourceName=jdbc/handlereg
+            url=jdbc:derby:memory:handlereg;create=true
+            ops4j.preHook=handleregdb
+        </config>
+        <capability>
+            osgi.service;objectClass=javax.sql.DataSource;effective:=active;osgi.jndi.service.name=jdbc/handlereg
+        </capability>
+        <feature>${karaf-feature-name}</feature>
+        <feature>pax-jdbc-config</feature>
     </feature>
 </features>
