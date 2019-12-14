@@ -238,7 +238,7 @@ class HandleregLiquibaseTest {
 
     private Connection createConnection() throws Exception {
         Properties properties = new Properties();
-        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
+        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:handlereg;create=true");
         DataSource dataSource = derbyDataSourceFactory.createDataSource(properties);
         return dataSource.getConnection();
     }

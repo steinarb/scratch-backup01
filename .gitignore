@@ -4,6 +4,5 @@
 .settings/
 /README.md
 /handlereg.db.liquibase/src/test/resources/olddata
-/ukelonn.gogoshell/runner/
 node_modules/
 target/

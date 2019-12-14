@@ -35,7 +35,7 @@ class HandleregDerbyTestDatabaseTest {
     void testCreateAndVerifySomeDataInSomeTables() throws Exception {
         DataSourceFactory dataSourceFactory = new DerbyDataSourceFactory();
         Properties properties = new Properties();
-        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
+        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:handlereg;create=true");
         DataSource datasource = dataSourceFactory.createDataSource(properties);
 
         MockLogService logservice = new MockLogService();

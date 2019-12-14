@@ -59,7 +59,7 @@ class HandleregServiceProviderTest {
     static void commonSetupForAllTests() throws Exception {
         DataSourceFactory derbyDataSourceFactory = new DerbyDataSourceFactory();
         Properties properties = new Properties();
-        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:ukelonn;create=true");
+        properties.setProperty(DataSourceFactory.JDBC_URL, "jdbc:derby:memory:handlereg;create=true");
         datasource = derbyDataSourceFactory.createDataSource(properties);
         MockLogService logservice = new MockLogService();
         HandleregTestDbLiquibaseRunner runner = new HandleregTestDbLiquibaseRunner();

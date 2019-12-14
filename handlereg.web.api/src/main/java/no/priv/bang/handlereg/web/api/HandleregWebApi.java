@@ -77,7 +77,7 @@ public class HandleregWebApi extends ServletContainer {
         reload(copyOfExistingConfig);
         Map<String, Object> configProperties = getConfiguration().getProperties();
         Set<Class<?>> classes = getConfiguration().getClasses();
-        logservice.log(LogService.LOG_INFO, String.format("Ukelonn Jersey servlet initialized with WebConfig, with resources: %s  and config params: %s", classes.toString(), configProperties.toString()));
+        logservice.log(LogService.LOG_INFO, String.format("Handlereg Jersey servlet initialized with WebConfig, with resources: %s  and config params: %s", classes.toString(), configProperties.toString()));
     }
 
 }
