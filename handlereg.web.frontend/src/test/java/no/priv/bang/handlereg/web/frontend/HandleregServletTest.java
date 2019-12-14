@@ -42,7 +42,7 @@ public class HandleregServletTest {
         servlet.init(servletConfig);
         servlet.setLogService(logservice);
         HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getRequestURI()).thenReturn("http://localhost:8181/authservice/useradmin/");
+        when(request.getRequestURI()).thenReturn("http://localhost:8181/handlereg/useradmin/");
         when(request.getPathInfo()).thenReturn("/");
         MockHttpServletResponse response = new MockHttpServletResponse();
 
@@ -58,7 +58,7 @@ public class HandleregServletTest {
     public void testDoGetAddTrailingSlash() throws Exception {
         MockLogService logservice = new MockLogService();
         HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/authservice/useradmin"));
+        when(request.getRequestURL()).thenReturn(new StringBuffer("http://localhost:8181/handlereg/useradmin"));
         when(request.getServletPath()).thenReturn("/frontend-karaf-demo");
         MockHttpServletResponse response = new MockHttpServletResponse();
 
@@ -74,7 +74,7 @@ public class HandleregServletTest {
     public void testDoGetResponseThrowsIOException() throws Exception {
         MockLogService logservice = new MockLogService();
         HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getRequestURI()).thenReturn("http://localhost:8181/authservice/useradmin/");
+        when(request.getRequestURI()).thenReturn("http://localhost:8181/handlereg/useradmin/");
         when(request.getPathInfo()).thenReturn("/");
         MockHttpServletResponse response = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
         response.resetAll();
@@ -95,7 +95,7 @@ public class HandleregServletTest {
     public void testDoGetResponseStreamMethodThrowsIOException() throws Exception {
         MockLogService logservice = new MockLogService();
         HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getRequestURI()).thenReturn("http://localhost:8181/authservice/useradmin/");
+        when(request.getRequestURI()).thenReturn("http://localhost:8181/handlereg/useradmin/");
         when(request.getPathInfo()).thenReturn("/");
         MockHttpServletResponse response = mock(MockHttpServletResponse.class, CALLS_REAL_METHODS);
         response.resetAll();
@@ -113,7 +113,7 @@ public class HandleregServletTest {
     public void testDoGetResourceNotFound() throws Exception {
         MockLogService logservice = new MockLogService();
         HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getRequestURI()).thenReturn("http://localhost:8181/authservice/useradmin/static/nosuchname.png");
+        when(request.getRequestURI()).thenReturn("http://localhost:8181/handlereg/useradmin/static/nosuchname.png");
         when(request.getPathInfo()).thenReturn("/static/nosuchname.png");
         MockHttpServletResponse response = new MockHttpServletResponse();
 
