@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export const FormRow = (props) => {
+export function FormRow(props) {
     return (
         <div className="form-group row">
             {props.children}
