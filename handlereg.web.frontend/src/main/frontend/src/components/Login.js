@@ -5,7 +5,7 @@ import login, { LOGIN_HENT } from '../reducers/login';
 const { USERNAME_ENDRE, PASSWORD_ENDRE } = login.actions;
 
 function Login(props) {
-    const { username, password, loginresultat, onUsernameEndre, onPasswordEndre, onSendLogin } = this.props;
+    const { username, password, loginresultat, onUsernameEndre, onPasswordEndre, onSendLogin } = props;
     if (loginresultat.suksess) {
         return (<Redirect to="/handlereg/" />);
     }

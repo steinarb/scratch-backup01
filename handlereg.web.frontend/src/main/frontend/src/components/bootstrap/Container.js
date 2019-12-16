@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export const Container = (props) => {
+export function Container(props) {
     return (
         <div className="container">
             {props.children}
