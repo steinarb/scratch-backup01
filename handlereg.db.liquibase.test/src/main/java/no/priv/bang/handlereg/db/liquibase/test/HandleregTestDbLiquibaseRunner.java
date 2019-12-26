@@ -18,8 +18,6 @@ package no.priv.bang.handlereg.db.liquibase.test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
-import javax.sql.PooledConnection;
-
 import org.ops4j.pax.jdbc.hook.PreHook;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -36,7 +34,6 @@ import no.priv.bang.handlereg.db.liquibase.HandleregLiquibase;
 @Component(immediate=true, property = "name=handleregdb")
 public class HandleregTestDbLiquibaseRunner implements PreHook {
 
-    PooledConnection pooledConnect;
     private LogService logservice;
 
     @Reference
