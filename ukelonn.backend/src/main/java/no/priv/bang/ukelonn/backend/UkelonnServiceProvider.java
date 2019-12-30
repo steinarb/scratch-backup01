@@ -39,6 +39,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.sql.DataSource;
 
 import no.priv.bang.osgiservice.users.Role;
+import no.priv.bang.osgiservice.users.UserAndPasswords;
 import no.priv.bang.osgiservice.users.UserManagementService;
 import no.priv.bang.osgiservice.users.UserRoles;
 import no.priv.bang.ukelonn.UkelonnException;
@@ -509,6 +510,7 @@ public class UkelonnServiceProvider extends UkelonnServiceBase {
     }
 
     void addUkelonnUserRolesToAuthservice() {
+    	addUkelonnUsersIfNotPresentInAuthservice();
         addUkelonnRolesIfNotPresentInAuthservice();
         List<Role> roles = useradmin.getRoles();
         try(Connection connection = datasource.getConnection()) {
@@ -538,7 +540,32 @@ public class UkelonnServiceProvider extends UkelonnServiceBase {
         }
     }
 
-    private void addUkelonnRolesIfNotPresentInAuthservice() {
+    private void addUkelonnUsersIfNotPresentInAuthservice() {
+        try(Connection connection = datasource.getConnection()) {
+            try(PreparedStatement statement = connection.prepareStatement("select * from users")) {
+                try(ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String username = resultSet.getString(2);
+                        no.priv.bang.osgiservice.users.User existingUser = useradmin.getUser(username);
+                        if (existingUser == null) {
+                        	String password = resultSet.getString(3);
+                        	String salt = resultSet.getString(4);
+                        	String email = resultSet.getString(5);
+                        	String firstname = resultSet.getString(6);
+                        	String lastname = resultSet.getString(7);
+                        	User user = new User(-1, username, email, firstname, lastname);
+                        	UserAndPasswords newuser = new UserAndPasswords();
+                        	useradmin.addUser(newuser);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logWarning("Failed to add ukelonn users to the authservice database", e);
+        }
+	}
+
+	private void addUkelonnRolesIfNotPresentInAuthservice() {
         List<Role> roles = useradmin.getRoles();
         if (!roles.stream().filter(role -> "ukelonnuser".equals(role.getRolename())).findFirst().isPresent()) {
             Role ukelonnuser = new Role(-1, "ukelonnuser", "Regular user of ukelonn");
