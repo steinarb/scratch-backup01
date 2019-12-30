@@ -32,12 +32,15 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.sql.DataSource;
 
+import no.priv.bang.osgiservice.users.Role;
 import no.priv.bang.osgiservice.users.UserManagementService;
+import no.priv.bang.osgiservice.users.UserRoles;
 import no.priv.bang.ukelonn.UkelonnException;
 import no.priv.bang.ukelonn.UkelonnService;
 import no.priv.bang.ukelonn.beans.Account;
@@ -72,7 +75,7 @@ public class UkelonnServiceProvider extends UkelonnServiceBase {
 
     @Activate
     public void activate() {
-        // Nothing to do here
+        addUkelonnUserRolesToAuthservice();
     }
 
     @Reference(target = "(osgi.jndi.service.name=jdbc/ukelonn)")
@@ -503,6 +506,49 @@ public class UkelonnServiceProvider extends UkelonnServiceBase {
         }
 
         return !username.isEmpty();
+    }
+
+    void addUkelonnUserRolesToAuthservice() {
+        addUkelonnRolesIfNotPresentInAuthservice();
+        List<Role> roles = useradmin.getRoles();
+        try(Connection connection = datasource.getConnection()) {
+            try(PreparedStatement statement = connection.prepareStatement("select * from user_roles")) {
+                try(ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String roleName = resultSet.getString(2);
+                        if (roleName.startsWith("ukelonn")) {
+                            String username = resultSet.getString(3);
+                            List<Role> existingRoles = useradmin.getRolesForUser(username);
+                            if (existingRoles == null || !existingRoles.stream().filter(role -> roleName.equals(role.getRolename())).findFirst().isPresent()) {
+                                Optional<Role> newRole = roles.stream().filter(role -> roleName.equals(role.getRolename())).findFirst();
+                                if (newRole.isPresent()) {
+                                    no.priv.bang.osgiservice.users.User user = useradmin.getUser(username);
+                                    List<Role> updatedRoles = new ArrayList<Role>(existingRoles);
+                                    updatedRoles.add(newRole.get());
+                                    UserRoles updatedUserRoles = new UserRoles(user, updatedRoles);
+                                    useradmin.addUserRoles(updatedUserRoles);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            logWarning("Failed to add ukelonn user_roles to the authservice database", e);
+        }
+    }
+
+    private void addUkelonnRolesIfNotPresentInAuthservice() {
+        List<Role> roles = useradmin.getRoles();
+        if (!roles.stream().filter(role -> "ukelonnuser".equals(role.getRolename())).findFirst().isPresent()) {
+            Role ukelonnuser = new Role(-1, "ukelonnuser", "Regular user of ukelonn");
+            useradmin.addRole(ukelonnuser);
+        }
+
+        if (!roles.stream().filter(role -> "ukelonnadmin".equals(role.getRolename())).findFirst().isPresent()) {
+            Role ukelonnadmin = new Role(-1, "ukelonnadmin", "Admin user of ukelonn");
+            useradmin.addRole(ukelonnadmin);
+        }
     }
 
     private static void trySettingPreparedStatementParameterThatMayNotBePresent(PreparedStatement statement, int parameterId, int parameterValue) {

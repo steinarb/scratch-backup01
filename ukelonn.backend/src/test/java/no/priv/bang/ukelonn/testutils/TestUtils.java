@@ -29,6 +29,7 @@ import org.osgi.service.log.LogService;
 
 import no.priv.bang.ukelonn.db.liquibase.test.TestLiquibaseRunner;
 import no.priv.bang.osgi.service.mocks.logservice.MockLogService;
+import no.priv.bang.osgiservice.users.UserManagementService;
 import no.priv.bang.ukelonn.backend.UkelonnServiceProvider;
 
 /**
@@ -64,12 +65,14 @@ public class TestUtils {
      */
     public static UkelonnServiceProvider setupFakeOsgiServices() throws Exception {
         ukelonnServiceSingleton = new UkelonnServiceProvider();
-        ukelonnServiceSingleton.activate();
         LogService logservice = new MockLogService();
         DataSource ukelonnDatasource = createUkelonnDatasource(logservice);
+        UserManagementService useradmin = new DummyUserManagementService();
 
         ukelonnServiceSingleton.setDataSource(ukelonnDatasource);
         ukelonnServiceSingleton.setLogservice(logservice);
+        ukelonnServiceSingleton.setUserAdmin(useradmin);
+        ukelonnServiceSingleton.activate();
         return ukelonnServiceSingleton;
     }
 
