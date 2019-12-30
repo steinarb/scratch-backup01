@@ -133,6 +133,10 @@
             <artifactId>liquibase-core</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>no.priv.bang.beans</groupId>
+            <artifactId>beans.immutable</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
