@@ -46,7 +46,7 @@
         <snakeyaml.version>1.17</snakeyaml.version>
         <derby.version>10.11.1.1</derby.version>
         <postgresql.version>42.2.8</postgresql.version>
-        <bean.version>1.0.0-SNAPSHOT</bean.version>
+        <beans.version>1.0.0-SNAPSHOT</beans.version>
         <jackson.version>2.9.10</jackson.version>
         <jackson.databind.version>2.9.10.1</jackson.databind.version>
         <jersey-feature.version>1.4.0</jersey-feature.version>
@@ -283,7 +283,7 @@
             <dependency>
                 <groupId>no.priv.bang.beans</groupId>
                 <artifactId>beans.immutable</artifactId>
-                <version>${bean.version}</version>
+                <version>${beans.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
