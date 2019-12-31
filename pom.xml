@@ -40,7 +40,7 @@
         <pax.jdbc.version>1.0.1</pax.jdbc.version>
         <pax.jdbc.version>1.0.1</pax.jdbc.version>
         <osgi-service-adaptors.version>1.0.1</osgi-service-adaptors.version>
-        <beans.version>1.0.0-SNAPSHOT</beans.version>
+        <beans.version>1.0.0</beans.version>
     </properties>
 
     <dependencyManagement>
