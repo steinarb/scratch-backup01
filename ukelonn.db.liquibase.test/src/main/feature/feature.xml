@@ -41,6 +41,7 @@
         <capability>
             osgi.service;objectClass=javax.sql.DataSource;effective:=active;osgi.jndi.service.name=jdbc/authservice
         </capability>
+        <feature>authservice-definitions</feature>
         <feature>authservice-db-liquibase-test</feature>
         <feature>pax-jdbc-config</feature>
     </feature>
