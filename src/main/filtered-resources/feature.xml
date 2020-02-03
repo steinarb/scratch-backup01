@@ -30,7 +30,6 @@
         <bundle start-level="80">mvn:org.glassfish.jersey.core/jersey-client/${jersey.version}</bundle>
         <bundle start-level="80">mvn:org.glassfish.jersey.media/jersey-media-jaxb/${jersey.version}</bundle>
         <bundle start-level="80">mvn:javax.validation/validation-api/${javax.validation}</bundle>
-        <bundle start-level="80">mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javax-inject/${javax.inject.version}</bundle>
         <bundle start-level="80">mvn:org.glassfish.jersey.media/jersey-media-json-jackson/${jersey.version}</bundle>
         <bundle start-level="80">mvn:org.glassfish.jersey.ext/jersey-entity-filtering/${jersey.version}</bundle>
     </feature>
