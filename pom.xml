@@ -57,11 +57,11 @@
         <shiro.version>1.4.1</shiro.version>
         <beans.version>1.0.0</beans.version>
         <jackson.version>2.9.10</jackson.version>
-        <jackson.databind.version>2.9.10.1</jackson.databind.version>
-        <jersey-feature.version>1.4.0</jersey-feature.version>
-        <jersey.version>2.28</jersey.version>
+        <jackson.databind.version>2.9.10.2</jackson.databind.version>
+        <jersey-feature.version>1.5.0</jersey-feature.version>
+        <jersey.version>2.30</jersey.version>
         <open-iconic.version>1.1.1</open-iconic.version>
-        <authservice.version>1.9.0</authservice.version>
+        <authservice.version>1.10.0</authservice.version>
         <sonar.cpd.exclusions>
             **/HandleregDerbyTestDatabase.java,
             **/HandleregPostgresqlDatabase.java,
