@@ -55,8 +55,7 @@ class HandleregLiquibaseTest {
     void testForceReleaseLocks() throws Exception {
         Connection connection = createConnection();
         HandleregLiquibase handleregLiquibase = new HandleregLiquibase();
-        handleregLiquibase.forceReleaseLocks(connection);
-        // Nothing to test for but if we get here, no exceptions have been thrown
+        assertDoesNotThrow(() -> handleregLiquibase.forceReleaseLocks(connection));
     }
 
     @Disabled("Pseudo-test that imports legacy data and turns them into SQL files that can be imported into an SQL database")
