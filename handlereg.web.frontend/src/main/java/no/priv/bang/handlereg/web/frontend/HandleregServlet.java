@@ -51,6 +51,7 @@ public class HandleregServlet extends FrontendServlet {
             "/login");
     }
 
+    @Override
     @Reference
     public void setLogService(LogService logservice) {
         super.setLogService(logservice);
