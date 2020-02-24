@@ -36,6 +36,8 @@ import no.priv.bang.handlereg.services.HandleregService;
 @Produces(MediaType.APPLICATION_JSON)
 public class ButikkResource {
 
+    private static final String SEE_THE_LOG_FOR_DETAILS = ", see the log for details";
+
     @Inject
     LogService logservice;
 
@@ -50,7 +52,7 @@ public class ButikkResource {
         } catch (Exception e) {
             String message = "Failed to find the list of stores";
             logservice.log(LogService.LOG_ERROR, message, e);
-            throw new InternalServerErrorException(message + ", see the log for details");
+            throw new InternalServerErrorException(message + SEE_THE_LOG_FOR_DETAILS);
         }
     }
 
@@ -63,7 +65,7 @@ public class ButikkResource {
         } catch (Exception e) {
             String message = "Failed to add a new store";
             logservice.log(LogService.LOG_ERROR, message, e);
-            throw new InternalServerErrorException(message + ", see the log for details");
+            throw new InternalServerErrorException(message + SEE_THE_LOG_FOR_DETAILS);
         }
     }
 
@@ -77,7 +79,7 @@ public class ButikkResource {
         } catch (Exception e) {
             String message = "Failed to change a store";
             logservice.log(LogService.LOG_ERROR, message, e);
-            throw new InternalServerErrorException(message + ", see the log for details");
+            throw new InternalServerErrorException(message + SEE_THE_LOG_FOR_DETAILS);
         }
     }
 
