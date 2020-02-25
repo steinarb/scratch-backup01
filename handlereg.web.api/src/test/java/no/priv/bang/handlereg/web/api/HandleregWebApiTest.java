@@ -324,7 +324,7 @@ class HandleregWebApiTest extends ShiroTestBase {
 
     private HandleregWebApi simulateDSComponentActivationAndWebWhiteboardConfiguration(HandleregService handlereg, LogService logservice) throws Exception {
         HandleregWebApi servlet = new HandleregWebApi();
-        servlet.setLogservice(logservice);
+        servlet.setLogService(logservice);
         servlet.setHandleregService(handlereg);
         servlet.activate();
         ServletConfig config = createServletConfigWithApplicationAndPackagenameForJerseyResources();
