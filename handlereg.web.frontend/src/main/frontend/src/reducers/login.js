@@ -18,7 +18,9 @@ const login = createSlice({
         },
         LOGIN_MOTTA: (state, action) => {
             const loginresultat = action.payload;
-            return { ...state, loginresultat };
+            const { suksess } = loginresultat;
+            const password = suksess ? '' : state.password;
+            return { ...state, loginresultat, password };
         },
     },
 });
