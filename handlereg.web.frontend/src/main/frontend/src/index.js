@@ -8,13 +8,13 @@ import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import rootReducer from './reducers';
+import createRootReducer from './reducers';
 import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 const history = createBrowserHistory();
 const store = configureStore({
-    reducer: rootReducer,
+    reducer: createRootReducer(history),
     middleware: [
         sagaMiddleware,
         routerMiddleware(history),
@@ -24,7 +24,7 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>
-        <App/>
+        <App history={history} />
     </Provider>,
     document.getElementById('root'));
 

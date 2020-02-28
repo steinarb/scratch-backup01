@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router';
 import { emptyUser, emptyUserAndPasswords, emptyRole, emptyPermission } from '../constants';
 import login from './login';
 import oversikt from './oversikt';
@@ -14,7 +15,8 @@ import sumyear from './sumyear';
 import sumyearmonth from './sumyearmonth';
 import errors from './errors';
 
-const rootsReducer = combineReducers({
+export default (history) => combineReducers({
+    router: connectRouter(history),
     login: login.reducer,
     oversikt: oversikt.reducer,
     butikker: butikker.reducer,
@@ -28,5 +30,3 @@ const rootsReducer = combineReducers({
     sumyearmonth: sumyearmonth.reducer,
     errors: errors.reducer,
 });
-
-export default rootsReducer;
