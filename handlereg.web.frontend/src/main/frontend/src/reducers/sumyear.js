@@ -1,6 +1,7 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const sumyear = createSlice({
+    name: 'sumyear',
     initialState: [],
     reducers: {
         SUMYEAR_MOTTA: (state, action) => action.payload,

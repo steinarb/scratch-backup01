@@ -1,4 +1,4 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 
 const defaultState = {
@@ -7,6 +7,7 @@ const defaultState = {
 };
 
 const butikk = createSlice({
+    name: 'butikk',
     initialState: defaultState,
     reducers: {
         BUTIKKNAVN_ENDRE: (state, action) => {

@@ -1,8 +1,9 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const defaultState = [];
 
 const handlinger = createSlice({
+    name: 'handlinger',
     initialState: defaultState,
     reducers: {
         HANDLINGER_MOTTA: (state, action) => action.payload,

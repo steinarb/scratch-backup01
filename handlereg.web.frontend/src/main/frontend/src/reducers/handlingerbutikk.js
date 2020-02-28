@@ -1,6 +1,7 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const handlingerbutikk = createSlice({
+    name: 'handlingerbutikk',
     initialState: [],
     reducers: {
         HANDLINGERBUTIKK_MOTTA: (state, action) => action.payload,

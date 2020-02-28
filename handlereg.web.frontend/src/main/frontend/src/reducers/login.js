@@ -1,10 +1,11 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const defaultState = {
     loginresultat: {},
 };
 
 const login = createSlice({
+    name: 'login',
     initialState: defaultState,
     reducers: {
         USERNAME_ENDRE: (state, action) => {

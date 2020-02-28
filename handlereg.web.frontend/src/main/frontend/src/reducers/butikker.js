@@ -1,4 +1,4 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 import butikk from './butikk';
 
 const { NYBUTIKK_LAGRET, BUTIKK_LAGRET } = butikk.actions;
@@ -19,6 +19,7 @@ function leggPaaTomButikkIStarten(action) {
  }
 
 const butikker = createSlice({
+    name: 'butikker',
     initialState: [],
     reducers: {
         BUTIKKER_MOTTA: (state, action) => leggPaaTomButikkIStarten(action),

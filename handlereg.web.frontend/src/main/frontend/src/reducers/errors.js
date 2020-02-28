@@ -1,6 +1,7 @@
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const errors = createSlice({
+    name: 'errors',
     initialState: {},
     reducers: {
         LOGIN_ERROR: (state, action) => {

@@ -1,6 +1,7 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const sumbutikk = createSlice({
+    name: 'sumbutikk',
     initialState: [],
     reducers: {
         SUMBUTIKK_MOTTA: (state, action) => action.payload,

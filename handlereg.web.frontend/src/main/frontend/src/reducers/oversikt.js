@@ -1,10 +1,11 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const defaultState = {
     oversiktresultat: {},
 };
 
 const oversikt = createSlice({
+    name: 'oversikt',
     initialState: defaultState,
     reducers: {
         OVERSIKT_MOTTA: (state, action) => action.payload,

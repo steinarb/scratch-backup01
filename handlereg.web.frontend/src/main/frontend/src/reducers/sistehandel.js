@@ -1,6 +1,7 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 
 const sistehandel = createSlice({
+    name: 'sistehandel',
     initialState: [],
     reducers: {
         SISTEHANDEL_MOTTA: (state, action) => action.payload,

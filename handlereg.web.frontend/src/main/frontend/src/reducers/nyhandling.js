@@ -1,4 +1,4 @@
-import { createSlice, createAction } from 'redux-starter-kit';
+import { createSlice, createAction } from '@reduxjs/toolkit';
 import moment from 'moment';
 import handlinger from './handlinger';
 const { HANDLINGER_MOTTA } = handlinger.actions;
@@ -10,6 +10,7 @@ const defaultState = {
 };
 
 const nyhandling = createSlice({
+    name: 'nyhandling',
     initialState: defaultState,
     reducers: {
         BELOP_ENDRE: (state, action) => {
