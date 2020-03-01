@@ -6,14 +6,8 @@ import { Header } from './bootstrap/Header';
 import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';
-import { SISTEHANDEL_HENT } from '../reducers/sistehandel';
 
 class StatistikkSistehandel extends Component {
-    componentDidMount() {
-        const { hentSistehandel } = this.props;
-        hentSistehandel();
-    }
-
     render() {
         const { sistehandel } = this.props;
 
@@ -55,11 +49,5 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        hentSistehandel: () => dispatch(SISTEHANDEL_HENT()),
-    };
-};
-
-StatistikkSistehandel = connect(mapStateToProps, mapDispatchToProps)(StatistikkSistehandel);
+StatistikkSistehandel = connect(mapStateToProps)(StatistikkSistehandel);
 export default StatistikkSistehandel;

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { OVERSIKT_HENT } from '../reducers/oversikt';
-import { BUTIKKER_HENT } from '../reducers/butikker';
 import nyhandling, { NYHANDLING_REGISTRER } from '../reducers/nyhandling';
 const { BELOP_ENDRE, BUTIKK_ENDRE, DATO_ENDRE } = nyhandling.actions;
 import { Header } from './bootstrap/Header';
@@ -14,12 +12,6 @@ import { StyledLinkRight } from './bootstrap/StyledLinkRight';
 
 
 class Home extends Component {
-    componentDidMount() {
-        const { hentOversikt, hentButikker } = this.props;
-        hentOversikt();
-        hentButikker();
-    }
-
     render () {
         const { oversikt, handlinger, butikker, nyhandling, endreBelop, endreButikk, endreDato, onRegistrerHandling } = this.props;
         const favordisfavor = oversikt.balanse >= 0 ? 'favør' : 'disfavør';
@@ -104,8 +96,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        hentOversikt: () => dispatch(OVERSIKT_HENT()),
-        hentButikker: () => dispatch(BUTIKKER_HENT()),
         endreBelop: (belop) => dispatch(BELOP_ENDRE(belop)),
         endreButikk: (butikk) => dispatch(BUTIKK_ENDRE(butikk)),
         endreDato: (dato) => dispatch(DATO_ENDRE(dato)),

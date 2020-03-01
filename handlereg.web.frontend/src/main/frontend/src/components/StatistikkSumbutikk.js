@@ -5,14 +5,8 @@ import { Header } from './bootstrap/Header';
 import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';
-import { SUMBUTIKK_HENT } from '../reducers/sumbutikk';
 
 class StatistikkSumbutikk extends Component {
-    componentDidMount() {
-        const { hentSumbutikk } = this.props;
-        hentSumbutikk();
-    }
-
     render() {
         const { sumbutikk } = this.props;
 
@@ -54,11 +48,5 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        hentSumbutikk: () => dispatch(SUMBUTIKK_HENT()),
-    };
-};
-
-StatistikkSumbutikk = connect(mapStateToProps, mapDispatchToProps)(StatistikkSumbutikk);
+StatistikkSumbutikk = connect(mapStateToProps)(StatistikkSumbutikk);
 export default StatistikkSumbutikk;

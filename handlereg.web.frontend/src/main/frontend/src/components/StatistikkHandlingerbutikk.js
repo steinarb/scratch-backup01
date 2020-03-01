@@ -5,14 +5,8 @@ import { Header } from './bootstrap/Header';
 import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';
-import { HANDLINGERBUTIKK_HENT } from '../reducers/handlingerbutikk';
 
 class StatistikkHandlingerbutikk extends Component {
-    componentDidMount() {
-        const { hentHandlingerbutikk } = this.props;
-        hentHandlingerbutikk();
-    }
-
     render() {
         const { handlingerbutikk } = this.props;
 
@@ -54,11 +48,5 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        hentHandlingerbutikk: () => dispatch(HANDLINGERBUTIKK_HENT()),
-    };
-};
-
-StatistikkHandlingerbutikk = connect(mapStateToProps, mapDispatchToProps)(StatistikkHandlingerbutikk);
+StatistikkHandlingerbutikk = connect(mapStateToProps)(StatistikkHandlingerbutikk);
 export default StatistikkHandlingerbutikk;

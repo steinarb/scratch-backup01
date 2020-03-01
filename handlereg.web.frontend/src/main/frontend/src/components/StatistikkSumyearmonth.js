@@ -6,14 +6,8 @@ import { Header } from './bootstrap/Header';
 import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';
-import { SUMYEARMONTH_HENT } from '../reducers/sumyearmonth';
 
 class StatistikkSumyearmonth extends Component {
-    componentDidMount() {
-        const { hentSumyearmonth } = this.props;
-        hentSumyearmonth();
-    }
-
     render() {
         const { sumyearmonth } = this.props;
 
@@ -57,11 +51,5 @@ const mapStateToProps = state => {
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        hentSumyearmonth: () => dispatch(SUMYEARMONTH_HENT()),
-    };
-};
-
-StatistikkSumyearmonth = connect(mapStateToProps, mapDispatchToProps)(StatistikkSumyearmonth);
+StatistikkSumyearmonth = connect(mapStateToProps)(StatistikkSumyearmonth);
 export default StatistikkSumyearmonth;

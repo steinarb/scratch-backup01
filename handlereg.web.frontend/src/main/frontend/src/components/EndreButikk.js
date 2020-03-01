@@ -9,11 +9,6 @@ const { BUTIKKNAVN_ENDRE, VELG_BUTIKK } = butikk.actions;
 import { BUTIKKER_HENT } from '../reducers/butikker';
 
 class EndreButikk extends Component {
-    componentDidMount() {
-        const { hentButikker } = this.props;
-        hentButikker();
-    }
-
     render() {
         const { valgtButikk, butikk, butikker, velgButikk, endreNavn, onLagreEndretButikk } = this.props;
         const { butikknavn, gruppe, rekkefolge } = butikk;
@@ -62,7 +57,6 @@ const mapDispatchToProps = dispatch => {
     return {
         velgButikk: (indeks, butikker) => dispatch(VELG_BUTIKK({ indeks, butikker })),
         endreNavn: (butikknavn) => dispatch(BUTIKKNAVN_ENDRE(butikknavn)),
-        hentButikker: () => dispatch(BUTIKKER_HENT()),
         onLagreEndretButikk: (nybutikk) => dispatch(BUTIKK_LAGRE(nybutikk)),
     };
 };
