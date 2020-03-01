@@ -8,40 +8,38 @@ import butikk, { BUTIKK_LAGRE } from '../reducers/butikk';
 const { BUTIKKNAVN_ENDRE, VELG_BUTIKK } = butikk.actions;
 import { BUTIKKER_HENT } from '../reducers/butikker';
 
-class EndreButikk extends Component {
-    render() {
-        const { valgtButikk, butikk, butikker, velgButikk, endreNavn, onLagreEndretButikk } = this.props;
-        const { butikknavn, gruppe, rekkefolge } = butikk;
-        const butikkerUnntattUndefined = butikker.filter(b => b.storeId > -1);
+function EndreButikk(props) {
+    const { valgtButikk, butikk, butikker, velgButikk, endreNavn, onLagreEndretButikk } = props;
+    const { butikknavn, gruppe, rekkefolge } = butikk;
+    const butikkerUnntattUndefined = butikker.filter(b => b.storeId > -1);
 
-        return (
-            <div>
-                <StyledLinkLeft to="/handlereg">Opp til matregnskap</StyledLinkLeft>
-                <Header>
-                    <h1>Endre butikk</h1>
-                </Header>
-                <Container>
-                    <form onSubmit={ e => { e.preventDefault(); }}>
-                        <select size="10" value={valgtButikk} onChange={e => velgButikk(e.target.value, butikkerUnntattUndefined)}>
-                            { butikkerUnntattUndefined.map((b, indeks) => <option value={indeks}>{b.butikknavn}</option>) }
-                        </select>
-                        <div className="form-group row">
-                            <label htmlFor="amount" className="col-form-label col-5">Ny butikk</label>
-                            <div className="col-7">
-                                <input id="amount" className="form-control" type="text" value={butikk.butikknavn} onChange={e => endreNavn(e.target.value)} />
-                            </div>
+    return (
+        <div>
+            <StyledLinkLeft to="/handlereg">Opp til matregnskap</StyledLinkLeft>
+            <Header>
+                <h1>Endre butikk</h1>
+            </Header>
+            <Container>
+                <form onSubmit={ e => { e.preventDefault(); }}>
+                    <select size="10" value={valgtButikk} onChange={e => velgButikk(e.target.value, butikkerUnntattUndefined)}>
+                        { butikkerUnntattUndefined.map((b, indeks) => <option value={indeks}>{b.butikknavn}</option>) }
+                    </select>
+                    <div className="form-group row">
+                        <label htmlFor="amount" className="col-form-label col-5">Ny butikk</label>
+                        <div className="col-7">
+                            <input id="amount" className="form-control" type="text" value={butikk.butikknavn} onChange={e => endreNavn(e.target.value)} />
                         </div>
-                        <div className="form-group row">
-                            <div className="col-5"/>
-                            <div className="col-7">
-                                <button className="btn btn-primary" onClick={() => onLagreEndretButikk(butikk)}>Lagre endret butikk</button>
-                            </div>
+                    </div>
+                    <div className="form-group row">
+                        <div className="col-5"/>
+                        <div className="col-7">
+                            <button className="btn btn-primary" onClick={() => onLagreEndretButikk(butikk)}>Lagre endret butikk</button>
                         </div>
-                    </form>
-                </Container>
-            </div>
-        );
-    }
+                    </div>
+                </form>
+            </Container>
+        </div>
+    );
 }
 
 const mapStateToProps = state => {

@@ -7,39 +7,37 @@ import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';
 
-class StatistikkSumyear extends Component {
-    render() {
-        const { sumyear } = this.props;
+function StatistikkSumyear(props) {
+    const { sumyear } = props;
 
-        return (
-            <div>
-                <StyledLinkLeft to="/handlereg/statistikk">Tilbake</StyledLinkLeft>
-                <Header>
-                    <h1>Handlesum pr år</h1>
-                </Header>
-                <Container>
-                <div className="table-responsive table-sm table-striped">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <td>År</td>
-                                <td>Handlebeløp</td>
+    return (
+        <div>
+            <StyledLinkLeft to="/handlereg/statistikk">Tilbake</StyledLinkLeft>
+            <Header>
+                <h1>Handlesum pr år</h1>
+            </Header>
+            <Container>
+            <div className="table-responsive table-sm table-striped">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <td>År</td>
+                            <td>Handlebeløp</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sumyear.map((sy) =>
+                            <tr key={'year' + sy.year.value}>
+                                <td>{sy.year.value}</td>
+                                <td>{sy.sum}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {sumyear.map((sy) =>
-                                <tr key={'year' + sy.year.value}>
-                                    <td>{sy.year.value}</td>
-                                    <td>{sy.sum}</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-                </Container>
+                        )}
+                    </tbody>
+                </table>
             </div>
-        );
-    }
+            </Container>
+        </div>
+    );
 }
 
 const mapStateToProps = state => {

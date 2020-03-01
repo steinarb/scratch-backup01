@@ -7,41 +7,39 @@ import { Container } from './bootstrap/Container';
 import { StyledLinkLeft } from './bootstrap/StyledLinkLeft';
 import { StyledLinkRight } from './bootstrap/StyledLinkRight';
 
-class StatistikkSumyearmonth extends Component {
-    render() {
-        const { sumyearmonth } = this.props;
+function StatistikkSumyearmonth(props) {
+    const { sumyearmonth } = props;
 
-        return (
-            <div>
-                <StyledLinkLeft to="/handlereg/statistikk">Tilbake</StyledLinkLeft>
-                <Header>
-                    <h1>Handlesum for år og måned</h1>
-                </Header>
-                <Container>
-                <div className="table-responsive table-sm table-striped">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <td>År</td>
-                                <td>Måned</td>
-                                <td>Handlebeløp</td>
+    return (
+        <div>
+            <StyledLinkLeft to="/handlereg/statistikk">Tilbake</StyledLinkLeft>
+            <Header>
+                <h1>Handlesum for år og måned</h1>
+            </Header>
+            <Container>
+            <div className="table-responsive table-sm table-striped">
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <td>År</td>
+                            <td>Måned</td>
+                            <td>Handlebeløp</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {sumyearmonth.map((sym) =>
+                            <tr key={'year' + sym.year.value}>
+                                <td>{sym.year.value}</td>
+                                <td>{sym.month}</td>
+                                <td>{sym.sum}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {sumyearmonth.map((sym) =>
-                                <tr key={'year' + sym.year.value}>
-                                    <td>{sym.year.value}</td>
-                                    <td>{sym.month}</td>
-                                    <td>{sym.sum}</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-                </Container>
+                        )}
+                    </tbody>
+                </table>
             </div>
-        );
-    }
+            </Container>
+        </div>
+    );
 }
 
 const mapStateToProps = state => {
